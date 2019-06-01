@@ -2,284 +2,153 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <!-- This file has been downloaded from Bootsnipp.com. Enjoy! -->
-    <title>User card - Bootsnipp.com</title>
+    <title>Shyam.Suthar</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="bootstrap.min.css" rel="stylesheet">
     <style type="text/css">
-        @import url('https://fonts.googleapis.com/css?family=Open+Sans');
-
-body{
-    background:#f3f3f4;
-    padding-top:30px;
-    font-family: 'Open Sans', sans-serif;
-}
-.userMain .userBlock{
-    float: left;
-    width: 100%;
-    box-shadow: 0px 0px 23px -3px #ccc;
-    padding-bottom: 12px;
-    margin-bottom: 30px;
-    overflow: hidden;
-    background:#fff;
-    
-
-}
-.userMain .userBlock .backgrounImg{
-    float: left;
-    overflow: hidden;
-    height: 77px;
-}
-.userMain .userBlock .backgrounImg img{
-    width: auto;
-}
-.userMain .userBlock .userImg{
-    text-align: center;
-}
-.userMain .userBlock .userImg img{
-    width: 80px;
-    height: 80px;
-    margin-top: -39px;
-    border-radius: 100%;
-    border: 5px solid #fff;
-    
-}
-.userMain .userBlock .userDescription{
-    text-align: center;
-}
-.userMain .userBlock .userDescription h5{
-    margin-bottom: 2px;
-    font-weight: 600;
-}
-.userMain .userBlock .userDescription p{
-    margin-bottom: 5px;
-}
-.userMain .userBlock .userDescription .btn{
-    padding: 0px 23px 0px 23px;
-    height: 22px;
-    border-radius: 0;
-    font-size: 12px;
-    background: #0198dd;
-    color: #fff;
-}
-.userMain .userBlock .userDescription .btn:hover{
-    
-    opacity:0.7;
+body, .badgescard, .firstinfo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.userMain .userBlock .followrs{
-    display: inline-flex;
-    margin-right: 10px;
-    border-right: 1px solid #ccc;
-    padding-right: 10px;
+html {
+  height: 100%;
 }
-.userMain .userBlock .followrs .number{
-    font-size: 15px;
-    font-weight: bold;
-    margin-right: 5px;
-    margin-top: -1px;
+
+body {
+  font-family: 'Open Sans', sans-serif;
+  width: 100%;
+  min-height: 100%;
+  background: #009688;
+  font-size: 16px;
+  overflow: hidden;
 }
+
+*, *:before, *:after {
+  box-sizing: border-box;
+}
+
+.content {
+  position: relative;
+  animation: animatop 0.9s cubic-bezier(0.425, 1.14, 0.47, 1.125) forwards;
+}
+
+.card {
+  width: 500px;
+  min-height: 100px;
+  padding: 20px;
+  border-radius: 3px;
+  background-color: white;
+  box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.2);
+  position: relative;
+  overflow: hidden;
+}
+.card:after {
+  content: '';
+  display: block;
+  width: 190px;
+  height: 300px;
+  background: cadetblue;
+  position: absolute;
+  animation: rotatemagic 0.75s cubic-bezier(0.425, 1.04, 0.47, 1.105) 1s both;
+}
+
+.badgescard {
+  padding: 10px 20px;
+  border-radius: 3px;
+  background-color: #ECECEC;
+  width: 480px;
+  box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.2);
+  position: absolute;
+  z-index: -1;
+  left: 10px;
+  bottom: 10px;
+  animation: animainfos 0.5s cubic-bezier(0.425, 1.04, 0.47, 1.105) 0.75s forwards;
+}
+.badgescard span {
+  font-size: 1.6em;
+  margin: 0px 6px;
+  opacity: 0.6;
+}
+
+.firstinfo {
+  flex-direction: row;
+  z-index: 2;
+  position: relative;
+}
+.firstinfo img {
+  border-radius: 50%;
+  width: 120px;
+  height: 120px;
+}
+.firstinfo .profileinfo {
+  padding: 0px 20px;
+}
+.firstinfo .profileinfo h1 {
+  font-size: 1.8em;
+}
+.firstinfo .profileinfo h3 {
+  font-size: 1.2em;
+  color: #009688;
+  font-style: italic;
+}
+.firstinfo .profileinfo p.bio {
+  padding: 10px 0px;
+  color: #5A5A5A;
+  line-height: 1.2;
+  font-style: initial;
+}
+
+@keyframes animatop {
+  0% {
+    opacity: 0;
+    bottom: -500px;
+  }
+  100% {
+    opacity: 1;
+    bottom: 0px;
+  }
+}
+@keyframes animainfos {
+  0% {
+    bottom: 10px;
+  }
+  100% {
+    bottom: -42px;
+  }
+}
+@keyframes rotatemagic {
+  0% {
+    opacity: 0;
+    transform: rotate(0deg);
+    top: -24px;
+    left: -253px;
+  }
+  100% {
+    transform: rotate(-30deg);
+    top: -24px;
+    left: -78px;
+  }
+}
+
     </style>
     <script src="jquery-1.11.1.min.js"></script>
     <script src="bootstrap.min.js"></script>
 </head>
 <body>
-<div class="container">
-	 <div class="row userMain">
-       <div class="col-md-3 col-sm-4">
-           <div class="userBlock">
-               <div class="backgrounImg">
-                   <img src="https://preview.ibb.co/miQjb7/photography4.jpg">
-               </div>
-               <div class="userImg">
-                   <img src="https://image.ibb.co/es4AG7/author4.jpg">
-               </div>
-               <div class="userDescription">
-                   <h5>Tom Smith</h5>
-                   <p>Newyork, USA</p>
-                  
-                   
-                    <div class="followrs">
-                       <span class="number">137</span>
-                        <span>Followers</span>
-                    </div>
-                    <a href="">
-                        <button class="btn">Follow</button>
-                    </a>
-               </div>
-              
-           </div>
-       </div>
-       <div class="col-md-3 col-sm-4">
-           <div class="userBlock">
-               <div class="backgrounImg">
-                   <img src="https://preview.ibb.co/cqEz9S/photography3.jpg">
-               </div>
-               <div class="userImg">
-                   <img src="https://image.ibb.co/es4AG7/author4.jpg">
-               </div>
-               <div class="userDescription">
-                   <h5>Tom Smith</h5>
-                   <p>Newyork, USA</p>
-                  
-                   
-                    <div class="followrs">
-                       <span class="number">137</span>
-                        <span>Followers</span>
-                    </div>
-                    <a href="">
-                        <button class="btn">Follow</button>
-                    </a>
-               </div>
-             
-           </div>
-       </div>
-       <div class="col-md-3 col-sm-4">
-           <div class="userBlock">
-               <div class="backgrounImg">
-                   <img src="https://preview.ibb.co/m4Fjb7/photography2.jpg">
-               </div>
-               <div class="userImg">
-                   <img src="https://image.ibb.co/es4AG7/author4.jpg">
-               </div>
-               <div class="userDescription">
-                   <h5>Tom Smith</h5>
-                   <p>Newyork, USA</p>
-                  
-                   
-                    <div class="followrs">
-                       <span class="number">137</span>
-                        <span>Followers</span>
-                    </div>
-                    <a href="">
-                        <button class="btn">Follow</button>
-                    </a>
-               </div>
-              
-           </div>
-       </div>
-       <div class="col-md-3 col-sm-4">
-           <div class="userBlock">
-               <div class="backgrounImg">
-                   <img src="https://preview.ibb.co/cqEz9S/photography3.jpg">
-               </div>
-               <div class="userImg">
-                   <img src="https://image.ibb.co/es4AG7/author4.jpg">
-               </div>
-               <div class="userDescription">
-                   <h5>Tom Smith</h5>
-                   <p>Newyork, USA</p>
-                  
-                   
-                    <div class="followrs">
-                       <span class="number">137</span>
-                        <span>Followers</span>
-                    </div>
-                    <a href="">
-                        <button class="btn">Follow</button>
-                    </a>
-               </div>
-             
-           </div>
-       </div>
-       <div class="col-md-3 col-sm-4">
-           <div class="userBlock">
-               <div class="backgrounImg">
-                   <img src="https://preview.ibb.co/m4Fjb7/photography2.jpg">
-               </div>
-               <div class="userImg">
-                   <img src="https://image.ibb.co/es4AG7/author4.jpg">
-               </div>
-               <div class="userDescription">
-                   <h5>Tom Smith</h5>
-                   <p>Newyork, USA</p>
-                  
-                   
-                    <div class="followrs">
-                       <span class="number">137</span>
-                        <span>Followers</span>
-                    </div>
-                    <a href="">
-                        <button class="btn">Follow</button>
-                    </a>
-               </div>
-              
-           </div>
-       </div>
-       <div class="col-md-3 col-sm-4">
-           <div class="userBlock">
-               <div class="backgrounImg">
-                   <img src="https://preview.ibb.co/j7ygOn/photography.jpg">
-               </div>
-               <div class="userImg">
-                   <img src="https://image.ibb.co/es4AG7/author4.jpg">
-               </div>
-               <div class="userDescription">
-                   <h5>Tom Smith</h5>
-                   <p>Newyork, USA</p>
-                  
-                   
-                    <div class="followrs">
-                       <span class="number">137</span>
-                        <span>Followers</span>
-                    </div>
-                    <a href="">
-                        <button class="btn">Follow</button>
-                    </a>
-               </div>
-             
-           </div>
-       </div>
-       <div class="col-md-3 col-sm-4">
-           <div class="userBlock">
-               <div class="backgrounImg">
-                   <img src="https://preview.ibb.co/cqEz9S/photography3.jpg">
-               </div>
-               <div class="userImg">
-                   <img src="https://image.ibb.co/es4AG7/author4.jpg">
-               </div>
-               <div class="userDescription">
-                   <h5>Tom Smith</h5>
-                   <p>Newyork, USA</p>
-                  
-                   
-                    <div class="followrs">
-                       <span class="number">137</span>
-                        <span>Followers</span>
-                    </div>
-                    <a href="">
-                        <button class="btn">Follow</button>
-                    </a>
-               </div>
-              
-           </div>
-       </div>
-       <div class="col-md-3 col-sm-4">
-           <div class="userBlock">
-               <div class="backgrounImg">
-                   <img src="https://preview.ibb.co/miQjb7/photography4.jpg">
-               </div>
-               <div class="userImg">
-                   <img src="https://image.ibb.co/es4AG7/author4.jpg">
-               </div>
-               <div class="userDescription">
-                   <h5>Tom Smith</h5>
-                   <p>Newyork, USA</p>
-                  
-                   
-                    <div class="followrs">
-                       <span class="number">137</span>
-                        <span>Followers</span>
-                    </div>
-                    <a href="">
-                        <button class="btn">Follow</button>
-                    </a>
-               </div>
-             
-           </div>
-       </div>
-      
+
+<div class="content">
+  <div class="card">
+    <div class="firstinfo"><img src="pp.jpg"/>
+      <div class="profileinfo">
+        <h1>Shyam Suthar</h1>
+        <h3>Python Ninja</h3>
+        <p class="bio">Lived all my life on the top of mount Fuji, learning the way to be a Ninja Dev.</p>
+      </div>
     </div>
+  </div>
+  <div class="badgescard"> <span class="devicons devicons-django"></span><span class="devicons devicons-python"> </span><span class="devicons devicons-codepen"></span><span class="devicons devicons-javascript_badge"></span><span class="devicons devicons-gulp"></span><span class="devicons devicons-angular"></span><span class="devicons devicons-sass"> </span></div>
 </div>
 <script type="text/javascript">
 
