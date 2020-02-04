@@ -19,7 +19,7 @@ $(document).ready(function() {
 		}
 
 		function help() {
-				terminal.append("There is no help... MUAHAHAHAHA. >:D\n");
+				terminal.append("Available Commands -> ['clear', 'help', 'echo', 'fortune']\n");
 		}
 	
 		function echo(args) {
@@ -86,7 +86,7 @@ function processCommand() {
 
 		// No match was found...
 		if (!isValid) {
-				terminal.append("zsh: command not found: " + command + "\n");
+				terminal.append("terminal: command not found: " + command + "\n");
 		}
 
 		// Add to command history and clean up.
@@ -186,11 +186,11 @@ $(document).keypress(function(e) {
 });
 
 // Set the window title
-title.text("1. marc@mbp: ~ (zsh)");
+title.text("1. shyamzzp@mac: ~ (terminal)");
 
 // Get the date for our fake last-login
 var date = new Date().toString(); date = date.substr(0, date.indexOf("GMT") - 1);
 
 // Display last-login and promt
-terminal.append("Last login: " + date + " on ttys000\n"); displayPrompt();
+terminal.append("Last login: " + date + " by shyamzzp\n"); displayPrompt();
 });
