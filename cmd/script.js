@@ -86,7 +86,7 @@ function processCommand() {
 
 		// No match was found...
 		if (!isValid) {
-				terminal.append("terminal: command not found: " + command + "\n");
+				terminal.append("<a target='_blank' href='https://www.google.com/search?q="+command+"'>Help</a>: terminal command not found: " + command + "\n");
 		}
 
 		// Add to command history and clean up.

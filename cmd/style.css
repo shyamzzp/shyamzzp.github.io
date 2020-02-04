@@ -2,7 +2,17 @@ html, body {
   height: 100%;
   overflow: hidden;
 }
+a {
+    color: #0060B6;
+    text-decoration: none;
+}
 
+a:hover 
+{
+     color:#00A0C6; 
+     text-decoration:none; 
+     cursor:pointer;  
+}
 body {
   background: #3a7bd5;
   background-image: -webkit-radial-gradient(top, circle cover, #00d2ff 0%, #3a7bd5 80%);
