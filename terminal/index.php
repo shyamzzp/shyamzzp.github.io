@@ -10,11 +10,7 @@
 <body>
 <!-- partial:index.partial.html -->
 <link href='https://fonts.googleapis.com/css?family=Source+Code+Pro:200' rel='stylesheet' type='text/css'>
-<div class="container" style="
-    width: 70%;
-    /* height: 70%; */
-    /* margin: auto; */
-">
+<div class="container">
 		<div class="window">
 				<div class="handle">
 						<div class="buttons">
