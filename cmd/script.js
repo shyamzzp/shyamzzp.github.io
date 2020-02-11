@@ -20,13 +20,13 @@ $(document).ready(function() {
 
 		function help() {
 				terminal.append("Available Commands -> ['clear', 'help', 'echo', 'fortune']\n");
-				terminal.scroll(0,2000);
+				terminal[0].scroll(0,2000)
 		}
 	
 		function echo(args) {
 				var str = args.join(" ");
 				terminal.append(str + "\n");
-				terminal.scroll(0,2000);
+				terminal[0].scroll(0,2000)
 		}
 
 		function fortune() {
@@ -37,7 +37,7 @@ $(document).ready(function() {
 				if (xhr.status === 200) {
 						var fortunes = xhr.responseText.split("%");
 						var fortune = fortunes[getRandomInt(0, fortunes.length)].trim();
-						terminal.append(fortune + "\n");terminal.scroll(0,2000);
+						terminal.append(fortune + "\n");terminal[0].scroll(0,2000)
 				}
 		}
 		// END COMMANDS
@@ -89,7 +89,7 @@ function processCommand() {
 		// No match was found...
 		if (!isValid) {
 				terminal.append("<a target='_blank' href='https://www.google.com/search?q="+command+"'>Help</a>: terminal command not found: " + command + "\n");
-				terminal.scroll(0,2000);
+				terminal[0].scroll(0,2000)
 		}
 
 		// Add to command history and clean up.
@@ -99,8 +99,8 @@ function processCommand() {
 }
 
 function displayPrompt() {
-		terminal.append("<span class=\"prompt\">" + prompt + "</span> ");terminal.scroll(0,2000);
-		terminal.append("<span class=\"path\">" + path + "</span> ");terminal.scroll(0,2000);
+		terminal.append("<span class=\"prompt\">" + prompt + "</span> ");terminal[0].scroll(0,2000)
+		terminal.append("<span class=\"path\">" + path + "</span> ");terminal[0].scroll(0,2000)
 }
 
 // Delete n number of characters from the end of our output
@@ -116,7 +116,7 @@ function clearCommand() {
 }
 
 function appendCommand(str) {
-		terminal.append(str);terminal.scroll(0,2000);
+		terminal.append(str);terminal[0].scroll(0,2000)
 		command += str;
 }
 
@@ -195,5 +195,5 @@ title.text("1. shyamzzp@mac: ~ (terminal)");
 var date = new Date().toString(); date = date.substr(0, date.indexOf("GMT") - 1);
 
 // Display last-login and promt
-terminal.append("Last login: " + date + " by shyamzzp\n"); displayPrompt();terminal.scroll(0,2000);
+terminal.append("Last login: " + date + " by shyamzzp\n"); displayPrompt();terminal[0].scroll(0,2000)
 });
