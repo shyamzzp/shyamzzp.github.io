@@ -23,8 +23,269 @@
     <script></script>
     <script data-savepage-src="js/jcarousellite_1.0.1c4.js" type="text/javascript"></script>
     <script type="text/javascript"></script>
-    <script></script>
     <style>
+        
+    @import url(https://fonts.googleapis.com/css?family=PT+Sans+Narrow);
+
+    body {
+        font-family: Open Sans, "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif;
+        font-size: 13px;
+        color: #666;
+        position: relative;
+        -webkit-font-smoothing: antialiased;
+        margin: 0;
+    }
+
+    * {
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
+    }
+
+    body,
+    div,
+    dl,
+    dt,
+    dd,
+    ul,
+    ol,
+    li,
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    pre,
+    form,
+    p,
+    blockquote,
+    th,
+    td {
+        margin: 0;
+        padding: 0;
+        font-size: 13px;
+        direction: ltr;
+    }
+
+    .sectionClass {
+        padding: 0px 0px 50px 0px;
+        position: relative;
+        display: block;
+    }
+
+    .fullWidth {
+        width: 100% !important;
+        display: table;
+        float: none;
+        padding: 0;
+        min-height: 1px;
+        height: 100%;
+        position: relative;
+    }
+
+
+    .sectiontitle {
+        background-position: center;
+        margin: 30px 0 0px;
+        text-align: center;
+        min-height: 20px;
+    }
+
+    .sectiontitle h2 {
+        font-size: 30px;
+        color: #222;
+        margin-bottom: 0px;
+        padding-right: 10px;
+        padding-left: 10px;
+    }
+
+
+    .headerLine {
+        width: 160px;
+        height: 2px;
+        display: inline-block;
+        background: #101F2E;
+    }
+
+
+    .projectFactsWrap {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+
+
+    #projectFacts .fullWidth {
+        padding: 0;
+    }
+
+    .projectFactsWrap .item {
+        width: 25%;
+        height: 100%;
+        padding: 20px 0px;
+        text-align: center;
+    }
+
+    .projectFactsWrap .item:nth-child(1) {
+        background: rgb(16, 31, 46);
+    }
+
+    .projectFactsWrap .item:nth-child(2) {
+        background: rgb(18, 34, 51);
+    }
+
+    .projectFactsWrap .item:nth-child(3) {
+        background: rgb(21, 38, 56);
+    }
+
+    .projectFactsWrap .item:nth-child(4) {
+        background: rgb(23, 44, 66);
+    }
+
+    .projectFactsWrap .item p.number {
+        font-size: 40px;
+        padding: 0;
+        font-weight: bold;
+    }
+
+    .projectFactsWrap .item p {
+        color: rgba(255, 255, 255, 0.8);
+        font-size: 18px;
+        margin: 0;
+        padding: 10px;
+        font-family: 'Open Sans';
+    }
+
+
+    .projectFactsWrap .item span {
+        width: 60px;
+        background: rgba(255, 255, 255, 0.8);
+        height: 2px;
+        display: block;
+        margin: 0 auto;
+    }
+
+
+    .projectFactsWrap .item i {
+        vertical-align: middle;
+        font-size: 50px;
+        color: rgba(255, 255, 255, 0.8);
+    }
+
+
+    .projectFactsWrap .item:hover i,
+    .projectFactsWrap .item:hover p {
+        color: white;
+    }
+
+    .projectFactsWrap .item:hover span {
+        background: white;
+    }
+
+    @media (max-width: 786px) {
+        .projectFactsWrap .item {
+            flex: 0 0 50%;
+        }
+    }
+
+    /* AUTHOR LINK */
+
+
+    footer {
+        z-index: 100;
+        padding-top: 50px;
+        padding-bottom: 50px;
+        width: 100%;
+        bottom: 0;
+        left: 0;
+    }
+
+    footer p {
+        color: rgba(255, 255, 255, 0.8);
+        font-size: 16px;
+        opacity: 0;
+        font-family: 'Open Sans';
+        width: 100%;
+        word-wrap: break-word;
+        line-height: 25px;
+        -webkit-transform: translateX(-200px);
+        transform: translateX(-200px);
+        margin: 0;
+        -webkit-transition: all 250ms ease;
+        -moz-transition: all 250ms ease;
+        transition: all 250ms ease;
+    }
+
+    footer .authorWindow a {
+        color: white;
+        text-decoration: none;
+    }
+
+    footer p strong {
+        color: rgba(255, 255, 255, 0.9);
+    }
+
+    .about-me-img {
+        width: 120px;
+        height: 120px;
+        left: 10px;
+        /* bottom: 30px; */
+        position: relative;
+        border-radius: 100px;
+    }
+
+
+    .about-me-img img {}
+
+
+    .authorWindow {
+        width: 600px;
+        background: #75439a;
+        padding: 22px 20px 22px 20px;
+        border-radius: 5px;
+        overflow: hidden;
+    }
+
+    .authorWindowWrapper {
+        display: none;
+        left: 110px;
+        top: 0;
+        padding-left: 25px;
+        position: absolute;
+    }
+
+
+
+
+
+    .trans {
+        opacity: 1;
+        -webkit-transform: translateX(0px);
+        transform: translateX(0px);
+        -webkit-transition: all 500ms ease;
+        -moz-transition: all 500ms ease;
+        transition: all 500ms ease;
+    }
+
+    @media screen and (max-width: 768px) {
+        .authorWindow {
+            width: 210px;
+        }
+
+        .authorWindowWrapper {
+            bottom: -170px;
+            margin-bottom: 20px;
+        }
+
+        footer p {
+            font-size: 14px;
+        }
+    }
+    
+    </style>
+    <style>
+
     .question {
         display: none;
     }
@@ -924,6 +1185,33 @@
                 </div>
             </div>
         </div>
+        <div id="projectFacts" class="sectionClass">
+                <div class="fullWidth eight columns">
+                    <div class="projectFactsWrap ">
+                        <div class="item wow fadeInUpBig animated animated" data-number="12" style="visibility: visible;    background-color: #f1938c;">
+                            <i class="fa fa-briefcase"></i>
+
+                            <p class="number timer count-title count-number" data-to="600" data-speed="2000" style="margin-top: 10px;">12</p>
+                            <p>Years of Excellence</p>
+                        </div>
+                        <div class="item wow fadeInUpBig animated animated" data-number="55" style="visibility: visible;    background-color: #f1938c;">
+                            <i class="fa fa-smile-o"></i>
+                            <p class="number timer count-title count-number" data-to="376" data-speed="3000" style="margin-top: 10px;">55</p>
+                            <p>Happy clients</p>
+                        </div>
+                        <div class="item wow fadeInUpBig animated animated" data-number="359" style="visibility: visible;    background-color: #f1938c;">
+                            <i class="fa fa-coffee"></i>
+                            <p class="number timer count-title count-number" data-to="887" data-speed="1000" style="margin-top: 10px;">359</p>
+                            <p>Working Branches</p>
+                        </div>
+                        <div class="item wow fadeInUpBig animated animated" data-number="246" style="visibility: visible;    background-color: #f1938c;">
+                            <i class="fa fa-camera"></i>
+                            <p class="number timer count-title count-number" data-to="100" data-speed="5000" style="margin-top: 10px;">246</p>
+                            <p>Client Satisfaction</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
         <div class="container">
         </div>
         <!-- content END -->
@@ -998,6 +1286,106 @@
             </div>
         </div>
     </form>
+    <script type="text/javascript">
+            (function($) {
+                $.fn.countTo = function(options) {
+                    options = options || {};
+
+                    return $(this).each(function() {
+                        // set options for current element
+                        var settings = $.extend({}, $.fn.countTo.defaults, {
+                            from: $(this).data('from'),
+                            to: $(this).data('to'),
+                            speed: $(this).data('speed'),
+                            refreshInterval: $(this).data('refresh-interval'),
+                            decimals: $(this).data('decimals')
+                        }, options);
+
+                        // how many times to update the value, and how much to increment the value on each update
+                        var loops = Math.ceil(settings.speed / settings.refreshInterval),
+                            increment = (settings.to - settings.from) / loops;
+
+                        // references & variables that will change with each update
+                        var self = this,
+                            $self = $(this),
+                            loopCount = 0,
+                            value = settings.from,
+                            data = $self.data('countTo') || {};
+
+                        $self.data('countTo', data);
+
+                        // if an existing interval can be found, clear it first
+                        if (data.interval) {
+                            clearInterval(data.interval);
+                        }
+                        data.interval = setInterval(updateTimer, settings.refreshInterval);
+
+                        // initialize the element with the starting value
+                        render(value);
+
+                        function updateTimer() {
+                            value += increment;
+                            loopCount++;
+
+                            render(value);
+
+                            if (typeof(settings.onUpdate) == 'function') {
+                                settings.onUpdate.call(self, value);
+                            }
+
+                            if (loopCount >= loops) {
+                                // remove the interval
+                                $self.removeData('countTo');
+                                clearInterval(data.interval);
+                                value = settings.to;
+
+                                if (typeof(settings.onComplete) == 'function') {
+                                    settings.onComplete.call(self, value);
+                                }
+                            }
+                        }
+
+                        function render(value) {
+                            var formattedValue = settings.formatter.call(self, value, settings);
+                            $self.html(formattedValue);
+                        }
+                    });
+                };
+
+                $.fn.countTo.defaults = {
+                    from: 0, // the number the element should start at
+                    to: 0, // the number the element should end at
+                    speed: 1000, // how long it should take to count between the target numbers
+                    refreshInterval: 100, // how often the element should be updated
+                    decimals: 0, // the number of decimal places to show
+                    formatter: formatter, // handler for formatting the value before rendering
+                    onUpdate: null, // callback method for every time the element is updated
+                    onComplete: null // callback method for when the element finishes updating
+                };
+
+                function formatter(value, settings) {
+                    return value.toFixed(settings.decimals);
+                }
+            }(jQuery));
+
+            jQuery(function($) {
+                // custom formatting example
+                $('.count-number').data('countToOptions', {
+                    formatter: function(value, options) {
+                        return value.toFixed(options.decimals).replace(/\B(?=(?:\d{3})+(?!\d))/g, ',');
+                    }
+                });
+
+                // start all the timers
+                $('.timer').each(count);
+
+                function count(options) {
+                    var $this = $(this);
+                    options = $.extend({}, options || {}, $this.data('countToOptions') || {});
+                    $this.countTo(options);
+                }
+            });
+            </script>
 </body>
 
 </html>
