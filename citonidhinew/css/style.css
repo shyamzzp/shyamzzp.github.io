@@ -416,7 +416,6 @@ hr {
         /*savepage-url=../images/bg-img2.jpg*/
         var(--savepage-url-26) top no-repeat;
     background-size: cover;
-    margin: 30px 0;
 }
 
 ol li {
@@ -475,7 +474,6 @@ ol li {
     font-size: 13px;
     color: #5e5d5d;
     padding-top: 10px;
-    margin-top: 30px;
 }
 
 #footer-wrapper h3 {
