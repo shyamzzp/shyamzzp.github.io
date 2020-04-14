@@ -29,7 +29,7 @@ textarea, input, button {
   outline: none;
 }
 
-.window-button, .window .buttons .close, .window .buttons .minimize, .window .buttons .maximize {
+.window-button, .window .btns .exit, .window .btns .minimize, .window .btns .maximize {
   padding: 0;
   margin: 0;
   margin-right: 4px;
@@ -58,18 +58,18 @@ textarea, input, button {
   line-height: 22px;
   text-align: center;
 }
-.window .buttons {
+.window .btns {
   position: absolute;
   float: left;
   margin: 0 8px;
 }
-.window .buttons .close {
+.window .btns .exit {
   background-color: #ff6159;
 }
-.window .buttons .minimize {
+.window .btns .minimize {
   background-color: #ffbf2f;
 }
-.window .buttons .maximize {
+.window .btns .maximize {
   background-color: #25cc3e;
 }
 .window .terminal {
