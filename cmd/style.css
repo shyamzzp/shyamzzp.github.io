@@ -94,6 +94,30 @@ textarea, input, button {
   content: "|";
   animation: blink 2s steps(1) infinite;
 }
+.window .terminal1 {
+  padding: 4px;
+  background-color: black;
+  opacity: 0.7;
+  height: 372px;
+  color: white;
+  font-family: 'Source Code Pro', monospace;
+  font-weight: 200;
+  font-size: 14px;
+  white-space: pre-wrap;
+  white-space: -moz-pre-wrap;
+  white-space: -pre-wrap;
+  white-space: -o-pre-wrap;
+  word-wrap: break-word;
+  border-bottom-left-radius: 5px;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  overflow-y: auto;
+}
+.window .terminal1::after {
+  content: "|";
+  animation: blink 2s steps(1) infinite;
+}
 
 .prompt {
   color: #bde371;

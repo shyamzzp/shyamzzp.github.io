@@ -31,13 +31,22 @@
                 </div>
                 <div class="terminal"></div>
             </div>
-            <div class="window col-4"></div>
+            <div class="window col-4">
+                <h6><span class="badge badge-secondary" data-toggle="popover" title="Popover Header" data-content="Some content inside the popover">Clear</span></h6>
+                <h4><span class="badge badge-secondary" data-toggle="popover" title="Popover Header" data-content="Some content inside the popover">Fortune</span></h4>
+                <h3><span class="badge badge-secondary" data-toggle="popover" title="Popover Header" data-content="Some content inside the popover">Help</span></h3>
+                <h5><span class="badge badge-secondary" data-toggle="popover" title="Popover Header" data-content="Some content inside the popover">Echo</span></h5>
+            </div>
         </div>
     </div>
     </div>
     <!-- partial -->
-    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
     <script src="./script.js"></script>
+    <script>
+    $(document).ready(function() {
+        $('[data-toggle="popover"]').popover();
+    });
+    </script>
 </body>
 
 </html>
