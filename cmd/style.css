@@ -28,6 +28,9 @@ body {
 textarea, input, button {
   outline: none;
 }
+.badge{
+  cursor: pointer;
+}
 
 .window-button, .window .btns .exit, .window .btns .minimize, .window .btns .maximize {
   padding: 0;
