@@ -25,247 +25,264 @@
     <script type="text/javascript"></script>
     <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=PT+Sans+Narrow">
     <style type="text/css">
-        @import url(https://fonts.googleapis.com/css?family=PT+Sans+Narrow);
-body {
-  font-family: Open Sans, "Helvetica Neue", "Helvetica", Helvetica, Arial,   sans-serif;
-  font-size: 13px;
-  color: #666;
-  position: relative;
-  -webkit-font-smoothing: antialiased;
-  margin: 0;
-}
+    @import url(https://fonts.googleapis.com/css?family=PT+Sans+Narrow);
 
-* {
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
-}
-
-body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, form, p, blockquote, th, td {
-  margin: 0;
-  padding: 0;
-  font-size: 13px;
-  direction: ltr;
-}
-
-.sectionClass {
-  padding: 20px 0px 50px 0px;
-  position: relative;
-  display: block;
-}
-
-.fullWidth {
-  width: 100% !important;
-  display: table;
-  float: none;
-  padding: 0;
-  min-height: 1px;
-  height: 100%;
-  position: relative;
-}
-
-
-.sectiontitle {
-  background-position: center;
-  margin: 30px 0 0px;
-  text-align: center;
-  min-height: 20px;
-}
-
-.sectiontitle h2 {
-  font-size: 30px;
-  color: #222;
-  margin-bottom: 0px;
-  padding-right: 10px;
-  padding-left: 10px;
-}
-
-
-.headerLine {
-  width: 160px;
-  height: 2px;
-  display: inline-block;
-  background: #101F2E;
-}
-
-
-.projectFactsWrap{
-    display: flex;
-  margin-top: 30px;
-  flex-direction: row;
-  flex-wrap: wrap;
-}
-
-
-#projectFacts .fullWidth{
-  padding: 0;
-}
-
-.projectFactsWrap .item{
-  width: 25%;
-  height: 100%;
-  padding: 50px 0px;
-  text-align: center;
-}
-
-.projectFactsWrap .item:nth-child(1){
-  background: rgb(16, 31, 46);
-}
-
-.projectFactsWrap .item:nth-child(2){
-  background: rgb(18, 34, 51);
-}
-
-.projectFactsWrap .item:nth-child(3){
-  background: rgb(21, 38, 56);
-}
-
-.projectFactsWrap .item:nth-child(4){
-  background: rgb(23, 44, 66);
-}
-
-.projectFactsWrap .item p.number{
-  font-size: 40px;
-  padding: 0;
-  font-weight: bold;
-}
-
-.projectFactsWrap .item p{
-  color: rgba(255, 255, 255, 0.8);
-  font-size: 18px;
-  margin: 0;
-  padding: 10px;
-  font-family: 'Open Sans';
-}
-
-
-.projectFactsWrap .item span{
-  width: 60px;
-  background: rgba(255, 255, 255, 0.8);
-  height: 2px;
-  display: block;
-  margin: 0 auto;
-}
-
-
-.projectFactsWrap .item i{
-  vertical-align: middle;
-  font-size: 50px;
-  color: rgba(255, 255, 255, 0.8);
-}
-
-
-.projectFactsWrap .item:hover i, .projectFactsWrap .item:hover p{
-  color: white;
-}
-
-.projectFactsWrap .item:hover span{
-  background: white;
-}
-
-@media (max-width: 786px){
-  .projectFactsWrap .item {
-     flex: 0 0 50%;
-  }
-}
-
-/* AUTHOR LINK */
-
-
-footer{
-  z-index: 100;
-  padding-top: 50px;
-  padding-bottom: 50px;
-  width: 100%;
-  bottom: 0;
-  left: 0;
-}
-
-footer p {
-color: rgba(255, 255, 255, 0.8);
-  font-size: 16px;
-  opacity: 0;
-  font-family: 'Open Sans';
-  width: 100%;
-    word-wrap: break-word;
-  line-height: 25px;
-  -webkit-transform: translateX(-200px);
-  transform: translateX(-200px);
-  margin: 0;
-  -webkit-transition: all 250ms ease;
-  -moz-transition: all 250ms ease;
-  transition: all 250ms ease;
-}
-
-footer .authorWindow a{
-  color: white;
-  text-decoration: none;
-}
-
-footer p strong {
-    color: rgba(255, 255, 255, 0.9);
-}
-
-.about-me-img {
-  width: 120px;
-  height: 120px;
-  left: 10px;
-  /* bottom: 30px; */
-  position: relative;
-  border-radius: 100px;
-}
-
-
-.about-me-img img {
-}
-
-
-.authorWindow{
-  width: 600px;
-  background: #75439a;
-  padding: 22px 20px 22px 20px;
-  border-radius: 5px;
-  overflow: hidden;
-}
-
-.authorWindowWrapper{
-  display: none;
-  left: 110px;
-  top: 0;
-  padding-left: 25px;
-  position: absolute;
-}
-
-
-
-
-
-.trans{
-  opacity: 1;
-  -webkit-transform: translateX(0px);
-  transform: translateX(0px);
-  -webkit-transition: all 500ms ease;
-  -moz-transition: all 500ms ease;
-  transition: all 500ms ease;
-}
-
-@media screen and (max-width: 768px) {
-    .authorWindow{
-         width: 210px;
+    body {
+        font-family: Open Sans, "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif;
+        font-size: 13px;
+        color: #666;
+        position: relative;
+        -webkit-font-smoothing: antialiased;
+        margin: 0;
     }
 
-    .authorWindowWrapper{
-             bottom: -170px;
-  margin-bottom: 20px;
+    * {
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
     }
 
-    footer p{
-          font-size: 14px;
+    body,
+    div,
+    dl,
+    dt,
+    dd,
+    ul,
+    ol,
+    li,
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    pre,
+    form,
+    p,
+    blockquote,
+    th,
+    td {
+        margin: 0;
+        padding: 0;
+        font-size: 13px;
+        direction: ltr;
     }
-}
+
+    .sectionClass {
+        padding: 20px 0px 50px 0px;
+        position: relative;
+        display: block;
+    }
+
+    .fullWidth {
+        width: 100% !important;
+        display: table;
+        float: none;
+        padding: 0;
+        min-height: 1px;
+        height: 100%;
+        position: relative;
+    }
+
+
+    .sectiontitle {
+        background-position: center;
+        margin: 30px 0 0px;
+        text-align: center;
+        min-height: 20px;
+    }
+
+    .sectiontitle h2 {
+        font-size: 30px;
+        color: #222;
+        margin-bottom: 0px;
+        padding-right: 10px;
+        padding-left: 10px;
+    }
+
+
+    .headerLine {
+        width: 160px;
+        height: 2px;
+        display: inline-block;
+        background: #101F2E;
+    }
+
+
+    .projectFactsWrap {
+        display: flex;
+        margin-top: 30px;
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+
+
+    #projectFacts .fullWidth {
+        padding: 0;
+    }
+
+    .projectFactsWrap .item {
+        width: 25%;
+        height: 100%;
+        padding: 50px 0px;
+        text-align: center;
+    }
+
+    .projectFactsWrap .item:nth-child(1) {
+        background: rgb(16, 31, 46);
+    }
+
+    .projectFactsWrap .item:nth-child(2) {
+        background: rgb(18, 34, 51);
+    }
+
+    .projectFactsWrap .item:nth-child(3) {
+        background: rgb(21, 38, 56);
+    }
+
+    .projectFactsWrap .item:nth-child(4) {
+        background: rgb(23, 44, 66);
+    }
+
+    .projectFactsWrap .item p.number {
+        font-size: 40px;
+        padding: 0;
+        font-weight: bold;
+    }
+
+    .projectFactsWrap .item p {
+        color: rgba(255, 255, 255, 0.8);
+        font-size: 18px;
+        margin: 0;
+        padding: 10px;
+        font-family: 'Open Sans';
+    }
+
+
+    .projectFactsWrap .item span {
+        width: 60px;
+        background: rgba(255, 255, 255, 0.8);
+        height: 2px;
+        display: block;
+        margin: 0 auto;
+    }
+
+
+    .projectFactsWrap .item i {
+        vertical-align: middle;
+        font-size: 50px;
+        color: rgba(255, 255, 255, 0.8);
+    }
+
+
+    .projectFactsWrap .item:hover i,
+    .projectFactsWrap .item:hover p {
+        color: white;
+    }
+
+    .projectFactsWrap .item:hover span {
+        background: white;
+    }
+
+    @media (max-width: 786px) {
+        .projectFactsWrap .item {
+            flex: 0 0 50%;
+        }
+    }
+
+    /* AUTHOR LINK */
+
+
+    footer {
+        z-index: 100;
+        padding-top: 50px;
+        padding-bottom: 50px;
+        width: 100%;
+        bottom: 0;
+        left: 0;
+    }
+
+    footer p {
+        color: rgba(255, 255, 255, 0.8);
+        font-size: 16px;
+        opacity: 0;
+        font-family: 'Open Sans';
+        width: 100%;
+        word-wrap: break-word;
+        line-height: 25px;
+        -webkit-transform: translateX(-200px);
+        transform: translateX(-200px);
+        margin: 0;
+        -webkit-transition: all 250ms ease;
+        -moz-transition: all 250ms ease;
+        transition: all 250ms ease;
+    }
+
+    footer .authorWindow a {
+        color: white;
+        text-decoration: none;
+    }
+
+    footer p strong {
+        color: rgba(255, 255, 255, 0.9);
+    }
+
+    .about-me-img {
+        width: 120px;
+        height: 120px;
+        left: 10px;
+        /* bottom: 30px; */
+        position: relative;
+        border-radius: 100px;
+    }
+
+
+    .about-me-img img {}
+
+
+    .authorWindow {
+        width: 600px;
+        background: #75439a;
+        padding: 22px 20px 22px 20px;
+        border-radius: 5px;
+        overflow: hidden;
+    }
+
+    .authorWindowWrapper {
+        display: none;
+        left: 110px;
+        top: 0;
+        padding-left: 25px;
+        position: absolute;
+    }
 
 
 
+
+
+    .trans {
+        opacity: 1;
+        -webkit-transform: translateX(0px);
+        transform: translateX(0px);
+        -webkit-transition: all 500ms ease;
+        -moz-transition: all 500ms ease;
+        transition: all 500ms ease;
+    }
+
+    @media screen and (max-width: 768px) {
+        .authorWindow {
+            width: 210px;
+        }
+
+        .authorWindowWrapper {
+            bottom: -170px;
+            margin-bottom: 20px;
+        }
+
+        footer p {
+            font-size: 14px;
+        }
+    }
     </style>
     <style>
     .question {
@@ -748,7 +765,7 @@ footer p strong {
                             </ul>
                         </div>
                     </div>
-                    <div class="col-md-4" >
+                    <div class="col-md-4">
                         <div id="right">
                             <div class="media">
                                 <strong><i class="fa fa-phone fa-lg" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;+91 7569677236 / +91 883 2555699</strong><br>
@@ -781,7 +798,6 @@ footer p strong {
                             </li>
                             <li id="about"><a href="" style="">Deposits</a>
                                 <ul>
-                                    
                                     <li style="width: 300px;"><a href="Deposit/RecurringDeposit/index.html" target="_blank">Recurring Deposits</a></li>
                                     <li style="width: 300px;"><a href="Deposit/KuberaNidhiDeposit/index.html" target="_blank">Kubera Nidhi Deposit</a></li>
                                     <li style="width: 300px;"><a href="Deposit/SwarnaLakshadhikariDeposit/index.html" target="_blank">Swarna Lakshadhikari Deposit</a></li>
@@ -991,23 +1007,24 @@ footer p strong {
         </div>
         <div class="container">
             <div class="row" style="">
-                <div class="col-md-9" align="justify" style="padding: 0; "> <h1 style="font-size: 20px;"><strong style="">“Hearty Welcome to our CITO NIDHI LIMITED”</strong></h1>
+                <div class="col-md-9" align="justify" style="padding: 0; ">
+                    <h1 style="font-size: 20px;"><strong style="">“Hearty Welcome to our CITO NIDHI LIMITED”</strong></h1>
                     <br>
                     <p><strong style="color:black;">CITO NIDHI LIMITED</strong> is a trusted financial Organization which was promoted and established by the Core Banking
-Professionals with 25+ Years of Banking Experience across all verticals. It’s a Quasi Banking Mutual Benefit Company
-with Co-Operative Principles registered under Section 406 of the <strong>Companies</strong> Act, 2013 (Section 620A of the
-Companies Act, 1956) with RBI Nidhi rules. It’s duly approved by the Govt. of India, Ministry of Corporate Affairs (MCA).
-A Nidhi is wholly or partially regulated by the RBI, and is enabled to issue directions to them in matters identifying with
-their deposit acknowledgment activities and Lending activities. <br><br><b style="color:black;">CITO Nidhi</b> is established with a motive of promoting self
-sustenance and social empowerment of the poor and downtrodden families and holding the social responsibility of
-Financial Inclusion.
-Performing through Banking system, as a Nidhi We accept deposits from our members/shareholders to stimulate the
-mutual growth of our members through Trust and Responsibility within the stipulated norms issued by the RBI/Ministry of
-Corporate Affairs. The funds mobilized are utilized to a great extent for advancing of Gold Loans, Property Loans, Small
-Business Loans, SME Loans, Group Loans and Loans against approved Govt. Securities to its members. With the strong
-banking background &amp; experience of the promoters, we believe that success of business comes from creativity and team
-work with techno banking initiatives.
-Regulatory and <b style="color:black;">CIN</b> (corporate identification Number) of our CITO NIDHI Ltd., is <strong style="color:black;">U67100AP2019PLC111283</strong>.</p>
+                        Professionals with 25+ Years of Banking Experience across all verticals. It’s a Quasi Banking Mutual Benefit Company
+                        with Co-Operative Principles registered under Section 406 of the <strong>Companies</strong> Act, 2013 (Section 620A of the
+                        Companies Act, 1956) with RBI Nidhi rules. It’s duly approved by the Govt. of India, Ministry of Corporate Affairs (MCA).
+                        A Nidhi is wholly or partially regulated by the RBI, and is enabled to issue directions to them in matters identifying with
+                        their deposit acknowledgment activities and Lending activities. <br><br><b style="color:black;">CITO Nidhi</b> is established with a motive of promoting self
+                        sustenance and social empowerment of the poor and downtrodden families and holding the social responsibility of
+                        Financial Inclusion.
+                        Performing through Banking system, as a Nidhi We accept deposits from our members/shareholders to stimulate the
+                        mutual growth of our members through Trust and Responsibility within the stipulated norms issued by the RBI/Ministry of
+                        Corporate Affairs. The funds mobilized are utilized to a great extent for advancing of Gold Loans, Property Loans, Small
+                        Business Loans, SME Loans, Group Loans and Loans against approved Govt. Securities to its members. With the strong
+                        banking background &amp; experience of the promoters, we believe that success of business comes from creativity and team
+                        work with techno banking initiatives.
+                        Regulatory and <b style="color:black;">CIN</b> (corporate identification Number) of our CITO NIDHI Ltd., is <strong style="color:black;">U67100AP2019PLC111283</strong>.</p>
                     <hr>
                     <h1 style="font-size: 20px;">Our Banking <strong style="">Products</strong> and <strong style="">Services</strong></h1>
                     <br>
@@ -1037,7 +1054,7 @@ Regulatory and <b style="color:black;">CIN</b> (corporate identification Number)
                                             <td> </td>
                                         </tr>
                                         <tr>
-                                            <td valign="top" style=""><img src="images/news.png"  alt="" class="image"></td>
+                                            <td valign="top" style=""><img src="images/news.png" alt="" class="image"></td>
                                             <td style="">Re-launching our CITO Nidhi’s Classic Recurring Deposit Product “Swarna Lakshadhikari-2.O” with 1 Lakh maturity value and 2GMS gold coin as member bonus. Refer scheme details..</td>
                                         </tr>
                                         <tr>
@@ -1046,7 +1063,7 @@ Regulatory and <b style="color:black;">CIN</b> (corporate identification Number)
                                         </tr>
                                         <tr>
                                             <td valign="top"><img src="images/news.png" alt="" class="image"></td>
-                                            <td>COVID-19 RBI Circular Ref No: RBI/2019-20/186/DOR No.BP.BC.47/21.04.048/2019-20, dated March 27, 2020, on EMI moratorium, we are extending the EMI moratorium facility to all the eligible borrowers including  Group Loans. Please contact branch for further details.</td>
+                                            <td>COVID-19 RBI Circular Ref No: RBI/2019-20/186/DOR No.BP.BC.47/21.04.048/2019-20, dated March 27, 2020, on EMI moratorium, we are extending the EMI moratorium facility to all the eligible borrowers including Group Loans. Please contact branch for further details.</td>
                                         </tr>
                                     </tbody>
                                 </table>
