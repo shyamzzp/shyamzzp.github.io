@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <!-- This file has been downloaded from Bootsnipp.com. Enjoy! -->
+    <title>Image Gallery using bootstrap 4 - Bootsnipp.com</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="http://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
+    <style type="text/css">
+    body {
+        background-color: #1d1d1d !important;
+        font-family: "Asap", sans-serif;
+        color: #989898;
+        margin: 10px;
+        font-size: 16px;
+    }
+
+    #demo {
+        height: 100%;
+        position: relative;
+        overflow: hidden;
+    }
+
+
+    .green {
+        background-color: #6fb936;
+    }
+
+    .thumb {
+        margin-bottom: 30px;
+    }
+
+    .page-top {
+        margin-top: 85px;
+    }
+
+
+    img.zoom {
+        width: 100%;
+        height: 200px;
+        border-radius: 5px;
+        object-fit: cover;
+        -webkit-transition: all .3s ease-in-out;
+        -moz-transition: all .3s ease-in-out;
+        -o-transition: all .3s ease-in-out;
+        -ms-transition: all .3s ease-in-out;
+    }
+
+
+    .transition {
+        -webkit-transform: scale(1.2);
+        -moz-transform: scale(1.2);
+        -o-transform: scale(1.2);
+        transform: scale(1.2);
+    }
+
+    .modal-header {
+
+        border-bottom: none;
+    }
+
+    .modal-title {
+        color: #000;
+    }
+
+    .modal-footer {
+        display: none;
+    }
+    </style>
+    <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+</head>
+
+<body style="background-color: #fff !important;">
+    <div id="placeholderNav"></div>
+    <script>
+    $(function() {
+        $("#placeholderNav").load("nav.html");
+    });
+    </script>
+    <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.css" media="screen">
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.js"></script>
+    <!-- Page Content -->
+    <div class="container page-top">
+        <div class="row">
+            <div class="col-lg-3 col-md-4 col-xs-6 thumb">
+                <a href="gallery/Events/CSR_0025.jpg" class="fancybox" rel="ligthbox">
+                    <img src="gallery/Events/CSR_0025.jpg" class="zoom img-fluid " alt="">
+                </a>
+            </div>
+            <div class="col-lg-3 col-md-4 col-xs-6 thumb">
+                <a href="gallery/Events/CSR_0026.jpg" class="fancybox" rel="ligthbox">
+                    <img src="gallery/Events/CSR_0026.jpg" class="zoom img-fluid" alt="">
+                </a>
+            </div>
+            <div class="col-lg-3 col-md-4 col-xs-6 thumb">
+                <a href="gallery/Events/CSR_0027.jpg" class="fancybox" rel="ligthbox">
+                    <img src="gallery/Events/CSR_0027.jpg" class="zoom img-fluid " alt="">
+                </a>
+            </div>
+            <div class="col-lg-3 col-md-4 col-xs-6 thumb">
+                <a href="gallery/Events/CSR_0028.jpg" class="fancybox" rel="ligthbox">
+                    <img src="gallery/Events/CSR_0028.jpg" class="zoom img-fluid " alt="">
+                </a>
+            </div>
+            <div class="col-lg-3 col-md-4 col-xs-6 thumb">
+                <a href="gallery/Events/CSR_0029.jpg" class="fancybox" rel="ligthbox">
+                    <img src="gallery/Events/CSR_0029.jpg" class="zoom img-fluid " alt="">
+                </a>
+            </div>
+            <div class="col-lg-3 col-md-4 col-xs-6 thumb">
+                <a href="gallery/Events/CSR_0030.jpg" class="fancybox" rel="ligthbox">
+                    <img src="gallery/Events/CSR_0030.jpg" class="zoom img-fluid " alt="">
+                </a>
+            </div>
+            <div class="col-lg-3 col-md-4 col-xs-6 thumb">
+                <a href="gallery/Events/CSR_0031.jpeg" class="fancybox" rel="ligthbox">
+                    <img src="gallery/Events/CSR_0031.jpeg" class="zoom img-fluid " alt="">
+                </a>
+            </div>
+            <div class="col-lg-3 col-md-4 col-xs-6 thumb">
+                <a href="gallery/Events/CSR_0032.jpeg" class="fancybox" rel="ligthbox">
+                    <img src="gallery/Events/CSR_0032.jpeg" class="zoom img-fluid " alt="">
+                </a>
+            </div>
+            <div class="col-lg-3 col-md-4 col-xs-6 thumb">
+                <a href="gallery/Events/CSR_0033.jpeg" class="fancybox" rel="ligthbox">
+                    <img src="gallery/Events/CSR_0033.jpeg" class="zoom img-fluid " alt="">
+                </a>
+            </div><div class="col-lg-3 col-md-4 col-xs-6 thumb">
+                <a href="gallery/Events/CSR_0034.jpeg" class="fancybox" rel="ligthbox">
+                    <img src="gallery/Events/CSR_0034.jpeg" class="zoom img-fluid " alt="">
+                </a>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+    $(document).ready(function() {
+        $(".fancybox").fancybox({
+            openEffect: "none",
+            closeEffect: "none"
+        });
+
+        $(".zoom").hover(function() {
+
+            $(this).addClass('transition');
+        }, function() {
+
+            $(this).removeClass('transition');
+        });
+    });
+    </script>
+</body>
+
+</html>
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Events Gallery</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+    <style type="text/css">
+        .btn:focus, .btn:active, button:focus, button:active {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+#image-gallery .modal-footer{
+  display: block;
+}
+
+.thumb{
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
+    </style>
+    <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+
+</head>
+<body>
+  <div id="placeholderNav"></div>
+<script> 
+    $(function(){
+      $("#placeholderNav").load("nav.html"); 
+    });
+    </script> 
+<div class="container">
+  <div class="row">
+    <div class="row">
+            <div class="col-lg-3 col-md-4 col-xs-6 thumb">
+                <a class="thumbnail" href="#" data-image-id="" data-toggle="modal" data-title=""
+                   data-image="gallery/Events/CSR_0025.jpg"
+                   data-target="#image-gallery">
+                    <img class="img-thumbnail"
+                         src="gallery/Events/CSR_0025.jpg"
+                         alt="Another alt text">
+                </a>
+            </div>
+            <div class="col-lg-3 col-md-4 col-xs-6 thumb">
+                <a class="thumbnail" href="#" data-image-id="" data-toggle="modal" data-title=""
+                   data-image="gallery/Events/CSR_0026.jpg"
+                   data-target="#image-gallery">
+                    <img class="img-thumbnail"
+                         src="gallery/Events/CSR_0026.jpg"
+                         alt="Another alt text">
+                </a>
+            </div>
+
+            <div class="col-lg-3 col-md-4 col-xs-6 thumb">
+                <a class="thumbnail" href="#" data-image-id="" data-toggle="modal" data-title=""
+                   data-image="gallery/Events/CSR_0027.jpg"
+                   data-target="#image-gallery">
+                    <img class="img-thumbnail"
+                         src="gallery/Events/CSR_0027.jpg"
+                         alt="Another alt text">
+                </a>
+            </div>
+            <div class="col-lg-3 col-md-4 col-xs-6 thumb">
+                <a class="thumbnail" href="#" data-image-id="" data-toggle="modal" data-title="Test1"
+                   data-image="gallery/Events/CSR_0028.jpg"
+                   data-target="#image-gallery">
+                    <img class="img-thumbnail"
+                         src="gallery/Events/CSR_0028.jpg"
+                         alt="Another alt text">
+                </a>
+            </div>
+            <div class="col-lg-3 col-md-4 col-xs-6 thumb">
+                <a class="thumbnail" href="#" data-image-id="" data-toggle="modal" data-title="Im so nice"
+                   data-image="gallery/Events/CSR_0029.jpg"
+                   data-target="#image-gallery">
+                    <img class="img-thumbnail"
+                         src="gallery/Events/CSR_0029.jpg"
+                         alt="Another alt text">
+                </a>
+            </div>
+
+
+
+            <div class="col-lg-3 col-md-4 col-xs-6 thumb">
+                <a class="thumbnail" href="#" data-image-id="" data-toggle="modal" data-title="Im so nice"
+                   data-image="gallery/Events/CSR_0030.jpg"
+                   data-target="#image-gallery">
+                    <img class="img-thumbnail"
+                         src="gallery/Events/CSR_0030.jpg"
+                         alt="Another alt text">
+                </a>
+            </div>
+            <div class="col-lg-3 col-md-4 col-xs-6 thumb">
+                <a class="thumbnail" href="#" data-image-id="" data-toggle="modal" data-title="Im so nice"
+                   data-image="gallery/Events/CSR_0031.jpeg"
+                   data-target="#image-gallery">
+                    <img class="img-thumbnail"
+                         src="gallery/Events/CSR_0031.jpeg"
+                         alt="Another alt text">
+                </a>
+            </div>
+            <div class="col-lg-3 col-md-4 col-xs-6 thumb">
+                <a class="thumbnail" href="#" data-image-id="" data-toggle="modal" data-title="Im so nice"
+                   data-image="gallery/Events/CSR_0032.jpeg"
+                   data-target="#image-gallery">
+                    <img class="img-thumbnail"
+                         src="gallery/Events/CSR_0032.jpeg"
+                         alt="Another alt text">
+                </a>
+            </div>
+
+
+
+            <div class="col-lg-3 col-md-4 col-xs-6 thumb">
+                <a class="thumbnail" href="#" data-image-id="" data-toggle="modal" data-title="Im so nice"
+                   data-image="gallery/Events/CSR_0033.jpeg"
+                   data-target="#image-gallery">
+                    <img class="img-thumbnail"
+                         src="gallery/Events/CSR_0033.jpeg"
+                         alt="Another alt text">
+                </a>
+            </div>
+            <div class="col-lg-3 col-md-4 col-xs-6 thumb">
+                <a class="thumbnail" href="#" data-image-id="" data-toggle="modal" data-title="Im so nice"
+                   data-image="gallery/Events/CSR_0034.jpeg"
+                   data-target="#image-gallery">
+                    <img class="img-thumbnail"
+                         src="gallery/Events/CSR_0034.jpeg"
+                         alt="Another alt text">
+                </a>
+            </div>
+        </div>
+
+
+        <div class="modal fade" id="image-gallery" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="image-gallery-title"></h4>
+                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <img id="image-gallery-image" class="img-responsive col-md-12" src="">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary float-left" id="show-previous-image"><i class="fa fa-arrow-left"></i>
+                        </button>
+
+                        <button type="button" id="show-next-image" class="btn btn-secondary float-right"><i class="fa fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+  </div>
+</div>
+<script type="text/javascript">
+let modalId = $('#image-gallery');
+
+$(document)
+  .ready(function () {
+
+    loadGallery(true, 'a.thumbnail');
+
+    //This function disables buttons when needed
+    function disableButtons(counter_max, counter_current) {
+      $('#show-previous-image, #show-next-image')
+        .show();
+      if (counter_max === counter_current) {
+        $('#show-next-image')
+          .hide();
+      } else if (counter_current === 1) {
+        $('#show-previous-image')
+          .hide();
+      }
+    }
+
+    /**
+     *
+     * @param setIDs        Sets IDs when DOM is loaded. If using a PHP counter, set to false.
+     * @param setClickAttr  Sets the attribute for the click handler.
+     */
+
+    function loadGallery(setIDs, setClickAttr) {
+      let current_image,
+        selector,
+        counter = 0;
+
+      $('#show-next-image, #show-previous-image')
+        .click(function () {
+          if ($(this)
+            .attr('id') === 'show-previous-image') {
+            current_image--;
+          } else {
+            current_image++;
+          }
+
+          selector = $('[data-image-id="' + current_image + '"]');
+          updateGallery(selector);
+        });
+
+      function updateGallery(selector) {
+        let $sel = selector;
+        current_image = $sel.data('image-id');
+        $('#image-gallery-title')
+          .text($sel.data('title'));
+        $('#image-gallery-image')
+          .attr('src', $sel.data('image'));
+        disableButtons(counter, $sel.data('image-id'));
+      }
+
+      if (setIDs == true) {
+        $('[data-image-id]')
+          .each(function () {
+            counter++;
+            $(this)
+              .attr('data-image-id', counter);
+          });
+      }
+      $(setClickAttr)
+        .on('click', function () {
+          updateGallery($(this));
+        });
+    }
+  });
+
+// build key actions
+$(document)
+  .keydown(function (e) {
+    switch (e.which) {
+      case 37: // left
+        if ((modalId.data('bs.modal') || {})._isShown && $('#show-previous-image').is(":visible")) {
+          $('#show-previous-image')
+            .click();
+        }
+        break;
+
+      case 39: // right
+        if ((modalId.data('bs.modal') || {})._isShown && $('#show-next-image').is(":visible")) {
+          $('#show-next-image')
+            .click();
+        }
+        break;
+
+      default:
+        return; // exit this handler for other keys
+    }
+    e.preventDefault(); // prevent the default action (scroll / move caret)
+  });
+
+</script>
+</body>
+</html> -->
