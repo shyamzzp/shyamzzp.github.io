@@ -122,7 +122,7 @@ nav ul li {
     border-right: #f5821f 1px solid;
     height: 50px;
     position: relative;
-    /*background:url(../images/menu-line.jpg) right no-repeat;*/
+    /*background:url(/images/menu-line.jpg) right no-repeat;*/
 }
 
 nav ul li:last-child {
@@ -413,7 +413,7 @@ hr {
 
 .secation {
     background:
-        /*savepage-url=../images/bg-img2.jpg*/
+        /*savepage-url=/images/bg-img2.jpg*/
         var(--savepage-url-26) top no-repeat;
     background-size: cover;
 }
@@ -494,7 +494,7 @@ ol li {
 #footer-wrapper ul li {
     color: #422f01;
     background:
-        /*savepage-url=../images/icon.png*/
+        /*savepage-url=/images/icon.png*/
         var(--savepage-url-15) left no-repeat;
     line-height: 20px;
     padding-left: 20px;
