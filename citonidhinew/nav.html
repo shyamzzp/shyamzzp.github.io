@@ -1,14 +1,14 @@
 ﻿<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 
-<head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<head><meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title></title>
-    <link rel="stylesheet" type="text/css" href="css/style.css">
-    <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
-    <link rel="stylesheet" type="text/css" href="css/fontawesome.css">
-    <link rel="stylesheet" type="text/css" href="css/slicknav.css">
-    <link rel="stylesheet" type="text/css" href="css/responsiveslides.css">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="stylesheet" type="text/css" href="bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="fontawesome.css">
+    <link rel="stylesheet" type="text/css" href="slicknav.css">
+    <link rel="stylesheet" type="text/css" href="responsiveslides.css">
+    <link rel="stylesheet" type="text/css" href="main.css">
     <script data-savepage-src="js/jquery-1.12.4.min.js"></script>
     <script data-savepage-src="js/jquery.slicknav.min.js"></script>
     <script data-savepage-src="js/responsiveslides.min.js" type="text/javascript"></script>
@@ -24,266 +24,6 @@
     <script data-savepage-src="js/jcarousellite_1.0.1c4.js" type="text/javascript"></script>
     <script type="text/javascript"></script>
     <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=PT+Sans+Narrow">
-    <style type="text/css">
-    @import url(https://fonts.googleapis.com/css?family=PT+Sans+Narrow);
-
-    body {
-        font-family: Open Sans, "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif;
-        font-size: 13px;
-        color: #666;
-        position: relative;
-        -webkit-font-smoothing: antialiased;
-        margin: 0;
-    }
-
-    * {
-        -webkit-box-sizing: border-box;
-        -moz-box-sizing: border-box;
-        box-sizing: border-box;
-    }
-
-    body,
-    div,
-    dl,
-    dt,
-    dd,
-    ul,
-    ol,
-    li,
-    h1,
-    h2,
-    h3,
-    h4,
-    h5,
-    h6,
-    pre,
-    form,
-    p,
-    blockquote,
-    th,
-    td {
-        margin: 0;
-        padding: 0;
-        font-size: 13px;
-        direction: ltr;
-    }
-
-    .sectionClass {
-        padding: 20px 0px 50px 0px;
-        position: relative;
-        display: block;
-    }
-
-    .fullWidth {
-        width: 100% !important;
-        display: table;
-        float: none;
-        padding: 0;
-        min-height: 1px;
-        height: 100%;
-        position: relative;
-    }
-
-
-    .sectiontitle {
-        background-position: center;
-        margin: 30px 0 0px;
-        text-align: center;
-        min-height: 20px;
-    }
-
-    .sectiontitle h2 {
-        font-size: 30px;
-        color: #222;
-        margin-bottom: 0px;
-        padding-right: 10px;
-        padding-left: 10px;
-    }
-
-
-    .headerLine {
-        width: 160px;
-        height: 2px;
-        display: inline-block;
-        background: #101F2E;
-    }
-
-
-    .projectFactsWrap {
-        display: flex;
-        margin-top: 30px;
-        flex-direction: row;
-        flex-wrap: wrap;
-    }
-
-
-    #projectFacts .fullWidth {
-        padding: 0;
-    }
-
-    .projectFactsWrap .item {
-        width: 25%;
-        height: 100%;
-        padding: 50px 0px;
-        text-align: center;
-    }
-
-    .projectFactsWrap .item:nth-child(1) {
-        background: rgb(16, 31, 46);
-    }
-
-    .projectFactsWrap .item:nth-child(2) {
-        background: rgb(18, 34, 51);
-    }
-
-    .projectFactsWrap .item:nth-child(3) {
-        background: rgb(21, 38, 56);
-    }
-
-    .projectFactsWrap .item:nth-child(4) {
-        background: rgb(23, 44, 66);
-    }
-
-    .projectFactsWrap .item p.number {
-        font-size: 40px;
-        padding: 0;
-        font-weight: bold;
-    }
-
-    .projectFactsWrap .item p {
-        color: rgba(255, 255, 255, 0.8);
-        font-size: 18px;
-        margin: 0;
-        padding: 10px;
-        font-family: 'Open Sans';
-    }
-
-
-    .projectFactsWrap .item span {
-        width: 60px;
-        background: rgba(255, 255, 255, 0.8);
-        height: 2px;
-        display: block;
-        margin: 0 auto;
-    }
-
-
-    .projectFactsWrap .item i {
-        vertical-align: middle;
-        font-size: 50px;
-        color: rgba(255, 255, 255, 0.8);
-    }
-
-
-    .projectFactsWrap .item:hover i,
-    .projectFactsWrap .item:hover p {
-        color: white;
-    }
-
-    .projectFactsWrap .item:hover span {
-        background: white;
-    }
-
-    @media (max-width: 786px) {
-        .projectFactsWrap .item {
-            flex: 0 0 50%;
-        }
-    }
-
-    /* AUTHOR LINK */
-
-
-    footer {
-        z-index: 100;
-        padding-top: 50px;
-        padding-bottom: 50px;
-        width: 100%;
-        bottom: 0;
-        left: 0;
-    }
-
-    footer p {
-        color: rgba(255, 255, 255, 0.8);
-        font-size: 16px;
-        opacity: 0;
-        font-family: 'Open Sans';
-        width: 100%;
-        word-wrap: break-word;
-        line-height: 25px;
-        -webkit-transform: translateX(-200px);
-        transform: translateX(-200px);
-        margin: 0;
-        -webkit-transition: all 250ms ease;
-        -moz-transition: all 250ms ease;
-        transition: all 250ms ease;
-    }
-
-    footer .authorWindow a {
-        color: white;
-        text-decoration: none;
-    }
-
-    footer p strong {
-        color: rgba(255, 255, 255, 0.9);
-    }
-
-    .about-me-img {
-        width: 120px;
-        height: 120px;
-        left: 10px;
-        /* bottom: 30px; */
-        position: relative;
-        border-radius: 100px;
-    }
-
-
-    .about-me-img img {}
-
-
-    .authorWindow {
-        width: 600px;
-        background: #75439a;
-        padding: 22px 20px 22px 20px;
-        border-radius: 5px;
-        overflow: hidden;
-    }
-
-    .authorWindowWrapper {
-        display: none;
-        left: 110px;
-        top: 0;
-        padding-left: 25px;
-        position: absolute;
-    }
-
-
-
-
-
-    .trans {
-        opacity: 1;
-        -webkit-transform: translateX(0px);
-        transform: translateX(0px);
-        -webkit-transition: all 500ms ease;
-        -moz-transition: all 500ms ease;
-        transition: all 500ms ease;
-    }
-
-    @media screen and (max-width: 768px) {
-        .authorWindow {
-            width: 210px;
-        }
-
-        .authorWindowWrapper {
-            bottom: -170px;
-            margin-bottom: 20px;
-        }
-
-        footer p {
-            font-size: 14px;
-        }
-    }
-    </style>
     <style>
     .question {
         display: none;
@@ -723,11 +463,16 @@
         }
     }
     </script>
+    <style type="text/css">
+        .wrapper-header{
+            background-color: #c9a2e2;
+        }
+    </style>
+
 </head>
 
 <body>
-    <form name="form1" method="post" action="./" id="form1" style="">
-    	<div id="menu" style=" background-color: #000; ">
+    <div id="menu" style=" background-color: #000; ">
             <div class="container">
                 <div class="row" style="">
                     <nav>
@@ -740,7 +485,9 @@
                 </div>
             </div>
         </div>
-        <div id="wrapper-header">
+    <form name="form1" method="post" action="./" id="form1" style="">
+    	
+        <div id="wrapper-header" style="background-color: #c9a2e2;">
             <div class="container">
                 <div class="row">
                     <div class="col-md-4" style="padding-left: 0; ">
@@ -768,105 +515,110 @@
                 </div>
             </div>
         </div>
-        <!-- Header END -->
         <div class="clr"></div>
-        <!-- MENU State -->
-        <!-- Shyam -->
         <div id="menu">
             <div class="container">
                 <div class="row" style="">
                     <nav>
                         <ul class="mainmenu">
                             <li id="home"><a href="index.html" class="active" style="">Home</a></li>
-                            <!-- <li id="home"><a href="./" class="active" style="">Home</a></li> -->
                             <li><a href="#" style="#">About Us</a>
                                 <ul>
-                                    <b><li style="width: 300px;"><a href="AboutUs.html#companymaintitle">Company</a></li></b>
-                                    <b><li style="width: 300px;"><a href="AboutUs.html#boardofdirectors">Board & Management Team</a></li></b>
-                                    <b><li style="width: 300px;"><a href="AboutUs.html#advisoryteamcontent">Advisory Team</a></li></b>
-                                    <b><li style="width: 300px;"><a href="AboutUs.html#missionandcommitment">Mission & Commitment</a></li></b>
-                                    <b><li style="width: 300px;"><a href="AboutUs.html#csrinitiativecompany">CSR Initiative</a></li></b>
+                                    <li style="width: 300px;"><a href="AboutUs.html#companymaintitle">Company</a></li>
+                                    <li style="width: 300px;"><a href="AboutUs.html#boardofdirectors">Board & Management Team</a></li>
+                                    <li style="width: 300px;"><a href="AboutUs.html#advisoryteamcontent">Advisory Team</a></li>
+                                    <li style="width: 300px;"><a href="AboutUs.html#missionandcommitment">Mission & Commitment</a></li>
+                                    <li style="width: 300px;"><a href="AboutUs.html#csrinitiativecompany">CSR Initiative</a></li>
                                 </ul>
                             </li>
-                            <b><li id="about"><a href="#" style="">Deposits</a></li>
+                            <li><a href="#" style="#">About Us</a>
                                 <ul>
-                                    <b><li style="width: 300px;"><a href="RecurringDeposit.html">Recurring Deposits</a></li></b>
-                                    <b><li style="width: 300px;"><a href="KuberaNidhiDeposit.html">Kubera Nidhi Deposit</a></li></b>
-                                    <b><li style="width: 300px;"><a href="SwarnaLakshadhikariDeposit.html">Swarna Lakshadhikari Deposit</a></li></b>
-                                    <b><li style="width: 300px;"><a href="FixedDeposit.html">Fixed Deposit</a></li></b>
-                                    <b><li style="width: 300px;"><a href="MISDeposit.html">MIS Deposit</a></li></b>
-                                    <b><li style="width: 300px;"><a href="CumulativeDeposit.html">Cumulative Deposit</a></li></b>
-                                    <b><li style="width: 300px;"><a href="DoubleDepositBond.html">Double Deposit Bond</a></li></b>
-                                    <b><li style="width: 300px;"><a href="CITO-400DaysDeposit.html">CITO-400 Days Deposit*</a></li></b>
-                                    <b><li style="width: 300px;"><a href="#">Special Deposits*</a></li></b>
+                                    <li style="width: 300px;"><a href="AboutUs.html#companymaintitle">Company</a></li>
+                                    <li style="width: 300px;"><a href="AboutUs.html#boardofdirectors">Board & Management Team</a></li>
+                                    <li style="width: 300px;"><a href="AboutUs.html#advisoryteamcontent">Advisory Team</a></li>
+                                    <li style="width: 300px;"><a href="AboutUs.html#missionandcommitment">Mission & Commitment</a></li>
+                                    <li style="width: 300px;"><a href="AboutUs.html#csrinitiativecompany">CSR Initiative</a></li>
                                 </ul>
                             </li>
-                            <b><li><a href="#" style="">Loans</a></li>
+                            <li ><a href="#" style="">Deposits</a>
                                 <ul>
-                                    <b><li style="width: 300px;"><a href="GoldLoan.html">Gold Loans</a></li></b>
-                                    <b><li style="width: 300px;"><a href="HousingLoan.html">Housing Loans</a></li></b>
-                                    <b><li style="width: 300px;"><a href="MortgageLoan.html">Mortgage Loans</a></li></b>
-                                    <b><li style="width: 300px;"><a href="GovtBondFDLoan.html">Govt. Bond Loans</a></li></b>
-                                    <b><li style="width: 300px;"><a href="BusinessLoan.html">Business Loans</a></li></b>
-                                    <b><li style="width: 300px;"><a href="DDBL.html">DDBL</a></li></b>
-                                    <b><li style="width: 300px;"><a href="ConsumerLoan.html">Consumer Loans</a></li></b>
-                                    <b><li style="width: 300px;"><a href="JointLiablityGroupLoan.html">Joint Liability Group Loans</a></li></b>
-                                    <b><li style="width: 300px;"><a href="VehicleLoan.html">Vehicle Loans</a></li></b>
+                                    <li style="width: 300px;"><a href="RecurringDeposit.html">Recurring Deposits</a></li>
+                                    <li style="width: 300px;"><a href="KuberaNidhiDeposit.html">Kubera Nidhi Deposit</a></li>
+                                    <li style="width: 300px;"><a href="SwarnaLakshadhikariDeposit.html">Swarna Lakshadhikari Deposit</a></li>
+                                    <li style="width: 300px;"><a href="FixedDeposit.html">Fixed Deposit</a></li>
+                                    <li style="width: 300px;"><a href="MISDeposit.html">MIS Deposit</a></li>
+                                    <li style="width: 300px;"><a href="CumulativeDeposit.html">Cumulative Deposit</a></li>
+                                    <li style="width: 300px;"><a href="DoubleDepositBond.html">Double Deposit Bond</a></li>
+                                    <li style="width: 300px;"><a href="CITO-400DaysDeposit.html">CITO-400 Days Deposit*</a></li>
+                                    <li style="width: 300px;"><a href="#">Special Deposits*</a></li>
                                 </ul>
                             </li>
-                            <b><li><a href="Services.html" style="">Services</a></li>
+                            <li><a href="#" style="">Loans</a>
                                 <ul>
-                                    <b><li><a href="Services.html">RTGS/NEFT/IMPS/UPI</a></li></b>
-                                    <b><li><a href="Services.html">Online Banking</a></li></b>
-                                    <b><li><a href="Services.html">Mobile Banking</a></li></b>
-                                    <b><li><a href="Services.html">Micro ATM</a></li></b>
-                                    <b><li><a href="Services.html">Debit Cards</a></li></b>
-                                    <b><li><a href="Services.html">Life Insurance</a></li></b>
-                                    <b><li><a href="Services.html">Health Insurance</a></li></b>
-                                    <b><li><a href="Services.html">Vehicle Insurance</a></li></b>
-                                    <b><li><a href="Services.html">Mutual Funds</a></li></b>
+                                    <li style="width: 300px;"><a href="GoldLoan.html">Gold Loans</a></li>
+                                    <li style="width: 300px;"><a href="HousingLoan.html">Housing Loans</a></li>
+                                    <li style="width: 300px;"><a href="MortgageLoan.html">Mortgage Loans</a></li>
+                                    <li style="width: 300px;"><a href="GovtBondFDLoan.html">Govt. Bond Loans</a></li>
+                                    <li style="width: 300px;"><a href="BusinessLoan.html">Business Loans</a></li>
+                                    <li style="width: 300px;"><a href="DDBL.html">DDBL</a></li>
+                                    <li style="width: 300px;"><a href="ConsumerLoan.html">Consumer Loans</a></li>
+                                    <li style="width: 300px;"><a href="JointLiablityGroupLoan.html">Joint Liability Group Loans</a></li>
+                                    <li style="width: 300px;"><a href="VehicleLoan.html">Vehicle Loans</a></li>
                                 </ul>
                             </li>
-                            <b><li id="legal"><a href="" style="">Accounts</a></li>
+                            <li><a href="Services.html" style="">Services</a>
                                 <ul>
-                                    <b><li style="width: 300px;"><a href="SavingsAccount.html">Savings Accounts</a></li></b>
-                                    <b><li style="width: 300px;"><a href="SpecialSavingsAccount.html">Special Savings Account</a></li></b>
-                                    <b><li style="width: 300px;"><a href="VyaparSuvidhaAccount.html">Vyapar Suvidha Account</a></li></b>
-                                    <b><li style="width: 300px;"><a href="DailyDepositAccount.html">Daily Deposit Account</a></li></b>
+                                    <li><a href="Services.html">RTGS/NEFT/IMPS/UPI</a></li>
+                                    <li><a href="Services.html">Online Banking</a></li>
+                                    <li><a href="Services.html">Mobile Banking</a></li>
+                                    <li><a href="Services.html">Micro ATM</a></li>
+                                    <li><a href="Services.html">Debit Cards</a></li>
+                                    <li><a href="Services.html">Life Insurance</a></li>
+                                    <li><a href="Services.html">Health Insurance</a></li>
+                                    <li><a href="Services.html">Vehicle Insurance</a></li>
+                                    <li><a href="Services.html">Mutual Funds</a></li>
                                 </ul>
                             </li>
-                            <b><li id="career"><a href="" style="" disabled="false">Legal</a></li>
+                            <li id="legal"><a href="" style="">Accounts</a>
                                 <ul>
-                                    <b><li><a href="legal.html#registration" disabled="false">Registration</a></li></b>
-                                    <b><li><a href="legal.html#disclosurenorms" disabled="false">Disclosure Norms</a></li></b>
-                                    <b><li><a href="legal.html#regulatory" disabled="false">Regulatory</a></li></b>
-                                    <b><li><a href="legal.html#shareholdercharter" disabled="false">Share Holders' Charter</a></li></b>
-                                    <b><li><a href="legal.html#noticeshareholdercharter" disabled="false">Notices to Share Holders</a></li></b>
-                                    <b><li><a href="legal.html#" disabled="false">Financials</a></li></b>
+                                    <li style="width: 300px;"><a href="SavingsAccount.html">Savings Accounts</a></li>
+                                    <li style="width: 300px;"><a href="SpecialSavingsAccount.html">Special Savings Account</a></li>
+                                    <li style="width: 300px;"><a href="VyaparSuvidhaAccount.html">Vyapar Suvidha Account</a></li>
+                                    <li style="width: 300px;"><a href="DailyDepositAccount.html">Daily Deposit Account</a></li>
                                 </ul>
                             </li>
-                            <b><li id="contact"><a href="" style="">Careers</a></li>
+                            <li id="career"><a href="" style="" disabled="false">Legal</a>
                                 <ul>
-                                    <b><li><a href="careers.html">Current Openings</a></li></b>
+                                    <li><a href="legal.html#registration" disabled="false">Registration</a></li>
+                                    <li><a href="legal.html#disclosurenorms" disabled="false">Disclosure Norms</a></li>
+                                    <li><a href="legal.html#regulatory" disabled="false">Regulatory</a></li>
+                                    <li><a href="legal.html#shareholdercharter" disabled="false">Share Holders' Charter</a></li>
+                                    <li><a href="legal.html#noticeshareholdercharter" disabled="false">Notices to Share Holders</a></li>
+                                    <li><a href="legal.html#" disabled="false">Financials</a></li>
                                 </ul>
                             </li>
-                            <b><li id="faq"><a href="" style="">Login</a></li>
+                            <li id="contact"><a href="" style="">Careers</a>
                                 <ul>
-                                    <b><li><a href="internetbanking.html">Internet Banking</a></li></b>
-                                    <b><li><a href="employeelogin.html">Employee Login</a></li></b>
+                                    <li><a href="careers.html">Current Openings</a></li>
                                 </ul>
                             </li>
-                            <b><li id="faq"><a href="" style="">Gallery</a></li>
+                            <li id="faq"><a href="" style="">Login</a>
                                 <ul>
-                                    <b><li><a href="galleryinauguration.html">Inauguration</a></li></b>
-                                    <b><li><a href="galleryevents.html">CSR Events</a></li></b>
+                                    <li><a href="internetbanking.html">Internet Banking</a></li>
+                                    <li><a href="employeelogin.html">Employee Login</a></li>
                                 </ul>
                             </li>
-                            <b><li id="faq"><a href="contact-us.html" style="">Contact Us</a></li>
+                            <li id="faq"><a href="" style="">Gallery</a>
                                 <ul>
-                                    <b><li><a href="contact-us.html">Regd Office</a></li></b>
-                                    <b><li><a href="contact-us.html">M S O</a></li></b>
-                                    <b><li><a href="contact-us.html">Apply For</a></li></b>
+                                    <li><a href="galleryinauguration.html">Inauguration</a></li>
+                                    <li><a href="galleryevents.html">CSR Events</a></li>
+                                </ul>
+                            </li>
+                            <li id="faq"><a href="contact-us.html" style="">Contact Us</a>
+                                <ul>
+                                    <li><a href="contact-us.html">Regd Office</a></li>
+                                    <li><a href="contact-us.html">M S O</a></li>
+                                    <li><a href="contact-us.html">Apply For</a></li>
                                 </ul>
                             </li>
                         </ul>
