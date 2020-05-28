@@ -9440,10 +9440,22 @@
         margin: -4px 0 0 -10px;
     }
     </style>
+    <style type="text/css">
+        @media (min-width: 768px) {
+        .page-content {
+            padding-top: 180px !important;
+            padding-bottom: 30px;
+        }
+    }
+    </style>
 </head>
 
 <body>
-    <div id="placeholderNav"></div>
+    <div id="placeholderNav" style="
+    position: fixed;
+    z-index: 10;
+    width: 100%;
+"></div>
 <script> 
     $(function(){
       $("#placeholderNav").load("nav.html"); 

@@ -12512,20 +12512,29 @@
         margin: -4px 0 0 -10px;
     }
     </style>
+
 </head>
 
 <body id="body" style="padding-top: 0;">
-    <div id="placeholderNav"></div>
+    <div id="placeholderNav" style="
+    position: fixed;
+    z-index: 10;
+    width: 100%;
+"></div>
 <script> 
     $(function(){
       $("#placeholderNav").load("nav.html"); 
     });
     </script> 
-    <div id="placeholderNav"></div>
+    <div id="placeholderNav" style="
+    position: fixed;
+    z-index: 10;
+    width: 100%;
+"></div>
     <div id="loader-overflow" style="display: none;">
         <div id="loader3" class="loader-cont" style="display: none;"></div>
     </div>
-    <section class="page-content plain-contents" id="companymaintitle">
+    <section class="page-content plain-contents" id="companymaintitle" style="padding-top: 180px !important;">
         <div class="container">
             <div class="breadcrumbs animated fadeIn delay-2s"> <a class="active" href="/about-us/" about="" us="" disabled="false">About Us</a> → <span>Bank Building</span> </div>
             <!--Page Title-->

@@ -1037,7 +1037,11 @@
 </head>
 
 <body id="body" class="mm_desktop mm_no_touch" style="font-size: 14px;" contenteditable="false" spellcheck="true">
-   <div id="placeholderNav"></div>
+   <div id="placeholderNav" style="
+    position: fixed;
+    z-index: 100;
+    width: 100%;
+"></div>
 <script> 
     $(function(){
       $("#placeholderNav").load("nav.html"); 
@@ -1046,7 +1050,7 @@
     <div id="loader-overflow" style="display: none;">
         <div id="loader3" class="loader-cont" style="display: none;"></div>
     </div>
-    <section class="overview-tabs">
+    <section class="overview-tabs" style="padding-top: 180px !important;">
         <div data-accordian-tabs="tab" class="mat-hash-check" id="sampleID" mat-change="false" mat-init="false" mat-responsive="991">
             <div mat-none="">
                 <div> <a href="#Cards" data-mat="" disabled="false"> <img src="https://image.flaticon.com/icons/svg/2747/2747574.svg" alt="Cards">RTGS/NEFT/IMPS/UPI</a>

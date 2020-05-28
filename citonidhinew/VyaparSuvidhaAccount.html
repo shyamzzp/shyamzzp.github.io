@@ -12517,7 +12517,11 @@
 </head>
 
 <body id="body" class="mm_desktop mm_no_touch" style="font-size: 14px;" contenteditable="false" spellcheck="true">
-    <div id="placeholderNav"></div>
+    <div id="placeholderNav" style="
+    position: fixed;
+    z-index: 10;
+    width: 100%;
+"></div>
     <script>
         $(function(){
       $("#placeholderNav").load("nav.html"); 
@@ -12526,7 +12530,7 @@
     <div id="loader-overflow" style="display: none;">
         <div id="loader3" class="loader-cont" style="display: none;"></div>
     </div>
-    <section class="page-content">
+    <section class="page-content" style="padding-top: 180px !important;">
         <div class="container">
             <div class="box">
                 <div class="breadcrumbs animated fadeIn delay-2s">→&nbsp;Vyapar Suvidha Account</div>

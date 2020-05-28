@@ -726,13 +726,17 @@
 </head>
 
 <body>
-    <div id="placeholderNav"></div>
+    <div id="placeholderNav" style="
+    position: fixed;
+    z-index: 10;
+    width: 100%;
+"></div>
 <script> 
     $(function(){
       $("#placeholderNav").load("nav.html"); 
     });
     </script> 
-    <div class="container" style="margin-top: 20px;">
+    <div class="container" style="padding-top: 180px !important;">
         <div class="row">
             <div class="col-sm-6">
                 <div class="well">
