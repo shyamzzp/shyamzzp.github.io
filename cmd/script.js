@@ -36,13 +36,19 @@ $(document).ready(function() {
     }
 
     function help() {
-        terminal.append("Available Commands -> ['clear', 'help', 'echo', 'fortune']\n");
+        terminal.append("Available Commands -> ['clear', 'help', 'echo', 'fortune', eval]\n");
         terminal[0].scroll(0, 2000)
     }
 
     function echo(args) {
         var str = args.join(" ");
         terminal.append(str + "\n");
+        terminal[0].scroll(0, 2000)
+    }
+
+    function eval(args) {
+        var str = args.join(" ");
+        terminal.append(eval(str) + "\n");
         terminal[0].scroll(0, 2000)
     }
 
@@ -81,7 +87,12 @@ $(document).ready(function() {
     }, {
         "name": "echo",
         "function": echo
-    }];
+    },
+    , {
+        "name": "eval",
+        "function": eval
+    }
+];
 
     function processCommand() {
         var isValid = false;
