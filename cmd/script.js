@@ -213,7 +213,7 @@ $(document).ready(function() {
     });
 
     // Set the window title
-    title.text("1. shyamzzp@mac: ~ (terminal)");
+    title.text("shyamzzp@mac: ~ (terminal)");
 
     // Get the date for our fake last-login
     var date = new Date().toString();
