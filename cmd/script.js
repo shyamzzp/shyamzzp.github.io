@@ -5,7 +5,7 @@
 */
 
 $(document).ready(function() {
-    "use strict";
+    // "use strict";
 
 
     //Using Shift Double tap to fire the help event.
@@ -46,8 +46,8 @@ $(document).ready(function() {
         terminal[0].scroll(0, 2000)
     }
 
-    function evalulate(args) {
-        var str = args.split(" ")[1];
+    function evaluate(args) {
+        var str = args.join(" ");
         terminal.append(eval(str) + "\n");
         terminal[0].scroll(0, 2000)
     }
@@ -88,9 +88,9 @@ $(document).ready(function() {
         "name": "echo",
         "function": echo
     },
-    , {
+    {
         "name": "eval",
-        "function": evalulate
+        "function": evaluate
     }
 ];
 
