@@ -36,7 +36,7 @@ $(document).ready(function() {
     }
 
     function help() {
-        terminal.append("Available Commands -> ['clear', 'help', 'echo', 'fortune', eval]\n");
+        terminal.append("Available Commands -> ['clear', 'help', 'echo', 'fortune', eval, price]\n");
         terminal[0].scroll(0, 2000)
     }
 
