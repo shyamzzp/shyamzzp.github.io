@@ -46,8 +46,8 @@ $(document).ready(function() {
         terminal[0].scroll(0, 2000)
     }
 
-    function eval(args) {
-        var str = args.join(" ");
+    function evalulate(args) {
+        var str = args.split(" ")[1];
         terminal.append(eval(str) + "\n");
         terminal[0].scroll(0, 2000)
     }
@@ -90,7 +90,7 @@ $(document).ready(function() {
     },
     , {
         "name": "eval",
-        "function": eval
+        "function": evalulate
     }
 ];
 
