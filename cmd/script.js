@@ -52,6 +52,7 @@ $(document).ready(function() {
         terminal[0].scroll(0, 2000)
     }
 
+    // https://metals-api.com/api/latest?access_key=83s3dy68779ovmr8zb1s6oxcgdgnc3jy9xsqo2c8003zy7906czwxzb56hr6&base=INR&symbols=XAU%2CXAG%2CXPD%2CXPT%2CXRH
     function fortune() {
         var xhr = new XMLHttpRequest();
         xhr.open('GET', 'https://cdn.rawgit.com/bmc/fortunes/master/fortunes', false);
@@ -61,6 +62,20 @@ $(document).ready(function() {
             var fortunes = xhr.responseText.split("%");
             var fortune = fortunes[getRandomInt(0, fortunes.length)].trim();
             terminal.append(fortune + "\n");
+            terminal[0].scroll(0, 2000)
+        }
+    }
+    function metalprice() {
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', 'https://metals-api.com/api/latest?access_key=83s3dy68779ovmr8zb1s6oxcgdgnc3jy9xsqo2c8003zy7906czwxzb56hr6&base=INR&symbols=XAU%2CXAG%2CXPD%2CXPT%2CXRH', false);
+        xhr.send(null);
+
+        if (xhr.status === 200) {
+            var fortunes = xhr.responseText.split("%");
+            var fortune = fortunes[getRandomInt(0, fortunes.length)].trim();
+            var str = "";
+            str = "Gold Price (Per Ounce): "+JSON.parse(fortune).rates.XAU + "INR"
+            terminal.append(str + "\n");
             terminal[0].scroll(0, 2000)
         }
     }
@@ -91,6 +106,10 @@ $(document).ready(function() {
     {
         "name": "eval",
         "function": evaluate
+    },
+    {
+        "name": "price",
+        "function": metalprice
     }
 ];
 
