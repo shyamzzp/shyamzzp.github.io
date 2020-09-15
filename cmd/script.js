@@ -36,7 +36,7 @@ $(document).ready(function() {
     }
 
     function help() {
-        terminal.append("Available Commands -> ['clear', 'help', 'echo', 'fortune', eval, price]\n");
+        terminal.append("Available Commands -> ['clear', 'help', 'echo', 'fortune', eval, price, contribution]\n");
         terminal[0].scroll(0, 2000)
     }
 
@@ -79,6 +79,21 @@ $(document).ready(function() {
             terminal[0].scroll(0, 2000)
         }
     }
+
+    function githubcontribution() {
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', 'https://0hrvuct456.execute-api.us-east-2.amazonaws.com/default/githubcalendar?username=shyamzzp', false);
+        xhr.send(null);
+
+        if (xhr.status === 200) {
+            var fortunes = xhr.responseText.split("%");
+            var fortune = fortunes[getRandomInt(0, fortunes.length)].trim();
+            var str = "";
+            str = "Response: "+JSON.parse(fortune)
+            terminal.append(str + "\n");
+            terminal[0].scroll(0, 2000)
+        }
+    }
     // END COMMANDS
 
     var title = $(".title");
@@ -110,6 +125,10 @@ $(document).ready(function() {
     {
         "name": "price",
         "function": metalprice
+    },
+    {
+        "name": "contribution",
+        "function": githubcontribution
     }
 ];
 
