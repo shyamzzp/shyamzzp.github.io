@@ -18695,9 +18695,9 @@ blockquote:after {
     overflow: hidden;
     width: 100vw;
     height: calc(100vh - 30px);
-    padding-right: 80px;
+    /* padding-right: 80px; */
     -webkit-transition: .55s ease-in-out;
-    transition: .55s ease-in-out
+    transition: .55s ease-in-out;
 }
 
 .admin-bar .art-app .art-app-wrapper .art-app-container .art-content {
@@ -18978,7 +18978,7 @@ blockquote:after {
     z-index: 99999;
     width: 100%;
     padding: 30px;
-    height: 235px;
+    height: 240px;
     background: linear-gradient(159deg, rgba(37, 37, 50, .98) 0%, rgba(35, 35, 45, .98) 100%);
     text-align: center;
     -webkit-box-shadow: 0 1px 4px 0 rgba(15, 15, 20, .1);
@@ -22806,7 +22806,7 @@ body.default--scrolling {
 }
 
 .default--scrolling .art-app .art-app-wrapper .art-app-container .art-content {
-    padding-left: 290px
+    padding-left: 290px;
 }
 
 .default--scrolling .art-app .art-app-wrapper .art-app-container .art-menu-bar.art-active {
