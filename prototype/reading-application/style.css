@@ -1,0 +1,797 @@
+@import url('https://fonts.googleapis.com/css2?family=Kumbh+Sans&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Rubik&display=swap');
+
+html {
+
+    box-sizing: border-box ;
+    --padding-left: 1.25em ;
+    --duration-header: .25s ;
+    --duration-product-item: .5s ;
+
+}
+
+html *,
+html *::before,
+html *::after {
+
+    box-sizing: inherit ;
+    scrollbar-width: none ;
+}
+
+@media (max-width: 26.875em) {
+    
+    html {
+
+        --none: none ;
+        --top-start: 4.99em ;
+        --top-end: 2.08em ;
+    }
+
+}
+
+body{
+    
+    margin: 0 ;
+    display: flex ;
+    user-select: none ;
+    align-items: center ;
+    justify-content: center ;
+    background-color: #dadfea ;
+    font-family: 'Kumbh Sans', sans-serif ;
+    -webkit-tap-highlight-color: transparent ;
+
+} 
+
+::-webkit-scrollbar{
+
+    width: 0 ;
+    height:  0 ;
+
+}
+
+.list {
+
+    margin: 0 ;
+    padding: 0 ;
+    list-style-type: none ;
+
+}
+
+.img {
+    
+    width: 100% ;
+    display: block ;
+    object-fit: cover ;
+    position: relative ;
+    
+}
+
+.img::after{
+
+    top: 0 ;
+    left: 0 ;
+    content: "" ;
+    width: 100% ;
+    height: 100% ;
+    position: absolute ;
+    background-color: white ;
+    
+}
+
+.flex {
+
+    display: flex ;
+    align-items: center ;
+    justify-content: space-between ;
+
+}
+
+button {
+
+    all: unset ;
+    font: inherit ;
+    cursor: pointer ;
+
+}
+
+.container {
+
+    width: 100% ;
+    height: 100% ;
+    display: flex ;
+    overflow: hidden ;
+    font-size: 6.4vw ;
+    position: relative ;
+    flex-direction: column ;
+    background-color: white ;
+    border-radius: var(--none, 1.3em ) ;
+    border: var(--none, 0.45em solid black) ;
+    
+}
+
+.container::before {
+
+    right: 0 ;
+    bottom: 0 ;
+    opacity: 0 ;
+    content: " " ;
+    position: absolute ;
+    pointer-events: none ;
+    transition: opacity .2s ;
+    height: calc(100% - 4.81em) ;
+    background-color: #f8f9fc ;
+    width: calc(100% - var(--padding-left)) ;
+
+}
+
+@media (min-width: 26.875em) {
+    
+    .container {
+        
+        font-size: 1em ;
+        width: 15.0375em ;
+        height: 31.84em ;
+        
+    }
+
+    .container::before {
+
+        height: 80.2% ;
+        
+
+    }
+
+}
+
+
+.container.active::before{
+
+    opacity: 1 ;
+    z-index: 100 ;
+    
+}
+
+.status-bar {
+
+    display: var(--none, flex) ;
+    padding: .3em .25em 0 .95em ;
+    justify-content: space-between ;
+    
+
+}
+
+.status-bar__clock {
+
+    font-size: .53em ;
+    font-weight: bold ;
+    letter-spacing: .075em ; 
+    font-family: 'Rubik', sans-serif ;
+
+}
+
+.status-bar__img {
+
+    width: 2.85em ;
+
+}
+
+.header {
+
+    padding: 1.15em 0 .25em var(--padding-left) ;
+    transition: height, var(--duration-header), padding var(--duration-header), transform var(--duration-header), opacity var(--duration-header);
+
+}
+
+.header.hide {
+    
+    height: 0 ;
+    opacity: 0 ;
+    padding-top: 0 ;
+    padding-bottom: 0 ;
+    pointer-events: none ;
+    transform: translate3d(0, -5%, 0) ;
+
+}
+
+.header__context {
+
+    display: flex ;
+    font-size: .6em ;
+    align-items: baseline ;
+    text-transform: capitalize ;
+
+}
+
+.header__title {
+
+    margin: 0 .8em 0 0 ;
+    letter-spacing: 0.03em ;
+
+}
+
+.header__text {
+
+    color: #414141b4 ;
+
+}
+
+.tabbar {
+
+    overflow: hidden ;
+
+}
+
+.tabbar__list {
+
+    overflow: auto ;
+    cursor: pointer ;
+    white-space: nowrap ;
+    padding: .6em 1.2em .6em 0 ;
+
+
+}
+
+.tabbar__item {
+
+    font-size: .41em ;
+    color: #9e9fa2 ;
+    border-radius: 2em ;
+    display: inline-flex ;
+    justify-content: center ;
+    padding: .75em 1.2em .4em ;
+    text-transform: capitalize ;
+    background-color: #f0f1f4 ; 
+    pointer-events: var(--pointer-event) ;
+
+}
+
+.tabbar__item:not(:first-of-type) {
+
+    margin-left: .5em ;
+
+}
+
+.tabbar__item.active {
+
+    color: #f1f1f1 ;
+    background-color: #1469fc ;
+
+}
+
+.global-button {
+
+    opacity: 0 ;
+    width: 100% ;
+    pointer-events: none ;
+    padding: .55em 1em 0 .8em ;
+
+}
+
+.global-button--position-ab {
+
+    top: .5% ;
+    position: absolute ;
+
+}
+
+@media (min-width: 26.875em) {
+    
+    .global-button--position-ab {
+
+        top: 4.6% ;
+    
+    }
+
+}
+
+
+.global-button > * {
+
+    width: 1em ;
+    height: 1em ;
+
+}
+
+.global-button.show {
+    
+    opacity: 1 ;
+    pointer-events: initial ;
+
+}
+
+.main {
+
+    height: 100% ;
+    font-size: 1.1em ;
+    touch-action: none ;
+    overflow: hidden auto ;
+    overscroll-behavior: contain ;
+
+}
+
+@media (min-width: 26.875em) {
+    
+    .main {
+        
+        font-size: 1em ;
+        
+    }
+
+}
+
+.product-card {
+
+    height: var(--productCardHeight) ;
+    padding-left: var(--padding-left) ;
+
+}
+
+.product-card__item {
+    
+    width: 100% ;
+    display: flex ;
+    height: 9.92em ;
+    align-items: center ;
+    max-height: var(--max-height-item) ;
+    pointer-events: var(--pointer-event) ;
+    transform: var(--transform, perspective(1000px) rotateX(0)) ;
+    transition: height var(--duration-product-item), margin var(--timeOut, calc( var(--duration-product-item) / 1.5 )) ;
+    
+}
+
+.product-card__img {
+
+    width: 6.55em ;
+    height: 8.75em ;
+    overflow: hidden ;
+    position: absolute ;
+    border-radius: .3em ;
+    pointer-events: none ;
+    transform: translate3d(80%, 0, 0) ;
+    transition: border-radius var(--duration-product-item) ;
+    box-shadow: 0.3125em 0.3125em 0.875em -0.1875em #403e3e4f ;
+
+}
+
+.product-card__item.active {
+
+    height: 100% ;
+    padding-top: 3em ;
+    align-items: unset ;
+    margin-bottom: 1.5em ;
+    flex-direction: column ;
+
+}
+
+@media (min-width: 26.875em) {
+
+    .product-card__item.active {
+
+        padding-top: 3.55em ;
+
+    }
+
+} 
+
+
+.product-card__item.active .product-card__img {
+    
+    z-index: 200 ;
+    cursor: pointer ;
+    pointer-events: initial ;
+    
+} 
+
+.product-card__img.move-img {
+
+    border-radius: 0 .3em .3em 0 ;
+    animation: product-card-img-move var(--duration-product-item) forwards ;
+
+}
+
+@keyframes product-card-img-move {
+
+    0%, 20%{
+
+        top: var(--top-start, 20.5%) ;
+
+    }
+
+    80% ,100%{
+
+        top: var(--top-end, 12.8%) ;
+        transform: translate3d(-20%, 0, 0);
+        
+    }
+
+}
+
+.product-card__img.back-img {
+
+    border-radius: .3em ;
+    animation: product-card-img-back var(--duration-product-item) forwards ;
+
+}
+
+@keyframes product-card-img-back {
+
+    0%, 15%{
+
+        top: var(--top-end, 12.8%) ;
+        transform: translate3d(-20%, 0, 0);
+
+    }
+
+    50% ,100%{
+
+        top: var(--top-start, 20.5%) ;
+        
+    }
+
+    
+}
+
+.product-card__content {
+
+    width: 6em ;
+    z-index: 50 ;
+    height: 6.88em ;
+    cursor: pointer ;
+    overflow: hidden ;
+    border-radius: .25em ;
+    will-change : transform ;
+    background-color: white ;
+    text-transform: capitalize ;
+    box-shadow: -2px 6px 15px 0px #2f2f2f24 ;
+    transition: opacity calc(var(--duration-product-item) / 2) ;
+
+} 
+
+.product-card__content.open-content {
+
+    width: 100% ;
+    height: 100% ;
+    z-index: 150 ;
+    cursor: initial ;
+    box-shadow: none ;
+    padding-left: 1.05em ;
+    pointer-events: initial ;
+    background-color: unset ;
+    transform: translate3d(0, 180%, 0) ;
+    animation: open-content var(--duration-product-item) forwards,
+    opacity-content calc(var(--duration-product-item) * 2) forwards ;
+
+}
+
+@keyframes open-content {
+    
+    100%{
+
+        transform:  none ;
+
+    }
+
+}
+
+@keyframes opacity-content {
+    
+    0%{
+        
+        opacity: 0;
+    }
+    
+    100%{
+        
+        opacity: 1;
+
+
+    }
+
+}
+
+.product-card__info {
+
+    padding: .82em .7em ;
+
+}
+
+.product-card__content.open-content .product-card__info {
+
+    width: 63% ;
+    margin-left: auto ;
+    padding: .8em .7em ;
+
+}
+
+.product-card__product-name {
+
+    margin: 0 0 .2em ;
+    line-height: 1.4 ;
+    font-size: .63em ;
+    min-height: 2.778em ;
+    white-space: pre-line ;
+
+}
+
+.product-card__content.open-content .product-card__product-name {
+
+    font-size: .78em ;
+    line-height: 1.5 ;
+    margin-bottom: .8em ;
+    letter-spacing: .03em ;
+
+}
+
+.product-card__product-author {
+
+    font-size: .4em ;
+    font-weight: bold ;
+    color: #00000073 ;
+    letter-spacing: -.01em ;
+
+}
+
+.product-card__content.open-content .product-card__product-author {
+
+    font-size: .55em ;
+
+}
+
+.product-card__rank {
+
+    display: flex ;
+    align-items: center ;
+    margin: .8em 0 .75em ;
+
+}
+
+.product-card__content.open-content .product-card__rank {
+
+    width: 0 ;
+    overflow: hidden ;
+    margin: 1.2em 0 0 ;
+    animation: show-rank var(--duration-product-item) var(--duration-product-item) forwards ;
+    
+}
+
+@keyframes show-rank {
+    
+    100%{
+
+        width: 100% ;
+
+    }
+
+}
+
+.product-card__starts {
+
+    position: relative ;
+
+}
+
+.product-card__starts::after {
+
+    right: 0 ;
+    content: "" ;
+    height: 100% ;
+    width: var(--rank) ;
+    position: absolute ;
+    background-color: #ffffffc2 ;
+
+}
+
+.product-card__content.open-content .product-card__starts::after {
+
+    background-color: #f8f9fcc9 ;
+    
+}
+
+.product-card__start-icon {
+
+    width: .5em ;
+    height: .5em ;
+    flex-shrink: 0 ;
+    margin-right: .1em ;
+
+}
+
+.product-card__content.open-content .product-card__start-icon {
+
+    animation: show-star var(--duration-product-item) var(--duration-product-item) forwards ;
+
+}
+
+@keyframes show-star {
+    
+    0% {
+
+        transform: scale(0) ;
+
+    }
+
+    100%{
+
+        transform: scale(1) ;
+
+    }
+
+}
+
+.product-card__rank-number {
+
+    font-size: .5em ;
+    color: #ffb964 ;
+    font-weight: bold ;
+    margin-left: .15em ;
+    margin-bottom: -.3em ;
+    letter-spacing: .05em ;
+
+}
+
+.product-card__view {
+
+    display: flex ;
+    font-size: .45em ;
+    font-weight: bold ;
+    color: #00000059 ;
+    position: relative ;
+    align-items: center ;
+
+}
+
+.product-card__view.hide{
+
+    display: none ;
+
+}
+
+.product-card__view::after {
+    
+    right: 4% ;
+    opacity: .2 ;
+    width: 1.6em ;
+    content: " " ;
+    height: 1.6em ;
+    position: absolute ;
+    transform: rotate(180deg) ;
+    background-position: center ;
+    background-repeat: no-repeat ;
+    background-image: url(http://utopian-drink.surge.sh/images/icon/back.svg) ;
+
+}
+
+.product-card__view-number {
+
+    color: #408cff ;
+    margin-right: .45em ;
+
+}
+
+.product-card__view-value{
+
+    font-size: .45em ;
+    color:#00000059 ;
+    margin: 0 0 -.3em .8em ;
+
+}
+
+.product-card__view-value.hide{
+
+    display: none ;
+
+}
+
+.product-card__buttons {
+
+    width: 100% ;
+    margin-top: 2.8em ;
+    font-size: 0.45em ; 
+    color: #000000d9 ;
+    will-change: transform ;
+    padding: 0 1.6em 2.4em 0 ;
+    border-bottom: .2em solid #c3c3c31f ;
+
+}
+
+@media (max-width: 26.875em) {
+
+    .product-card__buttons {
+
+        margin-top: 1.8em ;
+        padding: 0 1.6em 1.4em 0 ;
+
+    }
+
+}    
+
+.product-card__button-icon {
+
+    width: 1.6em ;
+    margin-right: .8em ;
+
+}
+
+.product-card__button-text {
+
+    margin: .5em 0 0 ;
+
+}
+
+.product-card__context {
+
+    height: 100% ;
+    overflow: hidden ;
+    font-size: .52em ;
+    padding: 1.2em 0 0 ;
+    text-transform: none ;
+
+}
+
+.product-card__context ::first-letter{
+
+    text-transform: capitalize ;
+
+}
+
+.product-card__description {
+
+    overflow: auto ;
+    line-height: 1.9 ;
+    margin: 1.6em 0 0 ;
+    color: #969696a8 ;
+    padding-right: 2.15em ;
+    pointer-events: initial ;
+    height: calc(100% - 23.2em) ;
+
+}
+
+@media (min-width: 26.875em) {
+
+    .product-card__description {
+
+        overflow: hidden ;
+
+    }
+
+} 
+
+.product-card__content.open-content .product-card__description {
+    
+    transform: translate3d(0, 12%, 0) ;
+    animation: description var(--duration-product-item) calc(var(--duration-product-item) / 2) forwards;
+
+}
+
+@keyframes description {
+    
+    100% {
+
+        transform: translate3d(0, 0, 0) ;
+
+    }
+
+}
+
+.product-card__cta {
+
+    opacity: 0 ;
+    z-index: 300 ;
+    color: white ;
+    font-size: .55em ;
+    margin-left: auto ;
+    pointer-events: none ;
+    letter-spacing: 0.1em ;
+    text-transform: capitalize ;
+    background-color: #1368fa ;
+    padding: 1.7em 1.5em 1em 1.9em ;
+    
+}
+
+.product-card__item.active  .product-card__cta {
+    
+    opacity: 1 ;
+    pointer-events: initial ;
+    transition: opacity calc(var(--duration-product-item) / 2) var(--duration-product-item) ;
+
+}
