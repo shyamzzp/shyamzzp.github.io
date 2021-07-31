@@ -1,10 +1,34 @@
 import './App.css';
 import Person from './components/Person';
+import React from 'react';
+class App extends React.Component {
+  constructor(props) {
+    super(props);
 
+    this.state = { data: [] };
+  }
+  componentDidMount() {
+    this.getData();
+  }
 
-function App() {
-  return (
-    <div class="bg-gray-100 dark:bg-gray-900 dark:text-white text-gray-600 h-screen flex overflow-hidden text-sm">
+  getData() {
+    const Splitwise = require('splitwise')
+    const sw = Splitwise({
+      consumerKey: 'bk3LaPlmAJvVo60VwiPuijb6b4oCsRqTPbGcvgVC',
+      consumerSecret: 'nT9F7z82eKRE5KaJOSQNIdoH6rCcAT6qvkXnwWe3'
+    });
+    sw.getFriends().then((item) => {
+      item.forEach(element => {
+        element.first_name = element.first_name.charAt(0).toUpperCase() + element.first_name.substr(1).toLowerCase();
+        element.registration_status = element.registration_status.charAt(0).toUpperCase() + element.registration_status.substr(1).toLowerCase();
+      });
+      this.setState({ data: item });
+    });
+
+  }
+
+  render() {
+    return <div class="bg-gray-100 dark:bg-gray-900 dark:text-white text-gray-600 h-screen flex overflow-hidden text-sm">
       <div class="bg-white dark:bg-gray-900 dark:border-gray-800 w-20 flex-shrink-0 border-r border-gray-200 flex-col hidden sm:flex">
         <div class="h-16 text-blue-500 flex items-center justify-center">
           <svg class="w-9" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 54 33">
@@ -74,12 +98,10 @@ function App() {
                 <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
               </svg>
             </div>
+
             <div class="space-y-4 mt-3">
-              <Person name="Mert Cukuren" dept="Sales" money="INR 2,794.00" image="https://images.unsplash.com/photo-1521587765099-8835e7201186?ixlib=rb-1.2.1&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&ixid=eyJhcHBfaWQiOjE3Nzg0fQ"/>
-              <Person name="Albert Flores" dept="Marketing" money="INR 2,94.00" image="https://assets.codepen.io/344846/internal/avatars/users/default.png?fit=crop&format=auto&height=512&version=1582611188&width=512"/>
-              <Person name="Jane Cooper" dept="Design" money="INR 762.00" image="https://images.unsplash.com/photo-1521587765099-8835e7201186?ixlib=rb-1.2.1&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&ixid=eyJhcHBfaWQiOjE3Nzg0fQ"/>
-              <Person name="Ronald Richards" dept="Sales" money="INR 0.00" image="https://assets.codepen.io/344846/internal/avatars/users/default.png?fit=crop&format=auto&height=512&version=1582611188&width=512"/>
-            </div>
+              {this.state.data.map((eachPerson, i) => <Person name={eachPerson.first_name} dept={eachPerson.registration_status} money="INR 2,794.00" image={eachPerson.picture.small} />)}
+              </div>
           </div>
           <div class="flex-grow bg-white dark:bg-gray-900 overflow-y-auto">
             <div class="sm:px-7 sm:pt-7 px-4 pt-4 flex flex-col w-full border-b border-gray-200 bg-white dark:bg-gray-900 dark:text-white dark:border-gray-800 sticky top-0">
@@ -104,8 +126,7 @@ function App() {
               </div>
               <div class="flex items-center space-x-3 sm:mt-7 mt-4">
                 <a href="#" class="px-3 border-b-2 border-blue-500 text-blue-500 dark:text-white dark:border-white pb-1.5">Activities</a>
-                <a href="#" class="px-3 border-b-2 border-transparent text-gray-600 dark:text-gray-400 pb-1.5">Transfer</a>
-                <a href="#" class="px-3 border-b-2 border-transparent text-gray-600 dark:text-gray-400 pb-1.5 sm:block hidden">Budgets</a>
+                <a href="#" class="px-3 border-b-2 border-transparent text-gray-600 dark:text-gray-400 pb-1.5">Transfer</a>                <a href="#" class="px-3 border-b-2 border-transparent text-gray-600 dark:text-gray-400 pb-1.5 sm:block hidden">Budgets</a>
                 <a href="#" class="px-3 border-b-2 border-transparent text-gray-600 dark:text-gray-400 pb-1.5 sm:block hidden">Notifications</a>
                 <a href="#" class="px-3 border-b-2 border-transparent text-gray-600 dark:text-gray-400 pb-1.5 sm:block hidden">Cards</a>
               </div>
@@ -775,8 +796,8 @@ function App() {
           </div>
         </div>
       </div>
-    </div>
-  );
+    </div>;
+  }
 }
 
 export default App;

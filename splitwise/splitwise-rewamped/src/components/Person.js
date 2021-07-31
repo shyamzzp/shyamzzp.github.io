@@ -2,13 +2,13 @@ import React from 'react';
 
 function Person(props) {
     var classNameToBePut = "";
-    if (props.dept == 'Marketing') {
+    if (props.dept == 'Confirmed') {
         classNameToBePut = "text-xs py-1 px-2 leading-none dark:bg-gray-900 bg-green-100 text-green-600 rounded-md"
     }
-    if (props.dept == 'Sales') {
+    if (props.dept == 'Invited') {
         classNameToBePut = "text-xs py-1 px-2 leading-none dark:bg-gray-900 bg-white-100 text-white-600 rounded-md"
     }
-    if (props.dept == 'Design') {
+    if (props.dept == 'Unsubscribed') {
         classNameToBePut = "text-xs py-1 px-2 leading-none dark:bg-gray-900 bg-yellow-100 text-yellow-600 rounded-md"
     }
     const imageSrc = props.image;
