@@ -75,10 +75,10 @@ function App() {
               </svg>
             </div>
             <div class="space-y-4 mt-3">
-              <Person name="Mert Cukuren" dept="Sales" money="INR 2,794.00" />
-              <Person name="Albert Flores" dept="Marketing" money="INR 2,94.00" />
-              <Person name="Jane Cooper" dept="Design" money="INR 762.00" />
-              <Person name="Ronald Richards" dept="Sales" money="INR 0.00" />
+              <Person name="Mert Cukuren" dept="Sales" money="INR 2,794.00" image="https://images.unsplash.com/photo-1521587765099-8835e7201186?ixlib=rb-1.2.1&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&ixid=eyJhcHBfaWQiOjE3Nzg0fQ"/>
+              <Person name="Albert Flores" dept="Marketing" money="INR 2,94.00" image="https://assets.codepen.io/344846/internal/avatars/users/default.png?fit=crop&format=auto&height=512&version=1582611188&width=512"/>
+              <Person name="Jane Cooper" dept="Design" money="INR 762.00" image="https://images.unsplash.com/photo-1521587765099-8835e7201186?ixlib=rb-1.2.1&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&ixid=eyJhcHBfaWQiOjE3Nzg0fQ"/>
+              <Person name="Ronald Richards" dept="Sales" money="INR 0.00" image="https://assets.codepen.io/344846/internal/avatars/users/default.png?fit=crop&format=auto&height=512&version=1582611188&width=512"/>
             </div>
           </div>
           <div class="flex-grow bg-white dark:bg-gray-900 overflow-y-auto">
