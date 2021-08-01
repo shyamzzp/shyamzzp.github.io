@@ -7,37 +7,36 @@ import FormData from 'form-data'
 import 'antd/dist/antd.dark.css'
 import {
   Table,
-  Tag,
-  Space
 } from 'antd';
-const dataSource = [{
-    key: '1',
-    name: 'Mike',
-    age: 32,
-    address: '10 Downing Street',
-  },
-  {
-    key: '2',
-    name: 'John',
-    age: 42,
-    address: '10 Downing Street',
-  },
-];
 
 const columns = [{
-    title: 'Description',
-    dataIndex: 'description',
-    key: 'description',
+      title: 'Description',
+      dataIndex: 'description',
+      key: 'description',
+    },
+    {
+        title: 'Expense',
+        dataIndex: 'cost',
+        key: 'cost',
+        render: (text, row) => <span> {
+          "₹ " + text
+        } </span>
+      },
+  {
+    title: 'Date',
+    dataIndex: 'date',
+    key: 'date',
+    render: (text, row) => <span> {
+      text.split('T')[0]
+    } </span>
   },
   {
-    title: 'Age',
-    dataIndex: 'age',
-    key: 'age',
-  },
-  {
-    title: 'Address',
-    dataIndex: 'address',
-    key: 'address',
+    title: 'Created By',
+    dataIndex: 'created_by',
+    key: 'created_by',
+    render: (text, row) => <span> {
+      text.first_name
+    } </span>
   },
 ];
 class App extends React.Component {
