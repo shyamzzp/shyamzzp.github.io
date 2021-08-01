@@ -4,8 +4,42 @@ import React from 'react';
 // var axios = require('axios');
 import axios from 'axios'
 import FormData from 'form-data'
+import 'antd/dist/antd.dark.css'
+import {
+  Table,
+  Tag,
+  Space
+} from 'antd';
+const dataSource = [{
+    key: '1',
+    name: 'Mike',
+    age: 32,
+    address: '10 Downing Street',
+  },
+  {
+    key: '2',
+    name: 'John',
+    age: 42,
+    address: '10 Downing Street',
+  },
+];
 
-
+const columns = [{
+    title: 'Description',
+    dataIndex: 'description',
+    key: 'description',
+  },
+  {
+    title: 'Age',
+    dataIndex: 'age',
+    key: 'age',
+  },
+  {
+    title: 'Address',
+    dataIndex: 'address',
+    key: 'address',
+  },
+];
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -179,84 +213,8 @@ class App extends React.Component {
               </div>
             </div>
             <div class="sm:p-7 p-4">
-              <table class="w-full text-left">
-                <thead>
-                  <tr class="text-gray-400">
-                    <th class="font-normal px-3 pt-0 pb-3 border-b border-gray-200 dark:border-gray-800">Name</th>
-                    <th class="font-normal px-3 pt-0 pb-3 border-b border-gray-200 dark:border-gray-800">Group</th>
-                    <th class="font-normal px-3 pt-0 pb-3 border-b border-gray-200 dark:border-gray-800 hidden md:table-cell">Description</th>
-                    <th class="font-normal px-3 pt-0 pb-3 border-b border-gray-200 dark:border-gray-800">Amount</th>
-                    <th class="font-normal px-3 pt-0 pb-3 border-b border-gray-200 dark:border-gray-800 sm:text-gray-400 text-white">Date</th>
-                  </tr>
-                </thead>
-                <tbody class="text-gray-600 dark:text-gray-100">
-                  {this.state.friendsExpenseData.map((eachPerson, i) => 
-                    <tr>
-                      <td class="sm:p-3 py-2 px-1 border-b border-gray-200 dark:border-gray-800">
-                        <div class="flex items-center">
-                          <img src="https://images.unsplash.com/photo-1521587765099-8835e7201186?ixlib=rb-1.2.1&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&ixid=eyJhcHBfaWQiOjE3Nzg0fQ" class="w-7 h-7 mr-2 rounded-full" alt="profile" />
-                          eachPerson
-                        </div>
-                      </td>
-                      <td class="sm:p-3 py-2 px-1 border-b border-gray-200 dark:border-gray-800">
-                        <div class="flex items-center">
-                          {/* {eachPerson.description} */}
-                        </div>
-                      </td>
-                      <td class="sm:p-3 py-2 px-1 border-b border-gray-200 dark:border-gray-800 md:table-cell hidden">{eachPerson.description}</td>
-                      <td class="sm:p-3 py-2 px-1 border-b border-gray-200 dark:border-gray-800 text-red-500">{eachPerson.currency_code+" "+eachPerson.cost}</td>
-                      <td class="sm:p-3 py-2 px-1 border-b border-gray-200 dark:border-gray-800">
-                        <div class="flex items-center">
-                          <div class="sm:flex hidden flex-col">
-                            {eachPerson.date.split('T')[0]}
-                            <div class="text-gray-400 text-xs">11:16 AM</div>
-                          </div>
-                        </div>
-                      </td>
-                    </tr>
-                  )}
-                  
-                  <tr>
-                    <td class="sm:p-3 py-2 px-1 border-b border-gray-200 dark:border-gray-800">
-                      <div class="flex items-center">
-                        <img src="https://images.unsplash.com/photo-1521587765099-8835e7201186?ixlib=rb-1.2.1&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&ixid=eyJhcHBfaWQiOjE3Nzg0fQ" class="w-7 h-7 mr-2 rounded-full" alt="profile" />
-                        Income
-                      </div>
-                    </td>
-                    <td class="sm:p-3 py-2 px-1 border-b border-gray-200 dark:border-gray-800">
-                      <div class="flex items-center">
-                        Income
-                      </div>
-                    </td>
-                    <td class="sm:p-3 py-2 px-1 border-b border-gray-200 dark:border-gray-800 md:table-cell hidden">Invoice No: 37401</td>
-                    <td class="sm:p-3 py-2 px-1 border-b border-gray-200 dark:border-gray-800 text-green-500">+ $60.00</td>
-                    <td class="sm:p-3 py-2 px-1 border-b border-gray-200 dark:border-gray-800">
-                      <div class="flex items-center">
-                        <div class="sm:flex hidden flex-col">
-                          13.11.2020
-                          <div class="text-gray-400 text-xs">09:45 AM</div>
-                        </div>
-                      </div>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-              <div class="flex w-full mt-5 space-x-2 justify-end">
-                <button class="inline-flex items-center h-8 w-8 justify-center text-gray-400 rounded-md shadow border border-gray-200 dark:border-gray-800 leading-none">
-                  <svg class="w-4" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                    <polyline points="15 18 9 12 15 6"></polyline>
-                  </svg>
-                </button>
-                <button class="inline-flex items-center h-8 w-8 justify-center text-gray-500 rounded-md shadow border border-gray-200 dark:border-gray-800 leading-none">1</button>
-                <button class="inline-flex items-center h-8 w-8 justify-center text-gray-500 rounded-md shadow border border-gray-200 dark:border-gray-800 bg-gray-100 dark:bg-gray-800 dark:text-white leading-none">2</button>
-                <button class="inline-flex items-center h-8 w-8 justify-center text-gray-500 rounded-md shadow border border-gray-200 dark:border-gray-800 leading-none">3</button>
-                <button class="inline-flex items-center h-8 w-8 justify-center text-gray-500 rounded-md shadow border border-gray-200 dark:border-gray-800 leading-none">4</button>
-                <button class="inline-flex items-center h-8 w-8 justify-center text-gray-400 rounded-md shadow border border-gray-200 dark:border-gray-800 leading-none">
-                  <svg class="w-4" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                    <polyline points="9 18 15 12 9 6"></polyline>
-                  </svg>
-                </button>
-              </div>
+              <Table dataSource = { this.state.friendsExpenseData } bordered
+              columns = { columns } />
             </div>
           </div>
         </div>

@@ -11,3 +11,24 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.ant-table {
+  background-color: #18181b !important;
+}
+.ant-pagination-item {
+  border-radius: 5px !important;
+}
+.ant-pagination-prev {
+  border-radius: 5px !important;
+}
+.ant-pagination-item-link {
+  border-radius: 5px !important;
+}
+
+.anticon{
+  vertical-align: 0 !important;
+}
+
+.ant-table-thead>tr>th {
+  background: #31313163 !important;
+}
