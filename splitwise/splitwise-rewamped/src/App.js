@@ -4,20 +4,20 @@ import React from 'react';
 class App extends React.Component {
   constructor(props) {
     super(props);
-
-    this.state = { data: [] };
-  }
-  componentDidMount() {
-    this.getData();
-  }
-
-  getData() {
-    const Splitwise = require('splitwise')
-    const sw = Splitwise({
+    this.Splitwise = require('splitwise')
+    this.sw = this.Splitwise({
       consumerKey: 'bk3LaPlmAJvVo60VwiPuijb6b4oCsRqTPbGcvgVC',
       consumerSecret: 'nT9F7z82eKRE5KaJOSQNIdoH6rCcAT6qvkXnwWe3'
     });
-    sw.getFriends().then((item) => {
+    this.state = { data: [], personalData: Object, userProfile: "" };
+  }
+  componentDidMount() {
+    this.getData();
+    this.getPersonalData();
+  }
+
+  getData() {
+    this.sw.getFriends().then((item) => {
       item.forEach(element => {
         element.first_name = element.first_name.charAt(0).toUpperCase() + element.first_name.substr(1).toLowerCase();
         element.registration_status = element.registration_status.charAt(0).toUpperCase() + element.registration_status.substr(1).toLowerCase();
@@ -25,6 +25,44 @@ class App extends React.Component {
       this.setState({ data: item });
     });
 
+  }
+  // {
+  //   id: 6586174,
+  //     first_name: 'shyamzzp',
+  //       last_name: null,
+  //         picture: {
+  //     small: 'https://s3.amazonaws.com/splitwise/uploads/user/default_avatars/avatar-orange18-50px.png',
+  //       medium: 'https://s3.amazonaws.com/splitwise/uploads/user/default_avatars/avatar-orange18-100px.png',
+  //         large: 'https://s3.amazonaws.com/splitwise/uploads/user/default_avatars/avatar-orange18-200px.png'
+  //   },
+  //   custom_picture: false,
+  //     email: 'shyamsundersuthar009@gmail.com',
+  //       registration_status: 'confirmed',
+  //         force_refresh_at: '2019-02-07T11:28:51Z',
+  //           locale: 'en',
+  //             country_code: 'IN',
+  //               date_format: 'MM/DD/YYYY',
+  //                 default_currency: 'INR',
+  //                   default_group_id: -1,
+  //                     notifications_read: '2021-07-30T16:24:29Z',
+  //                       notifications_count: 1,
+  //                         notifications: {
+  //     added_as_friend: true,
+  //       added_to_group: true,
+  //         expense_added: false,
+  //           expense_updated: false,
+  //             bills: true,
+  //               payments: true,
+  //                 monthly_summary: true,
+  //                   announcements: true
+  //   }
+  // }
+  getPersonalData() {
+    this.sw.getCurrentUser().then((item) => {
+      this.setState({userProfile : item.picture.small})
+      this.setState({ personalData: item });
+    })
+    // console.log(this.state.personalData.push(item))
   }
 
   render() {
@@ -66,7 +104,7 @@ class App extends React.Component {
         </div>
       </div>
       <div class="flex-grow overflow-hidden h-full flex flex-col">
-        <div class="h-16 lg:flex w-full border-b border-gray-200 dark:border-gray-800 hidden px-10">
+        <div class="h-16 lg:flex w-full border-b border-gray-200 dark:border-gray-800 hidden px-10 padding-20">
           <div class="flex h-full text-gray-600 dark:text-gray-400">
             <a href="#" class="cursor-pointer h-full border-b-2 border-transparent inline-flex items-center mr-8">Company</a>
             <a href="#" class="cursor-pointer h-full border-b-2 border-blue-500 text-blue-500 dark:text-white dark:border-white inline-flex mr-8 items-center">Users</a>
@@ -74,14 +112,14 @@ class App extends React.Component {
             <a href="#" class="cursor-pointer h-full border-b-2 border-transparent inline-flex items-center">Currency Exchange</a>
           </div>
           <div class="ml-auto flex items-center space-x-7">
-            <button class="h-8 px-3 rounded-md shadow text-white bg-blue-500">Deposit</button>
+            {/* <button class="h-8 px-3 rounded-md shadow text-white bg-blue-500">Deposit</button> */}
 
             <button class="flex items-center">
               <span class="relative flex-shrink-0">
-                <img class="w-7 h-7 rounded-full" src="https://images.unsplash.com/photo-1521587765099-8835e7201186?ixlib=rb-1.2.1&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&ixid=eyJhcHBfaWQiOjE3Nzg0fQ" alt="profile" />
+                <img class="w-7 h-7 rounded-full" src={this.state.userProfile} alt="profile" />
                 <span class="absolute right-0 -mb-0.5 bottom-0 w-2 h-2 rounded-full bg-green-500 border border-white dark:border-gray-900"></span>
               </span>
-              <span class="ml-2">James Smith</span>
+              <span class="ml-2">{this.state.personalData.first_name}</span>
               <svg viewBox="0 0 24 24" class="w-4 ml-1 flex-shrink-0" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
                 <polyline points="6 9 12 15 18 9"></polyline>
               </svg>
@@ -101,7 +139,7 @@ class App extends React.Component {
 
             <div class="space-y-4 mt-3">
               {this.state.data.map((eachPerson, i) => <Person name={eachPerson.first_name} dept={eachPerson.registration_status} money="INR 2,794.00" image={eachPerson.picture.small} />)}
-              </div>
+            </div>
           </div>
           <div class="flex-grow bg-white dark:bg-gray-900 overflow-y-auto">
             <div class="sm:px-7 sm:pt-7 px-4 pt-4 flex flex-col w-full border-b border-gray-200 bg-white dark:bg-gray-900 dark:text-white dark:border-gray-800 sticky top-0">
