@@ -13,7 +13,7 @@ class App extends React.Component {
       consumerKey: 'bk3LaPlmAJvVo60VwiPuijb6b4oCsRqTPbGcvgVC',
       consumerSecret: 'nT9F7z82eKRE5KaJOSQNIdoH6rCcAT6qvkXnwWe3'
     });
-    this.state = { data: [], personalData: Object, userProfile: "" };
+    this.state = { data: [], personalData: Object, userProfile: "", friendName:"" };
   }
   componentDidMount() {
     this.getData();
@@ -23,25 +23,23 @@ class App extends React.Component {
   getData() {
     this.sw.getFriends().then((item) => {
       item.forEach(element => {
-        console.log(element)
         element.first_name = element.first_name.charAt(0).toUpperCase() + element.first_name.substr(1).toLowerCase();
+        element.last_name = element.last_name === null ? "" : (element.last_name.charAt(0).toUpperCase() + element.last_name.substr(1).toLowerCase());
         element.registration_status = element.registration_status.charAt(0).toUpperCase() + element.registration_status.substr(1).toLowerCase();
       });
       this.setState({ data: item });
     });
 
   }
-  
+
   getPersonalData() {
     this.sw.getCurrentUser().then((item) => {
-      this.setState({userProfile : item.picture.small})
+      this.setState({ userProfile: item.picture.small })
       this.setState({ personalData: item });
     })
-    // console.log(this.state.personalData.push(item))
   }
 
   getExpensesBtnFriends(friend_id) {
-    
     var data = new FormData();
     // data.append('friend_id', '9105114');
     data.append('friend_id', friend_id);
@@ -139,15 +137,23 @@ class App extends React.Component {
             </div>
 
             <div class="space-y-4 mt-3">
-              {this.state.data.map((eachPerson, i) => <Person name={eachPerson.first_name} dept={eachPerson.registration_status} money="INR 2,794.00" image={eachPerson.picture.small} />)}
+              {this.state.data.map((eachPerson, i) => <Person name={eachPerson.first_name + " " + (eachPerson.last_name === null ? "" : eachPerson.last_name)}
+                dept={eachPerson.registration_status}
+                money="INR 2,794.00" image={eachPerson.picture.small} />)}
             </div>
           </div>
           <div class="flex-grow bg-white dark:bg-gray-900 overflow-y-auto">
             <div class="sm:px-7 sm:pt-7 px-4 pt-4 flex flex-col w-full border-b border-gray-200 bg-white dark:bg-gray-900 dark:text-white dark:border-gray-800 sticky top-0">
               <div class="flex w-full items-center">
-                <div class="flex items-center text-3xl text-gray-900 dark:text-white">
+                <div class="flex items-center text-3xl text-gray-900 dark:text-white mr-4">
                   <img src="https://assets.codepen.io/344846/internal/avatars/users/default.png?fit=crop&format=auto&height=512&version=1582611188&width=512" class="w-12 mr-4 rounded-full" alt="profile" />
                   Mert Cukuren
+                </div>
+                <div class="flex items-center text-3xl text-gray-900 dark:text-white mr-4 ml-4">
+                </div>
+                <div class="flex items-center text-3xl text-gray-900 dark:text-white ml-4">
+                  <img src={this.state.userProfile} class="w-12 mr-4 rounded-full" alt="profile" />
+                  {this.state.personalData.first_name}
                 </div>
                 <div class="ml-auto sm:flex hidden items-center justify-end">
                   <div class="text-right">
