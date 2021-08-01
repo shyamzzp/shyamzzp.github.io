@@ -10,34 +10,34 @@ import {
 } from 'antd';
 
 const columns = [{
-      title: 'Description',
-      dataIndex: 'description',
-      key: 'description',
-    },
-    {
-        title: 'Expense',
-        dataIndex: 'cost',
-        key: 'cost',
-        render: (text, row) => <span> {
-          "₹ " + text
-        } </span>
-      },
-  {
-    title: 'Date',
-    dataIndex: 'date',
-    key: 'date',
-    render: (text, row) => <span> {
-      text.split('T')[0]
-    } </span>
-  },
-  {
-    title: 'Created By',
-    dataIndex: 'created_by',
-    key: 'created_by',
-    render: (text, row) => <span> {
-      text.first_name
-    } </span>
-  },
+  title: 'Description',
+  dataIndex: 'description',
+  key: 'description',
+},
+{
+  title: 'Expense',
+  dataIndex: 'cost',
+  key: 'cost',
+  render: (text, row) => <span> {
+    "₹ " + text
+  } </span>
+},
+{
+  title: 'Date',
+  dataIndex: 'date',
+  key: 'date',
+  render: (text, row) => <span> {
+    text.split('T')[0]
+  } </span>
+},
+{
+  title: 'Created By',
+  dataIndex: 'created_by',
+  key: 'created_by',
+  render: (text, row) => <span> {
+    text.first_name
+  } </span>
+},
 ];
 class App extends React.Component {
   constructor(props) {
@@ -47,7 +47,7 @@ class App extends React.Component {
       consumerKey: constants.consumer_key,
       consumerSecret: constants.consumer_secret
     });
-    this.state = { data: [], personalData: Object, userProfile: "", friendName:"", friendsExpenseData: [] };
+    this.state = { data: [], personalData: Object, userProfile: "./man.png", friendName: "", friendsExpenseData: [], language: '' };
   }
   componentDidMount() {
     this.getData();
@@ -64,6 +64,10 @@ class App extends React.Component {
       });
       this.setState({ data: item });
     });
+  }
+
+  handleLanguage = (langValue) => {
+    this.setState({ language: langValue });
   }
 
   getPersonalData() {
@@ -83,7 +87,7 @@ class App extends React.Component {
       method: 'get',
       url: 'api/v3.0/get_expenses?limit=1000000',
       headers: {
-        'Authorization': 'Bearer '+constants.api_key,
+        'Authorization': 'Bearer ' + constants.api_key,
         'Content-Type': 'application/json'
       },
       data: data
@@ -91,12 +95,12 @@ class App extends React.Component {
 
     axios(config)
       .then(function (response) {
-        self.setState({friendsExpenseData:response.data.expenses});
+        self.setState({ friendsExpenseData: response.data.expenses });
       })
       .catch(function (error) {
         console.log(error);
       });
-   
+
   }
 
   render() {
@@ -172,7 +176,7 @@ class App extends React.Component {
             </div>
 
             <div class="space-y-4 mt-3">
-              {this.state.data.map((eachPerson, i) => <Person name={eachPerson.first_name + " " + (eachPerson.last_name === null ? "" : eachPerson.last_name)}
+              {this.state.data.map((eachPerson, i) => <Person onSelectLanguage={this.handleLanguage} name={eachPerson.first_name + " " + (eachPerson.last_name === null ? "" : eachPerson.last_name)}
                 dept={eachPerson.registration_status}
                 money="INR 2,794.00" image={eachPerson.picture.small} />)}
             </div>
@@ -212,8 +216,8 @@ class App extends React.Component {
               </div>
             </div>
             <div class="sm:p-7 p-4">
-              <Table dataSource = { this.state.friendsExpenseData } bordered
-              columns = { columns } />
+              <Table dataSource={this.state.friendsExpenseData} bordered
+                columns={columns} />
             </div>
           </div>
         </div>
