@@ -36,7 +36,6 @@ class Person extends React.Component {
     }
 
     UNSAFE_componentWillReceiveProps() {
-        console.log("UNSAFE_componentWillReceiveProps")
         console.log(this.props)
         if (this.props.person.balance.length == 0) {
             this.setState({

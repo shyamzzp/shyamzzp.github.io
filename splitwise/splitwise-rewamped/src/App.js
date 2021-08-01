@@ -63,7 +63,10 @@ class App extends React.Component {
       friendNameVs: 'Friend',
       friendImageVs: 'https://image.flaticon.com/icons/png/512/848/848006.png',
       isDataLoading:true,
-      isSpinFriendsLoading:false
+      isSpinFriendsLoading:false,
+      isOwesYouChecked: false,
+      isYouOweChecked: false,
+      isShowAllFriends: false,
     };
   }
   componentDidMount() {
@@ -74,7 +77,11 @@ class App extends React.Component {
   }
   
   showAllFriendsToggle(self,checked, evt) {
+    
+    this.setState({ isOwesYouChecked: false })
+    this.setState({ isYouOweChecked: false })
     if(checked){
+      this.setState({ isShowAllFriends: true })
       this.setState({ data: [] });
       this.setState({ isSpinFriendsLoading: true })
       this.sw.getFriends().then((item) => {
@@ -87,10 +94,49 @@ class App extends React.Component {
         this.setState({ data: item });
       });
     }else{
+      this.setState({ isShowAllFriends: false })
       this.getData()
     }
   }
-
+  oweCalculationFriends(self, checked, evt, crdr) {
+    
+    if (checked) {
+      if (crdr == 1) {
+        this.setState({ isShowAllFriends: false })
+        this.setState({ isYouOweChecked: false })
+        this.setState({ isOwesYouChecked: true })
+      }
+      else {
+        this.setState({ isOwesYouChecked: false })
+        this.setState({ isShowAllFriends: false })
+        this.setState({ isYouOweChecked: true })
+      }
+      this.setState({ data: [] });
+      this.setState({ isSpinFriendsLoading: true })
+      this.sw.getFriends().then((item) => {
+        var filteredData = []
+        item.forEach(element => {
+          element.first_name = element.first_name.charAt(0).toUpperCase() + element.first_name.substr(1).toLowerCase();
+          element.last_name = element.last_name === null ? "" : (element.last_name.charAt(0).toUpperCase() + element.last_name.substr(1).toLowerCase());
+          element.registration_status = element.registration_status.charAt(0).toUpperCase() + element.registration_status.substr(1).toLowerCase();
+            if (element.balance.length > 0 && parseFloat(element.balance[0].amount) > 0.0 && crdr == 1) {
+              filteredData.push(element)
+            }
+            if (element.balance.length > 0 && parseFloat(element.balance[0].amount) < 0.0 && crdr == 0) {
+              filteredData.push(element)
+            }
+        });
+        this.setState({ isSpinFriendsLoading: false })
+        this.setState({ data: filteredData });
+      });
+    } else {
+        this.setState({ isShowAllFriends: false })
+        this.setState({ isYouOweChecked: false })
+        this.setState({ isOwesYouChecked: false })
+        this.getData()
+    }
+  }
+  
   getData() {
     this.setState({ data: [] });
     this.setState({isSpinFriendsLoading:true})
@@ -111,7 +157,7 @@ class App extends React.Component {
 
   handleOnClickChangeFriend = (propsChildren) => {
     this.setState({ isDataLoading:true})
-    this.setState({ friendNameVs: propsChildren.name });
+    this.setState({ friendNameVs: propsChildren.person.first_name });
     this.setState({ friendImageVs: propsChildren.image });
     this.setState({ friendsExpenseData: [] });
     this.getExpensesBtnFriends(propsChildren.id)
@@ -207,8 +253,10 @@ class App extends React.Component {
         </div>
         <div class="flex-grow flex overflow-x-hidden">
           <div class="xl:w-72 w-48 flex-shrink-0 border-r border-gray-200 dark:border-gray-800 h-full overflow-y-auto lg:block hidden p-5">
-            <div class="relative">
-              <Switch unCheckedChildren="Show all" checkedChildren={<CheckOutlined />} onChange={(checked,evt) => this.showAllFriendsToggle(this,checked,evt)}/>
+            <div class="relative flex-space-between">
+              <Switch unCheckedChildren="Show all" checkedChildren="Show all" onChange={(checked, evt) => this.showAllFriendsToggle(this, checked, evt)} checked={this.state.isShowAllFriends}/>
+              <Switch unCheckedChildren="Owes You" checkedChildren="Owes You" onChange={(checked, evt) => this.oweCalculationFriends(this, checked, evt, 1)} checked={this.state.isOwesYouChecked} />
+              <Switch unCheckedChildren="You Owe" checkedChildren="You Owe" onChange={(checked, evt) => this.oweCalculationFriends(this, checked, evt, 0)} checked={this.state.isYouOweChecked}/>
             </div>
             <div class="space-y-4 mt-4">
               {this.state.isSpinFriendsLoading ? <center class="center-vertical"><Spin /></center>: this.state.data.map((eachPerson, i) => <Person

@@ -40,3 +40,8 @@ code {
 .center-vertical{
   margin-top: 50px;
 }
+
+.flex-space-between{
+  display: flex;
+  justify-content: space-between;
+}
