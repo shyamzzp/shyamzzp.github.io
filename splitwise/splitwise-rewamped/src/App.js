@@ -69,6 +69,10 @@ class App extends React.Component {
   
   getData() {
     this.sw.getFriends().then((item) => {
+      console.log(item)
+      item.sort(function (a, b) {
+        return new Date(b.updated_at) - new Date(a.updated_at);
+      });
       item.forEach(element => {
         element.first_name = element.first_name.charAt(0).toUpperCase() + element.first_name.substr(1).toLowerCase();
         element.last_name = element.last_name === null ? "" : (element.last_name.charAt(0).toUpperCase() + element.last_name.substr(1).toLowerCase());
@@ -191,6 +195,7 @@ class App extends React.Component {
             <div class="space-y-4 mt-3">
               {this.state.data.map((eachPerson, i) => <Person onSelectFriendParamChange={this.handleOnClickChangeFriend} id={eachPerson.id} name={eachPerson.first_name + " " + (eachPerson.last_name === null ? "" : eachPerson.last_name)}
                 dept={eachPerson.registration_status}
+                person = {eachPerson}
                 money="INR 2,794.00" image={eachPerson.picture.small} />)}
             </div>
           </div>

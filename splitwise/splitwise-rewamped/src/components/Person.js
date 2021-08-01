@@ -3,7 +3,7 @@ import React from 'react';
 class Person extends React.Component {
     constructor(props) {
         super(props);
-        this.state = { classNameToBePut: "", }
+        this.state = { classNameToBePut: "", money:""}
     }
 
     handleOnClickChangeFriend = (props) => {
@@ -11,15 +11,27 @@ class Person extends React.Component {
     }
 
     componentDidMount() {
-        if (this.props.dept == 'Confirmed') {
-            this.setState({ classNameToBePut: "text-xs py-1 px-2 leading-none dark:bg-gray-900 bg-green-100 text-green-600 rounded-md" })
-        }
-        if (this.props.dept == 'Invited') {
+        console.log("shyamzzp")
+        console.log(this.props)
+        if (this.props.person.balance.length == 0) {
+            this.setState({
+                money: "NIL"
+            })
             this.setState({ classNameToBePut: "text-xs py-1 px-2 leading-none dark:bg-gray-900 bg-white-100 text-white-600 rounded-md" })
         }
-        if (this.props.dept == 'Unsubscribed') {
-            this.setState({ classNameToBePut: "text-xs py-1 px-2 leading-none dark:bg-gray-900 bg-yellow-100 text-yellow-600 rounded-md" })
-        }
+        else{
+            if(parseInt(this.props.person.balance[0].amount) > 0) {
+                this.setState({
+                    money: "INR " + this.props.person.balance[0].amount})
+                this.setState({ classNameToBePut: "text-xs py-1 px-2 leading-none dark:bg-gray-900 bg-green-100 text-green-600 rounded-md" })
+            }
+            if (parseInt(this.props.person.balance[0].amount) < 0) {
+                this.setState({
+                    money: "INR " + this.props.person.balance[0].amount * -1
+                })
+                this.setState({ classNameToBePut: "text-xs py-1 px-2 leading-none dark:bg-gray-900 bg-green-100 text-green-600 rounded-md color-red" })
+            }
+        } 
     }
 
     render() {
@@ -29,8 +41,8 @@ class Person extends React.Component {
                 {this.props.name}
             </div>
             <div class="flex items-center w-full">
-                <div class={this.state.classNameToBePut}>{this.props.dept}</div>
-                <div class="ml-auto text-xs text-gray-500">{this.props.money}</div>
+                <div class={this.state.classNameToBePut}>{this.state.money}</div>
+                <div class="ml-auto text-xs text-gray-500">{this.state.money}</div>
             </div>
         </button>;
     }
