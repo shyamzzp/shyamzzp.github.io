@@ -7,6 +7,7 @@ import FormData from 'form-data'
 import 'antd/dist/antd.dark.css'
 import {
   Table,
+  Empty,
 } from 'antd';
 
 const columns = [{
@@ -54,15 +55,14 @@ class App extends React.Component {
       userProfile: "./man.png",
       friendName: "",
       friendsExpenseData: [],
-      friendNameVs: '',
-      friendImageVs: '',
+      friendNameVs: 'Friend',
+      friendImageVs: 'https://image.flaticon.com/icons/png/512/848/848006.png',
       isDataLoading:true
     };
   }
   componentDidMount() {
     this.getData();
     this.getPersonalData();
-    this.getExpensesBtnFriends('9105114');
     this.setState({ isDataLoading: false })
     window.scrollTo(0, 0)
   }
@@ -159,10 +159,8 @@ class App extends React.Component {
       <div class="flex-grow overflow-hidden h-full flex flex-col">
         <div class="h-16 lg:flex w-full border-b border-gray-200 dark:border-gray-800 hidden px-10 padding-20">
           <div class="flex h-full text-gray-600 dark:text-gray-400">
-            <a href="#" class="cursor-pointer h-full border-b-2 border-transparent inline-flex items-center mr-8">Company</a>
             <a href="#" class="cursor-pointer h-full border-b-2 border-blue-500 text-blue-500 dark:text-white dark:border-white inline-flex mr-8 items-center">Friends</a>
-            <a href="#" class="cursor-pointer h-full border-b-2 border-transparent inline-flex items-center mr-8">Expense Centres</a>
-            <a href="#" class="cursor-pointer h-full border-b-2 border-transparent inline-flex items-center">Currency Exchange</a>
+            <a href="#" class="cursor-pointer h-full border-b-2 border-transparent inline-flex items-center mr-8">Groups</a>
           </div>
           <div class="ml-auto flex items-center space-x-7">
             {/* <button class="h-8 px-3 rounded-md shadow text-white bg-blue-500">Deposit</button> */}
@@ -181,7 +179,7 @@ class App extends React.Component {
         </div>
         <div class="flex-grow flex overflow-x-hidden">
           <div class="xl:w-72 w-48 flex-shrink-0 border-r border-gray-200 dark:border-gray-800 h-full overflow-y-auto lg:block hidden p-5">
-            <div class="text-xs text-gray-400 tracking-wider">USERS</div>
+            <div class="text-xs text-gray-400 tracking-wider">FRIENDS / CONNECTIONS</div>
             <div class="relative mt-2">
               <input type="text" class="pl-8 h-9 bg-transparent border border-gray-300 dark:border-gray-700 dark:text-white w-full rounded-md text-sm" placeholder="Search" />
               <svg viewBox="0 0 24 24" class="w-4 absolute text-gray-400 top-1/2 transform translate-x-0.5 -translate-y-1/2 left-2" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
@@ -233,6 +231,7 @@ class App extends React.Component {
             <div class="sm:p-7 p-4">
               <Table dataSource={this.state.friendsExpenseData} bordered
                 loading={this.state.isDataLoading}
+                locale={{ emptyText: <Empty description="Select friend to display Expenses."/> }}
                 columns={columns} />
             </div>
           </div>
