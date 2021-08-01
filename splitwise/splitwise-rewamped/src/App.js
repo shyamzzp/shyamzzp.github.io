@@ -55,15 +55,18 @@ class App extends React.Component {
       friendName: "",
       friendsExpenseData: [],
       friendNameVs: '',
-      friendImageVs: ''
+      friendImageVs: '',
+      isDataLoading:true
     };
   }
   componentDidMount() {
     this.getData();
     this.getPersonalData();
     this.getExpensesBtnFriends('9105114');
+    this.setState({ isDataLoading: false })
+    window.scrollTo(0, 0)
   }
-
+  
   getData() {
     this.sw.getFriends().then((item) => {
       item.forEach(element => {
@@ -76,9 +79,12 @@ class App extends React.Component {
   }
 
   handleOnClickChangeFriend = (propsChildren) => {
+    this.setState({ isDataLoading:true})
     this.setState({ friendNameVs: propsChildren.name });
     this.setState({ friendImageVs: propsChildren.image });
+    this.setState({ friendsExpenseData: [] });
     this.getExpensesBtnFriends(propsChildren.id)
+    
   }
 
   getPersonalData() {
@@ -89,8 +95,8 @@ class App extends React.Component {
   }
 
   getExpensesBtnFriends(friend_id) {
-    var data = new FormData();
 
+    var data = new FormData();
     var config = {
       method: 'get',
       url: 'api/v3.0/get_expenses?limit=1000000&friend_id='+friend_id,
@@ -104,9 +110,11 @@ class App extends React.Component {
     axios(config)
       .then((response) => {
         this.setState({ friendsExpenseData: response.data.expenses });
+        this.setState({ isDataLoading: false })
       })
       .catch(function (error) {
         console.log(error);
+        this.setState({ isDataLoading: false })
       });
   }
 
@@ -224,6 +232,7 @@ class App extends React.Component {
             </div>
             <div class="sm:p-7 p-4">
               <Table dataSource={this.state.friendsExpenseData} bordered
+                loading={this.state.isDataLoading}
                 columns={columns} />
             </div>
           </div>
