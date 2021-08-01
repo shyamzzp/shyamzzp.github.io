@@ -47,8 +47,16 @@ class App extends React.Component {
       consumerKey: constants.consumer_key,
       consumerSecret: constants.consumer_secret
     });
-    this.handleLanguage = this.handleLanguage.bind(this)
-    this.state = { data: [], personalData: Object, userProfile: "./man.png", friendName: "", friendsExpenseData: [], language: '' };
+    this.handleOnClickChangeFriend = this.handleOnClickChangeFriend.bind(this)
+    this.state = {
+      data: [], 
+      personalData: Object,
+      userProfile: "./man.png", 
+      friendName: "",
+      friendsExpenseData: [], 
+      friendNameVs: '', 
+      friendImageVs: ''
+    };
   }
   componentDidMount() {
     this.getData();
@@ -67,8 +75,9 @@ class App extends React.Component {
     });
   }
 
-  handleLanguage = (langValue) => {
-    this.setState({ language: langValue });
+  handleOnClickChangeFriend = (name,image) => {
+    this.setState({ friendNameVs: name });
+    this.setState({ friendImageVs: image });
   }
 
   getPersonalData() {
@@ -177,7 +186,7 @@ class App extends React.Component {
             </div>
 
             <div class="space-y-4 mt-3">
-              {this.state.data.map((eachPerson, i) => <Person onSelectLanguage={this.handleLanguage} name={eachPerson.first_name + " " + (eachPerson.last_name === null ? "" : eachPerson.last_name)}
+              {this.state.data.map((eachPerson, i) => <Person onSelectFriendParamChange={this.handleOnClickChangeFriend} name={eachPerson.first_name + " " + (eachPerson.last_name === null ? "" : eachPerson.last_name)}
                 dept={eachPerson.registration_status}
                 money="INR 2,794.00" image={eachPerson.picture.small} />)}
             </div>
@@ -186,8 +195,8 @@ class App extends React.Component {
             <div class="sm:px-7 sm:pt-7 px-4 pt-4 flex flex-col w-full border-b border-gray-200 bg-white dark:bg-gray-900 dark:text-white dark:border-gray-800 sticky top-0">
               <div class="flex w-full items-center">
                 <div class="flex items-center text-3xl text-gray-900 dark:text-white mr-4">
-                  <img src="https://assets.codepen.io/344846/internal/avatars/users/default.png?fit=crop&format=auto&height=512&version=1582611188&width=512" class="w-12 mr-4 rounded-full" alt="profile" />
-                  {this.state.language}
+                  <img src={this.state.friendImageVs} class="w-12 mr-4 rounded-full" alt="profile" />
+                  {this.state.friendNameVs}
                 </div>
                 <div class="flex items-center text-3xl text-gray-900 dark:text-white mr-4 ml-4">
                 </div>
