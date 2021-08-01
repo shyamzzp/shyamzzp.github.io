@@ -49,19 +49,19 @@ class App extends React.Component {
     });
     this.handleOnClickChangeFriend = this.handleOnClickChangeFriend.bind(this)
     this.state = {
-      data: [], 
+      data: [],
       personalData: Object,
-      userProfile: "./man.png", 
+      userProfile: "./man.png",
       friendName: "",
-      friendsExpenseData: [], 
-      friendNameVs: '', 
+      friendsExpenseData: [],
+      friendNameVs: '',
       friendImageVs: ''
     };
   }
   componentDidMount() {
     this.getData();
     this.getPersonalData();
-    this.getExpensesBtnFriends(this);
+    this.getExpensesBtnFriends('9105114');
   }
 
   getData() {
@@ -75,9 +75,10 @@ class App extends React.Component {
     });
   }
 
-  handleOnClickChangeFriend = (name,image) => {
-    this.setState({ friendNameVs: name });
-    this.setState({ friendImageVs: image });
+  handleOnClickChangeFriend = (propsChildren) => {
+    this.setState({ friendNameVs: propsChildren.name });
+    this.setState({ friendImageVs: propsChildren.image });
+    this.getExpensesBtnFriends(propsChildren.id)
   }
 
   getPersonalData() {
@@ -87,15 +88,12 @@ class App extends React.Component {
     })
   }
 
-  getExpensesBtnFriends(self) {
+  getExpensesBtnFriends(friend_id) {
     var data = new FormData();
-    data.append('friend_id', '9105114');
-    // data.append('friend_id', friend_id);
-    data.append('limit', '1000');
 
     var config = {
       method: 'get',
-      url: 'api/v3.0/get_expenses?limit=1000000',
+      url: 'api/v3.0/get_expenses?limit=1000000&friend_id='+friend_id,
       headers: {
         'Authorization': 'Bearer ' + constants.api_key,
         'Content-Type': 'application/json'
@@ -104,13 +102,12 @@ class App extends React.Component {
     };
 
     axios(config)
-      .then(function (response) {
-        self.setState({ friendsExpenseData: response.data.expenses });
+      .then((response) => {
+        this.setState({ friendsExpenseData: response.data.expenses });
       })
       .catch(function (error) {
         console.log(error);
       });
-
   }
 
   render() {
@@ -186,7 +183,7 @@ class App extends React.Component {
             </div>
 
             <div class="space-y-4 mt-3">
-              {this.state.data.map((eachPerson, i) => <Person onSelectFriendParamChange={this.handleOnClickChangeFriend} name={eachPerson.first_name + " " + (eachPerson.last_name === null ? "" : eachPerson.last_name)}
+              {this.state.data.map((eachPerson, i) => <Person onSelectFriendParamChange={this.handleOnClickChangeFriend} id={eachPerson.id} name={eachPerson.first_name + " " + (eachPerson.last_name === null ? "" : eachPerson.last_name)}
                 dept={eachPerson.registration_status}
                 money="INR 2,794.00" image={eachPerson.picture.small} />)}
             </div>
