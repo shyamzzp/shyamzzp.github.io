@@ -107,7 +107,7 @@ class App extends React.Component {
         <div class="h-16 lg:flex w-full border-b border-gray-200 dark:border-gray-800 hidden px-10 padding-20">
           <div class="flex h-full text-gray-600 dark:text-gray-400">
             <a href="#" class="cursor-pointer h-full border-b-2 border-transparent inline-flex items-center mr-8">Company</a>
-            <a href="#" class="cursor-pointer h-full border-b-2 border-blue-500 text-blue-500 dark:text-white dark:border-white inline-flex mr-8 items-center">Users</a>
+            <a href="#" class="cursor-pointer h-full border-b-2 border-blue-500 text-blue-500 dark:text-white dark:border-white inline-flex mr-8 items-center">Friends</a>
             <a href="#" class="cursor-pointer h-full border-b-2 border-transparent inline-flex items-center mr-8">Expense Centres</a>
             <a href="#" class="cursor-pointer h-full border-b-2 border-transparent inline-flex items-center">Currency Exchange</a>
           </div>
