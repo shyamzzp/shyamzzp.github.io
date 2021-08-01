@@ -6,9 +6,13 @@ import axios from 'axios'
 import FormData from 'form-data'
 import 'antd/dist/antd.dark.css'
 import {
+  Spin,
+  Switch,
   Table,
   Empty,
 } from 'antd';
+
+import { CloseOutlined, CheckOutlined } from '@ant-design/icons';
 
 const columns = [{
   title: 'Description',
@@ -40,6 +44,7 @@ const columns = [{
   } </span>
 },
 ];
+
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -57,7 +62,8 @@ class App extends React.Component {
       friendsExpenseData: [],
       friendNameVs: 'Friend',
       friendImageVs: 'https://image.flaticon.com/icons/png/512/848/848006.png',
-      isDataLoading:true
+      isDataLoading:true,
+      isSpinFriendsLoading:false
     };
   }
   componentDidMount() {
@@ -67,18 +73,39 @@ class App extends React.Component {
     window.scrollTo(0, 0)
   }
   
-  getData() {
-    this.sw.getFriends().then((item) => {
-      console.log(item)
-      item.sort(function (a, b) {
-        return new Date(b.updated_at) - new Date(a.updated_at);
+  showAllFriendsToggle(self,checked, evt) {
+    if(checked){
+      this.setState({ data: [] });
+      this.setState({ isSpinFriendsLoading: true })
+      this.sw.getFriends().then((item) => {
+        item.forEach(element => {
+          element.first_name = element.first_name.charAt(0).toUpperCase() + element.first_name.substr(1).toLowerCase();
+          element.last_name = element.last_name === null ? "" : (element.last_name.charAt(0).toUpperCase() + element.last_name.substr(1).toLowerCase());
+          element.registration_status = element.registration_status.charAt(0).toUpperCase() + element.registration_status.substr(1).toLowerCase();
+        });
+        this.setState({ isSpinFriendsLoading: false })
+        this.setState({ data: item });
       });
+    }else{
+      this.getData()
+    }
+  }
+
+  getData() {
+    this.setState({ data: [] });
+    this.setState({isSpinFriendsLoading:true})
+    this.sw.getFriends().then((item) => {
+      var filteredData = []
       item.forEach(element => {
         element.first_name = element.first_name.charAt(0).toUpperCase() + element.first_name.substr(1).toLowerCase();
         element.last_name = element.last_name === null ? "" : (element.last_name.charAt(0).toUpperCase() + element.last_name.substr(1).toLowerCase());
         element.registration_status = element.registration_status.charAt(0).toUpperCase() + element.registration_status.substr(1).toLowerCase();
+        if(element.balance.length>0 && (element.balance[0].amount)!=="0.0"){
+          filteredData.push(element)
+        }
       });
-      this.setState({ data: item });
+      this.setState({ isSpinFriendsLoading: false })
+      this.setState({ data: filteredData });
     });
   }
 
@@ -88,7 +115,6 @@ class App extends React.Component {
     this.setState({ friendImageVs: propsChildren.image });
     this.setState({ friendsExpenseData: [] });
     this.getExpensesBtnFriends(propsChildren.id)
-    
   }
 
   getPersonalData() {
@@ -99,7 +125,6 @@ class App extends React.Component {
   }
 
   getExpensesBtnFriends(friend_id) {
-
     var data = new FormData();
     var config = {
       method: 'get',
@@ -117,7 +142,6 @@ class App extends React.Component {
         this.setState({ isDataLoading: false })
       })
       .catch(function (error) {
-        console.log(error);
         this.setState({ isDataLoading: false })
       });
   }
@@ -183,20 +207,15 @@ class App extends React.Component {
         </div>
         <div class="flex-grow flex overflow-x-hidden">
           <div class="xl:w-72 w-48 flex-shrink-0 border-r border-gray-200 dark:border-gray-800 h-full overflow-y-auto lg:block hidden p-5">
-            <div class="text-xs text-gray-400 tracking-wider">FRIENDS / CONNECTIONS</div>
-            <div class="relative mt-2">
-              <input type="text" class="pl-8 h-9 bg-transparent border border-gray-300 dark:border-gray-700 dark:text-white w-full rounded-md text-sm" placeholder="Search" />
-              <svg viewBox="0 0 24 24" class="w-4 absolute text-gray-400 top-1/2 transform translate-x-0.5 -translate-y-1/2 left-2" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                <circle cx="11" cy="11" r="8"></circle>
-                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-              </svg>
+            <div class="relative">
+              <Switch unCheckedChildren="Show all" checkedChildren={<CheckOutlined />} onChange={(checked,evt) => this.showAllFriendsToggle(this,checked,evt)}/>
             </div>
-
-            <div class="space-y-4 mt-3">
-              {this.state.data.map((eachPerson, i) => <Person onSelectFriendParamChange={this.handleOnClickChangeFriend} id={eachPerson.id} name={eachPerson.first_name + " " + (eachPerson.last_name === null ? "" : eachPerson.last_name)}
-                dept={eachPerson.registration_status}
+            <div class="space-y-4 mt-4">
+              {this.state.isSpinFriendsLoading ? <center class="center-vertical"><Spin /></center>: this.state.data.map((eachPerson, i) => <Person
+                onSelectFriendParamChange={this.handleOnClickChangeFriend} 
+                id={eachPerson.id}
                 person = {eachPerson}
-                money="INR 2,794.00" image={eachPerson.picture.small} />)}
+                image={eachPerson.picture.small} />)}
             </div>
           </div>
           <div class="flex-grow bg-white dark:bg-gray-900 overflow-y-auto">

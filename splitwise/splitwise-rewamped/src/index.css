@@ -36,3 +36,7 @@ code {
 .color-red{
   color:rgba(255, 0, 0, 0.76) !important
 }
+
+.center-vertical{
+  margin-top: 50px;
+}
