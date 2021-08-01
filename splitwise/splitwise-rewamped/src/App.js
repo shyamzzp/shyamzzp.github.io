@@ -44,8 +44,8 @@ class App extends React.Component {
     super(props);
     this.Splitwise = require('splitwise')
     this.sw = this.Splitwise({
-      consumerKey: 'bk3LaPlmAJvVo60VwiPuijb6b4oCsRqTPbGcvgVC',
-      consumerSecret: 'nT9F7z82eKRE5KaJOSQNIdoH6rCcAT6qvkXnwWe3'
+      consumerKey: constants.consumer_key,
+      consumerSecret: constants.consumer_secret
     });
     this.state = { data: [], personalData: Object, userProfile: "", friendName:"", friendsExpenseData: [] };
   }
