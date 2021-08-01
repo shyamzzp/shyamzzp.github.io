@@ -1,8 +1,9 @@
 import './App.css';
 import Person from './components/Person';
 import React from 'react';
-var axios = require('axios');
-var FormData = require('form-data');
+// var axios = require('axios');
+import axios from 'axios'
+import FormData from 'form-data'
 
 
 class App extends React.Component {
@@ -13,11 +14,12 @@ class App extends React.Component {
       consumerKey: 'bk3LaPlmAJvVo60VwiPuijb6b4oCsRqTPbGcvgVC',
       consumerSecret: 'nT9F7z82eKRE5KaJOSQNIdoH6rCcAT6qvkXnwWe3'
     });
-    this.state = { data: [], personalData: Object, userProfile: "", friendName:"" };
+    this.state = { data: [], personalData: Object, userProfile: "", friendName:"", friendsExpenseData: [] };
   }
   componentDidMount() {
     this.getData();
     this.getPersonalData();
+    this.getExpensesBtnFriends(this);
   }
 
   getData() {
@@ -29,7 +31,6 @@ class App extends React.Component {
       });
       this.setState({ data: item });
     });
-
   }
 
   getPersonalData() {
@@ -39,29 +40,30 @@ class App extends React.Component {
     })
   }
 
-  getExpensesBtnFriends(friend_id) {
+  getExpensesBtnFriends(self) {
     var data = new FormData();
-    // data.append('friend_id', '9105114');
-    data.append('friend_id', friend_id);
-    data.append('limit', '100000000');
+    data.append('friend_id', '9105114');
+    // data.append('friend_id', friend_id);
+    data.append('limit', '1000');
 
     var config = {
       method: 'get',
-      url: 'https://secure.splitwise.com/api/v3.0/get_expenses',
+      url: 'api/v3.0/get_expenses?limit=1000000',
       headers: {
         'Authorization': 'Bearer UOpp7i32muEIrFwEi9bcR0BLgthIkDvBkgnCKPew',
-        ...data.getHeaders()
+        'Content-Type': 'application/json'
       },
       data: data
     };
 
     axios(config)
       .then(function (response) {
-        console.log(JSON.stringify(response.data));
+        self.setState({friendsExpenseData:response.data.expenses});
       })
       .catch(function (error) {
         console.log(error);
       });
+   
   }
 
   render() {
@@ -188,29 +190,32 @@ class App extends React.Component {
                   </tr>
                 </thead>
                 <tbody class="text-gray-600 dark:text-gray-100">
-                  <tr>
-                    <td class="sm:p-3 py-2 px-1 border-b border-gray-200 dark:border-gray-800">
-                      <div class="flex items-center">
-                        <img src="https://images.unsplash.com/photo-1521587765099-8835e7201186?ixlib=rb-1.2.1&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&ixid=eyJhcHBfaWQiOjE3Nzg0fQ" class="w-7 h-7 mr-2 rounded-full" alt="profile" />
-                        Card
-                      </div>
-                    </td>
-                    <td class="sm:p-3 py-2 px-1 border-b border-gray-200 dark:border-gray-800">
-                      <div class="flex items-center">
-                        PayPal
-                      </div>
-                    </td>
-                    <td class="sm:p-3 py-2 px-1 border-b border-gray-200 dark:border-gray-800 md:table-cell hidden">Subscription renewal</td>
-                    <td class="sm:p-3 py-2 px-1 border-b border-gray-200 dark:border-gray-800 text-red-500">- $120.00</td>
-                    <td class="sm:p-3 py-2 px-1 border-b border-gray-200 dark:border-gray-800">
-                      <div class="flex items-center">
-                        <div class="sm:flex hidden flex-col">
-                          24.12.2020
-                          <div class="text-gray-400 text-xs">11:16 AM</div>
+                  {this.state.friendsExpenseData.map((eachPerson, i) => 
+                    <tr>
+                      <td class="sm:p-3 py-2 px-1 border-b border-gray-200 dark:border-gray-800">
+                        <div class="flex items-center">
+                          <img src="https://images.unsplash.com/photo-1521587765099-8835e7201186?ixlib=rb-1.2.1&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&ixid=eyJhcHBfaWQiOjE3Nzg0fQ" class="w-7 h-7 mr-2 rounded-full" alt="profile" />
+                          eachPerson
                         </div>
-                      </div>
-                    </td>
-                  </tr>
+                      </td>
+                      <td class="sm:p-3 py-2 px-1 border-b border-gray-200 dark:border-gray-800">
+                        <div class="flex items-center">
+                          {/* {eachPerson.description} */}
+                        </div>
+                      </td>
+                      <td class="sm:p-3 py-2 px-1 border-b border-gray-200 dark:border-gray-800 md:table-cell hidden">{eachPerson.description}</td>
+                      <td class="sm:p-3 py-2 px-1 border-b border-gray-200 dark:border-gray-800 text-red-500">{eachPerson.currency_code+" "+eachPerson.cost}</td>
+                      <td class="sm:p-3 py-2 px-1 border-b border-gray-200 dark:border-gray-800">
+                        <div class="flex items-center">
+                          <div class="sm:flex hidden flex-col">
+                            {eachPerson.date.split('T')[0]}
+                            <div class="text-gray-400 text-xs">11:16 AM</div>
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+                  )}
+                  
                   <tr>
                     <td class="sm:p-3 py-2 px-1 border-b border-gray-200 dark:border-gray-800">
                       <div class="flex items-center">

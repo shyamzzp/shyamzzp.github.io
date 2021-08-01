@@ -1,5 +1,6 @@
 {
   "name": "splitwise-rewamped",
+  "proxy": "https://secure.splitwise.com/",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -11,6 +12,7 @@
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-scripts": "4.0.3",
+    "request": "^2.88.2",
     "web-vitals": "^1.0.1"
   },
   "scripts": {
