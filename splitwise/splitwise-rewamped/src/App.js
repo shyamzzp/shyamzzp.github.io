@@ -1,7 +1,7 @@
 import './App.css';
 import Person from './components/Person';
 import React from 'react';
-// var axios = require('axios');
+import { constants } from './constant'
 import axios from 'axios'
 import FormData from 'form-data'
 import 'antd/dist/antd.dark.css'
@@ -83,7 +83,7 @@ class App extends React.Component {
       method: 'get',
       url: 'api/v3.0/get_expenses?limit=1000000',
       headers: {
-        'Authorization': 'Bearer UOpp7i32muEIrFwEi9bcR0BLgthIkDvBkgnCKPew',
+        'Authorization': 'Bearer '+constants.api_key,
         'Content-Type': 'application/json'
       },
       data: data
