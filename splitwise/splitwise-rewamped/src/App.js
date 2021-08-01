@@ -47,6 +47,7 @@ class App extends React.Component {
       consumerKey: constants.consumer_key,
       consumerSecret: constants.consumer_secret
     });
+    this.handleLanguage = this.handleLanguage.bind(this)
     this.state = { data: [], personalData: Object, userProfile: "./man.png", friendName: "", friendsExpenseData: [], language: '' };
   }
   componentDidMount() {
@@ -186,7 +187,7 @@ class App extends React.Component {
               <div class="flex w-full items-center">
                 <div class="flex items-center text-3xl text-gray-900 dark:text-white mr-4">
                   <img src="https://assets.codepen.io/344846/internal/avatars/users/default.png?fit=crop&format=auto&height=512&version=1582611188&width=512" class="w-12 mr-4 rounded-full" alt="profile" />
-                  Mert Cukuren
+                  {this.state.language}
                 </div>
                 <div class="flex items-center text-3xl text-gray-900 dark:text-white mr-4 ml-4">
                 </div>

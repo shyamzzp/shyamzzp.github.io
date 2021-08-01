@@ -27,12 +27,20 @@
 // }
 
 // export default Person;
+
+
+
 import React from 'react';
 
 class Person extends React.Component {
     constructor(props) {
         super(props);
         this.state = { classNameToBePut: "", }
+    }
+
+    handleLangChange = (name) => {
+        this.props.onSelectLanguage(name);
+        
     }
 
     componentDidMount() {
@@ -48,7 +56,7 @@ class Person extends React.Component {
     }
 
     render() {
-        return <button class="bg-white p-3 w-full flex flex-col rounded-md dark:bg-gray-800 shadow-lg relative">
+        return <button onClick={() => this.handleLangChange(this.props.name)} class="bg-white p-3 w-full flex flex-col rounded-md dark:bg-gray-800 shadow-lg relative">
             <div class="flex xl:flex-row flex-col items-center font-medium text-gray-900 dark:text-white pb-2 mb-2 xl:border-b border-gray-200 border-opacity-75 dark:border-gray-700 w-full">
                 <img src={this.props.image} class="w-7 h-7 mr-2 rounded-full" alt="profile" />
                 {this.props.name}
