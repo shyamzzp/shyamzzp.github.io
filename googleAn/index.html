@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<title></title>
-	<!-- <script async src="https://www.googletagmanager.com/gtag/js?id=G-19V72WLZKV"></script>
+	<script async src="https://www.googletagmanager.com/gtag/js?id=G-19V72WLZKV"></script>
 	<script>
 		window.dataLayer = window.dataLayer || [];
 		function gtag() {
@@ -12,9 +12,11 @@
 		gtag('js', new Date());
 
 		gtag('config', 'G-19V72WLZKV');
-	</script> -->
+	</script>
 
-	<!-- Google Analytics -->
+	 <!-- Global Site Tag (gtag.js) - Google Analytics
+	 
+	<!-- Google Analytics
 	<script>
 		window.ga = window.ga || function () {
 			(ga.q = ga.q || []).push(arguments)
@@ -23,7 +25,7 @@
 		ga('create', 'G-19V72WLZKV', 'auto');
 		ga('send', 'pageview');
 	</script>
-	<script async src='https://www.google-analytics.com/analytics.js'></script>
+	<script async src='https://www.google-analytics.com/analytics.js'></script> -->
 	
 	<!-- End Google Analytics -->
 	<script>
@@ -33,6 +35,13 @@
 			eventCategory: 'Video',
 			eventAction: 'play',
 			eventLabel: 'cats.mp4'
+			});
+			var url = 'https://shyamzzp.github.io/googleAn/';
+			gtag('event', 'click', {
+			'event_category': 'outbound',
+			'event_label': url,
+			'transport_type': 'beacon',
+			'event_callback': function(){document.location = url;}
 			});
 		}
 	</script>
