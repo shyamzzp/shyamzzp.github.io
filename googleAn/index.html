@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<title></title>
-	<script async src="https://www.googletagmanager.com/gtag/js?id=G-19V72WLZKV"></script>
+	<!-- <script async src="https://www.googletagmanager.com/gtag/js?id=G-19V72WLZKV"></script>
 	<script>
 		window.dataLayer = window.dataLayer || [];
 		function gtag() {
@@ -12,10 +12,33 @@
 		gtag('js', new Date());
 
 		gtag('config', 'G-19V72WLZKV');
+	</script> -->
+
+	<!-- Google Analytics -->
+	<script>
+		window.ga = window.ga || function () {
+			(ga.q = ga.q || []).push(arguments)
+		};
+		ga.l = +new Date;
+		ga('create', 'G-19V72WLZKV', 'auto');
+		ga('send', 'pageview');
+	</script>
+	<script async src='https://www.google-analytics.com/analytics.js'></script>
+	
+	<!-- End Google Analytics -->
+	<script>
+		function hello(){
+			ga('send', {
+			hitType: 'event',
+			eventCategory: 'Video',
+			eventAction: 'play',
+			eventLabel: 'cats.mp4'
+			});
+		}
 	</script>
 </head>
 <body>
 	<h2>Hello World</h2>
-	<button onclick="alert('asdf')">Hello</button>
+	<button onclick="hello()">Hello</button>
 </body>
 </html>
