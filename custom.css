@@ -336,3 +336,11 @@ hr {
 .hero.is-info .title {
     color: rgba(52, 53, 65);
 }
+.blink_me {
+    color:green;
+    animation: blinker 1s linear infinite;
+  }
+  
+  @keyframes blinker {  
+    50% { opacity: 0; }
+  }
