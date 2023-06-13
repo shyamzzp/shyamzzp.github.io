@@ -344,3 +344,10 @@ hr {
   @keyframes blinker {  
     50% { opacity: 0; }
   }
+.title{
+    font-weight:100 !important;
+}
+
+  .body_class{
+    font-family:"Google Sans Display",Arial,Helvetica,sans-serif
+  }
