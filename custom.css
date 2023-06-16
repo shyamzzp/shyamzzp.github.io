@@ -360,3 +360,7 @@ hr {
     padding-left: 0.6em !important;
     padding-right: 0.6em !important;
 }
+
+.is-success{
+    background-color: #4c9766 !important;
+}
