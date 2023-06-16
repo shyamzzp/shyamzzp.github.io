@@ -351,3 +351,12 @@ hr {
   .body_class{
     font-family:"Google Sans Display",Arial,Helvetica,sans-serif
   }
+
+.tech-stack{
+    background-color: #36363621 !important;
+    color:#0e0e0e !important;
+    font-size: .7rem !important;
+    height: 1.7em !important;
+    padding-left: 0.6em !important;
+    padding-right: 0.6em !important;
+}
