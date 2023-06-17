@@ -314,7 +314,10 @@ function Home(){
                         </div>
                         <hr style={{ backgroundColor: "rgba(52, 53, 65, 0.137)" }} />
                         {/* <!-- Sections for the blog posts. START--> */}
-                        <BlogPost/>
+                        <div style={{display:'flex', gap:'20px'}}>
+                            <BlogPost title="Configure GitHub Pages" date="3rd June 2023" lang="TypeScript" />
+                            <BlogPost title="Everything about JWT Authentication" date="16th June 2023" lang="NodeJS" />
+                        </div>
                     </div>
                 </div>
             </section>

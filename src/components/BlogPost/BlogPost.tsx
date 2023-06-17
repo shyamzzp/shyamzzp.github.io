@@ -1,7 +1,7 @@
 import React from "react";
 import "./BlogPost.css";
 
-function BlogPost() {
+function BlogPost(props:any) {
     return (
         <div style={{ display: "flex", gap: "20px" }}>
             <div
@@ -14,6 +14,7 @@ function BlogPost() {
                     borderRadius: ".375rem",
                     border: "1px solid rgb(223 223 223)",
                     boxShadow: "5px 5px 0px 0 rgba(0,0,0,0.1)",
+                    height: 'fit-content'
                 }}
             >
                 <div
@@ -27,11 +28,11 @@ function BlogPost() {
                         className="project-header-title"
                         style={{
                             fontSize: "1.1rem",
-                            textAlign: "start",
                             fontWeight: "500",
+                            textAlign: "center",
                         }}
                     >
-                        Configure GitHub Pages
+                        {props.title}
                     </p>
                 </div>
 
@@ -43,9 +44,9 @@ function BlogPost() {
                         color: "#00000069",
                     }}
                 >
-                    <div style={{ fontSize: ".75rem", display: "flex" }}>TypeScript</div>
+                    <div style={{ fontSize: ".75rem", display: "flex" }}>{props.lang}</div>
                     <div style={{ fontSize: ".75rem", display: "flex" }}>
-                        16th June 2023
+                        {props.date}
                     </div>
                 </div>
             </div>
