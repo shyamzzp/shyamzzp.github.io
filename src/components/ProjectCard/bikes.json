@@ -1,0 +1,838 @@
+{
+    "companies": [
+        {
+            "name":"Adler",
+            "logo":"",
+            "description":"Adler is a German brand that was founded in 1880 by Herr Heinrich Kleyer in Frankfurt a.M. It started off with bicycle and tricycle production, and later moved on to office machines, automobiles, trucks and motorcycles, until the company filed for bankruptcy in 1957. In 1944, as a result of the bombings that targeted the whole city, the Adler factory was utterly destroyed, which left way for a more modern and well-equipped facility to take its place. This meant a new era for the brand, which started focusing primarily on small and accessible motorcycles, suitable for day-to-day use. Their motorcycles were well-known, and envied, at the time, for their reliability, and were the object of comparison for most of the motorcycle producers at the time.",
+            "in_production": {},
+            "discontinued": {
+                "count":"11",
+                "bikes":[
+
+                ]
+            }
+        },
+        {
+            "name":"AEON",
+            "logo":"",
+            "in_production": {},
+            "discontinued": {}
+        },
+        {
+            "name":"AERMACCHI",
+            "logo":"",
+            "in_production": {},
+            "discontinued": {}
+        },
+        {
+            "name":"AJP",
+            "logo":"",
+            "in_production": {},
+            "discontinued": {}
+        },
+        {
+            "name":"AJS",
+            "logo":"",
+            "in_production": {},
+            "discontinued": {}
+        },
+        {
+            "name":"ALTA MOTORS",
+            "logo":"",
+            "in_production": {},
+            "discontinued": {}
+        },
+        {
+            "name":"AMAZONAS",
+            "logo":"",
+            "in_production": {},
+            "discontinued": {}
+        },
+        {
+            "name":"APRILIA",
+            "logo":"",
+            "in_production": {},
+            "discontinued": {}
+        },
+        {
+            "name":"ARCTIC CAT",
+            "logo":"",
+            "in_production": {},
+            "discontinued": {}
+        },
+        {
+            "name":"ARIEL",
+            "logo":"",
+            "in_production": {},
+            "discontinued": {}
+        },
+        {
+            "name":"ATK",
+            "logo":"",
+            "in_production": {},
+            "discontinued": {}
+        },
+        {
+            "name":"BAJAJ",
+            "logo":"",
+            "in_production": {},
+            "discontinued": {}
+        },
+        {
+            "name":"BARIGO",
+            "logo":"",
+            "in_production": {},
+            "discontinued": {}
+        },
+        {
+            "name":"BENELLI",
+            "logo":"",
+            "in_production": {},
+            "discontinued": {}
+        },
+        {
+            "name":"BETA",
+            "logo":"",
+            "in_production": {},
+            "discontinued": {}
+        },
+        {
+            "name":"BFG",
+            "logo":"",
+            "in_production": {},
+            "discontinued": {}
+        },
+        {
+            "name":"Big Bear Choppers",
+            "logo":"",
+            "in_production": {},
+            "discontinued": {}
+        },
+        {
+            "name":"Big Dog",
+            "logo":"",
+            "in_production": {},
+            "discontinued": {}
+        },
+        {
+            "name":"BIMOTA",
+            "logo":"",
+            "in_production": {},
+            "discontinued": {}
+        },
+        {
+            "name":"BMW",
+            "logo":"",
+            "in_production": {},
+            "discontinued": {}
+        },
+        {
+            "name":"BORILE",
+            "logo":"",
+            "in_production": {},
+            "discontinued": {}
+        },
+        {
+            "name":"BOSS HOSS",
+            "logo":"",
+            "in_production": {},
+            "discontinued": {}
+        },
+        {
+            "name":"BRITTEN",
+            "logo":"",
+            "in_production": {},
+            "discontinued": {}
+        },
+        {
+            "name":"BROUGH SUPERIOR",
+            "logo":"",
+            "in_production": {},
+            "discontinued": {}
+        },
+        {
+            "name":"BSA",
+            "logo":"",
+            "in_production": {},
+            "discontinued": {}
+        },
+        {
+            "name":"BUELL",
+            "logo":"",
+            "in_production": {},
+            "discontinued": {}
+        },
+        {
+            "name":"CAGIVA",
+            "logo":"",
+            "in_production": {},
+            "discontinued": {}
+        },
+        {
+            "name":"CAN-AM/ BRP",
+            "logo":"",
+            "in_production": {},
+            "discontinued": {}
+        },
+        {
+            "name":"CANNONDALE",
+            "logo":"",
+            "in_production": {},
+            "discontinued": {}
+        },
+        {
+            "name":"CARVER",
+            "logo":"",
+            "in_production": {},
+            "discontinued": {}
+        },
+        {
+            "name":"CCM",
+            "logo":"",
+            "in_production": {},
+            "discontinued": {}
+        },
+        {
+            "name":"CEMEC",
+            "logo":"",
+            "in_production": {},
+            "discontinued": {}
+        },
+        {
+            "name":"CFMOTO",
+            "logo":"",
+            "in_production": {},
+            "discontinued": {}
+        },
+        {
+            "name":"CHAK MOTORS",
+            "logo":"",
+            "in_production": {},
+            "discontinued": {}
+        },
+        {
+            "name":"Christini",
+            "logo":"",
+            "in_production": {},
+            "discontinued": {}
+        },
+        {
+            "name":"CONDOR",
+            "logo":"",
+            "in_production": {},
+            "discontinued": {}
+        },
+        {
+            "name":"CONFEDERATE",
+            "logo":"",
+            "in_production": {},
+            "discontinued": {}
+        },
+        {
+            "name":"CPI",
+            "logo":"",
+            "in_production": {},
+            "discontinued": {}
+        },
+        {
+            "name":"CR&S",
+            "logo":"",
+            "in_production": {},
+            "discontinued": {}
+        },
+        {
+            "name":"DAELIM",
+            "logo":"",
+            "in_production": {},
+            "discontinued": {}
+        },
+        {
+            "name":"Dafra Motos",
+            "logo":"",
+            "in_production": {},
+            "discontinued": {}
+        },
+        {
+            "name":"DERBI",
+            "logo":"",
+            "in_production": {},
+            "discontinued": {}
+        },
+        {
+            "name":"DNEPR",
+            "logo":"",
+            "in_production": {},
+            "discontinued": {}
+        },
+        {
+            "name":"DUCATI",
+            "logo":"",
+            "in_production": {},
+            "discontinued": {}
+        },
+        {
+            "name":"EBR Motorcycles",
+            "logo":"",
+            "in_production": {},
+            "discontinued": {}
+        },
+        {
+            "name":"ECOSSE",
+            "logo":"",
+            "in_production": {},
+            "discontinued": {}
+        },
+        {
+            "name":"ENERGICA",
+            "logo":"",
+            "in_production": {},
+            "discontinued": {}
+        },
+        {
+            "name":"EXCELSIOR",
+            "logo":"",
+            "in_production": {},
+            "discontinued": {}
+        },
+        {
+            "name":"FISCHER",
+            "logo":"",
+            "in_production": {},
+            "discontinued": {}
+        },
+        {
+            "name":"GAS GAS",
+            "logo":"",
+            "in_production": {},
+            "discontinued": {}
+        },
+        {
+            "name":"GEELY",
+            "logo":"",
+            "in_production": {},
+            "discontinued": {}
+        },
+        {
+            "name":"GG MOTORRAD",
+            "logo":"",
+            "in_production": {},
+            "discontinued": {}
+        },
+        {
+            "name":"GHEZZI-BRIAN",
+            "logo":"",
+            "in_production": {},
+            "discontinued": {}
+        },
+        {
+            "name":"GILERA",
+            "logo":"",
+            "in_production": {},
+            "discontinued": {}
+        },
+        {
+            "name":"HARLEY-DAVIDSON",
+            "logo":"",
+            "in_production": {},
+            "discontinued": {}
+        },
+        {
+            "name":"HARTFORD",
+            "logo":"",
+            "in_production": {},
+            "discontinued": {}
+        },
+        {
+            "name":"HENDERSON",
+            "logo":"",
+            "in_production": {},
+            "discontinued": {}
+        },
+        {
+            "name":"HERCULES",
+            "logo":"",
+            "in_production": {},
+            "discontinued": {}
+        },
+        {
+            "name":"HERO",
+            "logo":"",
+            "in_production": {},
+            "discontinued": {}
+        },
+        {
+            "name":"HESKETH",
+            "logo":"",
+            "in_production": {},
+            "discontinued": {}
+        },
+        {
+            "name":"HIGHLAND",
+            "logo":"",
+            "in_production": {},
+            "discontinued": {}
+        },
+        {
+            "name":"HODAKA",
+            "logo":"",
+            "in_production": {},
+            "discontinued": {}
+        },
+        {
+            "name":"HONDA",
+            "logo":"",
+            "in_production": {},
+            "discontinued": {}
+        },
+        {
+            "name":"HOREX",
+            "logo":"",
+            "in_production": {},
+            "discontinued": {}
+        },
+        {
+            "name":"HUSABERG",
+            "logo":"",
+            "in_production": {},
+            "discontinued": {}
+        },
+        {
+            "name":"HUSQVARNA",
+            "logo":"",
+            "in_production": {},
+            "discontinued": {}
+        },
+        {
+            "name":"HYOSUNG",
+            "logo":"",
+            "in_production": {},
+            "discontinued": {}
+        },
+        {
+            "name":"INDIAN",
+            "logo":"",
+            "in_production": {},
+            "discontinued": {}
+        },
+        {
+            "name":"ITALJET",
+            "logo":"",
+            "in_production": {},
+            "discontinued": {}
+        },
+        {
+            "name":"IZH",
+            "logo":"",
+            "in_production": {},
+            "discontinued": {}
+        },
+        {
+            "name":"JAWA",
+            "logo":"",
+            "in_production": {},
+            "discontinued": {}
+        },
+        {
+            "name":"JUNAK",
+            "logo":"",
+            "in_production": {},
+            "discontinued": {}
+        },
+        {
+            "name":"KANUNI",
+            "logo":"",
+            "in_production": {},
+            "discontinued": {}
+        },
+        {
+            "name":"KASINSKI",
+            "logo":"",
+            "in_production": {},
+            "discontinued": {}
+        },
+        {
+            "name":"KAWASAKI",
+            "logo":"",
+            "in_production": {},
+            "discontinued": {}
+        },
+        {
+            "name":"KTM",
+            "logo":"",
+            "in_production": {},
+            "discontinued": {}
+        },
+        {
+            "name":"KYMCO",
+            "logo":"",
+            "in_production": {},
+            "discontinued": {}
+        },
+        {
+            "name":"LAVERDA",
+            "logo":"",
+            "in_production": {},
+            "discontinued": {}
+        },
+        {
+            "name":"LEHMAN TRIKES",
+            "logo":"",
+            "in_production": {},
+            "discontinued": {}
+        },
+        {
+            "name":"LIFAN",
+            "logo":"",
+            "in_production": {},
+            "discontinued": {}
+        },
+        {
+            "name":"LINHAI",
+            "logo":"",
+            "in_production": {},
+            "discontinued": {}
+        },
+        {
+            "name":"MAGNI",
+            "logo":"",
+            "in_production": {},
+            "discontinued": {}
+        },
+        {
+            "name":"MAICO",
+            "logo":"",
+            "in_production": {},
+            "discontinued": {}
+        },
+        {
+            "name":"MALAGUTI",
+            "logo":"",
+            "in_production": {},
+            "discontinued": {}
+        },
+        {
+            "name":"MARUSHO-LILAC",
+            "logo":"",
+            "in_production": {},
+            "discontinued": {}
+        },
+        {
+            "name":"MASH",
+            "logo":"",
+            "in_production": {},
+            "discontinued": {}
+        },
+        {
+            "name":"MATCHLESS",
+            "logo":"",
+            "in_production": {},
+            "discontinued": {}
+        },
+        {
+            "name":"MBK",
+            "logo":"",
+            "in_production": {},
+            "discontinued": {}
+        },
+        {
+            "name":"MEGELLI",
+            "logo":"",
+            "in_production": {},
+            "discontinued": {}
+        },
+        {
+            "name":"MIDUAL",
+            "logo":"",
+            "in_production": {},
+            "discontinued": {}
+        },
+        {
+            "name":"MIKILON",
+            "logo":"",
+            "in_production": {},
+            "discontinued": {}
+        },
+        {
+            "name":"MODENAS",
+            "logo":"",
+            "in_production": {},
+            "discontinued": {}
+        },
+        {
+            "name":"MONDIAL",
+            "logo":"",
+            "in_production": {},
+            "discontinued": {}
+        },
+        {
+            "name":"MOTO GUZZI",
+            "logo":"",
+            "in_production": {},
+            "discontinued": {}
+        },
+        {
+            "name":"MOTO MORINI",
+            "logo":"",
+            "in_production": {},
+            "discontinued": {}
+        },
+        {
+            "name":"MOTOCZYSZ",
+            "logo":"",
+            "in_production": {},
+            "discontinued": {}
+        },
+        {
+            "name":"MOTORHISPANIA",
+            "logo":"",
+            "in_production": {},
+            "discontinued": {}
+        },
+        {
+            "name":"MOTUS",
+            "logo":"",
+            "in_production": {},
+            "discontinued": {}
+        },
+        {
+            "name":"MTT",
+            "logo":"",
+            "in_production": {},
+            "discontinued": {}
+        },
+        {
+            "name":"MUNCH",
+            "logo":"",
+            "in_production": {},
+            "discontinued": {}
+        },
+        {
+            "name":"MV AGUSTA",
+            "logo":"",
+            "in_production": {},
+            "discontinued": {}
+        },
+        {
+            "name":"MZ",
+            "logo":"",
+            "in_production": {},
+            "discontinued": {}
+        },
+        {
+            "name":"NCR",
+            "logo":"",
+            "in_production": {},
+            "discontinued": {}
+        },
+        {
+            "name":"NORTON",
+            "logo":"",
+            "in_production": {},
+            "discontinued": {}
+        },
+        {
+            "name":"OSSA",
+            "logo":"",
+            "in_production": {},
+            "discontinued": {}
+        },
+        {
+            "name":"PETRONAS",
+            "logo":"",
+            "in_production": {},
+            "discontinued": {}
+        },
+        {
+            "name":"PEUGEOT",
+            "logo":"",
+            "in_production": {},
+            "discontinued": {}
+        },
+        {
+            "name":"PGO",
+            "logo":"",
+            "in_production": {},
+            "discontinued": {}
+        },
+        {
+            "name":"PIAGGIO",
+            "logo":"",
+            "in_production": {},
+            "discontinued": {}
+        },
+        {
+            "name":"POLARIS",
+            "logo":"",
+            "in_production": {},
+            "discontinued": {}
+        },
+        {
+            "name":"RIEJU MOTORS",
+            "logo":"",
+            "in_production": {},
+            "discontinued": {}
+        },
+        {
+            "name":"ROYAL ENFIELD",
+            "logo":"",
+            "in_production": {},
+            "discontinued": {}
+        },
+        {
+            "name":"SACHS",
+            "logo":"",
+            "in_production": {},
+            "discontinued": {}
+        },
+        {
+            "name":"SCORPA",
+            "logo":"",
+            "in_production": {},
+            "discontinued": {}
+        },
+        {
+            "name":"SHERCO",
+            "logo":"",
+            "in_production": {},
+            "discontinued": {}
+        },
+        {
+            "name":"SIMSON",
+            "logo":"",
+            "in_production": {},
+            "discontinued": {}
+        },
+        {
+            "name":"Super SOCO",
+            "logo":"",
+            "in_production": {},
+            "discontinued": {}
+        },
+        {
+            "name":"SUZUKI",
+            "logo":"",
+            "in_production": {},
+            "discontinued": {}
+        },
+        {
+            "name":"SWM",
+            "logo":"",
+            "in_production": {},
+            "discontinued": {}
+        },
+        {
+            "name":"SYM",
+            "logo":"",
+            "in_production": {},
+            "discontinued": {}
+        },
+        {
+            "name":"TGB",
+            "logo":"",
+            "in_production": {},
+            "discontinued": {}
+        },
+        {
+            "name":"TRIUMPH",
+            "logo":"",
+            "in_production": {},
+            "discontinued": {}
+        },
+        {
+            "name":"URAL",
+            "logo":"",
+            "in_production": {},
+            "discontinued": {}
+        },
+        {
+            "name":"VELOCETTE",
+            "logo":"",
+            "in_production": {},
+            "discontinued": {}
+        },
+        {
+            "name":"VENTO",
+            "logo":"",
+            "in_production": {},
+            "discontinued": {}
+        },
+        {
+            "name":"VERUCCI",
+            "logo":"",
+            "in_production": {},
+            "discontinued": {}
+        },
+        {
+            "name":"VESPA",
+            "logo":"",
+            "in_production": {},
+            "discontinued": {}
+        },
+        {
+            "name":"VICTORY",
+            "logo":"",
+            "in_production": {},
+            "discontinued": {}
+        },
+        {
+            "name":"VINCENT HRD",
+            "logo":"",
+            "in_production": {},
+            "discontinued": {}
+        },
+        {
+            "name":"VOR",
+            "logo":"",
+            "in_production": {},
+            "discontinued": {}
+        },
+        {
+            "name":"VOXAN",
+            "logo":"",
+            "in_production": {},
+            "discontinued": {}
+        },
+        {
+            "name":"VYRUS",
+            "logo":"",
+            "in_production": {},
+            "discontinued": {}
+        },
+        {
+            "name":"WAKAN",
+            "logo":"",
+            "in_production": {},
+            "discontinued": {}
+        },
+        {
+            "name":"WHIZZER",
+            "logo":"",
+            "in_production": {},
+            "discontinued": {}
+        },
+        {
+            "name":"WRM",
+            "logo":"",
+            "in_production": {},
+            "discontinued": {}
+        },
+        {
+            "name":"YAMAHA",
+            "logo":"",
+            "in_production": {},
+            "discontinued": {}
+        },
+        {
+            "name":"ZERO",
+            "logo":"",
+            "in_production": {},
+            "discontinued": {}
+        },
+        {
+            "name":"ZUNDAPP",
+            "logo":"",
+            "in_production": {},
+            "discontinued": {}
+        },
+    ]
+}

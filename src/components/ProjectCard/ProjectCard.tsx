@@ -2,7 +2,7 @@ import React from 'react'
 import live from '../../img/live.png';
 import github from '../../img/github.png';
 
-function ProjectCard() {
+function ProjectCard(props: any) {
     return (
         <div style={{ display: "flex", gap: "20px" }}>
             <div
@@ -18,70 +18,66 @@ function ProjectCard() {
                 }}
             >
                 <div
+                    className="project-header-title"
                     style={{
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "space-between",
+                        fontSize: "1.1rem",
+                        textAlign: "start",
+                        fontWeight: "500",
+                        display: "flex", justifyContent: 'space-between'
                     }}
                 >
+                    <p>{props.header} <span className={props.live_demo?"blink_me":""} style={{ marginLeft: '5px' }}> {props.live_demo?'•':'🚧'}</span></p>
                     <div
-                        className="project-header-title"
                         style={{
-                            fontSize: "1.25rem",
-                            textAlign: "start",
-                            fontWeight: "500",
+                            fontSize: "25px",
                             display: "flex",
+                            marginLeft: "40px",
                         }}
                     >
-                        Interview Preparation <span className="blink_me" style={{ marginLeft: '5px' }}> •</span>
-                        <div
-                            style={{
-                                fontSize: "25px",
-                                display: "flex",
-                                marginLeft: "40px",
-                            }}
+                        <a
+                            href={props.github_source_code_link}
+                            target="_blank"
+                            style={{ display: "flex", alignItems: "center" }}
+                            rel="noreferrer"
                         >
-                            <a
-                                href="https://github.com/shyamzzp/interview"
-                                target="_blank"
-                                style={{ display: "flex", alignItems: "center" }}
-                                rel="noreferrer"
-                            >
-                                <img
-                                    src={github}
-                                    width="25"
-                                    alt=""
-                                    style={{ marginRight: "5px" }}
-                                />
-                            </a>
-                            <a
-                                href="https://shyamzzp.github.io/interview/"
-                                target="_blank"
-                                style={{
-                                    display: "flex",
-                                    alignItems: "center",
-                                    marginLeft: "5px",
-                                }}
-                                rel="noreferrer"
-                            >
-                                <img
-                                    src={live}
-                                    width="25"
-                                    alt=""
-                                    style={{ marginRight: "5px" }}
-                                />
-                            </a>
-                        </div>
+                            <img
+                                src={github}
+                                width="25"
+                                alt=""
+                                style={{ marginRight: "5px" }}
+                            />
+                        </a>
+                        <a
+                            href={props.live_link}
+                            target="_blank"
+                            style={{
+                                display: "flex",
+                                alignItems: "center",
+                                marginLeft: "5px",
+                            }}
+                            rel="noreferrer"
+                        >
+                            <img
+                                src={live}
+                                width="25"
+                                alt=""
+                                style={{ marginRight: "5px" }}
+                            />
+                        </a>
                     </div>
                 </div>
                 <p
                     className="project-header-sub-title"
-                    style={{ fontSize: ".875rem", textAlign: "start" }}
+                    style={{ fontSize: ".875rem", textAlign: "start", marginTop:'10px' }}
                 >
-                    • Enhance technical skills. <br />
-                    • Prepare for Coding Interviews. <br />
-                    • Structural approach to tackle challenges. <br />• Deep dive
-                    into System Design.
+                    {props.description.map((item: any) => {
+                        return (
+                            <span>
+                                {item}
+                                <br />
+                            </span>
+                        );
+                    })}
                 </p>
 
                 <div style={{ marginTop: "5px", display: 'flex', gap: '5px' }}>

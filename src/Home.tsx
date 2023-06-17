@@ -7,10 +7,12 @@ import stackoverflow from "./img/stack-overflow.png";
 import github from './img/github.png';
 import "./bulma.min.css";
 import "./App.css";
-import ProjectCard from "./components/ProjectCard/ProjectCard";
+import ProjectCard from './components/ProjectCard/ProjectCard';
 import BlogPost from "./components/BlogPost/BlogPost";
 
 function Home(){
+    const BikeDB = ["• A Web App for bike rental service.", "• A REST API using Node.js and Express.js.", "• Used MongoDB for database.", "• Used JWT for authentication."];
+    const InterviewPreparation = ["• Enhance technical skills.", "• Prepare for Coding Interviews.", "• Structural approach to tackle challenges.", "• Deep dive into System Design."];
     return (
         <div id="app">
             <div className="modal">
@@ -306,7 +308,10 @@ function Home(){
                         </div>
 
                         <hr style={{ backgroundColor: "rgba(52, 53, 65, 0.137)" }} />
-                        <ProjectCard />
+                        <div style={{display:'flex', gap:'20px'}}>
+                            <ProjectCard header="Interview Preparation" description={InterviewPreparation} github_source_code_link="https://github.com/shyamzzp/interview" live_demo="https://shyamzzp.github.io/interview/" tags=""></ProjectCard>
+                            <ProjectCard header="Bike Rental Service" description={BikeDB}/>
+                        </div>
                         <hr style={{ backgroundColor: "rgba(52, 53, 65, 0.137)" }} />
                         {/* <!-- Sections for the blog posts. START--> */}
                         <BlogPost/>
