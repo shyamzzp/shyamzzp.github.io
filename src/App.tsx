@@ -1,5 +1,5 @@
 import React from 'react';
-import logo from './logo.svg';
+import './bulma.min.css';
 import './App.css';
 
 function App() {
@@ -96,7 +96,7 @@ function App() {
                     >
                         Shyam Suthar <span><a
                                 href="https://github.com/shyamzzp/shyamzzp.github.io/raw/master/resume/ShyamSS-resume.pdf"
-                                target="_blank" rel="noreferrer"><img src="cv.png" width="40" style={{marginRight:'5px'}}
+                                target="_blank" rel="noreferrer"><img src="cv.png" width="40" style={{marginRight:'5px'}} alt=""
                                      /></a></span></h4>
                     <h3 className="title title-sub" 
                     style={{fontSize:'25px',marginBottom:'10px'}} >Sen. Software Development
@@ -104,16 +104,16 @@ function App() {
                     <div 
                     style={{fontSize:'25px',marginBottom:'30px'}} 
                     >
-                        <a href="https://join.skype.com/invite/vS8AjAHY3sZx" target="_blank" rel="noreferrer"> <img src="skype.png"
+                        <a href="https://join.skype.com/invite/vS8AjAHY3sZx" target="_blank" rel="noreferrer"> <img src="skype.png" alt=""
                                 width="25" style={{marginRight:'5px'}} /></a>
-                        <a href="https://api.whatsapp.com/send?phone=9501891381" target="_blank" rel="noreferrer"><img src="whatsapp.png"
+                        <a href="https://api.whatsapp.com/send?phone=9501891381" target="_blank" rel="noreferrer"><img src="whatsapp.png" alt=""
                                 width="25" style={{marginRight:'5px'}} /></a>
-                        <a href="https://www.linkedin.com/in/shyamzzp/" target="_blank" rel="noreferrer"><img src="linkedin.png"
+                        <a href="https://www.linkedin.com/in/shyamzzp/" target="_blank" rel="noreferrer"><img src="linkedin.png" alt=""
                                 width="25" style={{marginRight:'5px'}} /></a>
-                        <a href="https://github.com/shyamzzp" target="_blank" rel="noreferrer"><img src="github.png" width="25"
+                        <a href="https://github.com/shyamzzp" target="_blank" rel="noreferrer"><img src="github.png" width="25" alt=""
                                 style={{marginRight:'5px'}} /></a>
                         <a href="https://stackoverflow.com/users/5853122/shyamzzp" target="_blank" rel="noreferrer"><img
-                                src="stack-overflow.png" width="25" style={{marginRight:'5px'}} /></a>
+                                src="stack-overflow.png" width="25" style={{marginRight:'5px'}} alt=""/></a>
                     </div>
 
                     <div className="tags">
@@ -183,13 +183,13 @@ function App() {
                                     >
                                         <a href="https://github.com/shyamzzp/interview" target="_blank"
                                             style={{display:'flex', alignItems:'center'}} rel="noreferrer"
-                                            ><img src="github.png" width="25"
+                                            ><img src="github.png" width="25" alt=""
                                                 style={{marginRight:'5px'}}/></a>
                                         <a href="https://shyamzzp.github.io/interview/" target="_blank"
                                             
                                             style={{display:'flex', alignItems:'center', marginLeft:'5px'}} rel="noreferrer"
                                             ><img
-                                                src="live.png" width="25" 
+                                                src="live.png" width="25"  alt=""
                                                 style={{marginRight:'5px'}}
                                                 /></a>
                                     </div>
@@ -222,9 +222,7 @@ function App() {
                     style={{backgroundColor:'rgba(52, 53, 65, 0.137)'}}
                     />
                     {/* <!-- Sections for the blog posts. START--> */}
-                    <div 
-                    style={{display:'flex', gap:'20px'}}
-                    >
+                    <div style={{display:'flex', gap:'20px'}}>
                         <div className="section" 
                         
                             style={{padding: '1rem 1rem 1rem', color:'rgba(52,53,65)', maxWidth:'25rem', width:'fit-content', borderRadius:'.375rem', border: '1px solid rgb(223 223 223)', boxShadow: '5px 5px 0px 0 rgba(0,0,0,0.1)'}}
