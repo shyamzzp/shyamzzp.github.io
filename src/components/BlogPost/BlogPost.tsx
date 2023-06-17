@@ -26,7 +26,7 @@ function BlogPost() {
                     <p
                         className="project-header-title"
                         style={{
-                            fontSize: "1.25rem",
+                            fontSize: "1.1rem",
                             textAlign: "start",
                             fontWeight: "500",
                         }}
