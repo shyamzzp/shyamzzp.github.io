@@ -81,24 +81,16 @@ function ProjectCard(props: any) {
                 </p>
 
                 <div style={{ marginTop: "5px", display: 'flex', gap: '5px' }}>
-                    <span
-                        className="tag is-dark tech-stack"
-                        style={{ marginTop: "5px", backgroundColor: "#3636367d" }}
-                    >
-                        ReactJS
-                    </span>
-                    <span
-                        className="tag is-dark tech-stack"
-                        style={{ marginTop: "5px", backgroundColor: "#3636367d" }}
-                    >
-                        Docusaurus
-                    </span>
-                    <span
-                        className="tag is-dark tech-stack"
-                        style={{ marginTop: "5px", backgroundColor: "#3636367d" }}
-                    >
-                        TypeScript
-                    </span>
+                    {props?.tags.map((item: any) => {
+                        return (
+                            <span
+                                className="tag is-dark tech-stack"
+                                style={{ marginTop: "5px", backgroundColor: "#3636367d" }}
+                            >
+                                {item}
+                            </span>
+                        );
+                    })}
                 </div>
             </div>
         </div>

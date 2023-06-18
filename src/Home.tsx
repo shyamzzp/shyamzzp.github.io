@@ -11,9 +11,13 @@ import ProjectCard from './components/ProjectCard/ProjectCard';
 import BlogPost from "./components/BlogPost/BlogPost";
 import TitleDesc from "./components/TitleDesc/TitleDesc";
 
-function Home(){
+function Home() {
     const BikeDB = ["• A Web App for bike rental service.", "• A REST API using Node.js and Express.js.", "• Used MongoDB for database.", "• Used JWT for authentication."];
+    const FindMentor = ["• A Web App for finding mentors in your field.", "• Access to Experienced Mentors.", "• Skill Development and Learning Opportunities.", "• Trackable Progress and Feedback"];
     const InterviewPreparation = ["• Enhance technical skills.", "• Prepare for Coding Interviews.", "• Structural approach to tackle challenges.", "• Deep dive into System Design."];
+
+    const FindMentorTags = ["TypeScript", "PocketBase", "VueJS", "REST"]
+    const InterviewPreparationTags = ["ReactJS", "Docusaurus", "TypeScript", "Markdown"]
     return (
         <div id="app">
             <div className="modal">
@@ -309,17 +313,30 @@ function Home(){
                         </div>
 
                         <hr style={{ backgroundColor: "rgba(52, 53, 65, 0.137)" }} />
-                        <TitleDesc title="Projects" desc="Below is the list of projects that I have worked upon in my technical career. These projects exemplify my expertise, technical skills, and contributions as a senior software engineer, showcasing my ability to deliver robust solutions and drive impactful results."/>
-                        <div style={{display:'flex', gap:'20px'}}>
-                            <ProjectCard header="Interview Preparation" description={InterviewPreparation} github_source_code_link="https://github.com/shyamzzp/interview" live_demo="https://shyamzzp.github.io/interview/" tags=""></ProjectCard>
-                            <ProjectCard header="Bike Rental Service" description={BikeDB}/>
+                        <TitleDesc title="Projects" desc="Below is the list of projects that I have worked upon in my technical career. These projects exemplify my expertise, technical skills, and contributions as a senior software engineer, showcasing my ability to deliver robust solutions and drive impactful results." />
+                        <div style={{ display: 'flex', gap: '20px' }}>
+                            <ProjectCard
+                                header="Interview Preparation"
+                                tags={InterviewPreparationTags}
+                                description={InterviewPreparation}
+                                github_source_code_link="https://github.com/shyamzzp/interview"
+                                live_demo="https://shyamzzp.github.io/interview/" />
+                            <ProjectCard 
+                                header="Find Mentor" 
+                                description={FindMentor} 
+                                tags={FindMentorTags} />
+                            <ProjectCard 
+                                header="Bike Rental Service" 
+                                tags={FindMentorTags} 
+                                description={BikeDB} />
+
                         </div>
                         <hr style={{ backgroundColor: "rgba(52, 53, 65, 0.137)" }} />
                         {/* <!-- Sections for the blog posts. START--> */}
                         <p style={{ fontSize: '22px', color: '#4a4a4a', marginBottom: '0px', }}>Blogs</p>
                         <p style={{ fontSize: '16px', color: '#4a4a4a', marginBottom: '20px', marginTop: '0', maxWidth: '70%' }}>In the Blogs section, you will find a collection of articles that I have written throughout my career as a senior software engineer. These articles reflect my passion for sharing knowledge, insights, and best practices in the field of software development.
-Each blog post dives deep into a specific topic, providing valuable information and practical advice based on my extensive experience.</p>
-                        <div style={{display:'flex', gap:'20px'}}>
+                            Each blog post dives deep into a specific topic, providing valuable information and practical advice based on my extensive experience.</p>
+                        <div style={{ display: 'flex', gap: '20px' }}>
                             <BlogPost title="Configure GitHub Pages" date="3rd June 2023" lang="TypeScript" />
                             <BlogPost title="Everything about JWT Authentication" date="16th June 2023" lang="NodeJS" />
                             <BlogPost title="GPG Signing for GIT Users" date="16th June 2023" lang="NodeJS" />
