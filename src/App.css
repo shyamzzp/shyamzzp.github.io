@@ -371,3 +371,15 @@ hr {
   background-color: #d19066 !important;
   color: #ffffff !important;
 }
+
+::-webkit-scrollbar-thumb {
+  background: #aaa;
+  border-radius: 6px;
+  border: 1px solid #aaa;
+}
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+  
+  /* background-color: #aaa; */
+}

@@ -328,18 +328,6 @@ function Home() {
                             <ProjectCard 
                                 header="Bike Rental Service" 
                                 tags={FindMentorTags} 
-                                description={BikeDB} /><ProjectCard 
-                                header="Bike Rental Service" 
-                                tags={FindMentorTags} 
-                                description={BikeDB} /><ProjectCard 
-                                header="Bike Rental Service" 
-                                tags={FindMentorTags} 
-                                description={BikeDB} /><ProjectCard 
-                                header="Bike Rental Service" 
-                                tags={FindMentorTags} 
-                                description={BikeDB} /><ProjectCard 
-                                header="Bike Rental Service" 
-                                tags={FindMentorTags} 
                                 description={BikeDB} />
 
                         </div>
