@@ -314,7 +314,7 @@ function Home() {
 
                         <hr style={{ backgroundColor: "rgba(52, 53, 65, 0.137)" }} />
                         <TitleDesc title="Projects" desc="Below is the list of projects that I have worked upon in my technical career. These projects exemplify my expertise, technical skills, and contributions as a senior software engineer, showcasing my ability to deliver robust solutions and drive impactful results." />
-                        <div style={{ display: 'flex', gap: '20px' }}>
+                        <div style={{ display: 'flex', gap: '20px', overflow:'auto' }}>
                             <ProjectCard
                                 header="Interview Preparation"
                                 tags={InterviewPreparationTags}
@@ -326,6 +326,18 @@ function Home() {
                                 description={FindMentor} 
                                 tags={FindMentorTags} />
                             <ProjectCard 
+                                header="Bike Rental Service" 
+                                tags={FindMentorTags} 
+                                description={BikeDB} /><ProjectCard 
+                                header="Bike Rental Service" 
+                                tags={FindMentorTags} 
+                                description={BikeDB} /><ProjectCard 
+                                header="Bike Rental Service" 
+                                tags={FindMentorTags} 
+                                description={BikeDB} /><ProjectCard 
+                                header="Bike Rental Service" 
+                                tags={FindMentorTags} 
+                                description={BikeDB} /><ProjectCard 
                                 header="Bike Rental Service" 
                                 tags={FindMentorTags} 
                                 description={BikeDB} />

@@ -4,14 +4,14 @@ import github from '../../img/github.png';
 
 function ProjectCard(props: any) {
     return (
-        <div style={{ display: "flex", gap: "20px" }}>
+        <div style={{ display: "flex", gap: "20px", marginBottom:'20px' }}>
             <div
                 className="section"
                 style={{
                     padding: "1rem 1rem 1rem",
                     color: "rgba(52,53,65)",
-                    maxWidth: "25rem",
-                    width: "fit-content",
+                    width: "22rem",
+                    height: "fit-content",
                     borderRadius: ".375rem",
                     border: "1px solid rgb(223 223 223)",
                     boxShadow: 'rgba(0, 0, 0, 0.1) 5px 5px 0px 0px'
@@ -81,7 +81,7 @@ function ProjectCard(props: any) {
                 </p>
 
                 <div style={{ marginTop: "5px", display: 'flex', gap: '5px' }}>
-                    {props?.tags.map((item: any) => {
+                    {props.tags.map((item: any) => {
                         return (
                             <span
                                 className="tag is-dark tech-stack"
