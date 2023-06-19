@@ -10,6 +10,7 @@ import "./App.css";
 import ProjectCard from './components/ProjectCard/ProjectCard';
 import BlogPost from "./components/BlogPost/BlogPost";
 import TitleDesc from "./components/TitleDesc/TitleDesc";
+import CaseStudies from "./components/CaseStudies/CaseStudies";
 
 function Home() {
     const BikeDB = ["• A Web App for bike rental service.", "• A REST API using Node.js and Express.js.", "• Used MongoDB for database.", "• Used JWT for authentication."];
@@ -312,34 +313,48 @@ function Home() {
                             </span>
                         </div>
 
-                        <hr style={{ backgroundColor: "rgba(52, 53, 65, 0.137)" }} />
-                        <TitleDesc title="Projects" desc="Below is the list of projects that I have worked upon in my technical career. These projects exemplify my expertise, technical skills, and contributions as a senior software engineer, showcasing my ability to deliver robust solutions and drive impactful results." />
-                        <div style={{ display: 'flex', gap: '20px', overflow:'auto' }}>
-                            <ProjectCard
-                                header="Interview Preparation"
-                                tags={InterviewPreparationTags}
-                                description={InterviewPreparation}
-                                github_source_code_link="https://github.com/shyamzzp/interview"
-                                live_demo="https://shyamzzp.github.io/interview/" />
-                            <ProjectCard 
-                                header="Find Mentor" 
-                                description={FindMentor} 
-                                tags={FindMentorTags} />
-                            <ProjectCard 
-                                header="Bike Rental Service" 
-                                tags={FindMentorTags} 
-                                description={BikeDB} />
+                        <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '100px' }}>
+                            <div style={{ width: '30%' }}>
+                                <p style={{ fontSize: '22px', color: '#4a4a4a', marginBottom: '0px', }}>Projects</p>
+                                <p style={{ fontSize: '16px', color: '#4a4a4a', marginBottom: '20px', marginTop: '0' }}>Below projects exemplify my expertise, technical skills, and contributions as a senior software engineer.</p>
+                                <div style={{ display: 'flex', gap: '20px', overflow: 'auto', flexDirection: 'column' }}>
+                                    <ProjectCard
+                                        header="Interview Preparation"
+                                        tags={InterviewPreparationTags}
+                                        description={InterviewPreparation}
+                                        github_source_code_link="https://github.com/shyamzzp/interview"
+                                        live_demo="https://shyamzzp.github.io/interview/" />
+                                    <ProjectCard
+                                        header="Find Mentor"
+                                        description={FindMentor}
+                                        tags={FindMentorTags} />
+                                    <ProjectCard
+                                        header="Bike Rental Service"
+                                        tags={FindMentorTags}
+                                        description={BikeDB}
+                                        mb />
 
-                        </div>
-                        <hr style={{ backgroundColor: "rgba(52, 53, 65, 0.137)" }} />
-                        {/* <!-- Sections for the blog posts. START--> */}
-                        <p style={{ fontSize: '22px', color: '#4a4a4a', marginBottom: '0px', }}>Blogs</p>
-                        <p style={{ fontSize: '16px', color: '#4a4a4a', marginBottom: '20px', marginTop: '0', maxWidth: '70%' }}>In the Blogs section, you will find a collection of articles that I have written throughout my career as a senior software engineer. These articles reflect my passion for sharing knowledge, insights, and best practices in the field of software development.
-                            Each blog post dives deep into a specific topic, providing valuable information and practical advice based on my extensive experience.</p>
-                        <div style={{ display: 'flex', gap: '20px' }}>
-                            <BlogPost title="Configure GitHub Pages" date="3rd June 2023" lang="TypeScript" />
-                            <BlogPost title="Everything about JWT Authentication" date="16th June 2023" lang="NodeJS" />
-                            <BlogPost title="GPG Signing for GIT Users" date="16th June 2023" lang="NodeJS" />
+                                </div>
+                            </div>
+                            <div style={{ width: '30%' }}>
+                                <p style={{ fontSize: '22px', color: '#4a4a4a', marginBottom: '0px', }}>Blogs</p>
+                                <p style={{ fontSize: '16px', color: '#4a4a4a', marginBottom: '20px', marginTop: '0' }}>Below articles reflect my passion for sharing knowledge, insights, and best practices in the market.</p>
+                                <div style={{ display: 'flex', gap: '20px', flexDirection: 'column' }}>
+                                    <BlogPost title="Configure GitHub Pages" date="3rd June 2023" lang="TypeScript" />
+                                    <BlogPost title="Everything about JWT Authentication" date="16th June 2023" lang="NodeJS" />
+                                    <BlogPost title="GPG Signing for GIT Users" date="16th June 2023" lang="NodeJS" />
+                                </div>
+                            </div>
+
+                            <div style={{ width: '30%' }}>
+                                <p style={{ fontSize: '22px', color: '#4a4a4a', marginBottom: '0px', }}>Case Studies</p>
+                                <p style={{ fontSize: '16px', color: '#4a4a4a', marginBottom: '20px', marginTop: '0' }}>Below is a deep dive into real-world scenarios where various technological solutions are implemented</p>
+                                <div style={{ display: 'flex', gap: '20px', flexDirection: 'column' }}>
+                                    <CaseStudies title="Zerodha - Trading Platform" desc="3rd June 2023" />
+                                    <CaseStudies title="Pinterest - Social Media Service" desc="16th June 2023" />
+                                    <CaseStudies title="GPG Signing for GIT Users" desc="16th June 2023" />
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -347,4 +362,4 @@ function Home() {
         </div>
     );
 }
-export default Home;
+export default Home; 

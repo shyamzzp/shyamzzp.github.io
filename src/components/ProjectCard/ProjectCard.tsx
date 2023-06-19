@@ -3,8 +3,13 @@ import live from '../../img/live.png';
 import github from '../../img/github.png';
 
 function ProjectCard(props: any) {
+    const styleContainer = {
+        marginBottom :props.mb?'20px':'0',
+        display: "flex", 
+        gap: "20px"
+    }
     return (
-        <div style={{ display: "flex", gap: "20px", marginBottom:'20px' }}>
+        <div style={styleContainer}>
             <div
                 className="section"
                 style={{
