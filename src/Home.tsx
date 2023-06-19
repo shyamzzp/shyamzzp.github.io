@@ -367,6 +367,8 @@ function Home() {
                                         <CaseStudies title="Git" logo="git" />
                                         <CaseStudies title="Pinterest" logo="pinterest" />
                                         <CaseStudies title="TailwindCSS" logo="tailwind" />
+                                        <CaseStudies title="NextJS" logo="nextjs" />
+                                        <CaseStudies title="NestJS" logo="nestjs" />
                                         
                                     </div>
                                 </div>

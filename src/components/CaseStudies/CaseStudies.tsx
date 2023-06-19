@@ -4,6 +4,8 @@ import pinterest from "../../img/pinterest.png";
 import git from "../../img/git.png";
 import netsuite from "../../img/netsuite.png";
 import tailwind from "../../img/tailwind.png";
+import nextjs from "../../img/nextjs.png";
+import nestjs from "../../img/nestjs.png";
 import "./CaseStudies.css";
 
 function CaseStudies(props: any) {
@@ -22,6 +24,12 @@ function CaseStudies(props: any) {
     }
     if(props.logo==='tailwind'){
         srcLogo = tailwind;   
+    }
+    if(props.logo==='nextjs'){
+        srcLogo = nextjs;   
+    }
+    if(props.logo==='nestjs'){
+        srcLogo = nestjs;   
     }
 
     return (
