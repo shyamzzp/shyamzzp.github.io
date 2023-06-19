@@ -348,7 +348,7 @@ function Home() {
                                             lang="Git" />
                                         <BlogPost 
                                             title="Everything about JWT Authentication" 
-                                            desc="Discover the ins and outs of JWT authentication and gain valuable insights to implement secure authentication in your web-based systems and APIs." 
+                                            desc="Discover the ins and outs of JWT authentication and gain valuable insights to implement secure authentication in your web-based systems and APIs. Explore public websites to generate JWT tokens and learn how to use them." 
                                             date="16th June 2023" 
                                             lang="NodeJS" />
                                         <BlogPost 
