@@ -3,7 +3,7 @@ import "./BlogPost.css";
 
 function BlogPost(props:any) {
     return (
-        <div style={{ display: "flex", gap: "20px" }}>
+        <div style={{ display: "flex", gap: "20px", maxWidth:'25rem' }}>
             <div
                 className="section"
                 style={{
@@ -20,8 +20,10 @@ function BlogPost(props:any) {
                 <div
                     style={{
                         display: "flex",
-                        alignItems: "center",
+                        textAlign: "start",
                         justifyContent: "space-between",
+                        flexDirection:'column',
+                        alignItems:'flex-start',
                     }}
                 >
                     <p
@@ -29,10 +31,15 @@ function BlogPost(props:any) {
                         style={{
                             fontSize: "1.1rem",
                             fontWeight: "500",
-                            textAlign: "center",
+                            textAlign: "start"
                         }}
                     >
                         {props.title}
+                    </p>
+                    <p style={{
+                            fontSize: "0.875rem",textAlign: "start",marginTop:'5px'
+                        }}>
+                        {props.desc}
                     </p>
                 </div>
 

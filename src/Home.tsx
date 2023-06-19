@@ -313,11 +313,11 @@ function Home() {
                             </span>
                         </div>
 
-                        <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '100px' }}>
-                            <div style={{ width: '30%' }}>
-                                <p style={{ fontSize: '22px', color: '#4a4a4a', marginBottom: '0px', }}>Projects</p>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '100px', flexDirection:'column' }}>
+                            <div>
+                                <p style={{ fontSize: '22px', color: '#4a4a4a', marginBottom: '0px', }}>🚀 Projects</p>
                                 <p style={{ fontSize: '16px', color: '#4a4a4a', marginBottom: '20px', marginTop: '0' }}>Below projects exemplify my expertise, technical skills, and contributions as a senior software engineer.</p>
-                                <div style={{ display: 'flex', gap: '20px', overflow: 'auto', flexDirection: 'column' }}>
+                                <div style={{ display: 'flex', gap: '20px', overflow: 'auto' }}>
                                     <ProjectCard
                                         header="Interview Preparation"
                                         tags={InterviewPreparationTags}
@@ -336,23 +336,37 @@ function Home() {
 
                                 </div>
                             </div>
-                            <div style={{ width: '30%' }}>
-                                <p style={{ fontSize: '22px', color: '#4a4a4a', marginBottom: '0px', }}>Blogs</p>
-                                <p style={{ fontSize: '16px', color: '#4a4a4a', marginBottom: '20px', marginTop: '0' }}>Below articles reflect my passion for sharing knowledge, insights, and best practices in the market.</p>
-                                <div style={{ display: 'flex', gap: '20px', flexDirection: 'column' }}>
-                                    <BlogPost title="Configure GitHub Pages" date="3rd June 2023" lang="TypeScript" />
-                                    <BlogPost title="Everything about JWT Authentication" date="16th June 2023" lang="NodeJS" />
-                                    <BlogPost title="GPG Signing for GIT Users" date="16th June 2023" lang="NodeJS" />
+                            <div style={{display:'flex', marginTop:'50px'}}>
+                                <div style={{ width: '70%' }}>
+                                    <p style={{ fontSize: '22px', color: '#4a4a4a', marginBottom: '0px', }}>📝 Blogs</p>
+                                    <p style={{ fontSize: '16px', color: '#4a4a4a', marginBottom: '20px', marginTop: '0' }}>Below articles reflect my passion for sharing knowledge, insights, and best practices in the market.</p>
+                                    <div style={{ display: 'flex', gap: '20px', flexWrap:'wrap' }}>
+                                        <BlogPost 
+                                            title="Configure GitHub Pages (Deployment)" 
+                                            desc="Learn how to setup and configure GitHub Pages site with themes, custom layouts, and dynamic elements, while enjoying seamless updates and maintenance through its integration with your GitHub workflow." 
+                                            date="3rd June 2023" 
+                                            lang="Git" />
+                                        <BlogPost 
+                                            title="Everything about JWT Authentication" 
+                                            desc="Discover the ins and outs of JWT authentication and gain valuable insights to implement secure authentication in your web-based systems and APIs." 
+                                            date="16th June 2023" 
+                                            lang="NodeJS" />
+                                        <BlogPost 
+                                            title="GPG Signing for GIT Users" 
+                                            desc="Exploring GPG Signing and its importance in verifying the authenticity and integrity of commits. Learn how to implement GPG signing to enhance security and trust in your Git repositories." 
+                                            date="16th June 2023" 
+                                            lang="NodeJS" />
+                                    </div>
                                 </div>
-                            </div>
-
-                            <div style={{ width: '30%' }}>
-                                <p style={{ fontSize: '22px', color: '#4a4a4a', marginBottom: '0px', }}>Case Studies</p>
-                                <p style={{ fontSize: '16px', color: '#4a4a4a', marginBottom: '20px', marginTop: '0' }}>Below is a deep dive into real-world scenarios where various technological solutions are implemented</p>
-                                <div style={{ display: 'flex', gap: '20px', flexDirection: 'column' }}>
-                                    <CaseStudies title="Zerodha - Trading Platform" desc="3rd June 2023" />
-                                    <CaseStudies title="Pinterest - Social Media Service" desc="16th June 2023" />
-                                    <CaseStudies title="GPG Signing for GIT Users" desc="16th June 2023" />
+    
+                                <div style={{ width: '30%' }}>
+                                    <p style={{ fontSize: '22px', color: '#4a4a4a', marginBottom: '0px', }}>🔍 Case Studies</p>
+                                    <p style={{ fontSize: '16px', color: '#4a4a4a', marginBottom: '20px', marginTop: '0' }}>Below is a deep dive into real-world scenarios where various technological solutions are implemented</p>
+                                    <div style={{ display: 'flex', gap: '20px', flexDirection: 'column' }}>
+                                        <CaseStudies title="Zerodha - Trading Platform" desc="3rd June 2023" />
+                                        <CaseStudies title="Pinterest - Social Media Service" desc="16th June 2023" />
+                                        <CaseStudies title="GPG Signing for GIT Users" desc="16th June 2023" />
+                                    </div>
                                 </div>
                             </div>
                         </div>
