@@ -3,6 +3,7 @@ import zerodha from "../../img/zerodha.png";
 import pinterest from "../../img/pinterest.png";
 import git from "../../img/git.png";
 import netsuite from "../../img/netsuite.png";
+import tailwind from "../../img/tailwind.png";
 import "./CaseStudies.css";
 
 function CaseStudies(props: any) {
@@ -18,6 +19,9 @@ function CaseStudies(props: any) {
     }
     if(props.logo==='netsuite'){
         srcLogo = netsuite;   
+    }
+    if(props.logo==='tailwind'){
+        srcLogo = tailwind;   
     }
 
     return (

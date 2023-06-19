@@ -200,9 +200,9 @@ function Home() {
             <section className="hero is-info is-fullheight">
                 <div className="hero-body">
                     <div className="container">
-                        <h4 className="title" style={{ marginBottom: "5px" }}>
+                        <h4 className="title flex items-center !mb-2">
                             Shyam Suthar{" "}
-                            <span>
+                            <span className="ml-2">
                                 <a
                                     href="https://github.com/shyamzzp/shyamzzp.github.io/raw/master/resume/ShyamSS-resume.pdf"
                                     target="_blank"
@@ -211,7 +211,7 @@ function Home() {
                                     <img
                                         src={cv}
                                         width="40"
-                                        style={{ marginRight: "5px" }}
+                                        className="mr-1"
                                         alt=""
                                     />
                                 </a>
@@ -312,7 +312,6 @@ function Home() {
                                 Embedded System - Arduino
                             </span>
                         </div>
-
                         <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '100px', flexDirection:'column' }}>
                             <div>
                                 <p style={{ fontSize: '22px', color: '#4a4a4a', marginBottom: '0px', }}>🚀 Projects</p>
@@ -367,6 +366,7 @@ function Home() {
                                         <CaseStudies title="Zerodha" logo="zerodha"/>
                                         <CaseStudies title="Git" logo="git" />
                                         <CaseStudies title="Pinterest" logo="pinterest" />
+                                        <CaseStudies title="TailwindCSS" logo="tailwind" />
                                         
                                     </div>
                                 </div>
