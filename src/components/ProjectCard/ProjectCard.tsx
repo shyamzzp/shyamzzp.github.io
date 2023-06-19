@@ -53,7 +53,7 @@ function ProjectCard(props: any) {
                             />
                         </a>
                         <a
-                            href={props.live_link}
+                            href={props.live_demo}
                             target="_blank"
                             style={{
                                 display: "flex",
