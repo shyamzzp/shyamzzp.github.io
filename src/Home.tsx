@@ -362,10 +362,10 @@ function Home() {
                                 <div style={{ width: '30%' }}>
                                     <p style={{ fontSize: '22px', color: '#4a4a4a', marginBottom: '0px', }}>🔍 Case Studies</p>
                                     <p style={{ fontSize: '16px', color: '#4a4a4a', marginBottom: '20px', marginTop: '0' }}>Below is a deep dive into real-world scenarios where various technological solutions are implemented</p>
-                                    <div style={{ display: 'flex', gap: '20px', flexDirection: 'column' }}>
-                                        <CaseStudies title="Zerodha - Trading Platform" desc="3rd June 2023" />
-                                        <CaseStudies title="Pinterest - Social Media Service" desc="16th June 2023" />
-                                        <CaseStudies title="GPG Signing for GIT Users" desc="16th June 2023" />
+                                    <div style={{ display: 'flex', gap: '20px', flexWrap:'wrap' }}>
+                                        <CaseStudies title="Zerodha" logo="zerodha"/>
+                                        <CaseStudies title="Pinterest" logo="pinterest" />
+                                        <CaseStudies title="Git" logo="git" />
                                     </div>
                                 </div>
                             </div>

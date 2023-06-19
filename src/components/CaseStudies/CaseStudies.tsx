@@ -1,13 +1,28 @@
 import React from "react";
+import zerodha from "../../img/zerodha.png";
+import pinterest from "../../img/pinterest.png";
+import git from "../../img/git.png";
 import "./CaseStudies.css";
 
-function CaseStudies(props:any) {
+function CaseStudies(props: any) {
+    let srcLogo; 
+    if(props.logo==='zerodha'){
+        srcLogo = zerodha;
+    }
+    if(props.logo==='pinterest'){
+        srcLogo = pinterest;
+    }
+    if(props.logo==='git'){
+        srcLogo = git;   
+    }
+
     return (
-        <div style={{ display: "flex", gap: "20px" }}>
+        <div style={{ display: "flex", gap: "10px", maxWidth:'100%' }}>
             <div
                 className="section"
                 style={{
-                    padding: "1rem 1rem 1rem",
+                    paddingBlock: ".4rem",
+                    paddingInline: "1rem",
                     color: "rgba(52,53,65)",
                     maxWidth: "25rem",
                     width: "fit-content",
@@ -24,31 +39,24 @@ function CaseStudies(props:any) {
                         justifyContent: "space-between",
                     }}
                 >
+                    <span style={{display:'flex'}}><img src={srcLogo} alt="" width="25" /></span>
                     <p
                         className="project-header-title"
                         style={{
-                            fontSize: "1.1rem",
+                            fontSize: "1rem",
                             fontWeight: "500",
                             textAlign: "center",
+                            marginLeft:'10px'
                         }}
                     >
                         {props.title}
                     </p>
                 </div>
 
-                <div
-                    style={{
-                        display: "flex",
-                        justifyContent: "space-between",
-                        marginTop: "8px",
-                        color: "#00000069",
-                    }}
-                >
-                    <div style={{ fontSize: ".75rem", display: "flex" }}>{props.lang}</div>
-                    <div style={{ fontSize: ".75rem", display: "flex" }}>
-                        {props.date}
-                    </div>
-                </div>
+
+                {/* <div style={{ fontSize: ".875rem", display: "flex" }}>
+                    {props.desc}
+                </div> */}
             </div>
         </div>
     );
