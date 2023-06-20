@@ -16,7 +16,7 @@ function Home() {
     const BikeDB = ["• A Web App for bike rental service.", "• A REST API using Node.js and Express.js.", "• Used MongoDB for database.", "• Used JWT for authentication."];
     const FindMentor = ["• A Web App for finding mentors in your field.", "• Access to Experienced Mentors.", "• Skill Development and Learning Opportunities.", "• Trackable Progress and Feedback"];
     const InterviewPreparation = ["• Enhance technical skills.", "• Prepare for Coding Interviews.", "• Structural approach to tackle challenges.", "• Deep dive into System Design."];
-
+    const DocsGoto = ["• A Web App for easy read-on for documentation.", "• Contains documentation for various technologies.", "• Easy to read and understand.", "• Contains code snippets for better understanding."];
     const FindMentorTags = ["TypeScript", "PocketBase", "VueJS", "REST"]
     const InterviewPreparationTags = ["ReactJS", "Docusaurus", "TypeScript", "Markdown"]
     return (
@@ -312,17 +312,22 @@ function Home() {
                                 Embedded System - Arduino
                             </span>
                         </div>
-                        <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '100px', flexDirection:'column' }}>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '100px', flexDirection: 'column' }}>
                             <div>
                                 <p style={{ fontSize: '22px', color: '#4a4a4a', marginBottom: '0px', }}>🚀 Projects</p>
                                 <p style={{ fontSize: '16px', color: '#4a4a4a', marginBottom: '20px', marginTop: '0' }}>Below projects exemplify my expertise, technical skills, and contributions as a senior software engineer.</p>
-                                <div style={{ display: 'flex', gap: '20px', overflow: 'auto' }}>
+                                <div style={{ display: 'flex', gap: '20px', overflow: 'auto'}}>
                                     <ProjectCard
                                         header="Interview Preparation"
                                         tags={InterviewPreparationTags}
                                         description={InterviewPreparation}
                                         github_source_code_link="https://github.com/shyamzzp/interview"
                                         live_demo="https://shyamzzp.github.io/interview/" />
+                                    <ProjectCard
+                                        header="Docs Goto"
+                                        tags={FindMentorTags}
+                                        description={DocsGoto}
+                                        mb />
                                     <ProjectCard
                                         header="Find Mentor"
                                         description={FindMentor}
@@ -331,45 +336,44 @@ function Home() {
                                         header="Bike Rental Service"
                                         tags={FindMentorTags}
                                         description={BikeDB}
-                                        mb />
-
+                                        mb
+                                        mr />
                                 </div>
                             </div>
-                            <div style={{display:'flex', marginTop:'50px'}}>
+                            <div style={{ display: 'flex', marginTop: '50px' }}>
                                 <div style={{ width: '70%' }}>
                                     <p style={{ fontSize: '22px', color: '#4a4a4a', marginBottom: '0px', }}>📝 Blogs</p>
                                     <p style={{ fontSize: '16px', color: '#4a4a4a', marginBottom: '20px', marginTop: '0' }}>Below articles reflect my passion for sharing knowledge, insights, and best practices in the market.</p>
-                                    <div style={{ display: 'flex', gap: '20px', flexWrap:'wrap' }}>
-                                        <BlogPost 
-                                            title="Configure GitHub Pages (Deployment)" 
-                                            desc="Learn how to setup and configure GitHub Pages site with themes, custom layouts, and dynamic elements, while enjoying seamless updates and maintenance through its integration with your GitHub workflow." 
-                                            date="3rd June 2023" 
+                                    <div style={{ display: 'flex', gap: '20px', flexWrap: 'wrap' }}>
+                                        <BlogPost
+                                            title="Configure GitHub Pages (Deployment)"
+                                            desc="Learn how to setup and configure GitHub Pages site with themes, custom layouts, and dynamic elements, while enjoying seamless updates and maintenance through its integration with your GitHub workflow."
+                                            date="3rd June 2023"
                                             lang="Git" />
-                                        <BlogPost 
-                                            title="Everything about JWT Authentication" 
-                                            desc="Discover the ins and outs of JWT authentication and gain valuable insights to implement secure authentication in your web-based systems and APIs. Explore public websites to generate JWT tokens and learn how to use them." 
-                                            date="16th June 2023" 
+                                        <BlogPost
+                                            title="Everything about JWT Authentication"
+                                            desc="Discover the ins and outs of JWT authentication and gain valuable insights to implement secure authentication in your web-based systems and APIs. Explore public websites to generate JWT tokens and learn how to use them."
+                                            date="16th June 2023"
                                             lang="NodeJS" />
-                                        <BlogPost 
-                                            title="GPG Signing for GIT Users" 
-                                            desc="Exploring GPG Signing and its importance in verifying the authenticity and integrity of commits. Learn how to implement GPG signing to enhance security and trust in your Git repositories." 
-                                            date="16th June 2023" 
+                                        <BlogPost
+                                            title="GPG Signing for GIT Users"
+                                            desc="Exploring GPG Signing and its importance in verifying the authenticity and integrity of commits. Learn how to implement GPG signing to enhance security and trust in your Git repositories."
+                                            date="16th June 2023"
                                             lang="NodeJS" />
                                     </div>
                                 </div>
-    
+
                                 <div style={{ width: '30%' }}>
                                     <p style={{ fontSize: '22px', color: '#4a4a4a', marginBottom: '0px', }}>🔍 Case Studies</p>
                                     <p style={{ fontSize: '16px', color: '#4a4a4a', marginBottom: '20px', marginTop: '0' }}>Below is a deep dive into real-world scenarios where various technological solutions are implemented</p>
-                                    <div style={{ display: 'flex', gap: '20px', flexWrap:'wrap' }}>
-                                        <CaseStudies title="Netsuite" logo="netsuite"/>
-                                        <CaseStudies title="Zerodha" logo="zerodha"/>
+                                    <div style={{ display: 'flex', gap: '20px', flexWrap: 'wrap' }}>
+                                        <CaseStudies title="Netsuite" logo="netsuite" />
+                                        <CaseStudies title="Zerodha" logo="zerodha" />
                                         <CaseStudies title="Git" logo="git" />
                                         <CaseStudies title="Pinterest" logo="pinterest" />
                                         <CaseStudies title="TailwindCSS" logo="tailwind" />
                                         <CaseStudies title="NextJS" logo="nextjs" />
                                         <CaseStudies title="NestJS" logo="nestjs" />
-                                        
                                     </div>
                                 </div>
                             </div>

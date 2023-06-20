@@ -6,7 +6,8 @@ function ProjectCard(props: any) {
     const styleContainer = {
         marginBottom :props.mb?'20px':'0',
         display: "flex", 
-        gap: "20px"
+        gap: "20px",
+        marginRight:props.mr?'10px':'0',
     }
     return (
         <div style={styleContainer}>
