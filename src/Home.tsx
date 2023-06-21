@@ -1,24 +1,14 @@
-import React from "react";
 import cv from "./img/cv.png";
 import skype from "./img/skype.png";
 import whatsapp from "./img/whatsapp.png";
 import linkedin from "./img/linkedin.png";
 import stackoverflow from "./img/stack-overflow.png";
-import github from './img/github.png';
+import github from "./img/github.png";
 import "./bulma.min.css";
 import "./App.css";
-import ProjectCard from './components/ProjectCard/ProjectCard';
-import BlogPost from "./components/BlogPost/BlogPost";
-import TitleDesc from "./components/TitleDesc/TitleDesc";
-import CaseStudies from "./components/CaseStudies/CaseStudies";
+import BorderedSection from "./components/Small/BorderedSection/BorderedSection";
 
 function Home() {
-    const BikeDB = ["• A Web App for bike rental service.", "• A REST API using Node.js and Express.js.", "• Used MongoDB for database.", "• Used JWT for authentication."];
-    const FindMentor = ["• A Web App for finding mentors in your field.", "• Access to Experienced Mentors.", "• Skill Development and Learning Opportunities.", "• Trackable Progress and Feedback"];
-    const InterviewPreparation = ["• Enhance technical skills.", "• Prepare for Coding Interviews.", "• Structural approach to tackle challenges.", "• Deep dive into System Design."];
-    const DocsGoto = ["• A Web App for easy read-on for documentation.", "• Contains documentation for various technologies.", "• Easy to read and understand.", "• Contains code snippets for better understanding."];
-    const FindMentorTags = ["TypeScript", "PocketBase", "VueJS", "REST"]
-    const InterviewPreparationTags = ["ReactJS", "Docusaurus", "TypeScript", "Markdown"]
     return (
         <div id="app">
             <div className="modal">
@@ -208,12 +198,7 @@ function Home() {
                                     target="_blank"
                                     rel="noreferrer"
                                 >
-                                    <img
-                                        src={cv}
-                                        width="40"
-                                        className="mr-1"
-                                        alt=""
-                                    />
+                                    <img src={cv} width="40" className="mr-1" alt="" />
                                 </a>
                             </span>
                         </h4>
@@ -311,10 +296,15 @@ function Home() {
                                 Embedded System - Arduino
                             </span>
                         </div>
+                        <div className="mt-5 flex gap-4">
+                            <BorderedSection text="Projects" />
+                            <BorderedSection text="Case Studies" />
+                            <BorderedSection text="Blog" />
+                        </div>
                     </div>
                 </div>
             </section>
         </div>
     );
 }
-export default Home; 
+export default Home;
