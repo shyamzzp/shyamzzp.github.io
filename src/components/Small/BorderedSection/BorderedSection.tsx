@@ -4,18 +4,15 @@ import right from '../../../img/right.svg';
 function BorderedSection(props: any) {
     return (
         <div
-            className="section"
+            className="section cursor-pointer h-fit w-fit"
             style={{
                 paddingBlock: ".4rem",
                 paddingInline: "1rem",
                 color: "rgba(52,53,65)",
                 maxWidth: "25rem",
-                width: "fit-content",
                 borderRadius: ".375rem",
                 border: "1px solid rgb(223 223 223)",
                 boxShadow: "5px 5px 0px 0 rgba(0,0,0,0.1)",
-                height: "fit-content",
-                cursor:'pointer'
             }}
             onClick={()=>{
                 window.location.href = props.link;
