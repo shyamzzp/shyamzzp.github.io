@@ -297,9 +297,9 @@ function Home() {
                             </span>
                         </div>
                         <div className="mt-5 flex gap-4">
-                            <BorderedSection text="Projects" />
-                            <BorderedSection text="Case Studies" />
-                            <BorderedSection text="Blog" />
+                            <BorderedSection text="Projects" link="/projects"/>
+                            <BorderedSection text="Case Studies" link="/casestudy"/>
+                            <BorderedSection text="Blog" link="/blog"/>
                         </div>
                     </div>
                 </div>

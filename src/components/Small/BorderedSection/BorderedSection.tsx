@@ -15,6 +15,10 @@ function BorderedSection(props: any) {
                 border: "1px solid rgb(223 223 223)",
                 boxShadow: "5px 5px 0px 0 rgba(0,0,0,0.1)",
                 height: "fit-content",
+                cursor:'pointer'
+            }}
+            onClick={()=>{
+                window.location.href = props.link;
             }}
         >
             <div
