@@ -6,6 +6,7 @@ import netsuite from "../../img/netsuite.png";
 import tailwind from "../../img/tailwind.png";
 import nextjs from "../../img/nextjs.png";
 import nestjs from "../../img/nestjs.png";
+import codeql from "../../img/githubs.png";
 import "./CaseStudies.css";
 
 function CaseStudies(props: any) {
@@ -30,6 +31,9 @@ function CaseStudies(props: any) {
     }
     if(props.logo==='nestjs'){
         srcLogo = nestjs;   
+    }
+    if(props.logo==='codeql'){
+        srcLogo = codeql;   
     }
 
     return (

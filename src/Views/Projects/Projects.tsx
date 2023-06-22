@@ -6,6 +6,9 @@ function Projects() {
     const FindMentor = ["• A Web App for finding mentors in your field.", "• Access to Experienced Mentors.", "• Skill Development and Learning Opportunities.", "• Trackable Progress and Feedback"];
     const InterviewPreparation = ["• Enhance technical skills.", "• Prepare for Coding Interviews.", "• Structural approach to tackle challenges.", "• Deep dive into System Design."];
     const DocsGoto = ["• A Web App for easy read-on for documentation.", "• Contains documentation for various technologies.", "• Easy to read and understand.", "• Contains code snippets for better understanding."];
+    const OffPay = ["• An Offline Payment Solution.", "• Contains documentation for various technologies.", "• Easy to read and understand.", "• Contains code snippets for better understanding."];
+    
+    
     const FindMentorTags = ["TypeScript", "PocketBase", "VueJS", "REST"];
     const InterviewPreparationTags = ["ReactJS", "Docusaurus", "TypeScript", "Markdown"];
     return (
@@ -21,9 +24,14 @@ function Projects() {
                         github_source_code_link="https://github.com/shyamzzp/interview"
                         live_demo="https://shyamzzp.github.io/interview/" />
                     <ProjectCard
-                        header="Docs Goto"
+                        header="Off Pay"
+                        description={OffPay}
                         tags={FindMentorTags}
+                        mb />
+                    <ProjectCard
+                        header="Docs Goto"
                         description={DocsGoto}
+                        tags={FindMentorTags}
                         mb />
                     <ProjectCard
                         header="Find Mentor"
@@ -31,8 +39,8 @@ function Projects() {
                         tags={FindMentorTags} />
                     <ProjectCard
                         header="Bike Rental Service"
-                        tags={FindMentorTags}
                         description={BikeDB}
+                        tags={FindMentorTags}
                         mb
                         mr />
                 </div>

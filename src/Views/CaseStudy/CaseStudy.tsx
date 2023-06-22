@@ -14,6 +14,7 @@ export default function CaseStudy() {
                 <CaseStudies title="TailwindCSS" logo="tailwind" />
                 <CaseStudies title="NextJS" logo="nextjs" />
                 <CaseStudies title="NestJS" logo="nestjs" />
+                <CaseStudies title="CodeQL" logo="codeql" />
             </div>
         </div>
     )
