@@ -35,7 +35,6 @@ function CaseStudies(props: any) {
     return (
         <div style={{ display: "flex", gap: "10px", maxWidth:'100%' }}>
             <div
-                className="section"
                 style={{
                     paddingBlock: ".4rem",
                     paddingInline: "1rem",
@@ -68,11 +67,6 @@ function CaseStudies(props: any) {
                         {props.title}
                     </p>
                 </div>
-
-
-                {/* <div style={{ fontSize: ".875rem", display: "flex" }}>
-                    {props.desc}
-                </div> */}
             </div>
         </div>
     );

@@ -9,11 +9,11 @@ function Projects() {
     const FindMentorTags = ["TypeScript", "PocketBase", "VueJS", "REST"];
     const InterviewPreparationTags = ["ReactJS", "Docusaurus", "TypeScript", "Markdown"];
     return (
-        <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '100px', flexDirection: 'column' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '100px', flexDirection: 'column' }} className="container">
             <div>
                 <p style={{ fontSize: '22px', color: '#4a4a4a', marginBottom: '0px', }}>🚀 Projects</p>
                 <p style={{ fontSize: '16px', color: '#4a4a4a', marginBottom: '20px', marginTop: '0' }}>Below projects exemplify my expertise, technical skills, and contributions as a senior software engineer.</p>
-                <div style={{ display: 'flex', gap: '20px', overflow: 'auto' }}>
+                <div style={{ display: 'flex', gap: '20px', flexWrap:'wrap'}}>
                     <ProjectCard
                         header="Interview Preparation"
                         tags={InterviewPreparationTags}
