@@ -6,13 +6,13 @@ function BorderedSection(props: any) {
         <div
             className="section cursor-pointer h-fit w-fit"
             style={{
-                paddingBlock: ".4rem",
+                paddingBlock: ".3rem",
                 paddingInline: "1rem",
                 color: "rgba(52,53,65)",
                 maxWidth: "25rem",
                 borderRadius: ".375rem",
                 border: "1px solid rgb(223 223 223)",
-                boxShadow: "5px 5px 0px 0 rgba(0,0,0,0.1)",
+                boxShadow: "2px 2px 0px 0 rgba(0,0,0,0.1)",
             }}
             onClick={()=>{
                 window.location.href = props.link;
