@@ -383,3 +383,7 @@ hr {
   
   /* background-color: #aaa; */
 }
+
+.tags .tag{
+  box-shadow: rgba(0, 0, 0, 0.1) 5px 5px 0px 0px;
+}
