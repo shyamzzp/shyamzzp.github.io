@@ -16,7 +16,7 @@ function BorderedSection(props: any) {
                 backgroundColor:'white',
             }}
             onClick={()=>{
-                window.location.href = props.link;
+                props.onClick();
             }}
         >
             <div

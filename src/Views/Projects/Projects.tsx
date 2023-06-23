@@ -7,8 +7,6 @@ function Projects() {
     const InterviewPreparation = ["Enhance technical skills.", "Prepare for Coding Interviews.", "Structural approach to tackle challenges.", "Deep dive into System Design."];
     const DocsGoto = ["A Web App for easy read-on for documentation.", "Contains documentation for various technologies.", "Easy to read and understand.", "Contains code snippets for better understanding."];
     const OffPay = ["An Offline Payment Solution.", "Contains documentation for various technologies.", "Easy to read and understand.", "Contains code snippets for better understanding."];
-    
-    
     const FindMentorTags = ["TypeScript", "PocketBase", "VueJS", "REST"];
     const InterviewPreparationTags = ["ReactJS", "Docusaurus", "TypeScript", "Markdown"];
     return (

@@ -6,6 +6,9 @@ import Skills from "./components/Skills/Skills";
 import SocialMedia from "./components/SocialMedia/SocialMedia";
 import { Drawer, RadioGroup, Radio, ButtonToolbar, Button, Placeholder } from 'rsuite';
 import React from "react";
+import Projects from "./Views/Projects/Projects";
+import Blog from "./Views/Blog/Blog";
+import CaseStudy from "./Views/CaseStudy/CaseStudy";
 
 const styles = {
     radioGroupLabel: {
@@ -16,7 +19,21 @@ const styles = {
 };
 
 function Home() {
-    const [open, setOpen] = React.useState(false);
+    const [openProjects, setOpenProjects] = React.useState(false);
+    const [openBlogs, setOpenBlogs] = React.useState(false);
+    const [openCaseStudies, setOpenCaseStudies] = React.useState(false);
+    const setModalOpenProjects = () => {
+        setOpenProjects(true);
+    };
+
+    const setModalOpenCaseStudies = () => {
+        setOpenCaseStudies(true);
+    };
+
+    const setModalOpenBlogs = () => {
+        setOpenBlogs(true);
+    };
+
     return (
         <div id="app">
             <section className="hero is-info is-fullheight">
@@ -44,26 +61,37 @@ function Home() {
                         <SocialMedia />
                         <Skills />
                         <div className="mt-5 flex gap-4">
-                            <BorderedSection text="Projects" link="/projects" />
-                            <BorderedSection text="Case Studies" link="/casestudy" />
-                            <BorderedSection text="Blog" link="/blog" />
+                            <BorderedSection text="Projects" link="/projects" onClick={setModalOpenProjects} />
+                            <BorderedSection text="Case Studies" link="/casestudy" onClick={setModalOpenCaseStudies} />
+                            <BorderedSection text="Blog" link="/blog" onClick={setModalOpenBlogs} />
                         </div>
                         <>
-                            <ButtonToolbar>
-                                <Button onClick={() => setOpen(true)}>Open</Button>
-                            </ButtonToolbar>
-                            <Drawer backdrop={'static'} open={open} onClose={() => setOpen(false)}>
+                            <Drawer backdrop={'static'} open={openProjects} onClose={() => setOpenProjects(false)}>
                                 <Drawer.Header>
-                                    <Drawer.Title>Drawer Title</Drawer.Title>
-                                    <Drawer.Actions>
-                                        <Button onClick={() => setOpen(false)}>Cancel</Button>
-                                        <Button onClick={() => setOpen(false)} appearance="primary">
-                                            Confirm
-                                        </Button>
-                                    </Drawer.Actions>
+                                    <Drawer.Title>Projects</Drawer.Title>
                                 </Drawer.Header>
                                 <Drawer.Body>
-                                    <Placeholder.Paragraph />
+                                    <Projects />
+                                </Drawer.Body>
+                            </Drawer>
+                        </>
+                        <>
+                            <Drawer backdrop={'static'} open={openBlogs} onClose={() => setOpenBlogs(false)}>
+                                <Drawer.Header>
+                                    <Drawer.Title>Blogs</Drawer.Title>
+                                </Drawer.Header>
+                                <Drawer.Body>
+                                    <Blog />
+                                </Drawer.Body>
+                            </Drawer>
+                        </>
+                        <>
+                            <Drawer backdrop={'static'} open={openCaseStudies} onClose={() => setOpenCaseStudies(false)}>
+                                <Drawer.Header>
+                                    <Drawer.Title>Case Studies</Drawer.Title>
+                                </Drawer.Header>
+                                <Drawer.Body>
+                                    <CaseStudy />
                                 </Drawer.Body>
                             </Drawer>
                         </>
