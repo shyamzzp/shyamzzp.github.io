@@ -2,11 +2,11 @@ import React from "react";
 import ProjectCard from "../../components/ProjectCard/ProjectCard";
 
 function Projects() {
-    const BikeDB = ["• A Web App for bike rental service.", "• A REST API using Node.js and Express.js.", "• Used MongoDB for database.", "• Used JWT for authentication."];
-    const FindMentor = ["• A Web App for finding mentors in your field.", "• Access to Experienced Mentors.", "• Skill Development and Learning Opportunities.", "• Trackable Progress and Feedback"];
-    const InterviewPreparation = ["• Enhance technical skills.", "• Prepare for Coding Interviews.", "• Structural approach to tackle challenges.", "• Deep dive into System Design."];
-    const DocsGoto = ["• A Web App for easy read-on for documentation.", "• Contains documentation for various technologies.", "• Easy to read and understand.", "• Contains code snippets for better understanding."];
-    const OffPay = ["• An Offline Payment Solution.", "• Contains documentation for various technologies.", "• Easy to read and understand.", "• Contains code snippets for better understanding."];
+    const BikeDB = ["A Web App for bike rental service.", "A REST API using Node.js and Express.js.", "Used MongoDB for database.", "Used JWT for authentication."];
+    const FindMentor = ["A Web App for finding mentors in your field.", "Access to Experienced Mentors.", "Skill Development and Learning Opportunities.", "Trackable Progress and Feedback"];
+    const InterviewPreparation = ["Enhance technical skills.", "Prepare for Coding Interviews.", "Structural approach to tackle challenges.", "Deep dive into System Design."];
+    const DocsGoto = ["A Web App for easy read-on for documentation.", "Contains documentation for various technologies.", "Easy to read and understand.", "Contains code snippets for better understanding."];
+    const OffPay = ["An Offline Payment Solution.", "Contains documentation for various technologies.", "Easy to read and understand.", "Contains code snippets for better understanding."];
     
     
     const FindMentorTags = ["TypeScript", "PocketBase", "VueJS", "REST"];

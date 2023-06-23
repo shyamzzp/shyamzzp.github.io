@@ -21,7 +21,7 @@ function ProjectCard(props: any) {
                     // borderRadius: ".375rem",    
                     paddingInline: '4rem',
                     paddingBlock: '5rem',
-                    backgroundColor:'#0f305f',
+                    backgroundColor:'#265aa5',
                     border: "1px solid rgb(223 223 223)",
                     // boxShadow: 'rgba(0, 0, 0, 0.1) 5px 5px 0px 0px'
                 }}
@@ -76,22 +76,21 @@ function ProjectCard(props: any) {
                         </a>
                     </div>
                 </div>
-                <p
+                <ol
                     className="project-header-sub-title"
-                    style={{ fontSize: "18px", textAlign: "start", marginTop:'10px' }}
+                    style={{ fontSize: "16px", marginTop:'10px' }}
                 >
-                    {props.description.map((item: any) => {
+                    {props.description.map((item: string) => {
                         return (
-                            <span>
+                            <li>
                                 {item}
-                                <br />
-                            </span>
+                            </li>
                         );
                     })}
-                </p>
+               </ol>
 
                 <div style={{ marginTop: "5px", display: 'flex', gap: '5px' }}>
-                    {props.tags.map((item: any) => {
+                    {props.tags.map((item: string) => {
                         return (
                             <span
                                 className="tag is-dark tech-stack"
