@@ -14,25 +14,24 @@ function ProjectCard(props: any) {
             <div
                 className="section"
                 style={{
-                    padding: "1rem 1rem 1rem",
-                    color: "#fff",
-                    width: "41rem",
+                    color: "black",
+                    width: "fit-content",
                     height: "fit-content",
-                    // borderRadius: ".375rem",    
-                    paddingInline: '4rem',
-                    paddingBlock: '5rem',
-                    backgroundColor:'#265aa5',
-                    border: "1px solid rgb(223 223 223)",
-                    // boxShadow: 'rgba(0, 0, 0, 0.1) 5px 5px 0px 0px'
+                    borderRadius: ".375rem",    
+                    paddingInline: '2rem',
+                    paddingBlock: '2rem',
+                    backgroundColor:'#f7f6ee',
+                    // border: "1px solid rgb(223 223 223)",
+                    boxShadow: 'rgba(0, 0, 0, 0.1) 5px 5px 0px 0px'
+                    
                 }}
             >
                 <div
                     className="project-header-title"
                     style={{
-                        fontSize: "32px",
+                        fontSize: "26px",
                         textAlign: "start",
-                        fontWeight: "600",
-                        letterSpacing:'1px',
+                        fontWeight: "400",
                         display: "flex", justifyContent: 'space-between'
                     }}
                 >
@@ -76,7 +75,13 @@ function ProjectCard(props: any) {
                         </a>
                     </div>
                 </div>
-                <ol
+                {/* <p className="project-header-sub-title"
+                    style={{ fontSize: "16px", marginTop:'10px' }}>Enhance technical skills by continuously learning and practicing programming languages, algorithms, and data structures.
+Prepare for coding interviews by studying common algorithms, data structures, and practicing problem-solving on platforms like LeetCode or HackerRank.
+<br/><br/>Adopt a structural approach to tackle challenges by breaking down complex problems, analyzing requirements, and systematically building and testing solutions.
+<br/><br/>Deep dive into system design by understanding scalable and efficient software architecture principles, distributed systems, and relevant concepts like caching and load balancing.
+<br/><br/>Focus on continuous improvement, staying updated with the latest technologies, and seeking opportunities to apply and enhance your skills through practical projects and real-world scenarios.</p> */}
+                {/* <ol
                     className="project-header-sub-title"
                     style={{ fontSize: "16px", marginTop:'10px' }}
                 >
@@ -87,7 +92,7 @@ function ProjectCard(props: any) {
                             </li>
                         );
                     })}
-               </ol>
+               </ol> */}
 
                 <div style={{ marginTop: "5px", display: 'flex', gap: '5px' }}>
                     {props.tags.map((item: string) => {

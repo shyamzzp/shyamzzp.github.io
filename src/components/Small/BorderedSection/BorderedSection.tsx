@@ -13,6 +13,7 @@ function BorderedSection(props: any) {
                 borderRadius: ".375rem",
                 border: "1px solid rgb(223 223 223)",
                 boxShadow: "2px 2px 0px 0 rgba(0,0,0,0.1)",
+                backgroundColor:'white',
             }}
             onClick={()=>{
                 window.location.href = props.link;

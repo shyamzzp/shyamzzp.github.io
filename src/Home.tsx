@@ -188,7 +188,7 @@ function Home() {
             </div>
 
             <section className="hero is-info is-fullheight">
-                <div className="hero-body">
+                <div className="hero-body" style={{backgroundColor:'#f7f6ee'}}>
                     <div className="container">
                         <h4 className="title flex items-center !mb-2">
                             Shyam Suthar{" "}
