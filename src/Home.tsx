@@ -4,19 +4,11 @@ import "./App.css";
 import BorderedSection from "./components/Small/BorderedSection/BorderedSection";
 import Skills from "./components/Skills/Skills";
 import SocialMedia from "./components/SocialMedia/SocialMedia";
-import { Drawer, RadioGroup, Radio, ButtonToolbar, Button, Placeholder } from 'rsuite';
+import { Drawer } from 'rsuite';
 import React from "react";
 import Projects from "./Views/Projects/Projects";
 import Blog from "./Views/Blog/Blog";
 import CaseStudy from "./Views/CaseStudy/CaseStudy";
-
-const styles = {
-    radioGroupLabel: {
-        padding: '8px 12px',
-        display: 'inline-block',
-        verticalAlign: 'middle'
-    }
-};
 
 function Home() {
     const [openProjects, setOpenProjects] = React.useState(false);
@@ -66,7 +58,7 @@ function Home() {
                             <BorderedSection text="Blog" link="/blog" onClick={setModalOpenBlogs} />
                         </div>
                         <>
-                            <Drawer backdrop={'static'} open={openProjects} onClose={() => setOpenProjects(false)}>
+                            <Drawer size={'xs'} backdrop={'static'} open={openProjects} onClose={() => setOpenProjects(false)}>
                                 <Drawer.Header>
                                     <Drawer.Title>Projects</Drawer.Title>
                                 </Drawer.Header>
@@ -86,11 +78,11 @@ function Home() {
                             </Drawer>
                         </>
                         <>
-                            <Drawer backdrop={'static'} open={openCaseStudies} onClose={() => setOpenCaseStudies(false)}>
+                            <Drawer size={'xs'} backdrop={'static'} open={openCaseStudies} onClose={() => setOpenCaseStudies(false)}>
                                 <Drawer.Header>
-                                    <Drawer.Title>Case Studies</Drawer.Title>
+                                    <Drawer.Title style={{fontSize:'20px'}}>Case Studies</Drawer.Title>
                                 </Drawer.Header>
-                                <Drawer.Body>
+                                <Drawer.Body style={{paddingInline:'2rem', paddingBlock:'1rem'}}>
                                     <CaseStudy />
                                 </Drawer.Body>
                             </Drawer>
