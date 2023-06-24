@@ -1,7 +1,12 @@
 import React from 'react'
 import right from '../../../img/right.svg';
 
-function BorderedSection(props: any) {
+interface IBorderedSectionProps {
+    text: string;
+    onClick: () => void;
+}
+
+function BorderedSection(props: IBorderedSectionProps) {
     return (
         <div
             className="section cursor-pointer h-fit w-fit"

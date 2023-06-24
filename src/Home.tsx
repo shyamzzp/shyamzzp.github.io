@@ -9,11 +9,13 @@ import React from "react";
 import Projects from "./Views/Projects/Projects";
 import Blog from "./Views/Blog/Blog";
 import CaseStudy from "./Views/CaseStudy/CaseStudy";
+import Glossaries from "./Views/Glossaries/Glossaries";
 
 function Home() {
     const [openProjects, setOpenProjects] = React.useState(false);
     const [openBlogs, setOpenBlogs] = React.useState(false);
     const [openCaseStudies, setOpenCaseStudies] = React.useState(false);
+    const [openGlossary, setOpenGlossary] = React.useState(false);
     const setModalOpenProjects = () => {
         setOpenProjects(true);
     };
@@ -24,6 +26,10 @@ function Home() {
 
     const setModalOpenBlogs = () => {
         setOpenBlogs(true);
+    };
+
+    const setModalOpenGlossary = () => {
+        setOpenGlossary(true);
     };
 
     return (
@@ -53,9 +59,10 @@ function Home() {
                         <SocialMedia />
                         <Skills />
                         <div className="mt-5 flex gap-4">
-                            <BorderedSection text="Projects" link="/projects" onClick={setModalOpenProjects} />
-                            <BorderedSection text="Case Studies" link="/casestudy" onClick={setModalOpenCaseStudies} />
-                            <BorderedSection text="Blog" link="/blog" onClick={setModalOpenBlogs} />
+                            <BorderedSection text="Projects" onClick={setModalOpenProjects} />
+                            <BorderedSection text="Case Studies" onClick={setModalOpenCaseStudies} />
+                            <BorderedSection text="Blog" onClick={setModalOpenBlogs} />
+                            <BorderedSection text="Glossary" onClick={setModalOpenGlossary} />
                         </div>
                         <>
                             <Drawer size={'xs'} backdrop={'static'} open={openProjects} onClose={() => setOpenProjects(false)}>
@@ -84,6 +91,17 @@ function Home() {
                                 </Drawer.Header>
                                 <Drawer.Body style={{paddingInline:'2rem', paddingBlock:'1rem'}}>
                                     <CaseStudy />
+                                </Drawer.Body>
+                            </Drawer>
+                        </>
+
+                        <>
+                            <Drawer size={'md'} backdrop={'static'} open={openGlossary} onClose={() => setOpenGlossary(false)}>
+                                <Drawer.Header>
+                                    <Drawer.Title style={{fontSize:'20px'}}>Glossary</Drawer.Title>
+                                </Drawer.Header>
+                                <Drawer.Body style={{paddingInline:'2rem', paddingBlock:'1rem'}}>
+                                    <Glossaries />
                                 </Drawer.Body>
                             </Drawer>
                         </>
