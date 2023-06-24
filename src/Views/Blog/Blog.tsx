@@ -3,13 +3,13 @@ import BlogPost from '../../components/BlogPost/BlogPost'
 
 export default function Blog() {
     return (
-        <div style={{marginTop:'100px'}}>
-            <p style={{ fontSize: '22px', color: '#4a4a4a', marginBottom: '0px' }}>📝 Blogs</p>
+        <div>
             <p style={{ fontSize: '16px', color: '#4a4a4a', marginBottom: '20px', marginTop: '0' }}>Below articles reflect my passion for sharing knowledge, insights, and best practices in the market.</p>
             <div style={{ display: 'flex', gap: '20px', flexWrap: 'wrap' }}>
                 <BlogPost
                     title="Configure GitHub Pages (Deployment)"
                     desc="Learn how to setup and configure GitHub Pages site with themes, custom layouts, and dynamic elements, while enjoying seamless updates and maintenance through its integration with your GitHub workflow."
+                    date="16th June 2023"
                     lang="Git" />
                 <BlogPost
                     title="Everything about JWT Authentication"

@@ -3,17 +3,16 @@ import "./BlogPost.css";
 
 function BlogPost(props:any) {
     return (
-        <div style={{ display: "flex", gap: "20px", maxWidth:'25rem' }}>
+        <div style={{ display: "flex", gap: "20px" }} className="blog-post">
             <div
                 className="section"
                 style={{
                     padding: "1rem 1rem 1rem",
                     color: "rgba(52,53,65)",
-                    maxWidth: "25rem",
                     width: "fit-content",
-                    borderRadius: ".375rem",
+                    // borderRadius: ".375rem",
                     border: "1px solid rgb(223 223 223)",
-                    boxShadow: "5px 5px 0px 0 rgba(0,0,0,0.1)",
+                    boxShadow: "0px 0px 0px 0 rgba(0,0,0,0.1)",
                     height: 'fit-content'
                 }}
             >
