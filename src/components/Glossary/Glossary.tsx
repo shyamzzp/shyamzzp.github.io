@@ -32,7 +32,6 @@ function Glossary(props: any) {
                             fontSize: "1rem",
                             fontWeight: "500",
                             textAlign: "center",
-                            marginLeft:'10px'
                         }}
                     >
                         {props.title}
