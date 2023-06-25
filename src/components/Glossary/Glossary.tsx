@@ -1,16 +1,16 @@
 import React from "react";
+import "./Glossary.css";
 
 function Glossary(props: any) {
     return (
-        <div style={{ display: "flex", gap: "10px", maxWidth:'100%' }}>
+        <div style={{ display: "flex", gap: "10px", width:'100%' }} className="glossary-section">
             <div
                 style={{
-                    paddingBlock: ".2rem",
-                    paddingInline: ".8rem",
+                    padding: "1rem",
                     color: "rgba(52,53,65)",
-                    width: "fit-content",
+                    width: "100%",
                     border: "1px solid rgb(223 223 223)",
-                    boxShadow: "5px 5px 0px 0 rgba(0,0,0,0.1)",
+                    // boxShadow: "5px 5px 0px 0 rgba(0,0,0,0.1)",
                     height: 'fit-content'
                 }}
             >

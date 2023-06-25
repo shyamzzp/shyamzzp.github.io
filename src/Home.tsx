@@ -96,12 +96,20 @@ function Home() {
                         </>
 
                         <>
-                            <Drawer size={'md'} backdrop={'static'} open={openGlossary} onClose={() => setOpenGlossary(false)}>
+                            <Drawer size={'full'} backdrop={'static'} open={openGlossary} onClose={() => setOpenGlossary(false)}>
                                 <Drawer.Header>
                                     <Drawer.Title style={{fontSize:'20px'}}>Glossary</Drawer.Title>
                                 </Drawer.Header>
                                 <Drawer.Body style={{paddingInline:'2rem', paddingBlock:'1rem'}}>
-                                    <Glossaries />
+                                    
+                                    <div>
+                                        <div style={{width:'40%', borderRight:'1px solid #e5e5ea', paddingRight:'30px'}}>
+                                            <Glossaries />
+                                        </div>
+                                        <div style={{width:'60%'}}>
+
+                                        </div>
+                                    </div>
                                 </Drawer.Body>
                             </Drawer>
                         </>

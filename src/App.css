@@ -396,3 +396,8 @@ hr {
 /* .rs-drawer-header .rs-drawer-header-close{
   left: 30px;
 } */
+
+
+.rs-drawer-full.rs-drawer-left, .rs-drawer-full.rs-drawer-right {
+  width: calc(100% - 300px) !important;
+}
