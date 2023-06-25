@@ -4,9 +4,11 @@ import right from '../../../img/right.svg';
 interface IBorderedSectionProps {
     text: string;
     onClick: () => void;
+    isBorderedRadius?: boolean;
 }
 
 function BorderedSection(props: IBorderedSectionProps) {
+    const borderedRadius = props.isBorderedRadius ? ".375rem" : "0px";
     return (
         <div
             className="section cursor-pointer h-fit w-fit"
@@ -15,7 +17,8 @@ function BorderedSection(props: IBorderedSectionProps) {
                 paddingInline: "1rem",
                 color: "rgba(52,53,65)",
                 maxWidth: "25rem",
-                borderRadius: ".375rem",
+                borderRadius: `${borderedRadius}`,
+                // isBorderedRadius?".375rem":"0",
                 border: "1px solid rgb(223 223 223)",
                 boxShadow: "2px 2px 0px 0 rgba(0,0,0,0.1)",
                 backgroundColor:'white',
