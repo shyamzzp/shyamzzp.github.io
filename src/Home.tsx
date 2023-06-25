@@ -59,10 +59,10 @@ function Home() {
                         <SocialMedia />
                         <Skills />
                         <div className="mt-5 flex gap-4">
-                            <BorderedSection text="Projects" onClick={setModalOpenProjects} />
-                            <BorderedSection text="Case Studies" onClick={setModalOpenCaseStudies} />
-                            <BorderedSection text="Blog" onClick={setModalOpenBlogs} />
-                            <BorderedSection text="Glossary" onClick={setModalOpenGlossary} />
+                            <BorderedSection text="Projects" onClick={setModalOpenProjects} isBorderedRadius />
+                            <BorderedSection text="Case Studies" onClick={setModalOpenCaseStudies} isBorderedRadius/>
+                            <BorderedSection text="Blog" onClick={setModalOpenBlogs} isBorderedRadius/>
+                            <BorderedSection text="Glossary" onClick={setModalOpenGlossary} isBorderedRadius/>
                         </div>
                         <>
                             <Drawer size={'sm'} backdrop={'static'} open={openProjects} onClose={() => setOpenProjects(false)}>

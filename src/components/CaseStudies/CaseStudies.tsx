@@ -45,7 +45,6 @@ function CaseStudies(props: any) {
                     color: "rgba(52,53,65)",
                     maxWidth: "25rem",
                     width: "fit-content",
-                    borderRadius: ".375rem",
                     border: "1px solid rgb(223 223 223)",
                     boxShadow: "5px 5px 0px 0 rgba(0,0,0,0.1)",
                     height: 'fit-content'
