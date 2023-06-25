@@ -1,6 +1,7 @@
 import React from 'react'
 import live from '../../img/live.png';
 import github from '../../img/github.png';
+import "./ProjectCard.css";
 
 function ProjectCard(props: any) {
     const styleContainer = {
@@ -10,26 +11,22 @@ function ProjectCard(props: any) {
         marginRight:props.mr?'10px':'0',
     }
     return (
-        <div style={styleContainer}>
+        <div style={styleContainer} className="project-card">
             <div
                 className="section"
                 style={{
                     color: "black",
-                    width: "fit-content",
+                    width: "100%",
                     height: "fit-content",
-                    borderRadius: ".375rem",    
                     paddingInline: '2rem',
                     paddingBlock: '2rem',
-                    backgroundColor:'#f7f6ee',
-                    // border: "1px solid rgb(223 223 223)",
-                    boxShadow: 'rgba(0, 0, 0, 0.1) 5px 5px 0px 0px'
-                    
+                    border: "1px solid rgba(0, 0, 0, 0.1)",
                 }}
             >
                 <div
                     className="project-header-title"
                     style={{
-                        fontSize: "26px",
+                        fontSize: "20px",
                         textAlign: "start",
                         fontWeight: "400",
                         display: "flex", justifyContent: 'space-between'

@@ -65,7 +65,7 @@ function Home() {
                             <BorderedSection text="Glossary" onClick={setModalOpenGlossary} />
                         </div>
                         <>
-                            <Drawer size={'xs'} backdrop={'static'} open={openProjects} onClose={() => setOpenProjects(false)}>
+                            <Drawer size={'sm'} backdrop={'static'} open={openProjects} onClose={() => setOpenProjects(false)}>
                                 <Drawer.Header>
                                     <Drawer.Title>Projects</Drawer.Title>
                                 </Drawer.Header>

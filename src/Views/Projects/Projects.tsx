@@ -10,11 +10,11 @@ function Projects() {
     const FindMentorTags = ["TypeScript", "PocketBase", "VueJS", "REST"];
     const InterviewPreparationTags = ["ReactJS", "Docusaurus", "TypeScript", "Markdown"];
     return (
-        <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '100px', flexDirection: 'column' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', flexDirection: 'column' }}>
             <div>
                 {/* <p style={{ fontSize: '22px', color: '#4a4a4a', marginBottom: '0px', }}>🚀 Projects</p>
                 <p style={{ fontSize: '16px', color: '#4a4a4a', marginBottom: '20px', marginTop: '0' }}>Below projects exemplify my expertise, technical skills, and contributions as a senior software engineer.</p> */}
-                <div style={{ display: 'flex', gap: '20px', flexWrap:'wrap'}}>
+                <div style={{ display: 'flex', gap: '20px', flexDirection: 'column' }}>
                     <ProjectCard
                         header="Interview Preparation"
                         tags={InterviewPreparationTags}
@@ -25,12 +25,12 @@ function Projects() {
                         header="Off Pay"
                         description={OffPay}
                         tags={FindMentorTags}
-                        mb />
+                    />
                     <ProjectCard
                         header="Docs Goto"
                         description={DocsGoto}
                         tags={FindMentorTags}
-                        mb />
+                    />
                     <ProjectCard
                         header="Find Mentor"
                         description={FindMentor}
@@ -39,8 +39,7 @@ function Projects() {
                         header="Bike Rental Service"
                         description={BikeDB}
                         tags={FindMentorTags}
-                        mb
-                        mr />
+                    />
                 </div>
             </div>
         </div>

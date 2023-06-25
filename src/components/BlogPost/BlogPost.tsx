@@ -10,7 +10,6 @@ function BlogPost(props:any) {
                     padding: "1rem 1rem 1rem",
                     color: "rgba(52,53,65)",
                     width: "fit-content",
-                    // borderRadius: ".375rem",
                     border: "1px solid rgb(223 223 223)",
                     boxShadow: "0px 0px 0px 0 rgba(0,0,0,0.1)",
                     height: 'fit-content'
