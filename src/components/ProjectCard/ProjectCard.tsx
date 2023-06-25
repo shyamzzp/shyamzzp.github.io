@@ -72,29 +72,21 @@ function ProjectCard(props: any) {
                         </a>
                     </div>
                 </div>
-                {/* <p className="project-header-sub-title"
-                    style={{ fontSize: "16px", marginTop:'10px' }}>Enhance technical skills by continuously learning and practicing programming languages, algorithms, and data structures.
-Prepare for coding interviews by studying common algorithms, data structures, and practicing problem-solving on platforms like LeetCode or HackerRank.
-<br/><br/>Adopt a structural approach to tackle challenges by breaking down complex problems, analyzing requirements, and systematically building and testing solutions.
-<br/><br/>Deep dive into system design by understanding scalable and efficient software architecture principles, distributed systems, and relevant concepts like caching and load balancing.
-<br/><br/>Focus on continuous improvement, staying updated with the latest technologies, and seeking opportunities to apply and enhance your skills through practical projects and real-world scenarios.</p> */}
-                {/* <ol
-                    className="project-header-sub-title"
-                    style={{ fontSize: "16px", marginTop:'10px' }}
-                >
+                <p className="project-header-sub-title"
+                    style={{ fontSize: "16px", marginTop:'10px' }}>
                     {props.description.map((item: string) => {
                         return (
-                            <li>
+                            <li key={item}>
                                 {item}
                             </li>
                         );
                     })}
-               </ol> */}
+                    </p>
 
                 <div style={{ marginTop: "5px", display: 'flex', gap: '5px' }}>
                     {props.tags.map((item: string) => {
                         return (
-                            <span
+                            <span key={item}
                                 className="tag is-dark tech-stack"
                                 style={{ marginTop: "5px", backgroundColor: "#ffffffa6" }}
                             >
