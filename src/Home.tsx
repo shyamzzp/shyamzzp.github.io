@@ -110,7 +110,7 @@ function Home() {
                                 <Drawer.Body style={{paddingInline:'2rem', paddingBlock:'1rem'}}>
                                     
                                     <div style={{display:'flex', gap:'30px'}}>
-                                        <div style={{width:'35%', borderRight:'1px solid #e5e5ea'}}>
+                                        <div style={{width:'35%', borderRight:'1px solid #e5e5ea', paddingRight:'30px'}}>
                                             <Glossaries />
                                         </div>
                                         <div style={{width:'60%'}}>
