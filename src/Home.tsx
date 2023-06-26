@@ -18,6 +18,7 @@ function Home() {
     const [openBlogs, setOpenBlogs] = React.useState(false);
     const [openCaseStudies, setOpenCaseStudies] = React.useState(false);
     const [openGlossary, setOpenGlossary] = React.useState(false);
+    const [value, setValue] = React.useState('agile-development');
     const [tosText, setTosText] = useState('')
     useEffect(() => {
         fetch(AgileDevelopmentMD).then(res => res.text()).then(text => setTosText(text))
@@ -38,6 +39,10 @@ function Home() {
     const setModalOpenGlossary = () => {
         setOpenGlossary(true);
     };
+
+    const setReadMeFileContext = (data: string) => {
+        setValue(data)
+    }
 
     return (
         <div id="app">
@@ -82,22 +87,37 @@ function Home() {
                             </Drawer>
                         </>
                         <>
-                            <Drawer backdrop={'static'} open={openBlogs} onClose={() => setOpenBlogs(false)}>
-                                <Drawer.Header>
-                                    <Drawer.Title>Blogs</Drawer.Title>
-                                </Drawer.Header>
-                                <Drawer.Body>
-                                    <Blog />
-                                </Drawer.Body>
-                            </Drawer>
-                        </>
-                        <>
-                            <Drawer size={'xs'} backdrop={'static'} open={openCaseStudies} onClose={() => setOpenCaseStudies(false)}>
+                            <Drawer size={'full'} backdrop={'static'} open={openBlogs} onClose={() => setOpenBlogs(false)}>
                                 <Drawer.Header>
                                     <Drawer.Title style={{ fontSize: '20px' }}>Case Studies</Drawer.Title>
                                 </Drawer.Header>
                                 <Drawer.Body style={{ paddingInline: '2rem', paddingBlock: '1rem' }}>
-                                    <CaseStudy />
+                                    <div style={{ display: 'flex' }}>
+                                        <div style={{ width: '35%', paddingRight: '30px', height: '85vh', overflow: 'scroll' }}>
+                                            <Blog />
+                                        </div>
+                                        <div style={{ width: '65%', height: '85vh', overflow: 'scroll', paddingInline: '30px' }}>
+                                            <p>Default Value for the Bigger Section</p>
+                                        </div>
+                                    </div>
+                                </Drawer.Body>
+                            </Drawer>
+                        </>
+
+                        <>
+                            <Drawer size={'full'} backdrop={'static'} open={openCaseStudies} onClose={() => setOpenCaseStudies(false)}>
+                                <Drawer.Header>
+                                    <Drawer.Title style={{ fontSize: '20px' }}>Case Studies</Drawer.Title>
+                                </Drawer.Header>
+                                <Drawer.Body style={{ paddingInline: '2rem', paddingBlock: '1rem' }}>
+                                    <div style={{ display: 'flex' }}>
+                                        <div style={{ width: '35%', paddingRight: '30px', height: '85vh', overflow: 'scroll' }}>
+                                            <CaseStudy />
+                                        </div>
+                                        <div style={{ width: '65%', height: '85vh', overflow: 'scroll', paddingInline: '30px' }}>
+                                            <p>Default Value for the Bigger Section</p>
+                                        </div>
+                                    </div>
                                 </Drawer.Body>
                             </Drawer>
                         </>
@@ -108,13 +128,13 @@ function Home() {
                                     <Drawer.Title style={{ fontSize: '20px' }}>Glossary</Drawer.Title>
                                 </Drawer.Header>
                                 <Drawer.Body style={{ paddingInline: '2rem', paddingBlock: '1rem' }}>
-
                                     <div style={{ display: 'flex' }}>
                                         <div style={{ width: '35%', paddingRight: '30px', height: '85vh', overflow: 'scroll' }}>
-                                            <Glossaries />
+                                            <Glossaries setValue={setReadMeFileContext} />
                                         </div>
-                                        <div style={{ width: '65%', height: '85vh', overflow: 'scroll', paddingInline:'30px' }}>
+                                        <div style={{ width: '65%', height: '85vh', overflow: 'scroll', paddingInline: '30px' }} className="readme-section">
                                             <ReactMarkdown children={tosText} />
+                                            <p>{value}</p>
                                         </div>
                                     </div>
                                 </Drawer.Body>

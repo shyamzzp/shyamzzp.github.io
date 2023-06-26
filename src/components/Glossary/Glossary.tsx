@@ -1,16 +1,15 @@
 import React from "react";
 import "./Glossary.css";
 
-function Glossary(props: any) {
+function Glossary({setReadMeFileContext, title, reference}: any) {
     return (
-        <div style={{ display: "flex", gap: "10px", width:'100%' }} className="glossary-section">
+        <div style={{ display: "flex", gap: "10px", width:'100%' }} className="glossary-section" onClick={()=>{setReadMeFileContext(reference)}}>
             <div
                 style={{
                     padding: "1rem",
                     color: "rgba(52,53,65)",
                     width: "100%",
                     border: "1px solid rgb(223 223 223)",
-                    // boxShadow: "5px 5px 0px 0 rgba(0,0,0,0.1)",
                     height: 'fit-content'
                 }}
             >
@@ -29,7 +28,7 @@ function Glossary(props: any) {
                             textAlign: "center",
                         }}
                     >
-                        {props.title}
+                        {title}
                     </p>
                 </div>
             </div>

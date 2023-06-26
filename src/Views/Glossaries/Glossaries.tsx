@@ -1,23 +1,19 @@
-import React, { useEffect, useState } from 'react'
 import {SuffleData, data} from './data'
 import Glossary from '../../components/Glossary/Glossary'
-import ReactMarkdown from 'react-markdown'
-// import AgileDevelopmentMD from './agile-development.md'
 
-export default function Glossaries() {
+export default function Glossaries({setValue}:any) {
     const suffledData = SuffleData(data);
-    // const [tosText, setTosText] = useState('')
-    // useEffect(() => {
-	// 	fetch(AgileDevelopmentMD).then(res => res.text()).then(text => setTosText(text))
-	// })
+    const setReadMeFileContext = (data:string) => {
+        setValue(data)
+    }
+
     return (
         <div>
-            <div style={{ display: 'flex', gap: '20px', flexDirection: 'column' }}>
+            <div style={{ display: 'flex', gap: '20px', flexDirection: 'column' }} >
                 {suffledData.map((item, index) => (
-                    <Glossary key={index} title={item.title} />
+                    <Glossary key={index} title={item.title} reference={item.reference} setReadMeFileContext={setReadMeFileContext}/>
                 ))}
             </div>
-            {/*  */}
         </div>
     )
 }
