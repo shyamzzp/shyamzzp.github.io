@@ -3,10 +3,11 @@ import "./Glossary.css";
 
 function Glossary({setReadMeFileContext, title, reference}: any) {
     return (
-        <div style={{ display: "flex", gap: "10px", width:'100%' }} className="glossary-section" onClick={()=>{setReadMeFileContext(reference)}}>
+        <div style={{ display: "flex", gap: "5px", width:'100%' }} className="glossary-section" onClick={()=>{setReadMeFileContext(reference)}}>
             <div
                 style={{
                     padding: "1rem",
+                    paddingBlock:'0.5rem',
                     color: "rgba(52,53,65)",
                     width: "100%",
                     border: "1px solid rgb(223 223 223)",

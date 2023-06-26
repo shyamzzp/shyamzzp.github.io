@@ -9,7 +9,7 @@ export default function Glossaries({setValue}:any) {
 
     return (
         <div>
-            <div style={{ display: 'flex', gap: '20px', flexDirection: 'column' }} >
+            <div style={{ display: 'flex', gap: '10px', flexDirection: 'column' }} >
                 {suffledData.map((item, index) => (
                     <Glossary key={index} title={item.title} reference={item.reference} setReadMeFileContext={setReadMeFileContext}/>
                 ))}

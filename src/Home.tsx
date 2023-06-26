@@ -11,7 +11,7 @@ import Blog from "./Views/Blog/Blog";
 import CaseStudy from "./Views/CaseStudy/CaseStudy";
 import Glossaries from "./Views/Glossaries/Glossaries";
 import ReactMarkdown from "react-markdown";
-import AgileDevelopmentMD from './agile-development.md'
+import { getCorrespondingReadMe } from "./ReadMeFiles/Glossaries";
 
 function Home() {
     const [openProjects, setOpenProjects] = React.useState(false);
@@ -20,8 +20,9 @@ function Home() {
     const [openGlossary, setOpenGlossary] = React.useState(false);
     const [value, setValue] = React.useState('agile-development');
     const [tosText, setTosText] = useState('')
+
     useEffect(() => {
-        fetch(AgileDevelopmentMD).then(res => res.text()).then(text => setTosText(text))
+        fetch(getCorrespondingReadMe(value)).then(res => res.text()).then(text => setTosText(text))
     })
 
     const setModalOpenProjects = () => {
@@ -134,7 +135,6 @@ function Home() {
                                         </div>
                                         <div style={{ width: '65%', height: '85vh', overflow: 'scroll', paddingInline: '30px' }} className="readme-section">
                                             <ReactMarkdown children={tosText} />
-                                            <p>{value}</p>
                                         </div>
                                     </div>
                                 </Drawer.Body>
