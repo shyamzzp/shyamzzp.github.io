@@ -20,9 +20,9 @@ function Home() {
     const [openGlossary, setOpenGlossary] = React.useState(false);
     const [tosText, setTosText] = useState('')
     useEffect(() => {
-		fetch(AgileDevelopmentMD).then(res => res.text()).then(text => setTosText(text))
-	})
-    
+        fetch(AgileDevelopmentMD).then(res => res.text()).then(text => setTosText(text))
+    })
+
     const setModalOpenProjects = () => {
         setOpenProjects(true);
     };
@@ -67,9 +67,9 @@ function Home() {
                         <Skills />
                         <div className="mt-5 flex gap-4">
                             <BorderedSection text="Projects" onClick={setModalOpenProjects} isBorderedRadius />
-                            <BorderedSection text="Case Studies" onClick={setModalOpenCaseStudies} isBorderedRadius/>
-                            <BorderedSection text="Blog" onClick={setModalOpenBlogs} isBorderedRadius/>
-                            <BorderedSection text="Glossary" onClick={setModalOpenGlossary} isBorderedRadius/>
+                            <BorderedSection text="Case Studies" onClick={setModalOpenCaseStudies} isBorderedRadius />
+                            <BorderedSection text="Blog" onClick={setModalOpenBlogs} isBorderedRadius />
+                            <BorderedSection text="Glossary" onClick={setModalOpenGlossary} isBorderedRadius />
                         </div>
                         <>
                             <Drawer size={'sm'} backdrop={'static'} open={openProjects} onClose={() => setOpenProjects(false)}>
@@ -94,9 +94,9 @@ function Home() {
                         <>
                             <Drawer size={'xs'} backdrop={'static'} open={openCaseStudies} onClose={() => setOpenCaseStudies(false)}>
                                 <Drawer.Header>
-                                    <Drawer.Title style={{fontSize:'20px'}}>Case Studies</Drawer.Title>
+                                    <Drawer.Title style={{ fontSize: '20px' }}>Case Studies</Drawer.Title>
                                 </Drawer.Header>
-                                <Drawer.Body style={{paddingInline:'2rem', paddingBlock:'1rem'}}>
+                                <Drawer.Body style={{ paddingInline: '2rem', paddingBlock: '1rem' }}>
                                     <CaseStudy />
                                 </Drawer.Body>
                             </Drawer>
@@ -105,15 +105,15 @@ function Home() {
                         <>
                             <Drawer size={'full'} backdrop={'static'} open={openGlossary} onClose={() => setOpenGlossary(false)}>
                                 <Drawer.Header>
-                                    <Drawer.Title style={{fontSize:'20px'}}>Glossary</Drawer.Title>
+                                    <Drawer.Title style={{ fontSize: '20px' }}>Glossary</Drawer.Title>
                                 </Drawer.Header>
-                                <Drawer.Body style={{paddingInline:'2rem', paddingBlock:'1rem'}}>
-                                    
-                                    <div style={{display:'flex', gap:'30px'}}>
-                                        <div style={{width:'35%', borderRight:'1px solid #e5e5ea', paddingRight:'30px'}}>
+                                <Drawer.Body style={{ paddingInline: '2rem', paddingBlock: '1rem' }}>
+
+                                    <div style={{ display: 'flex' }}>
+                                        <div style={{ width: '35%', paddingRight: '30px', height: '85vh', overflow: 'scroll' }}>
                                             <Glossaries />
                                         </div>
-                                        <div style={{width:'60%'}}>
+                                        <div style={{ width: '65%', height: '85vh', overflow: 'scroll', paddingInline:'30px' }}>
                                             <ReactMarkdown children={tosText} />
                                         </div>
                                     </div>
