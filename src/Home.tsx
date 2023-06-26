@@ -5,17 +5,24 @@ import BorderedSection from "./components/Small/BorderedSection/BorderedSection"
 import Skills from "./components/Skills/Skills";
 import SocialMedia from "./components/SocialMedia/SocialMedia";
 import { Drawer } from 'rsuite';
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Projects from "./Views/Projects/Projects";
 import Blog from "./Views/Blog/Blog";
 import CaseStudy from "./Views/CaseStudy/CaseStudy";
 import Glossaries from "./Views/Glossaries/Glossaries";
+import ReactMarkdown from "react-markdown";
+import AgileDevelopmentMD from './agile-development.md'
 
 function Home() {
     const [openProjects, setOpenProjects] = React.useState(false);
     const [openBlogs, setOpenBlogs] = React.useState(false);
     const [openCaseStudies, setOpenCaseStudies] = React.useState(false);
     const [openGlossary, setOpenGlossary] = React.useState(false);
+    const [tosText, setTosText] = useState('')
+    useEffect(() => {
+		fetch(AgileDevelopmentMD).then(res => res.text()).then(text => setTosText(text))
+	})
+    
     const setModalOpenProjects = () => {
         setOpenProjects(true);
     };
@@ -102,12 +109,12 @@ function Home() {
                                 </Drawer.Header>
                                 <Drawer.Body style={{paddingInline:'2rem', paddingBlock:'1rem'}}>
                                     
-                                    <div>
-                                        <div style={{width:'40%', borderRight:'1px solid #e5e5ea', paddingRight:'30px'}}>
+                                    <div style={{display:'flex', gap:'30px'}}>
+                                        <div style={{width:'35%', borderRight:'1px solid #e5e5ea'}}>
                                             <Glossaries />
                                         </div>
                                         <div style={{width:'60%'}}>
-
+                                            <ReactMarkdown children={tosText} />
                                         </div>
                                     </div>
                                 </Drawer.Body>
