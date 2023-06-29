@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/static/css/main.d92a344b.css",
-    "main.js": "/static/js/main.f4639ecc.js",
+    "main.css": "/static/css/main.5e6e73c9.css",
+    "main.js": "/static/js/main.3b17e8c9.js",
     "static/js/787.27502e5e.chunk.js": "/static/js/787.27502e5e.chunk.js",
     "static/media/skype.png": "/static/media/skype.ab4e958cf232a0d52b44.png",
     "static/media/cv.png": "/static/media/cv.02b00606e243f8945ade.png",
@@ -10,15 +10,16 @@
     "static/media/stack-overflow.png": "/static/media/stack-overflow.579cff432dec19bc3d23.png",
     "static/media/github.png": "/static/media/github.f11021803f68852df283.png",
     "static/media/linkedin.png": "/static/media/linkedin.f249b38224ca41a0b909.png",
-    "static/media/agile-development.md": "/static/media/agile-development.8c04357b285ad39f59ab.md",
+    "static/media/agile-development.md": "/static/media/agile-development.fe5511110827267d9696.md",
     "index.html": "/index.html",
     "static/media/right.svg": "/static/media/right.f587f8c7d3be1d68165ecb31d9826853.svg",
-    "main.d92a344b.css.map": "/static/css/main.d92a344b.css.map",
-    "main.f4639ecc.js.map": "/static/js/main.f4639ecc.js.map",
+    "static/media/not-available.md": "/static/media/not-available.730b22ad26a5448338a4.md",
+    "main.5e6e73c9.css.map": "/static/css/main.5e6e73c9.css.map",
+    "main.3b17e8c9.js.map": "/static/js/main.3b17e8c9.js.map",
     "787.27502e5e.chunk.js.map": "/static/js/787.27502e5e.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.d92a344b.css",
-    "static/js/main.f4639ecc.js"
+    "static/css/main.5e6e73c9.css",
+    "static/js/main.3b17e8c9.js"
   ]
 }
