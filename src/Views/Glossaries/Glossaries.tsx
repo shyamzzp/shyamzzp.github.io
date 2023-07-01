@@ -11,7 +11,7 @@ export default function Glossaries({setValue}:any) {
         <div>
             <div style={{ display: 'flex', gap: '10px', flexDirection: 'column' }} >
                 {suffledData.map((item, index) => (
-                    <Glossary key={index} title={item.title} reference={item.reference} setReadMeFileContext={setReadMeFileContext}/>
+                    <Glossary key={index} title={item.title} reference={item.reference} setReadMeFileContext={setReadMeFileContext} level={item.level}/>
                 ))}
             </div>
         </div>

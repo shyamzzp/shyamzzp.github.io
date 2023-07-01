@@ -1,24 +1,30 @@
 import React from "react";
 import "./Glossary.css";
 
-function Glossary({setReadMeFileContext, title, reference}: any) {
+function Glossary({ setReadMeFileContext, title, reference, level }: any) {
+    const levelStyle = {
+        backgroundColor: level,
+        width: '2px'
+    }
+    console.log(levelStyle);
+    
     return (
-        <div style={{ display: "flex", gap: "5px", width:'100%' }} className="glossary-section" onClick={()=>{setReadMeFileContext(reference)}}>
+        <div style={{ display: "flex", gap: "5px", width: '100%' }} className="glossary-section" onClick={() => { setReadMeFileContext(reference) }}>
             <div
                 style={{
-                    padding: "1rem",
-                    paddingBlock:'0.5rem',
                     color: "rgba(52,53,65)",
                     width: "100%",
                     border: "1px solid rgb(223 223 223)",
-                    height: 'fit-content'
+                    height: 'fit-content',
+                    display: 'flex',
                 }}
             >
+                <div style={levelStyle}></div>
                 <div
                     style={{
                         display: "flex",
-                        alignItems: "center",
-                        justifyContent: "space-between",
+                        paddingBlock: '0.7rem',
+                        marginLeft: "1rem",
                     }}
                 >
                     <p
