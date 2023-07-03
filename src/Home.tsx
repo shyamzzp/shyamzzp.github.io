@@ -4,7 +4,7 @@ import "./App.css";
 import BorderedSection from "./components/Small/BorderedSection/BorderedSection";
 import Skills from "./components/Skills/Skills";
 import SocialMedia from "./components/SocialMedia/SocialMedia";
-import { Drawer } from 'rsuite';
+import { Drawer, Button } from 'rsuite';
 import React, { useEffect, useState } from "react";
 import Projects from "./Views/Projects/Projects";
 import Blog from "./Views/Blog/Blog";
@@ -12,6 +12,10 @@ import CaseStudy from "./Views/CaseStudy/CaseStudy";
 import Glossaries from "./Views/Glossaries/Glossaries";
 import ReactMarkdown from "react-markdown";
 import { getCorrespondingReadMe } from "./ReadMeFiles/Glossaries";
+import { createClient } from '@supabase/supabase-js'
+import { SUPABASE_ENDPOINT, SUPABASE_PUBLIC_ANON_KEY } from './config'
+import { data as GlossaryData } from './Views/Glossaries/data'
+const supabase = createClient(SUPABASE_ENDPOINT, SUPABASE_PUBLIC_ANON_KEY)
 
 function Home() {
     const [openProjects, setOpenProjects] = React.useState(false);
@@ -19,7 +23,20 @@ function Home() {
     const [openCaseStudies, setOpenCaseStudies] = React.useState(false);
     const [openGlossary, setOpenGlossary] = React.useState(false);
     const [value, setValue] = React.useState('agile-development');
-    const [tosText, setTosText] = useState('')
+    const [tosText, setTosText] = useState('');
+
+    const updateDBWithGlossaryData = async () => {
+        GlossaryData.forEach(async (item) => {
+            const { data, error } = await supabase
+                .from('Glossary')
+                .insert([item])
+                .select();
+        });
+    }
+
+    useEffect(() => {
+        fetch(getCorrespondingReadMe(value)).then(res => res.text()).then(text => setTosText(text))
+    })
 
     useEffect(() => {
         fetch(getCorrespondingReadMe(value)).then(res => res.text()).then(text => setTosText(text))
@@ -127,11 +144,14 @@ function Home() {
                             <Drawer size={'full'} backdrop={'static'} open={openGlossary} onClose={() => setOpenGlossary(false)}>
                                 <Drawer.Header>
                                     <Drawer.Title style={{ fontSize: '20px' }}>Glossary</Drawer.Title>
+                                    {/* <Drawer.Actions>
+                                        <Button onClick={() => updateDBWithGlossaryData()}>Cancel</Button>
+                                    </Drawer.Actions> */}
                                 </Drawer.Header>
                                 <Drawer.Body style={{ paddingInline: '2rem', paddingBlock: '1rem' }}>
                                     <div style={{ display: 'flex' }}>
                                         <div style={{ width: '35%', paddingRight: '30px', height: '85vh', overflow: 'scroll' }}>
-                                            <Glossaries setValue={setReadMeFileContext} />
+                                            <Glossaries />
                                         </div>
                                         <div style={{ width: '65%', height: '85vh', overflow: 'scroll', paddingInline: '30px' }} className="readme-section">
                                             <ReactMarkdown children={tosText} />
