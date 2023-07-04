@@ -144,14 +144,14 @@ function Home() {
                             <Drawer size={'full'} backdrop={'static'} open={openGlossary} onClose={() => setOpenGlossary(false)}>
                                 <Drawer.Header>
                                     <Drawer.Title style={{ fontSize: '20px' }}>Glossary</Drawer.Title>
-                                    {/* <Drawer.Actions>
-                                        <Button onClick={() => updateDBWithGlossaryData()}>Cancel</Button>
-                                    </Drawer.Actions> */}
+                                    <Drawer.Actions>
+                                        <Button onClick={() => updateDBWithGlossaryData()}>Feed Data to DB</Button>
+                                    </Drawer.Actions>
                                 </Drawer.Header>
                                 <Drawer.Body style={{ paddingInline: '2rem', paddingBlock: '1rem' }}>
                                     <div style={{ display: 'flex' }}>
                                         <div style={{ width: '35%', paddingRight: '30px', height: '85vh', overflow: 'scroll' }}>
-                                            <Glossaries />
+                                            <Glossaries setValue={setReadMeFileContext} />
                                         </div>
                                         <div style={{ width: '65%', height: '85vh', overflow: 'scroll', paddingInline: '30px' }} className="readme-section">
                                             <ReactMarkdown children={tosText} />

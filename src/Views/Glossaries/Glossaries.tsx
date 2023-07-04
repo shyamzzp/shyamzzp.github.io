@@ -6,9 +6,11 @@ import { Loader } from 'rsuite';
 import { SuffleData } from './data'
 const supabase = createClient(SUPABASE_ENDPOINT, SUPABASE_PUBLIC_ANON_KEY)
 
-export default function Glossaries() {
+export default function Glossaries({setValue}:any) {
     const [shuffledData, setShuffledData] = useState<any[]>([]);
-
+    const setReadMeFileContext = (data:string) => {
+        setValue(data)
+    }
     useEffect(() => {
         async function fetchData() {
             const { data, error } = await supabase
@@ -28,7 +30,7 @@ export default function Glossaries() {
             <div style={{ display: 'flex', gap: '10px', flexDirection: 'column' }} >
                 {shuffledData.length === 0?<Loader size="md" content="Fetching Data...." style={{display:'flex', justifyContent:'center'}} />:null}
                 {shuffledData.map((item) => (
-                    <Glossary key={item.id} title={item.title} reference={item.reference} level={item.level} />
+                    <Glossary key={item.id} title={item.title} reference={item.reference} level={item.level} setReadMeFileContext={setReadMeFileContext} />
                 ))}
             </div>
         </div>
