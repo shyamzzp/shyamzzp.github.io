@@ -26,7 +26,7 @@ export default function Glossaries() {
     return (
         <div>
             <div style={{ display: 'flex', gap: '10px', flexDirection: 'column' }} >
-                {SuffleData == null?<Loader size="md" content="Loading" style={{display:'flex', justifyContent:'center'}} />:null}
+                {shuffledData.length === 0?<Loader size="md" content="Loading" style={{display:'flex', justifyContent:'center'}} />:null}
                 {shuffledData.map((item) => (
                     <Glossary key={item.id} title={item.title} reference={item.reference} level={item.level} />
                 ))}
