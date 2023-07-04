@@ -15,6 +15,7 @@ import { getCorrespondingReadMe } from "./ReadMeFiles/Glossaries";
 import { createClient } from '@supabase/supabase-js'
 import { SUPABASE_ENDPOINT, SUPABASE_PUBLIC_ANON_KEY } from './config'
 import { data as GlossaryData } from './Views/Glossaries/data'
+import FlightDetails from "./components/FlighDetails/FlighDetails";
 const supabase = createClient(SUPABASE_ENDPOINT, SUPABASE_PUBLIC_ANON_KEY)
 
 function Home() {
@@ -134,6 +135,7 @@ function Home() {
                                         </div>
                                         <div style={{ width: '65%', height: '85vh', overflow: 'scroll', paddingInline: '30px' }}>
                                             <p>Default Value for the Bigger Section</p>
+                                            {/* <FlightDetails /> */}
                                         </div>
                                     </div>
                                 </Drawer.Body>
