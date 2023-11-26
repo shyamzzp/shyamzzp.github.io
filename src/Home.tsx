@@ -4,18 +4,17 @@ import "./App.css";
 import BorderedSection from "./components/Small/BorderedSection/BorderedSection";
 import Skills from "./components/Skills/Skills";
 import SocialMedia from "./components/SocialMedia/SocialMedia";
-import { Drawer, Button } from 'rsuite';
+import { Drawer } from 'rsuite';
 import React, { useEffect, useState } from "react";
 import Projects from "./Views/Projects/Projects";
 import Blog from "./Views/Blog/Blog";
 import CaseStudy from "./Views/CaseStudy/CaseStudy";
 import Glossaries from "./Views/Glossaries/Glossaries";
 import ReactMarkdown from "react-markdown";
-import { getCorrespondingReadMe } from "./ReadMeFiles/Glossaries";
+import { getGlossaryReadMe,getBlogReadMe } from "./ReadMeFiles/Glossaries";
 import { createClient } from '@supabase/supabase-js'
 import { SUPABASE_ENDPOINT, SUPABASE_PUBLIC_ANON_KEY } from './config'
 import { data as GlossaryData } from './Views/Glossaries/data'
-import FlightDetails from "./components/FlighDetails/FlighDetails";
 const supabase = createClient(SUPABASE_ENDPOINT, SUPABASE_PUBLIC_ANON_KEY)
 
 function Home() {
@@ -24,7 +23,9 @@ function Home() {
     const [openCaseStudies, setOpenCaseStudies] = React.useState(false);
     const [openGlossary, setOpenGlossary] = React.useState(false);
     const [value, setValue] = React.useState('agile-development');
+    const [viewForClicked, setViewForClicked] = React.useState('github-site');
     const [tosText, setTosText] = useState('');
+    const [tosTextBlog, setTosTextBlog] = useState('');
 
     const updateDBWithGlossaryData = async () => {
         GlossaryData.forEach(async (item) => {
@@ -36,11 +37,11 @@ function Home() {
     }
 
     useEffect(() => {
-        fetch(getCorrespondingReadMe(value)).then(res => res.text()).then(text => setTosText(text))
+        fetch(getGlossaryReadMe(value)).then(res => res.text()).then(text => setTosText(text))
     })
 
     useEffect(() => {
-        fetch(getCorrespondingReadMe(value)).then(res => res.text()).then(text => setTosText(text))
+        fetch(getBlogReadMe(value)).then(res => res.text()).then(text => setTosTextBlog(text))
     })
 
     const setModalOpenProjects = () => {
@@ -61,6 +62,10 @@ function Home() {
 
     const setReadMeFileContext = (data: string) => {
         setValue(data)
+    }
+
+    const exposedMethod = (data:string) =>{
+        setViewForClicked(data)
     }
 
     return (
@@ -89,12 +94,12 @@ function Home() {
 
                         <SocialMedia />
                         <Skills />
-                        <div className="mt-5 flex gap-4">
+                        {/* <div className="mt-5 flex gap-4">
                             <BorderedSection text="Projects" onClick={setModalOpenProjects} isBorderedRadius />
                             <BorderedSection text="Case Studies" onClick={setModalOpenCaseStudies} isBorderedRadius />
                             <BorderedSection text="Blog" onClick={setModalOpenBlogs} isBorderedRadius />
                             <BorderedSection text="Glossary" onClick={setModalOpenGlossary} isBorderedRadius />
-                        </div>
+                        </div> */}
                         <>
                             <Drawer size={'sm'} backdrop={'static'} open={openProjects} onClose={() => setOpenProjects(false)}>
                                 <Drawer.Header>
@@ -108,15 +113,16 @@ function Home() {
                         <>
                             <Drawer size={'full'} backdrop={'static'} open={openBlogs} onClose={() => setOpenBlogs(false)}>
                                 <Drawer.Header>
-                                    <Drawer.Title style={{ fontSize: '20px' }}>Case Studies</Drawer.Title>
+                                    <Drawer.Title style={{ fontSize: '20px' }}>Blogs</Drawer.Title>
                                 </Drawer.Header>
                                 <Drawer.Body style={{ paddingInline: '2rem', paddingBlock: '1rem' }}>
                                     <div style={{ display: 'flex' }}>
-                                        <div style={{ width: '35%', paddingRight: '30px', height: '85vh', overflow: 'scroll' }}>
-                                            <Blog />
+                                        <div style={{ width: '35%', paddingRight: '30px', height: '85vh', overflow: 'scroll', paddingBottom:'20px' }}>
+                                            <Blog exposedMethod={exposedMethod}/>
                                         </div>
                                         <div style={{ width: '65%', height: '85vh', overflow: 'scroll', paddingInline: '30px' }}>
-                                            <p>Default Value for the Bigger Section</p>
+                                            <p>{viewForClicked}</p>
+                                            <ReactMarkdown children={tosTextBlog} />
                                         </div>
                                     </div>
                                 </Drawer.Body>

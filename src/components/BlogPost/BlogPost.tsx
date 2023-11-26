@@ -1,9 +1,9 @@
 import React from "react";
 import "./BlogPost.css";
 
-function BlogPost(props:any) {
+function BlogPost({exposedMethod, ...props}:any) {
     return (
-        <div style={{ display: "flex", gap: "20px" }} className="blog-post">
+        <div style={{ display: "flex", gap: "20px" }} className="blog-post" onClick={()=>{exposedMethod(props.reference)}}>
             <div
                 className="section"
                 style={{
