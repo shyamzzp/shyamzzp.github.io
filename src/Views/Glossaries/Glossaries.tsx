@@ -1,5 +1,5 @@
 // import { SUPABASE_ENDPOINT, SUPABASE_PUBLIC_ANON_KEY } from '../../config'
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Loader } from "rsuite";
 import Glossary from "../../components/Glossary/Glossary";
 // const supabase = createClient(SUPABASE_ENDPOINT, SUPABASE_PUBLIC_ANON_KEY)
@@ -9,17 +9,18 @@ export default function Glossaries({ setValue }: any) {
   const setReadMeFileContext = (data: string) => {
     setValue(data);
   };
-  // useEffect(() => {
-  //   async function fetchData() {
-  //     const { data, error } = await supabase.from("Glossary").select("*");
-  //     if (error) {
-  //       console.error(error);
-  //     } else {
-  //       setShuffledData(data);
-  //     }
-  //   }
-  //   fetchData();
-  // }, []);
+  useEffect(() => {
+    setShuffledData([]);
+    // async function fetchData() {
+    //   const { data, error } = await supabase.from("Glossary").select("*");
+    //   if (error) {
+    //     console.error(error);
+    //   } else {
+    //     setShuffledData(data);
+    //   }
+    // }
+    // fetchData();
+  }, []);
 
   return (
     <div>

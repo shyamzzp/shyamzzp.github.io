@@ -45,22 +45,6 @@ function Home() {
       .then((text) => setTosTextBlog(text));
   });
 
-  const setModalOpenProjects = () => {
-    setOpenProjects(true);
-  };
-
-  const setModalOpenCaseStudies = () => {
-    setOpenCaseStudies(true);
-  };
-
-  const setModalOpenBlogs = () => {
-    setOpenBlogs(true);
-  };
-
-  const setModalOpenGlossary = () => {
-    setOpenGlossary(true);
-  };
-
   const setReadMeFileContext = (data: string) => {
     setValue(data);
   };
