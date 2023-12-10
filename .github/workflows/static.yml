@@ -24,10 +24,5 @@ jobs:
 
       - name: Build site
         run: |
-          npm run build  # Replace with your build script, e.g., "npm run build" or "yarn build"
+          npm run deploy  # Replace with your build script, e.g., "npm run build" or "yarn build"
 
-      - name: Deploy to GitHub Pages
-        run: |
-          git config --global user.email "github-actions@users.noreply.github.com"
-          git config --global user.name "GitHub Actions"
-          git subtree push --prefix build origin gh-pages
