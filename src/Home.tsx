@@ -74,7 +74,7 @@ function Home() {
               className="title title-sub"
               style={{ fontSize: "25px", marginBottom: "10px" }}
             >
-              Sen. Software Development Engineer (6+)
+              Sen. Software Development Engineer (7+)
             </h3>
 
             <SocialMedia />
