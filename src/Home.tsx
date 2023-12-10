@@ -1,20 +1,17 @@
-import cv from "./img/cv.png";
-import "./bulma.min.css";
-import "./App.css";
-import BorderedSection from "./components/Small/BorderedSection/BorderedSection";
-import Skills from "./components/Skills/Skills";
-import SocialMedia from "./components/SocialMedia/SocialMedia";
-import { Drawer } from "rsuite";
 import React, { useEffect, useState } from "react";
-import Projects from "./Views/Projects/Projects";
+import ReactMarkdown from "react-markdown";
+import { Drawer } from "rsuite";
+import "./App.css";
+import { getBlogReadMe, getGlossaryReadMe } from "./ReadMeFiles/Glossaries";
 import Blog from "./Views/Blog/Blog";
 import CaseStudy from "./Views/CaseStudy/CaseStudy";
 import Glossaries from "./Views/Glossaries/Glossaries";
-import ReactMarkdown from "react-markdown";
-import { getGlossaryReadMe, getBlogReadMe } from "./ReadMeFiles/Glossaries";
-import { createClient } from "@supabase/supabase-js";
+import Projects from "./Views/Projects/Projects";
+import "./bulma.min.css";
+import Skills from "./components/Skills/Skills";
+import SocialMedia from "./components/SocialMedia/SocialMedia";
+import cv from "./img/cv.png";
 // import { SUPABASE_ENDPOINT, SUPABASE_PUBLIC_ANON_KEY } from './config'
-import { data as GlossaryData } from "./Views/Glossaries/data";
 // const supabase = createClient(SUPABASE_ENDPOINT, SUPABASE_PUBLIC_ANON_KEY);
 
 function Home() {

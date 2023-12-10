@@ -1,9 +1,7 @@
-import { createClient } from "@supabase/supabase-js";
 // import { SUPABASE_ENDPOINT, SUPABASE_PUBLIC_ANON_KEY } from '../../config'
-import Glossary from "../../components/Glossary/Glossary";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Loader } from "rsuite";
-import { SuffleData } from "./data";
+import Glossary from "../../components/Glossary/Glossary";
 // const supabase = createClient(SUPABASE_ENDPOINT, SUPABASE_PUBLIC_ANON_KEY)
 
 export default function Glossaries({ setValue }: any) {
