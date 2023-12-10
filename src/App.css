@@ -425,3 +425,11 @@ hr {
 .readme-section h1 {
   font-size: 1.5rem !important;
 }
+
+.tags:not(:last-child) {
+  margin-bottom: 0rem !important;
+}
+
+.hero.is-info .title {
+  color: #373737 !important;
+}

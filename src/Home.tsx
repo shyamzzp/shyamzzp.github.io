@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from "react";
 import ReactMarkdown from "react-markdown";
 import { Drawer } from "rsuite";
-import "./App.css";
+
 import { getBlogReadMe, getGlossaryReadMe } from "./ReadMeFiles/Glossaries";
 import Blog from "./Views/Blog/Blog";
 import CaseStudy from "./Views/CaseStudy/CaseStudy";
 import Glossaries from "./Views/Glossaries/Glossaries";
 import Projects from "./Views/Projects/Projects";
 import "./bulma.min.css";
+import "./App.css";
 import Skills from "./components/Skills/Skills";
 import SocialMedia from "./components/SocialMedia/SocialMedia";
 import cv from "./img/cv.png";
