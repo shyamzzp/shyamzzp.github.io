@@ -1,4 +1,3 @@
-
 .container-project {
     display: flex;
     flex-direction: column;
@@ -54,6 +53,7 @@ hr {
         font-size: .8em !important;
     }
 }
+
 .tags:not(:last-child) {
     margin-bottom: 0;
 }
@@ -61,6 +61,7 @@ hr {
 .hero.is-info .title {
     font-size: 3rem;
 }
+
 #ctre_wnd {
     position: fixed;
     bottom: 0;
@@ -336,32 +337,36 @@ hr {
 .hero.is-info .title {
     color: rgba(52, 53, 65);
 }
+
 .blink_me {
-    color:green;
+    color: green;
     animation: blinker 1s linear infinite;
-  }
-  
-  @keyframes blinker {  
-    50% { opacity: 0; }
-  }
-.title{
-    font-weight:100 !important;
 }
 
-  .body_class{
-    font-family:"Google Sans Display",Arial,Helvetica,sans-serif
-  }
+@keyframes blinker {
+    50% {
+        opacity: 0;
+    }
+}
 
-.tech-stack{
+.title {
+    font-weight: 100 !important;
+}
+
+.body_class {
+    font-family: "Google Sans Display", Arial, Helvetica, sans-serif
+}
+
+.tech-stack {
     background-color: #36363621 !important;
-    color:#0e0e0e !important;
+    color: #0e0e0e !important;
     font-size: .7rem !important;
     height: 1.7em !important;
     padding-left: 0.6em !important;
     padding-right: 0.6em !important;
 }
 
-.is-success{
+.is-success {
     background-color: #4c9766 !important;
 }
 

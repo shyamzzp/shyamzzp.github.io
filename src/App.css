@@ -379,6 +379,11 @@ hr {
   color: #ffffff !important;
 }
 
+.is-light-grey-pink {
+  background-color: rgb(156, 148, 113) !important;
+  color: #ffffff !important;
+}
+
 ::-webkit-scrollbar-thumb {
   background: #aaa;
   border-radius: 6px;
