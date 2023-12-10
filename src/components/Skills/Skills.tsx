@@ -40,6 +40,7 @@ export default function Skills() {
         <span className="tag is-link">Figma (Design & Prototype)</span>
         <span className="tag is-link">Sketch</span>
         <span className="tag is-link">Chrome Extensions</span>
+        <span className="tag is-link">Postman</span>
       </div>
       <div className="tags">
         <span className="tag is-light-grey-pink">Playwright</span>
