@@ -12,11 +12,14 @@ import "./App.css";
 import Skills from "./components/Skills/Skills";
 import SocialMedia from "./components/SocialMedia/SocialMedia";
 import cv from "./img/cv.png";
+import BorderedSection from "./components/Small/BorderedSection/BorderedSection";
+import { useLocation } from "react-router-dom";
+
 // import { SUPABASE_ENDPOINT, SUPABASE_PUBLIC_ANON_KEY } from './config'
 // const supabase = createClient(SUPABASE_ENDPOINT, SUPABASE_PUBLIC_ANON_KEY);
 
 function Home() {
-  const [openProjects, setOpenProjects] = React.useState(false);
+  const [openProjects, setModalOpenProjects] = React.useState(false);
   const [openBlogs, setOpenBlogs] = React.useState(false);
   const [openCaseStudies, setOpenCaseStudies] = React.useState(false);
   const [openGlossary, setOpenGlossary] = React.useState(false);
@@ -24,6 +27,11 @@ function Home() {
   const [viewForClicked, setViewForClicked] = React.useState("github-site");
   const [tosText, setTosText] = useState("");
   const [tosTextBlog, setTosTextBlog] = useState("");
+
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const projectParam = queryParams.get("project");
+  const [showProjects, setshowProjects] = useState(false);
 
   //   const updateDBWithGlossaryData = async () => {
   //     GlossaryData.forEach(async (item) => {
@@ -80,18 +88,45 @@ function Home() {
 
             <SocialMedia />
             <Skills />
-            {/* <div className="mt-5 flex gap-4">
-                            <BorderedSection text="Projects" onClick={setModalOpenProjects} isBorderedRadius />
-                            <BorderedSection text="Case Studies" onClick={setModalOpenCaseStudies} isBorderedRadius />
-                            <BorderedSection text="Blog" onClick={setModalOpenBlogs} isBorderedRadius />
-                            <BorderedSection text="Glossary" onClick={setModalOpenGlossary} isBorderedRadius />
-                        </div> */}
+            {showProjects ? (
+              <div className="mt-5 flex gap-4 tags">
+                <span
+                  className="tag cursor-pointer border"
+                  onClick={() => {
+                    setModalOpenProjects(true);
+                  }}
+                >
+                  Projects
+                </span>
+                {/* <BorderedSection
+                text="Case Studies"
+                onClick={() => {
+                  setOpenCaseStudies(true);
+                }}
+                isBorderedRadius
+              /> */}
+                {/* <BorderedSection
+                text="Blogs"
+                onClick={() => {
+                  setOpenBlogs(true);
+                }}
+                isBorderedRadius
+              /> */}
+                {/* <BorderedSection
+                text="Glossary"
+                onClick={() => {
+                  setOpenGlossary(true);
+                }}
+                isBorderedRadius
+              /> */}
+              </div>
+            ) : null}
             <>
               <Drawer
                 size={"sm"}
                 backdrop={"static"}
                 open={openProjects}
-                onClose={() => setOpenProjects(false)}
+                onClose={() => setModalOpenProjects(false)}
               >
                 <Drawer.Header>
                   <Drawer.Title>Projects</Drawer.Title>

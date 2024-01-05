@@ -1,13 +1,24 @@
 import React from "react";
+import { Drawer } from "rsuite";
+import Projects from "../../Views/Projects/Projects";
 
 export default function Skills() {
+  const [openProjects, setModalOpenProjects] = React.useState(false);
   return (
     <>
       <div className="tags">
         <span className="tag is-warning">Windows</span>
-        <span className="tag is-warning">Linux</span>
+        <span className="tag is-warning">Linux</span>{" "}
+        <span
+          className="tag cursor-pointer border"
+          onClick={() => {
+            setModalOpenProjects(true);
+          }}
+        >
+          Projects
+        </span>
       </div>
-
+      <br />
       <div className="tags">
         <span className="tag is-dark">Python</span>
         <span className="tag is-dark">Java - Spring</span>
@@ -55,6 +66,21 @@ export default function Skills() {
         <span className="tag is-light-orange">RasberryPi</span>
         <span className="tag is-light-orange">Embedded System - Arduino</span>
       </div>
+      <>
+        <Drawer
+          size={"sm"}
+          backdrop={"static"}
+          open={openProjects}
+          onClose={() => setModalOpenProjects(false)}
+        >
+          <Drawer.Header>
+            <Drawer.Title>Projects</Drawer.Title>
+          </Drawer.Header>
+          <Drawer.Body>
+            <Projects />
+          </Drawer.Body>
+        </Drawer>
+      </>
     </>
   );
 }
