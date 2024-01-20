@@ -384,6 +384,11 @@ hr {
   color: #ffffff !important;
 }
 
+.is-js-frameworks {
+  background-color: rgb(167, 112, 112) !important;
+  color: #ffffff !important;
+}
+
 ::-webkit-scrollbar-thumb {
   background: #aaa;
   border-radius: 6px;

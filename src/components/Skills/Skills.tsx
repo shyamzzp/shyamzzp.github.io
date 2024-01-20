@@ -25,10 +25,8 @@ export default function Skills() {
         <span className="tag is-dark">MongoDB</span>
         <span className="tag is-dark">GraphQL</span>
         <span className="tag is-dark">NodeJS</span>
-        <span className="tag is-dark">Framework7</span>
         <span className="tag is-dark">C# - UWP/WPF</span>
       </div>
-
       <div className="tags">
         <span className="tag is-success">TypeScript</span>
         <span className="tag is-success">Javascript</span>
@@ -38,7 +36,6 @@ export default function Skills() {
         <span className="tag is-success">NextJS</span>
         <span className="tag is-success">NestJS</span>
       </div>
-
       <div className="tags">
         <span className="tag is-link">Github</span>
         <span className="tag is-link">Github - Actions/Workflows</span>
@@ -63,24 +60,30 @@ export default function Skills() {
         </span>
       </div>
       <div className="tags">
+        <span className="tag is-js-frameworks">Ant Design (antd)</span>
+        <span className="tag is-js-frameworks">Material UI (mui)</span>
+        <span className="tag is-js-frameworks">Shadcn UI</span>
+        <span className="tag is-js-frameworks">Framework7</span>
+        <span className="tag is-js-frameworks">NextUI</span>
+      </div>
+
+      <div className="tags">
         <span className="tag is-light-orange">RasberryPi</span>
         <span className="tag is-light-orange">Embedded System - Arduino</span>
       </div>
-      <>
-        <Drawer
-          size={"sm"}
-          backdrop={"static"}
-          open={openProjects}
-          onClose={() => setModalOpenProjects(false)}
-        >
-          <Drawer.Header>
-            <Drawer.Title>Projects</Drawer.Title>
-          </Drawer.Header>
-          <Drawer.Body>
-            <Projects />
-          </Drawer.Body>
-        </Drawer>
-      </>
+      <Drawer
+        size={"sm"}
+        backdrop={"static"}
+        open={openProjects}
+        onClose={() => setModalOpenProjects(false)}
+      >
+        <Drawer.Header>
+          <Drawer.Title>Projects</Drawer.Title>
+        </Drawer.Header>
+        <Drawer.Body>
+          <Projects />
+        </Drawer.Body>
+      </Drawer>
     </>
   );
 }
