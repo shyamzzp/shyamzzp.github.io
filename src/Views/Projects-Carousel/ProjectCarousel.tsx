@@ -1,27 +1,48 @@
 import React from "react";
 import { ArrowLeft, ArrowRight } from "lucide-react";
-import GenLT from "./GenLT.svg";
+import { ReactComponent as GenLTSVG } from "./GenLT.svg";
 
 function ProjectCarousel() {
   return (
     <div
       style={{
         display: "flex",
-        justifyContent: "space-between",
+        justifyContent: "center",
         flexDirection: "row",
         alignItems: "center",
-        gap: 4,
       }}
     >
-      <div>
+      {/* <div
+        style={{
+          width: "10vw",
+        }}
+      >
         <ArrowLeft />
+      </div> */}
+      <div
+        style={{
+          width: "75vw",
+          display: "flex",
+        }}
+      >
+        <GenLTSVG style={{ width: "fit-content" }} />
       </div>
-      <div>
-        <img src={GenLT} alt="GenLT" />
-      </div>
-      <div>
-        <ArrowRight />
-      </div>
+      {/* <div
+        style={{
+          width: "10vw",
+        }}
+      >
+        <ArrowRight
+          style={{
+            border: "1px solid black",
+            borderRadius: "50%",
+            padding: "4px",
+            height: "fit-content",
+            marginLeft: "20px",
+            fontSize: "30px",
+          }}
+        />
+      </div> */}
     </div>
   );
 }
