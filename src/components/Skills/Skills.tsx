@@ -1,6 +1,6 @@
 import React from "react";
 import { Drawer } from "rsuite";
-import Projects from "../../Views/Projects/Projects";
+import ProjectCarousel from "../../Views/Projects-Carousel/ProjectCarousel";
 
 export default function Skills() {
   const [openProjects, setModalOpenProjects] = React.useState(false);
@@ -72,7 +72,7 @@ export default function Skills() {
         <span className="tag is-light-orange">Embedded System - Arduino</span>
       </div>
       <Drawer
-        size={"sm"}
+        size={"full"}
         backdrop={"static"}
         open={openProjects}
         onClose={() => setModalOpenProjects(false)}
@@ -81,7 +81,7 @@ export default function Skills() {
           <Drawer.Title>Projects</Drawer.Title>
         </Drawer.Header>
         <Drawer.Body>
-          <Projects />
+          <ProjectCarousel />
         </Drawer.Body>
       </Drawer>
     </>

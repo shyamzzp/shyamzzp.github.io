@@ -51,6 +51,7 @@
     "@supabase/supabase-js": "^2.26.0",
     "dotenv": "^16.3.1",
     "gh-pages": "^5.0.0",
+    "lucide-react": "^0.315.0",
     "react-markdown": "^8.0.7",
     "rsuite": "^5.35.1",
     "tailwindcss": "^3.3.2"
