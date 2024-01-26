@@ -1,6 +1,6 @@
 import { ReactComponent as GenLTSVG } from "./GenLT.svg";
+import { ReactComponent as InterviewPrep } from "./InterviewPrep.svg";
 import NavItemLeftProject from "./NavItemLeftProject";
-import InterviewPrep from "./InterviewPrep.png";
 import React from "react";
 
 function ProjectCarousel() {
@@ -61,7 +61,7 @@ function ProjectCarousel() {
           <GenLTSVG style={{ width: "fit-content" }} />
         ) : null}
         {active === "interview-prep" ? (
-          <img src={InterviewPrep} alt="" style={{ width: "match-parent" }} />
+          <InterviewPrep style={{ width: "fit-content" }} />
         ) : null}
       </div>
     </div>
