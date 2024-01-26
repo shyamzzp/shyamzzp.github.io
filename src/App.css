@@ -417,7 +417,7 @@ hr {
 
 
 .rs-drawer-full.rs-drawer-left, .rs-drawer-full.rs-drawer-right {
-  width: calc(100% - 300px) !important;
+  width: calc(100%) !important;
 }
 
 @media screen and (min-width: 768px) and (max-width: 1540px) {
@@ -440,4 +440,8 @@ hr {
 
 .hero.is-info .title {
   color: #373737 !important;
+}
+
+.shadow-google {
+  box-shadow: rgba(0, 0, 0, 0.1) 5px 5px 0px 0px;
 }

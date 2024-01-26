@@ -2,21 +2,16 @@ import React, { useEffect, useState } from "react";
 import ReactMarkdown from "react-markdown";
 import { Drawer } from "rsuite";
 
+import "./App.css";
 import { getBlogReadMe, getGlossaryReadMe } from "./ReadMeFiles/Glossaries";
 import Blog from "./Views/Blog/Blog";
 import CaseStudy from "./Views/CaseStudy/CaseStudy";
 import Glossaries from "./Views/Glossaries/Glossaries";
 import Projects from "./Views/Projects/Projects";
 import "./bulma.min.css";
-import "./App.css";
 import Skills from "./components/Skills/Skills";
 import SocialMedia from "./components/SocialMedia/SocialMedia";
 import cv from "./img/cv.png";
-import BorderedSection from "./components/Small/BorderedSection/BorderedSection";
-import { useLocation } from "react-router-dom";
-
-// import { SUPABASE_ENDPOINT, SUPABASE_PUBLIC_ANON_KEY } from './config'
-// const supabase = createClient(SUPABASE_ENDPOINT, SUPABASE_PUBLIC_ANON_KEY);
 
 function Home() {
   const [openProjects, setModalOpenProjects] = React.useState(false);
@@ -28,19 +23,7 @@ function Home() {
   const [tosText, setTosText] = useState("");
   const [tosTextBlog, setTosTextBlog] = useState("");
 
-  const location = useLocation();
-  const queryParams = new URLSearchParams(location.search);
-  const projectParam = queryParams.get("project");
   const [showProjects, setshowProjects] = useState(false);
-
-  //   const updateDBWithGlossaryData = async () => {
-  //     GlossaryData.forEach(async (item) => {
-  //       const { data, error } = await supabase
-  //         .from("Glossary")
-  //         .insert([item])
-  //         .select();
-  //     });
-  //   };
 
   useEffect(() => {
     fetch(getGlossaryReadMe(value))

@@ -1,48 +1,69 @@
-import React from "react";
-import { ArrowLeft, ArrowRight } from "lucide-react";
 import { ReactComponent as GenLTSVG } from "./GenLT.svg";
+import NavItemLeftProject from "./NavItemLeftProject";
+import InterviewPrep from "./InterviewPrep.png";
+import React from "react";
 
 function ProjectCarousel() {
+  const [active, setActive] = React.useState("genlt");
   return (
     <div
       style={{
         display: "flex",
-        justifyContent: "center",
         flexDirection: "row",
-        alignItems: "center",
+        alignItems: "start",
       }}
     >
-      {/* <div
+      <div
         style={{
-          width: "10vw",
+          minWidth: "18vw",
+          maxHeight: "80vh",
+          marginRight: "30px",
+          display: "flex",
+          flexDirection: "column",
+          gap: "20px",
+          overflow: "auto",
+          paddingRight: "10px",
+          paddingBottom: "10px",
         }}
       >
-        <ArrowLeft />
-      </div> */}
+        <div
+          onClick={() => {
+            setActive("interview-prep");
+          }}
+        >
+          <NavItemLeftProject title="Interview Preparation" />
+        </div>
+        <div
+          onClick={() => {
+            setActive("genlt");
+          }}
+        >
+          <NavItemLeftProject title="GenLT - NodeJS Module" />
+        </div>
+        {/*<NavItemLeftProject title="GenLT - NodeJS Module" />
+        <NavItemLeftProject title="GenLT - NodeJS Module" />
+        <NavItemLeftProject title="GenLT - NodeJS Module" />
+        <NavItemLeftProject title="GenLT - NodeJS Module" />
+        <NavItemLeftProject title="GenLT - NodeJS Module" />
+        <NavItemLeftProject title="GenLT - NodeJS Module" />
+        <NavItemLeftProject title="GenLT - NodeJS Module" />
+        <NavItemLeftProject title="GenLT - NodeJS Module" />
+        <NavItemLeftProject title="GenLT - NodeJS Module" />
+        <NavItemLeftProject title="GenLT - NodeJS Module" /> */}
+      </div>
       <div
         style={{
           width: "75vw",
           display: "flex",
         }}
       >
-        <GenLTSVG style={{ width: "fit-content" }} />
+        {active === "genlt" ? (
+          <GenLTSVG style={{ width: "fit-content" }} />
+        ) : null}
+        {active === "interview-prep" ? (
+          <img src={InterviewPrep} alt="" style={{ width: "match-parent" }} />
+        ) : null}
       </div>
-      {/* <div
-        style={{
-          width: "10vw",
-        }}
-      >
-        <ArrowRight
-          style={{
-            border: "1px solid black",
-            borderRadius: "50%",
-            padding: "4px",
-            height: "fit-content",
-            marginLeft: "20px",
-            fontSize: "30px",
-          }}
-        />
-      </div> */}
     </div>
   );
 }
