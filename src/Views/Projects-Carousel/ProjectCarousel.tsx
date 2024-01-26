@@ -4,7 +4,7 @@ import NavItemLeftProject from "./NavItemLeftProject";
 import React from "react";
 
 function ProjectCarousel() {
-  const [active, setActive] = React.useState("genlt");
+  const [active, setActive] = React.useState("interview-prep");
   return (
     <div
       style={{
