@@ -1,5 +1,6 @@
 import { ReactComponent as GenLTSVG } from "./GenLT.svg";
 import { ReactComponent as InterviewPrep } from "./InterviewPrep.svg";
+import { ReactComponent as DeepDive } from "./DeepDive.svg";
 import NavItemLeftProject from "./NavItemLeftProject";
 import React from "react";
 
@@ -40,6 +41,13 @@ function ProjectCarousel() {
         >
           <NavItemLeftProject title="GenLT - NodeJS Module" />
         </div>
+        <div
+          onClick={() => {
+            setActive("deep-dive");
+          }}
+        >
+          <NavItemLeftProject title="Deep Dive" />
+        </div>
         {/*<NavItemLeftProject title="GenLT - NodeJS Module" />
         <NavItemLeftProject title="GenLT - NodeJS Module" />
         <NavItemLeftProject title="GenLT - NodeJS Module" />
@@ -62,6 +70,9 @@ function ProjectCarousel() {
         ) : null}
         {active === "interview-prep" ? (
           <InterviewPrep style={{ width: "fit-content" }} />
+        ) : null}
+        {active === "deep-dive" ? (
+          <DeepDive style={{ width: "fit-content" }} />
         ) : null}
       </div>
     </div>
