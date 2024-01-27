@@ -1,9 +1,11 @@
 {
   "files": {
-    "main.css": "/static/css/main.d96d9a5a.css",
-    "main.js": "/static/js/main.c17ee54b.js",
+    "main.css": "/static/css/main.88cd27fb.css",
+    "main.js": "/static/js/main.b80ca2c4.js",
     "static/js/787.27502e5e.chunk.js": "/static/js/787.27502e5e.chunk.js",
-    "static/media/GenLT.svg": "/static/media/GenLT.0a8d11b00fcd17b9710122e647072563.svg",
+    "static/media/DeepDive.svg": "/static/media/DeepDive.383329c150529aa3bc80bc293460fb51.svg",
+    "static/media/GenLT.svg": "/static/media/GenLT.f408cbe16bc3168cf29d9044c159e085.svg",
+    "static/media/InterviewPrep.svg": "/static/media/InterviewPrep.f1048e4d99495068d334f0a2a884e599.svg",
     "static/media/skype.png": "/static/media/skype.ab4e958cf232a0d52b44.png",
     "static/media/cv.png": "/static/media/cv.02b00606e243f8945ade.png",
     "static/media/live.png": "/static/media/live.73c390f0374e4a7ae99c.png",
@@ -16,12 +18,12 @@
     "static/media/github-site.md": "/static/media/github-site.fe5511110827267d9696.md",
     "index.html": "/index.html",
     "static/media/not-available.md": "/static/media/not-available.730b22ad26a5448338a4.md",
-    "main.d96d9a5a.css.map": "/static/css/main.d96d9a5a.css.map",
-    "main.c17ee54b.js.map": "/static/js/main.c17ee54b.js.map",
+    "main.88cd27fb.css.map": "/static/css/main.88cd27fb.css.map",
+    "main.b80ca2c4.js.map": "/static/js/main.b80ca2c4.js.map",
     "787.27502e5e.chunk.js.map": "/static/js/787.27502e5e.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.d96d9a5a.css",
-    "static/js/main.c17ee54b.js"
+    "static/css/main.88cd27fb.css",
+    "static/js/main.b80ca2c4.js"
   ]
 }
