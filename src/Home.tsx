@@ -54,7 +54,7 @@ function Home() {
               Shyam Suthar{" "}
               <span className="ml-2">
                 <a
-                  href="https://github.com/shyamzzp/shyamzzp.github.io/raw/master/resume/ShyamSS-resume.pdf"
+                  href="https://szygdaxmwwrsykcylxuk.supabase.co/storage/v1/object/public/Personal%20Data/ShyamSS-resume.pdf"
                   target="_blank"
                   rel="noreferrer"
                 >
