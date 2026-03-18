@@ -71,6 +71,33 @@ function Home() {
 
             <SocialMedia />
             <Skills />
+            <div className="blogs-section">
+              <p className="blogs-section-title">Blogs</p>
+              <div className="blogs-grid">
+                <a
+                  className="blog-link-card"
+                  href="https://shyamzzp.github.io/ai"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  <span className="blog-link-label">AI Landscape</span>
+                  <span className="blog-link-url">
+                    https://shyamzzp.github.io/ai
+                  </span>
+                </a>
+                <a
+                  className="blog-link-card"
+                  href="https://shyamzzp.github.io/ai-roadmap"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  <span className="blog-link-label">AI Roadmap</span>
+                  <span className="blog-link-url">
+                    https://shyamzzp.github.io/ai-roadmap
+                  </span>
+                </a>
+              </div>
+            </div>
             {showProjects ? (
               <div className="mt-5 flex gap-4 tags">
                 <span

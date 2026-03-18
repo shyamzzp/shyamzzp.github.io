@@ -56,6 +56,14 @@ hr {
   .project-header-sub-title {
     font-size: .8em !important;
   }
+
+  .blogs-section {
+    margin-top: 1.2rem;
+  }
+
+  .blogs-section-title {
+    font-size: 0.9rem;
+  }
 }
 
 .tags:not(:last-child) {
@@ -64,6 +72,57 @@ hr {
 
 .hero.is-info .title {
   font-size: 3rem;
+}
+
+.blogs-section {
+  margin-top: 1.5rem;
+  max-width: 52rem;
+}
+
+.blogs-section-title {
+  color: #363636;
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  margin-bottom: 0.75rem;
+  text-transform: uppercase;
+}
+
+.blogs-grid {
+  display: grid;
+  gap: 0.9rem;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+}
+
+.blog-link-card {
+  background: #ffffff;
+  border: 1px solid #ded7c8;
+  box-shadow: rgba(0, 0, 0, 0.08) 5px 5px 0 0;
+  color: #2f2f2f;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  min-height: 92px;
+  padding: 1rem 1.1rem;
+  text-decoration: none;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.blog-link-card:hover {
+  box-shadow: rgba(0, 0, 0, 0.12) 7px 7px 0 0;
+  transform: translate(-2px, -2px);
+}
+
+.blog-link-label {
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.blog-link-url {
+  color: #6b7280;
+  font-size: 0.82rem;
+  line-height: 1.4;
+  word-break: break-word;
 }
 
 #ctre_wnd {
