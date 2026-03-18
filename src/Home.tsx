@@ -73,30 +73,20 @@ function Home() {
             <Skills />
             <div className="blogs-section">
               <p className="blogs-section-title">Blogs</p>
-              <div className="blogs-grid">
+              <div className="tags">
                 <a
-                  className="blog-link-card"
                   href="https://shyamzzp.github.io/ai"
                   target="_blank"
                   rel="noreferrer"
                 >
-                  <span className="blog-link-label">AI Landscape</span>
-                  <span className="blog-link-meta">
-                    Interactive ecosystem map
-                  </span>
-                  <span className="blog-link-url">/ai</span>
+                  <span className="tag">AI Landscape</span>
                 </a>
                 <a
-                  className="blog-link-card"
                   href="https://shyamzzp.github.io/ai-roadmap"
                   target="_blank"
                   rel="noreferrer"
                 >
-                  <span className="blog-link-label">AI Roadmap</span>
-                  <span className="blog-link-meta">
-                    Structured learning path
-                  </span>
-                  <span className="blog-link-url">/ai-roadmap</span>
+                  <span className="tag">AI Roadmap</span>
                 </a>
               </div>
             </div>
