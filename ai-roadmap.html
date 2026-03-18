@@ -1,0 +1,1837 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Mastery Roadmap</title>
+<link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@300;400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #fafaf8;
+  --surface: #ffffff;
+  --border: #e4e4e0;
+  --border-dark: #c8c8c2;
+  --text: #1a1a18;
+  --muted: #6b6b64;
+  --muted2: #9b9b92;
+
+  /* Section colors - roadmap.sh style */
+  --c-found: #1a1a2e;   /* foundations - deep navy */
+  --c-found-bg: #eef0ff;
+  --c-found-border: #a5b4fc;
+
+  --c-concept: #1e3a1e;  /* concepts - forest green */
+  --c-concept-bg: #ecfdf5;
+  --c-concept-border: #6ee7b7;
+
+  --c-arch: #3b1a00;    /* architecture - amber */
+  --c-arch-bg: #fffbeb;
+  --c-arch-border: #fcd34d;
+
+  --c-build: #2d0a3e;   /* building - purple */
+  --c-build-bg: #fdf4ff;
+  --c-build-border: #e879f9;
+
+  --c-rag: #1a1000;     /* rag/tools - rose */
+  --c-rag-bg: #fff1f2;
+  --c-rag-border: #fda4af;
+
+  --connector: #d1d5db;
+  --connector-active: #6366f1;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Geist Mono', monospace;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+}
+
+/* ── TOP HEADER ── */
+.site-header {
+  background: var(--text);
+  color: #fff;
+  padding: 0;
+  position: sticky;
+  top: 0;
+  z-index: 200;
+  border-bottom: 2px solid #333;
+}
+.header-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 14px 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.header-logo {
+  font-family: 'Instrument Serif', serif;
+  font-size: 20px;
+  font-style: italic;
+  letter-spacing: -0.3px;
+}
+.header-logo span { color: #818cf8; font-style: normal; }
+.header-meta { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+.header-pill {
+  font-size: 10px; letter-spacing: 1px;
+  padding: 4px 10px; border-radius: 4px;
+  border: 1px solid rgba(255,255,255,0.15);
+  color: rgba(255,255,255,0.6);
+}
+.header-pill.active { border-color: #818cf8; color: #818cf8; }
+
+/* ── LEGEND ── */
+.legend {
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  padding: 12px 32px;
+}
+.legend-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.legend-label { font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--muted2); margin-right: 4px; }
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  color: var(--muted);
+  cursor: pointer;
+  padding: 3px 8px;
+  border-radius: 4px;
+  transition: background 0.15s;
+}
+.legend-item:hover { background: var(--border); }
+.legend-dot {
+  width: 10px; height: 10px; border-radius: 2px;
+  border: 1.5px solid;
+}
+
+/* ── MAIN LAYOUT ── */
+.roadmap-wrap {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 48px 32px 80px;
+}
+
+/* ── SECTION HEADERS ── */
+.section-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 0;
+  position: relative;
+}
+.section-badge {
+  font-size: 10px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  padding: 5px 14px;
+  border-radius: 100px;
+  border: 1.5px solid;
+  font-weight: 600;
+  margin-bottom: 12px;
+  display: inline-block;
+}
+.section-title-node {
+  border: 2px solid;
+  border-radius: 10px;
+  padding: 14px 32px;
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: -0.3px;
+  text-align: center;
+  position: relative;
+  min-width: 280px;
+  background: var(--surface);
+  cursor: default;
+}
+
+/* ── CONNECTOR LINES ── */
+.v-line {
+  width: 2px;
+  background: var(--connector);
+  margin: 0 auto;
+}
+.v-line.short { height: 20px; }
+.v-line.medium { height: 32px; }
+.v-line.tall { height: 48px; }
+
+/* ── NODE ROW (horizontal group) ── */
+.node-row {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  position: relative;
+  flex-wrap: wrap;
+}
+/* horizontal connector between nodes */
+.node-row::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  height: 2px;
+  background: var(--connector);
+  width: calc(100% - 120px);
+  max-width: 700px;
+}
+
+.node-col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* ── THE NODE ── */
+.node {
+  border: 1.5px solid;
+  border-radius: 8px;
+  padding: 11px 18px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  position: relative;
+  background: var(--surface);
+  min-width: 160px;
+  max-width: 200px;
+  text-align: center;
+  transition: all 0.15s;
+  user-select: none;
+  line-height: 1.4;
+}
+.node:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+}
+.node.active {
+  box-shadow: 0 0 0 3px rgba(99,102,241,0.25);
+}
+.node-check {
+  position: absolute;
+  top: -7px; right: -7px;
+  width: 16px; height: 16px;
+  border-radius: 50%;
+  background: #22c55e;
+  border: 2px solid var(--bg);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  font-size: 8px;
+  color: white;
+}
+.node.done .node-check { display: flex; }
+.node.done { opacity: 0.65; }
+
+/* ── SINGLE NODE (full-width) ── */
+.node-single {
+  display: flex;
+  justify-content: center;
+}
+.node-single .node {
+  min-width: 240px;
+  max-width: 320px;
+}
+
+/* ── PANEL OVERLAY ── */
+.panel-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.45);
+  z-index: 300;
+  display: none;
+  backdrop-filter: blur(2px);
+}
+.panel-overlay.open { display: block; }
+
+.panel {
+  position: fixed;
+  right: 0; top: 0; bottom: 0;
+  width: min(680px, 100vw);
+  background: var(--surface);
+  z-index: 400;
+  overflow-y: auto;
+  transform: translateX(100%);
+  transition: transform 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+  border-left: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+}
+.panel.open { transform: translateX(0); }
+
+.panel-top {
+  padding: 24px 28px 0;
+  border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
+  position: sticky;
+  top: 0;
+  background: var(--surface);
+  z-index: 10;
+}
+.panel-breadcrumb {
+  font-size: 10px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--muted2);
+  margin-bottom: 8px;
+}
+.panel-title {
+  font-family: 'Instrument Serif', serif;
+  font-size: clamp(22px, 3vw, 30px);
+  font-style: italic;
+  line-height: 1.15;
+  margin-bottom: 16px;
+  letter-spacing: -0.5px;
+}
+.panel-tabs {
+  display: flex;
+  gap: 0;
+  border-bottom: none;
+  margin-bottom: -1px;
+}
+.panel-tab {
+  padding: 8px 16px;
+  font-family: 'Geist Mono', monospace;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  border: 1px solid transparent;
+  border-bottom: none;
+  border-radius: 6px 6px 0 0;
+  color: var(--muted);
+  background: transparent;
+  transition: all 0.15s;
+  text-transform: uppercase;
+}
+.panel-tab.active {
+  border-color: var(--border);
+  background: var(--bg);
+  color: var(--text);
+  border-bottom-color: var(--bg);
+}
+.panel-close {
+  position: absolute;
+  top: 20px; right: 20px;
+  width: 32px; height: 32px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: transparent;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  color: var(--muted);
+  transition: all 0.15s;
+}
+.panel-close:hover { background: var(--border); color: var(--text); }
+
+.panel-body {
+  padding: 24px 28px;
+  flex: 1;
+  background: var(--bg);
+}
+.tab-content { display: none; }
+.tab-content.active { display: block; }
+
+/* ── PANEL CONTENT STYLES ── */
+.p-section { margin-bottom: 24px; }
+.p-label {
+  font-size: 9px; letter-spacing: 2px; text-transform: uppercase;
+  color: var(--muted2); margin-bottom: 6px;
+  display: flex; align-items: center; gap: 8px;
+}
+.p-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+.p-title {
+  font-size: 14px; font-weight: 700; margin-bottom: 8px; color: var(--text);
+}
+.p-text {
+  font-size: 12.5px; color: var(--muted); line-height: 1.8; font-weight: 400;
+}
+.p-text strong { color: var(--text); font-weight: 600; }
+.p-text p { margin-bottom: 10px; }
+
+/* Flow diagram inside panel */
+.flow-box {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 20px;
+  margin-bottom: 16px;
+  overflow-x: auto;
+}
+.flow-title {
+  font-size: 9px; letter-spacing: 2px; text-transform: uppercase;
+  color: var(--muted2); margin-bottom: 14px;
+  border-bottom: 1px solid var(--border); padding-bottom: 8px;
+}
+.flow {
+  display: flex; align-items: flex-start; gap: 0; flex-wrap: wrap;
+  row-gap: 8px;
+}
+.flow-node {
+  border: 1.5px solid var(--border);
+  border-radius: 6px;
+  padding: 7px 12px;
+  font-size: 11px;
+  font-weight: 600;
+  white-space: nowrap;
+  background: var(--surface);
+  flex-shrink: 0;
+}
+.fn-start { border-color: #6ee7b7; color: #065f46; background: #ecfdf5; }
+.fn-llm { border-color: #a5b4fc; color: #3730a3; background: #eef2ff; }
+.fn-tool { border-color: #7dd3fc; color: #075985; background: #f0f9ff; }
+.fn-gate { border-color: #fcd34d; color: #78350f; background: #fffbeb; }
+.fn-mem { border-color: #f9a8d4; color: #831843; background: #fdf2f8; }
+.fn-end { border-color: #fda4af; color: #881337; background: #fff1f2; }
+.fn-agent { border-color: #c4b5fd; color: #4c1d95; background: #f5f3ff; }
+.flow-arr { padding: 0 6px; color: var(--muted2); font-size: 14px; align-self: center; }
+.flow-branch { display: flex; flex-direction: column; gap: 6px; }
+.flow-branch-row { display: flex; align-items: center; }
+.flow-sublabel { font-size: 9px; color: var(--muted2); display: block; margin-top: 2px; font-style: italic; }
+
+/* Use case cards */
+.uc-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 16px; }
+@media(max-width: 500px){ .uc-grid { grid-template-columns: 1fr; } }
+.uc-card {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 8px; padding: 14px;
+}
+.uc-head { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+.uc-icon { font-size: 16px; }
+.uc-name { font-size: 12px; font-weight: 700; }
+.uc-co { font-size: 10px; color: var(--muted2); }
+.uc-desc { font-size: 11px; color: var(--muted); line-height: 1.65; }
+.uc-steps { margin-top: 8px; border-top: 1px solid var(--border); padding-top: 8px; }
+.uc-step { font-size: 10px; color: var(--muted); padding: 2px 0 2px 14px; position: relative; }
+.uc-step::before { content: attr(data-n)'.'; position: absolute; left: 0; color: #6366f1; font-weight: 700; }
+
+/* Compare table */
+.cmp { width: 100%; border-collapse: collapse; margin-bottom: 16px; }
+.cmp th { font-size: 9px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--muted2); padding: 8px 10px; text-align: left; border-bottom: 1.5px solid var(--border); background: var(--surface); }
+.cmp td { font-size: 11px; color: var(--muted); padding: 8px 10px; border-bottom: 1px solid var(--border); line-height: 1.5; }
+.cmp td:first-child { color: var(--text); font-weight: 600; }
+.cmp tr:hover td { background: var(--surface); }
+
+/* Info cards */
+.info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 16px; }
+@media(max-width: 500px){ .info-grid { grid-template-columns: 1fr; } }
+.info-card {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 8px; padding: 14px;
+  border-top: 3px solid;
+}
+.info-card-label { font-size: 9px; letter-spacing: 2px; text-transform: uppercase; color: var(--muted2); margin-bottom: 4px; }
+.info-card-title { font-size: 12px; font-weight: 700; margin-bottom: 6px; }
+.info-card-body { font-size: 11px; color: var(--muted); line-height: 1.65; }
+
+/* highlight */
+.callout {
+  border-left: 3px solid;
+  padding: 12px 16px;
+  border-radius: 0 8px 8px 0;
+  margin-bottom: 14px;
+  font-size: 12px; line-height: 1.7;
+}
+.callout-title { font-size: 10px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 4px; }
+.callout-body { color: var(--muted); }
+
+/* level steps */
+.steps { display: flex; flex-direction: column; gap: 10px; margin-bottom: 16px; }
+.step-card {
+  display: flex; gap: 14px;
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 8px; padding: 14px;
+}
+.step-num {
+  font-family: 'Instrument Serif', serif;
+  font-size: 28px; font-weight: 700; font-style: italic;
+  color: var(--border-dark); min-width: 32px; line-height: 1;
+}
+.step-body {}
+.step-title { font-size: 12px; font-weight: 700; margin-bottom: 4px; }
+.step-desc { font-size: 11px; color: var(--muted); line-height: 1.65; }
+
+/* progress badge */
+.node-progress { margin-top: 8px; font-size: 10px; color: var(--muted2); text-align: center; }
+
+/* Mark done button */
+.mark-done-btn {
+  display: flex; align-items: center; gap: 6px;
+  padding: 8px 16px;
+  border: 1.5px solid var(--border);
+  border-radius: 6px;
+  background: transparent;
+  font-family: 'Geist Mono', monospace;
+  font-size: 11px; font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s;
+  color: var(--muted);
+  margin-right: 8px;
+}
+.mark-done-btn:hover { border-color: #22c55e; color: #16a34a; background: #f0fdf4; }
+.mark-done-btn.done-state { border-color: #22c55e; color: #16a34a; background: #f0fdf4; }
+.panel-actions {
+  padding: 16px 28px;
+  border-top: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  background: var(--surface);
+}
+.progress-wrap {
+  flex: 1;
+  display: flex; align-items: center; gap: 10px;
+}
+.progress-bar-bg {
+  flex: 1; height: 4px; background: var(--border); border-radius: 4px; overflow: hidden;
+}
+.progress-bar { height: 100%; border-radius: 4px; background: #6366f1; transition: width 0.5s; }
+.progress-txt { font-size: 10px; color: var(--muted2); white-space: nowrap; }
+
+/* ── OVERALL PROGRESS ── */
+.overall-progress {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 20px 24px;
+  margin-bottom: 40px;
+  display: flex; align-items: center; gap: 20px; flex-wrap: wrap;
+}
+.op-label { font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--muted2); margin-bottom: 4px; }
+.op-count { font-family: 'Instrument Serif', serif; font-size: 32px; font-style: italic; color: var(--text); line-height: 1; }
+.op-bar-wrap { flex: 1; min-width: 160px; }
+.op-bar-bg { height: 6px; background: var(--border); border-radius: 6px; overflow: hidden; }
+.op-bar { height: 100%; background: linear-gradient(90deg, #6366f1, #8b5cf6); border-radius: 6px; transition: width 0.6s; }
+.op-pct { font-size: 11px; color: var(--muted2); margin-top: 4px; }
+
+/* ── SPACING HELPERS ── */
+.mt8 { margin-top: 8px; }
+.mt16 { margin-top: 16px; }
+.mb8 { margin-bottom: 8px; }
+
+/* ── TOOLTIP ── */
+.node-tip {
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%; transform: translateX(-50%);
+  background: var(--text); color: #fff;
+  font-size: 10px; padding: 4px 8px; border-radius: 4px;
+  white-space: nowrap; pointer-events: none;
+  opacity: 0; transition: opacity 0.15s;
+  z-index: 50;
+}
+.node:hover .node-tip { opacity: 1; }
+
+/* ── SCROLL PROGRESS ── */
+.scroll-line {
+  position: fixed; top: 0; left: 0;
+  height: 3px; background: #6366f1;
+  z-index: 500; transition: width 0.1s;
+}
+
+@media(max-width: 600px) {
+  .roadmap-wrap { padding: 32px 16px 60px; }
+  .node { min-width: 130px; font-size: 11px; padding: 9px 14px; }
+  .node-row { gap: 8px; }
+}
+</style>
+</head>
+<body>
+
+<div class="scroll-line" id="scrollLine"></div>
+
+<!-- PANEL OVERLAY -->
+<div class="panel-overlay" id="overlay" onclick="closePanel()"></div>
+
+<!-- SLIDE-IN PANEL -->
+<div class="panel" id="panel">
+  <div class="panel-top">
+    <div class="panel-breadcrumb" id="panelBreadcrumb">Module 01 · Foundations</div>
+    <div class="panel-title" id="panelTitle">Topic</div>
+    <button class="panel-close" onclick="closePanel()">✕</button>
+    <div class="panel-tabs" id="panelTabs">
+      <button class="panel-tab active" onclick="switchTab(0)">Overview</button>
+      <button class="panel-tab" onclick="switchTab(1)">Workflow</button>
+      <button class="panel-tab" onclick="switchTab(2)">Use Cases</button>
+    </div>
+  </div>
+  <div class="panel-body" id="panelBody"></div>
+  <div class="panel-actions">
+    <button class="mark-done-btn" id="markDoneBtn" onclick="toggleDone()">
+      <span>☐</span> Mark as done
+    </button>
+    <div class="progress-wrap">
+      <div class="progress-bar-bg">
+        <div class="progress-bar" id="globalBar" style="width:0%"></div>
+      </div>
+      <div class="progress-txt" id="globalPct">0 / 20 done</div>
+    </div>
+  </div>
+</div>
+
+<!-- HEADER -->
+<header class="site-header">
+  <div class="header-inner">
+    <div class="header-logo">AI <span>Mastery</span> Roadmap</div>
+    <div class="header-meta">
+      <div class="header-pill active">20 Topics</div>
+      <div class="header-pill">5 Modules</div>
+      <div class="header-pill">Click nodes to explore</div>
+    </div>
+  </div>
+</header>
+
+<!-- LEGEND -->
+<div class="legend">
+  <div class="legend-inner">
+    <span class="legend-label">Modules:</span>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--c-found-bg);border-color:var(--c-found-border)"></div>Foundations</div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--c-concept-bg);border-color:var(--c-concept-border)"></div>Agent Concepts</div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--c-arch-bg);border-color:var(--c-arch-border)"></div>Architecture</div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--c-build-bg);border-color:var(--c-build-border)"></div>Building</div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--c-rag-bg);border-color:var(--c-rag-border)"></div>RAG & Tools</div>
+    <div style="margin-left:auto;display:flex;gap:12px;align-items:center;">
+      <div class="legend-item"><span style="font-size:12px;">☐</span> Not started</div>
+      <div class="legend-item"><span style="font-size:12px;color:#22c55e;">✓</span> Completed</div>
+    </div>
+  </div>
+</div>
+
+<!-- ROADMAP -->
+<div class="roadmap-wrap">
+
+  <!-- Overall progress -->
+  <div class="overall-progress">
+    <div>
+      <div class="op-label">Your Progress</div>
+      <div class="op-count"><span id="doneCount">0</span><span style="font-size:16px;color:var(--muted2);"> / 20</span></div>
+    </div>
+    <div class="op-bar-wrap">
+      <div class="op-bar-bg"><div class="op-bar" id="opBar" style="width:0%"></div></div>
+      <div class="op-pct" id="opPct">0% complete · Click any node to start learning</div>
+    </div>
+  </div>
+
+  <!-- ═══════════════ MODULE 1: FOUNDATIONS ═══════════════ -->
+  <div class="section-header">
+    <div class="section-badge" style="color:var(--c-found);border-color:var(--c-found-border);background:var(--c-found-bg);">Module 01</div>
+    <div class="section-title-node" style="color:var(--c-found);border-color:var(--c-found-border);background:var(--c-found-bg);">
+      🧱 Foundations & Ecosystem
+    </div>
+  </div>
+
+  <div class="v-line medium"></div>
+
+  <!-- Row: AI Spectrum (single) -->
+  <div class="node-single">
+    <div class="node" style="color:var(--c-found);border-color:var(--c-found-border);background:var(--c-found-bg);"
+         id="node-spectrum" onclick="openNode('spectrum')">
+      <div class="node-check">✓</div>
+      <div class="node-tip">The 5-layer AI capability model</div>
+      The AI Spectrum<br><span style="font-size:10px;font-weight:400;color:var(--muted);">ML → Agentic AI</span>
+    </div>
+  </div>
+
+  <div class="v-line short"></div>
+
+  <!-- Row: 3 nodes -->
+  <div class="node-row">
+    <div class="node-col">
+      <div class="v-line short"></div>
+      <div class="node" style="color:var(--c-found);border-color:var(--c-found-border);background:var(--c-found-bg);"
+           id="node-oss" onclick="openNode('oss')">
+        <div class="node-check">✓</div>
+        <div class="node-tip">10-layer open-source AI stack</div>
+        Open-Source AI<br>Ecosystem
+      </div>
+    </div>
+    <div class="node-col">
+      <div class="v-line short"></div>
+      <div class="node" style="color:var(--c-found);border-color:var(--c-found-border);background:var(--c-found-bg);"
+           id="node-agent-eco" onclick="openNode('agent-eco')">
+        <div class="node-check">✓</div>
+        <div class="node-tip">8 categories of the agent landscape</div>
+        AI Agent<br>Ecosystem
+      </div>
+    </div>
+    <div class="node-col">
+      <div class="v-line short"></div>
+      <div class="node" style="color:var(--c-found);border-color:var(--c-found-border);background:var(--c-found-bg);"
+           id="node-careers" onclick="openNode('careers')">
+        <div class="node-check">✓</div>
+        <div class="node-tip">14 AI career roles & skills</div>
+        AI Career Paths<br>& Skills
+      </div>
+    </div>
+    <div class="node-col">
+      <div class="v-line short"></div>
+      <div class="node" style="color:var(--c-found);border-color:var(--c-found-border);background:var(--c-found-bg);"
+           id="node-resources" onclick="openNode('resources')">
+        <div class="node-check">✓</div>
+        <div class="node-tip">26 curated learning resources</div>
+        26 Best Learning<br>Resources (2026)
+      </div>
+    </div>
+  </div>
+
+  <div class="v-line tall"></div>
+
+  <!-- ═══════════════ MODULE 2: AGENT CONCEPTS ═══════════════ -->
+  <div class="section-header">
+    <div class="section-badge" style="color:var(--c-concept);border-color:var(--c-concept-border);background:var(--c-concept-bg);">Module 02</div>
+    <div class="section-title-node" style="color:var(--c-concept);border-color:var(--c-concept-border);background:var(--c-concept-bg);">
+      🤖 Agent Concepts & Classification
+    </div>
+  </div>
+
+  <div class="v-line medium"></div>
+
+  <div class="node-row">
+    <div class="node-col">
+      <div class="v-line short"></div>
+      <div class="node" style="color:var(--c-concept);border-color:var(--c-concept-border);background:var(--c-concept-bg);"
+           id="node-wftypes" onclick="openNode('wftypes')">
+        <div class="node-check">✓</div>
+        <div class="node-tip">Non-Agentic vs Agentic vs Agent</div>
+        3 Types of AI<br>Workflows
+      </div>
+    </div>
+    <div class="node-col">
+      <div class="v-line short"></div>
+      <div class="node" style="color:var(--c-concept);border-color:var(--c-concept-border);background:var(--c-concept-bg);"
+           id="node-agvag" onclick="openNode('agvag')">
+        <div class="node-check">✓</div>
+        <div class="node-tip">Academic taxonomy from arXiv</div>
+        AI Agents vs.<br>Agentic AI
+      </div>
+    </div>
+    <div class="node-col">
+      <div class="v-line short"></div>
+      <div class="node" style="color:var(--c-concept);border-color:var(--c-concept-border);background:var(--c-concept-bg);"
+           id="node-levels" onclick="openNode('levels')">
+        <div class="node-check">✓</div>
+        <div class="node-tip">HuggingFace's 5-level framework</div>
+        5 Levels of<br>AI Agents
+      </div>
+    </div>
+    <div class="node-col">
+      <div class="v-line short"></div>
+      <div class="node" style="color:var(--c-concept);border-color:var(--c-concept-border);background:var(--c-concept-bg);"
+           id="node-rpa" onclick="openNode('rpa')">
+        <div class="node-check">✓</div>
+        <div class="node-tip">Architecture & capability comparison</div>
+        RPA vs.<br>AI Agents
+      </div>
+    </div>
+  </div>
+
+  <div class="v-line tall"></div>
+
+  <!-- ═══════════════ MODULE 3: ARCHITECTURE ═══════════════ -->
+  <div class="section-header">
+    <div class="section-badge" style="color:var(--c-arch);border-color:var(--c-arch-border);background:var(--c-arch-bg);">Module 03</div>
+    <div class="section-title-node" style="color:var(--c-arch);border-color:var(--c-arch-border);background:var(--c-arch-bg);">
+      🏗️ Architecture & Design Patterns
+    </div>
+  </div>
+
+  <div class="v-line medium"></div>
+
+  <div class="node-row">
+    <div class="node-col">
+      <div class="v-line short"></div>
+      <div class="node" style="color:var(--c-arch);border-color:var(--c-arch-border);background:var(--c-arch-bg);"
+           id="node-archprac" onclick="openNode('archprac')">
+        <div class="node-check">✓</div>
+        <div class="node-tip">7 real-world architectures</div>
+        Agent Architectures<br>in Practice
+      </div>
+    </div>
+    <div class="node-col">
+      <div class="v-line short"></div>
+      <div class="node" style="color:var(--c-arch);border-color:var(--c-arch-border);background:var(--c-arch-bg);"
+           id="node-wfpat" onclick="openNode('wfpat')">
+        <div class="node-check">✓</div>
+        <div class="node-tip">9 production workflow patterns</div>
+        9 Workflow<br>Patterns
+      </div>
+    </div>
+    <div class="node-col">
+      <div class="v-line short"></div>
+      <div class="node" style="color:var(--c-arch);border-color:var(--c-arch-border);background:var(--c-arch-bg);"
+           id="node-mapats" onclick="openNode('mapats')">
+        <div class="node-check">✓</div>
+        <div class="node-tip">Sequential, Router, Parallel + more</div>
+        Multi-Agent<br>Design Patterns
+      </div>
+    </div>
+    <div class="node-col">
+      <div class="v-line short"></div>
+      <div class="node" style="color:var(--c-arch);border-color:var(--c-arch-border);background:var(--c-arch-bg);"
+           id="node-agpats" onclick="openNode('agpats')">
+        <div class="node-check">✓</div>
+        <div class="node-tip">ReAct, CodeAct, MCP, Reflexion...</div>
+        6 Agentic<br>Design Patterns
+      </div>
+    </div>
+  </div>
+
+  <div class="v-line tall"></div>
+
+  <!-- ═══════════════ MODULE 4: BUILDING ═══════════════ -->
+  <div class="section-header">
+    <div class="section-badge" style="color:var(--c-build);border-color:var(--c-build-border);background:var(--c-build-bg);">Module 04</div>
+    <div class="section-title-node" style="color:var(--c-build);border-color:var(--c-build-border);background:var(--c-build-bg);">
+      🔨 Building AI Agents
+    </div>
+  </div>
+
+  <div class="v-line medium"></div>
+
+  <!-- Row: 2 top nodes -->
+  <div class="node-row">
+    <div class="node-col">
+      <div class="v-line short"></div>
+      <div class="node" style="color:var(--c-build);border-color:var(--c-build-border);background:var(--c-build-bg);"
+           id="node-roadmap7" onclick="openNode('roadmap7')">
+        <div class="node-check">✓</div>
+        <div class="node-tip">LLM → Logic → Memory → Tools → Scale</div>
+        7-Step Building<br>Roadmap
+      </div>
+    </div>
+    <div class="node-col">
+      <div class="v-line short"></div>
+      <div class="node" style="color:var(--c-build);border-color:var(--c-build-border);background:var(--c-build-bg);"
+           id="node-buildguide" onclick="openNode('buildguide')">
+        <div class="node-check">✓</div>
+        <div class="node-tip">Frameworks, memory, protocols</div>
+        Comprehensive<br>Build Guide
+      </div>
+    </div>
+    <div class="node-col">
+      <div class="v-line short"></div>
+      <div class="node" style="color:var(--c-build);border-color:var(--c-build-border);background:var(--c-build-bg);"
+           id="node-anthropic" onclick="openNode('anthropic')">
+        <div class="node-check">✓</div>
+        <div class="node-tip">When & how to build from Anthropic</div>
+        Anthropic's<br>Agent Guide
+      </div>
+    </div>
+    <div class="node-col">
+      <div class="v-line short"></div>
+      <div class="node" style="color:var(--c-build);border-color:var(--c-build-border);background:var(--c-build-bg);"
+           id="node-lrnmap" onclick="openNode('lrnmap')">
+        <div class="node-check">✓</div>
+        <div class="node-tip">Python → ML → LLMs → Agents → MAS</div>
+        AI Agent Learning<br>Roadmap
+      </div>
+    </div>
+  </div>
+
+  <div class="v-line tall"></div>
+
+  <!-- ═══════════════ MODULE 5: RAG & TOOLS ═══════════════ -->
+  <div class="section-header">
+    <div class="section-badge" style="color:var(--c-rag);border-color:var(--c-rag-border);background:var(--c-rag-bg);">Module 05</div>
+    <div class="section-title-node" style="color:var(--c-rag);border-color:var(--c-rag-border);background:var(--c-rag-bg);">
+      🔗 RAG & Tool Use
+    </div>
+  </div>
+
+  <div class="v-line medium"></div>
+
+  <div class="node-row">
+    <div class="node-col">
+      <div class="v-line short"></div>
+      <div class="node" style="color:var(--c-rag);border-color:var(--c-rag-border);background:var(--c-rag-bg);"
+           id="node-agrag" onclick="openNode('agrag')">
+        <div class="node-check">✓</div>
+        <div class="node-tip">RAG → Agent → Agentic RAG evolution</div>
+        RAG → Agentic<br>RAG Explained
+      </div>
+    </div>
+    <div class="node-col">
+      <div class="v-line short"></div>
+      <div class="node" style="color:var(--c-rag);border-color:var(--c-rag-border);background:var(--c-rag-bg);"
+           id="node-mcp" onclick="openNode('mcp')">
+        <div class="node-check">✓</div>
+        <div class="node-tip">The "USB port" for AI tools</div>
+        Tool Calling<br>via MCP
+      </div>
+    </div>
+    <div class="node-col">
+      <div class="v-line short"></div>
+      <div class="node" style="color:var(--c-rag);border-color:var(--c-rag-border);background:var(--c-rag-bg);"
+           id="node-toolstrat" onclick="openNode('toolstrat')">
+        <div class="node-check">✓</div>
+        <div class="node-tip">Caching, parallel, chaining, grouping</div>
+        Tool Using<br>Strategies
+      </div>
+    </div>
+  </div>
+
+  <div class="v-line tall"></div>
+
+  <!-- ═══════════════ COMPLETION ═══════════════ -->
+  <div class="section-header">
+    <div class="section-title-node" style="background:#f0fdf4;border-color:#86efac;color:#14532d;min-width:220px;">
+      🏆 AI Agent Builder
+    </div>
+  </div>
+
+</div><!-- /roadmap-wrap -->
+
+<script>
+// ══════════════════════════════════════════════
+// NODE DATA
+// ══════════════════════════════════════════════
+const nodes = {
+
+spectrum: {
+  title: "The AI Spectrum: ML → Agentic AI",
+  breadcrumb: "Module 01 · Foundations",
+  tabs: ["Overview","Workflow","Use Cases"],
+  overview: `
+    <div class="p-section">
+      <div class="p-label">What is this</div>
+      <div class="p-text"><p>The AI Spectrum is a <strong>concentric-circle model</strong> showing how each layer of AI capability builds on the previous one. You can't have Agentic AI without Gen AI; you can't have Gen AI without Neural Networks. Each outer ring adds a new category of capability — they're not alternatives, they're <em>additive</em>.</p></div>
+    </div>
+    <div class="steps">
+      <div class="step-card"><div class="step-num">1</div><div class="step-body"><div class="step-title">AI & ML — "Turn data into decisions"</div><div class="step-desc">Classical machine learning. Supervised learning (labeled data → predictions), Unsupervised learning (find hidden clusters), Reinforcement Learning (reward-based). Examples: Gmail spam filter, Netflix recommendations, credit scoring.</div></div></div>
+      <div class="step-card"><div class="step-num">2</div><div class="step-body"><div class="step-title">Neural Networks — "Complex pattern detection"</div><div class="step-desc">Deep learning architectures. <strong>CNNs</strong> for images (medical imaging, self-driving), <strong>RNNs/LSTMs</strong> for sequences (speech, time-series), <strong>Transformers</strong> (attention mechanism — the basis of all LLMs). Examples: facial recognition, fraud detection.</div></div></div>
+      <div class="step-card"><div class="step-num">3</div><div class="step-body"><div class="step-title">Gen AI — "Generate content and code at scale"</div><div class="step-desc">LLMs trained on the internet. Key techniques: RAG (grounds generation in external knowledge), Prompt Engineering (controls behavior without retraining). Examples: ChatGPT writing emails, DALL-E generating images, Copilot suggesting code.</div></div></div>
+      <div class="step-card"><div class="step-num">4</div><div class="step-body"><div class="step-title">AI Agents — "Execute complex tasks autonomously"</div><div class="step-desc">LLMs given tools, memory, and a planning loop. An agent can <strong>perceive</strong> its environment, <strong>reason</strong> about what to do, and <strong>act</strong> using tools (search, APIs, databases). Examples: Cursor, Perplexity, customer support bots that take actions.</div></div></div>
+      <div class="step-card"><div class="step-num">5</div><div class="step-body"><div class="step-title">Agentic AI — "Automate entire processes"</div><div class="step-desc">Multiple AI agents coordinating to complete long-horizon complex goals. Adds: Multi-agent Collaboration, State Persistence, Self-improving loops, Governance & Guardrails, Rollback Mechanisms. Example: Supply chain system running 24/7 autonomously.</div></div></div>
+    </div>`,
+  workflow: `
+    <div class="flow-box">
+      <div class="flow-title">Layer-by-layer build-up: from data to autonomous process</div>
+      <div style="display:flex;flex-direction:column;gap:10px;">
+        <div class="flow"><div class="flow-node fn-start">Raw Data</div><div class="flow-arr">→</div><div class="flow-node fn-llm">ML Algorithm</div><div class="flow-arr">→</div><div class="flow-node fn-end">Prediction</div><span style="padding-left:12px;font-size:10px;color:var(--muted2);">← Layer 1: AI & ML</span></div>
+        <div class="flow"><div class="flow-node fn-start">Input</div><div class="flow-arr">→</div><div class="flow-node fn-llm">Neural Network</div><div class="flow-arr">→</div><div class="flow-node fn-end">Pattern Output</div><span style="padding-left:12px;font-size:10px;color:var(--muted2);">← Layer 2: Neural Networks</span></div>
+        <div class="flow"><div class="flow-node fn-start">Prompt</div><div class="flow-arr">→</div><div class="flow-node fn-llm">LLM + RAG</div><div class="flow-arr">→</div><div class="flow-node fn-end">Generated Content</div><span style="padding-left:12px;font-size:10px;color:var(--muted2);">← Layer 3: Gen AI</span></div>
+        <div class="flow"><div class="flow-node fn-start">Goal</div><div class="flow-arr">→</div><div class="flow-node fn-llm">LLM + Memory</div><div class="flow-arr">→</div><div class="flow-node fn-tool">Tools</div><div class="flow-arr">→</div><div class="flow-node fn-end">Task Done</div><span style="padding-left:12px;font-size:10px;color:var(--muted2);">← Layer 4: Agent</span></div>
+        <div class="flow"><div class="flow-node fn-start">Complex Goal</div><div class="flow-arr">→</div><div class="flow-node fn-agent">Orchestrator</div><div class="flow-arr">→</div><div class="flow-node fn-agent">Agent 1..N</div><div class="flow-arr">→</div><div class="flow-node fn-gate">Governance</div><div class="flow-arr">→</div><div class="flow-node fn-end">Process Automated</div></div>
+        <div style="font-size:10px;color:var(--muted2);padding-left:4px;">↑ Layer 5: Agentic AI</div>
+      </div>
+    </div>
+    <div class="callout" style="border-color:#a5b4fc;background:#eef2ff;">
+      <div class="callout-title" style="color:#3730a3;">Key Insight</div>
+      <div class="callout-body">Each outer layer <em>includes everything inside it</em>. An AI Agent (Layer 4) uses Gen AI (Layer 3) which uses Neural Networks (Layer 2). Understanding the inner layers is not optional — it's the foundation.</div>
+    </div>`,
+  usecases: `
+    <div class="uc-grid">
+      <div class="uc-card"><div class="uc-head"><div class="uc-icon">🎯</div><div><div class="uc-name">Fraud Detection</div><div class="uc-co">Layer 1–2 · Banking</div></div></div><div class="uc-desc">Banks use ML models (L1) to score transaction risk, and neural networks (L2) to detect subtle fraud patterns in sequences. 200+ features analyzed per transaction in real time.</div></div>
+      <div class="uc-card"><div class="uc-head"><div class="uc-icon">✍️</div><div><div class="uc-name">Content Generation</div><div class="uc-co">Layer 3 · Marketing</div></div></div><div class="uc-desc">Marketing teams use GPT-4 + RAG to generate product descriptions grounded in their actual product database. LLM writes; RAG ensures factual accuracy from internal docs.</div></div>
+      <div class="uc-card"><div class="uc-head"><div class="uc-icon">💻</div><div><div class="uc-name">Cursor IDE</div><div class="uc-co">Layer 4 · Developer Tools</div></div></div><div class="uc-desc">Cursor perceives your codebase, reasons about the task, uses tools (file read/write, terminal, search), and executes multi-step changes autonomously with your approval.</div></div>
+      <div class="uc-card"><div class="uc-head"><div class="uc-icon">🏭</div><div><div class="uc-name">Supply Chain AI</div><div class="uc-co">Layer 5 · Manufacturing</div></div></div><div class="uc-desc">Monitor Agent checks inventory → Procurement Agent contacts suppliers → Finance Agent approves POs → Reporting Agent updates dashboards. 24/7, no human in the loop.</div></div>
+    </div>`
+},
+
+wftypes: {
+  title: "3 Types of AI Workflows",
+  breadcrumb: "Module 02 · Agent Concepts",
+  tabs: ["Overview","Workflow","Use Cases"],
+  overview: `
+    <div class="p-section">
+      <div class="p-label">Why this matters</div>
+      <div class="p-text"><p>Not every AI system is an "agent." Understanding these three distinct workflow types is foundational — it determines how you design, build, and evaluate any AI system. Most teams over-engineer when a simple non-agentic workflow would suffice.</p></div>
+    </div>
+    <div class="info-grid">
+      <div class="info-card" style="border-top-color:#6ee7b7;">
+        <div class="info-card-label">Type 1</div>
+        <div class="info-card-title">Non-Agentic</div>
+        <div class="info-card-body">A single, stateless LLM call. User provides input → LLM processes → output delivered. No planning, no tools, no feedback loop. <strong>Example:</strong> Asking ChatGPT "What is the capital of France?" Every prompt is independent.</div>
+      </div>
+      <div class="info-card" style="border-top-color:#fcd34d;">
+        <div class="info-card-label">Type 2</div>
+        <div class="info-card-title">Agentic Workflow</div>
+        <div class="info-card-body">LLM follows a pre-defined pipeline with tools, evaluation, and iteration — but the workflow structure is <strong>programmed by a human</strong>. The LLM doesn't set its own goals; it executes a fixed agentic process. <strong>Example:</strong> GitHub Copilot writing code.</div>
+      </div>
+      <div class="info-card" style="border-top-color:#a5b4fc;" style="grid-column:span 2;">
+        <div class="info-card-label">Type 3</div>
+        <div class="info-card-title">AI Agent</div>
+        <div class="info-card-body">You give the AI a high-level goal. It <strong>autonomously</strong> understands its environment, defines sub-goals, plans a path, executes actions using tools, evaluates outcomes, and replans if needed. The agent decides <em>what</em> to do, not just <em>how</em> to do it.</div>
+      </div>
+    </div>
+    <table class="cmp">
+      <tr><th>Dimension</th><th>Non-Agentic</th><th>Agentic Workflow</th><th>AI Agent</th></tr>
+      <tr><td>Control</td><td>Full human</td><td>Human defines structure</td><td>AI decides autonomously</td></tr>
+      <tr><td>Cost</td><td>Cheapest (1 call)</td><td>Moderate</td><td>Highest (many calls)</td></tr>
+      <tr><td>Risk</td><td>Low</td><td>Medium</td><td>Higher (needs guardrails)</td></tr>
+      <tr><td>Example</td><td>ChatGPT Q&A</td><td>GitHub Copilot</td><td>AI scheduling assistant</td></tr>
+    </table>`,
+  workflow: `
+    <div class="flow-box">
+      <div class="flow-title">Type 1: Non-Agentic (Single turn)</div>
+      <div class="flow"><div class="flow-node fn-start">User Input</div><div class="flow-arr">→</div><div class="flow-node fn-llm">LLM Processes</div><div class="flow-arr">→</div><div class="flow-node fn-end">Output Delivered</div></div>
+    </div>
+    <div class="flow-box">
+      <div class="flow-title">Type 2: Agentic Workflow (Loop, fixed structure)</div>
+      <div class="flow"><div class="flow-node fn-start">Goal Received</div><div class="flow-arr">→</div><div class="flow-node fn-llm">Plan Generated</div><div class="flow-arr">→</div><div class="flow-node fn-tool">Pull Tools</div><div class="flow-arr">→</div><div class="flow-node fn-gate">Evaluate Output</div></div>
+      <div style="margin-top:8px;font-size:10px;color:var(--muted2);">↺ If not solved → loop back to Plan → Iterate → Deliver Output</div>
+    </div>
+    <div class="flow-box">
+      <div class="flow-title">Type 3: AI Agent (Autonomous goal pursuit)</div>
+      <div style="display:flex;flex-direction:column;gap:8px;">
+        <div class="flow"><div class="flow-node fn-start">Task Received<br><span class="flow-sublabel">High-level goal</span></div><div class="flow-arr">→</div><div class="flow-node fn-llm">Understand Environment<br><span class="flow-sublabel">Calendar, email, docs</span></div><div class="flow-arr">→</div><div class="flow-node fn-llm">Define Goal</div></div>
+        <div class="flow"><div class="flow-node fn-llm">Plan the Path<br><span class="flow-sublabel">Chooses tools + sequence</span></div><div class="flow-arr">→</div><div class="flow-node fn-tool">Execute Actions<br><span class="flow-sublabel">APIs, can retry on fly</span></div><div class="flow-arr">→</div><div class="flow-node fn-gate">Evaluate Outcome</div></div>
+        <div class="flow"><div class="flow-node fn-mem">Feedback Loop<br><span class="flow-sublabel">New strategy if failed</span></div><div class="flow-arr">→</div><div class="flow-node fn-end">Deliver Final Output</div></div>
+      </div>
+    </div>`,
+  usecases: `
+    <div class="uc-grid">
+      <div class="uc-card"><div class="uc-head"><div class="uc-icon">💬</div><div><div class="uc-name">Simple Q&A Bot</div><div class="uc-co">Type 1 · Non-Agentic</div></div></div><div class="uc-desc">A FAQ bot that answers one question at a time. No memory between questions. No tools. Just LLM in → response out. Perfect for 90% of simple helpdesk scenarios where complexity isn't needed.</div></div>
+      <div class="uc-card"><div class="uc-head"><div class="uc-icon">🔧</div><div><div class="uc-name">Code Review Pipeline</div><div class="uc-co">Type 2 · Agentic Workflow</div></div></div><div class="uc-desc">PR opens → LLM analyzes code → Gate checks if issues found → LLM writes review comments → LLM summarizes. Agentic (uses a loop + gate) but the structure is fixed by the developer.</div></div>
+      <div class="uc-card"><div class="uc-head"><div class="uc-icon">📅</div><div><div class="uc-name">AI Executive Assistant</div><div class="uc-co">Type 3 · AI Agent</div></div></div><div class="uc-desc">"My 2pm cancelled. Optimize my afternoon." Agent reads calendar, checks email + Slack for urgency, proposes alternatives, books a focus block, drafts a cancellation reply — all autonomously. You only see the result.</div></div>
+      <div class="uc-card"><div class="uc-head"><div class="uc-icon">🔍</div><div><div class="uc-name">Research Agent</div><div class="uc-co">Type 3 · AI Agent</div></div></div><div class="uc-desc">Given: "Research EV battery tech trends." Agent autonomously: decides what to search, calls search API, reads papers, identifies patterns, cross-references sources, and writes a structured report — replanning when searches return poor results.</div></div>
+    </div>`
+},
+
+levels: {
+  title: "5 Levels of AI Agents",
+  breadcrumb: "Module 02 · Agent Concepts",
+  tabs: ["Overview","Workflow","Use Cases"],
+  overview: `
+    <div class="p-section">
+      <div class="p-label">HuggingFace's Framework</div>
+      <div class="p-text"><p>HuggingFace defines agent capability in 5 progressive levels based on <strong>how much control the LLM has over program flow</strong>. Level 1 is a simple processor; Level 5 is a fully autonomous system that writes and executes its own code. This framework lets you classify any AI system you encounter.</p></div>
+    </div>
+    <div class="steps">
+      <div class="step-card"><div class="step-num">L1</div><div class="step-body"><div class="step-title">Simple Processor — Model has no impact on program flow</div><div class="step-desc">LLM receives input, produces output. All logic is hardcoded by the developer. The program doesn't change based on what the model returns. <strong>Example:</strong> A sentiment analysis API. You send text, get "positive/negative/neutral" back.</div></div></div>
+      <div class="step-card"><div class="step-num">L2</div><div class="step-body"><div class="step-title">Router — Model determines basic program flow</div><div class="step-desc">LLM output determines which of several predefined paths the program takes. The model acts as a classifier/router. <strong>Example:</strong> Customer service bot that classifies your query as "billing", "technical", or "account" — then routes to the right handler.</div></div></div>
+      <div class="step-card"><div class="step-num">L3</div><div class="step-body"><div class="step-title">Tool Calling — Model determines how functions are executed</div><div class="step-desc">LLM can choose from a set of tools and decides when and how to call them. This is where "agency" truly begins. <strong>Example:</strong> Perplexity AI decides whether to search the web, look at a URL, or answer from memory.</div></div></div>
+      <div class="step-card"><div class="step-num">L4</div><div class="step-body"><div class="step-title">Multi-Step Agent — Model controls iteration and continuation</div><div class="step-desc">A Meta-Agent orchestrates Sub-Agents, controlling whether to continue, repeat, or stop. The model decides when the task is "done enough." <strong>Example:</strong> Research agent spawns sub-agents per report section, evaluates quality, decides whether to regenerate.</div></div></div>
+      <div class="step-card"><div class="step-num">L5</div><div class="step-body"><div class="step-title">Fully Autonomous — Model creates and executes new code</div><div class="step-desc">The LLM can write new code, create new tools, and execute them — extending its own capabilities at runtime. <strong>Example:</strong> Devin (AI software engineer) writes code, executes it, sees errors, rewrites, installs missing dependencies, ships a working solution.</div></div></div>
+    </div>`,
+  workflow: `
+    <div class="flow-box">
+      <div class="flow-title">L1: Simple Processor</div>
+      <div class="flow"><div class="flow-node fn-start">In</div><div class="flow-arr">→</div><div class="flow-node fn-llm">LLM</div><div class="flow-arr">→</div><div class="flow-node fn-end">Out</div></div>
+    </div>
+    <div class="flow-box">
+      <div class="flow-title">L2: Router</div>
+      <div class="flow"><div class="flow-node fn-start">In</div><div class="flow-arr">→</div><div class="flow-node fn-llm">LLM</div><div class="flow-arr">→</div><div class="flow-branch"><div class="flow-branch-row"><div class="flow-arr">→</div><div class="flow-node fn-end">Path A</div></div><div class="flow-branch-row"><div class="flow-arr">→</div><div class="flow-node fn-end">Path B</div></div></div></div>
+    </div>
+    <div class="flow-box">
+      <div class="flow-title">L3: Tool Calling</div>
+      <div class="flow"><div class="flow-branch"><div class="flow-branch-row"><div class="flow-node fn-tool">Tool 1</div></div><div class="flow-branch-row"><div class="flow-node fn-tool">Tool 2</div></div><div class="flow-branch-row"><div class="flow-node fn-tool">Tool N</div></div></div><div class="flow-arr">→</div><div class="flow-node fn-llm">LLM decides<br>which to call</div><div class="flow-arr">→</div><div class="flow-node fn-end">Out</div></div>
+    </div>
+    <div class="flow-box">
+      <div class="flow-title">L4: Multi-Step Agent</div>
+      <div class="flow"><div class="flow-node fn-start">In</div><div class="flow-arr">→</div><div class="flow-node fn-agent">Meta-Agent</div><div class="flow-arr">→</div><div class="flow-branch"><div class="flow-branch-row"><div class="flow-arr">→</div><div class="flow-node fn-agent">Sub-Agent 1</div></div><div class="flow-branch-row"><div class="flow-arr">→</div><div class="flow-node fn-agent">Sub-Agent N</div></div></div><div class="flow-arr">→</div><div class="flow-node fn-gate">Evaluate</div><div class="flow-arr">→</div><div class="flow-node fn-end">Out</div></div>
+    </div>
+    <div class="flow-box">
+      <div class="flow-title">L5: Fully Autonomous</div>
+      <div class="flow"><div class="flow-node fn-start">In</div><div class="flow-arr">→</div><div class="flow-node fn-llm">LLM Generator<br><span class="flow-sublabel">creates solution code</span></div><div class="flow-arr">→</div><div class="flow-node fn-gate">Execute & Validate</div><div class="flow-arr">↺</div><div style="font-size:10px;color:var(--muted2);align-self:center;">Feedback loop</div><div class="flow-arr">→</div><div class="flow-node fn-end">Out</div></div>
+    </div>`,
+  usecases: `
+    <table class="cmp">
+      <tr><th>Product</th><th>Level</th><th>Why</th></tr>
+      <tr><td>Basic ChatGPT (text only)</td><td>L1 — Processor</td><td>No tools, no branching, just LLM in/out</td></tr>
+      <tr><td>Customer Service Classifier</td><td>L2 — Router</td><td>LLM classifies intent → routes to handler</td></tr>
+      <tr><td>Perplexity AI</td><td>L3 — Tool Calling</td><td>LLM decides when/how to call web search</td></tr>
+      <tr><td>Gemini Deep Research</td><td>L4 — Multi-Step</td><td>Orchestrates multiple research sub-agents</td></tr>
+      <tr><td>Devin / Manus</td><td>L5 — Fully Autonomous</td><td>Writes, executes, debugs its own code</td></tr>
+      <tr><td>Cursor IDE</td><td>L3–L4</td><td>Tool calling + multi-step code editing loops</td></tr>
+    </table>
+    <div class="callout" style="border-color:#fcd34d;background:#fffbeb;">
+      <div class="callout-title" style="color:#78350f;">Which Level Should You Build?</div>
+      <div class="callout-body">Start at the lowest level that solves your problem. L3 (Tool Calling) handles 80% of real-world agent use cases. Only go to L4–L5 when the task genuinely requires autonomous multi-step orchestration or dynamic code generation — the added complexity and cost is significant.</div>
+    </div>`
+},
+
+wfpat: {
+  title: "9 Agentic Workflow Patterns",
+  breadcrumb: "Module 03 · Architecture",
+  tabs: ["Overview","Workflow","Use Cases"],
+  overview: `
+    <div class="p-section">
+      <div class="p-label">Why these matter</div>
+      <div class="p-text"><p>Every production agentic system is built from one or more of these nine patterns. Understanding them is the difference between <strong>architecting agents</strong> and just prompting LLMs. These are the grammar of agentic systems.</p></div>
+    </div>
+    <div class="info-grid">
+      <div class="info-card" style="border-top-color:#a5b4fc;"><div class="info-card-label">Pattern 1</div><div class="info-card-title">Prompt Chaining</div><div class="info-card-body">Task split into sequential LLM calls. Each call processes the previous output. A <strong>Gate node</strong> validates each step — fails exit early. Best for: blog generation, legal review. Gate prevents bad output propagating.</div></div>
+      <div class="info-card" style="border-top-color:#6ee7b7;"><div class="info-card-label">Pattern 2</div><div class="info-card-title">Parallelization</div><div class="info-card-body">Multiple LLM calls run simultaneously. An <strong>Aggregator</strong> combines outputs. Two sub-types: (1) Sectioning — parallel workstreams, (2) Voting — same prompt N times, take majority. Best for: guardrails, evals, content moderation.</div></div>
+      <div class="info-card" style="border-top-color:#7dd3fc;"><div class="info-card-label">Pattern 3</div><div class="info-card-title">Orchestrator-Worker</div><div class="info-card-body">Central <strong>Orchestrator</strong> decomposes task → delegates to Worker LLMs → <strong>Synthesizer</strong> combines results. Orchestrator doesn't do the work itself. Best for: Agentic RAG, full-stack code generation, research reports.</div></div>
+      <div class="info-card" style="border-top-color:#fda4af;"><div class="info-card-label">Pattern 4</div><div class="info-card-title">Evaluator-Optimizer</div><div class="info-card-body"><strong>Generator</strong> creates output. <strong>Evaluator</strong> scores it + gives feedback. If rejected → Generator revises with feedback. Loop until quality threshold met. Best for: automated testing, financial report drafting, code quality loops.</div></div>
+      <div class="info-card" style="border-top-color:#c4b5fd;"><div class="info-card-label">Pattern 5</div><div class="info-card-title">Routing</div><div class="info-card-body">Input classified → Router directs to specialized handler. The routing decision is made by the LLM. Best for: customer support (billing vs tech vs returns), multi-domain Q&A systems. Example: Intercom.</div></div>
+      <div class="info-card" style="border-top-color:#fcd34d;"><div class="info-card-label">Patterns 6–9</div><div class="info-card-title">Advanced Patterns</div><div class="info-card-body"><strong>Autonomous Workflow:</strong> LLM action → observe → decide → repeat (browser agents). <strong>Reflexion:</strong> Generate → self-critique → revise N times. <strong>Rewoo:</strong> Pre-plan with variable slots → Solver fills in. <strong>Plan-and-Execute:</strong> Planner → Task Agents → Replan on failure.</div></div>
+    </div>`,
+  workflow: `
+    <div class="flow-box">
+      <div class="flow-title">Pattern 1: Prompt Chaining</div>
+      <div class="flow"><div class="flow-node fn-start">In</div><div class="flow-arr">→</div><div class="flow-node fn-llm">LLM Call 1</div><div class="flow-arr">→</div><div class="flow-node fn-gate">Gate ✓</div><div class="flow-arr">→</div><div class="flow-node fn-llm">LLM Call 2</div><div class="flow-arr">→</div><div class="flow-node fn-gate">Gate ✓</div><div class="flow-arr">→</div><div class="flow-node fn-end">Out</div></div>
+      <div style="margin-top:6px;font-size:10px;color:#dc2626;">Gate FAIL → Exit with error (prevents bad output propagating)</div>
+    </div>
+    <div class="flow-box">
+      <div class="flow-title">Pattern 2: Parallelization</div>
+      <div class="flow"><div class="flow-node fn-start">In</div><div class="flow-arr">→</div><div class="flow-branch"><div class="flow-branch-row"><div class="flow-arr">→</div><div class="flow-node fn-llm">LLM A</div></div><div class="flow-branch-row"><div class="flow-arr">→</div><div class="flow-node fn-llm">LLM B</div></div><div class="flow-branch-row"><div class="flow-arr">→</div><div class="flow-node fn-llm">LLM C</div></div></div><div class="flow-arr">→</div><div class="flow-node fn-gate">Aggregator</div><div class="flow-arr">→</div><div class="flow-node fn-end">Out</div></div>
+    </div>
+    <div class="flow-box">
+      <div class="flow-title">Pattern 3: Orchestrator-Worker</div>
+      <div class="flow"><div class="flow-node fn-start">In</div><div class="flow-arr">→</div><div class="flow-node fn-agent">Orchestrator<br><span class="flow-sublabel">decomposes task</span></div><div class="flow-arr">→</div><div class="flow-branch"><div class="flow-branch-row"><div class="flow-arr">→</div><div class="flow-node fn-llm">Worker 1</div></div><div class="flow-branch-row"><div class="flow-arr">→</div><div class="flow-node fn-llm">Worker 2</div></div><div class="flow-branch-row"><div class="flow-arr">→</div><div class="flow-node fn-llm">Worker N</div></div></div><div class="flow-arr">→</div><div class="flow-node fn-gate">Synthesizer</div><div class="flow-arr">→</div><div class="flow-node fn-end">Out</div></div>
+    </div>
+    <div class="flow-box">
+      <div class="flow-title">Pattern 4: Evaluator-Optimizer</div>
+      <div class="flow"><div class="flow-node fn-start">In</div><div class="flow-arr">→</div><div class="flow-node fn-llm">Generator</div><div class="flow-arr">→</div><div class="flow-node fn-gate">Evaluator</div></div>
+      <div class="flow" style="margin-top:8px;"><div class="flow-node fn-end" style="border-color:#6ee7b7;color:#065f46;background:#ecfdf5;">✓ Accepted → Out</div><div style="width:24px;"></div><div class="flow-node fn-end" style="border-color:#fda4af;">✗ Rejected + Feedback → ↺ Generator</div></div>
+    </div>`,
+  usecases: `
+    <table class="cmp">
+      <tr><th>Pattern</th><th>Best For</th><th>Example</th></tr>
+      <tr><td>Prompt Chaining</td><td>Chatbots, tool-using agents</td><td>Blog generator: outline → write → format</td></tr>
+      <tr><td>Parallelization</td><td>Guardrails, automating evals</td><td>Content moderation: hate + NSFW + spam simultaneously</td></tr>
+      <tr><td>Orchestrator-Worker</td><td>Agentic RAG, coding agents</td><td>Research report with specialist sub-agents per section</td></tr>
+      <tr><td>Evaluator-Optimizer</td><td>Data science, real-time monitoring</td><td>Auto unit test writer: generate → run → check coverage → revise</td></tr>
+      <tr><td>Routing</td><td>Customer support, MAD</td><td>Support bot routes billing vs tech vs returns</td></tr>
+      <tr><td>Autonomous Workflow</td><td>Embodied agents, browser bots</td><td>Agent books flights by controlling browser autonomously</td></tr>
+      <tr><td>Reflexion</td><td>Complex monitoring, full-stack apps</td><td>Speech writer critiques its own rhetoric iteratively</td></tr>
+      <tr><td>Rewoo</td><td>Deep research, multi-step Q&A</td><td>Research with pre-planned variable chain reduces LLM calls</td></tr>
+      <tr><td>Plan-and-Execute</td><td>Business process automation</td><td>Month-end close: Planner → Task Agents → Replan failures</td></tr>
+    </table>`
+},
+
+agrag: {
+  title: "RAG → Agentic RAG Explained",
+  breadcrumb: "Module 05 · RAG & Tools",
+  tabs: ["Overview","Workflow","Use Cases"],
+  overview: `
+    <div class="p-section">
+      <div class="p-label">Evolution of retrieval</div>
+      <div class="p-text"><p><strong>Classic RAG:</strong> A fixed 5-step pipeline. Embed documents → store in vector DB → embed query → retrieve top-K → generate answer. Deterministic and simple, but rigid — it always retrieves from one source using one strategy.</p><p><strong>Agentic RAG:</strong> An agent that uses RAG as one of its tools — but intelligently. The agent decides <em>when</em> to retrieve, <em>which source</em> to retrieve from (multiple vector DBs, web, email), and <em>how</em> to formulate the query. If retrieval fails, it tries a different source.</p></div>
+    </div>
+    <table class="cmp">
+      <tr><th>Dimension</th><th>Classic RAG</th><th>Agentic RAG</th></tr>
+      <tr><td>Retrieval source</td><td>Single vector DB</td><td>Multiple: vector DBs + web + email + APIs</td></tr>
+      <tr><td>Strategy</td><td>Fixed (always embed + cosine similarity)</td><td>Dynamic (agent decides best retrieval method)</td></tr>
+      <tr><td>Memory</td><td>None</td><td>Short-term + Long-term memory</td></tr>
+      <tr><td>Planning</td><td>None</td><td>ReACT + CoT reasoning about what to retrieve</td></tr>
+      <tr><td>Failure handling</td><td>Returns whatever it finds</td><td>Tries different source if retrieval quality is low</td></tr>
+      <tr><td>Example</td><td>Internal docs Q&A bot</td><td>Perplexity AI</td></tr>
+    </table>`,
+  workflow: `
+    <div class="flow-box">
+      <div class="flow-title">Stage 1: Classic RAG Pipeline</div>
+      <div style="display:flex;flex-direction:column;gap:8px;">
+        <div class="flow"><div class="flow-node fn-start">Documents</div><div class="flow-arr">→</div><div class="flow-node fn-llm">Embed</div><div class="flow-arr">→</div><div class="flow-node fn-tool">Vector DB</div></div>
+        <div style="font-size:10px;color:var(--muted2);margin:4px 0;">— At query time —</div>
+        <div class="flow"><div class="flow-node fn-start">User Query</div><div class="flow-arr">→</div><div class="flow-node fn-llm">Embed Query</div><div class="flow-arr">→</div><div class="flow-node fn-tool">Retrieve Top-K</div><div class="flow-arr">→</div><div class="flow-node fn-gate">Augment Prompt</div><div class="flow-arr">→</div><div class="flow-node fn-llm">Generate</div><div class="flow-arr">→</div><div class="flow-node fn-end">Answer</div></div>
+      </div>
+    </div>
+    <div class="flow-box">
+      <div class="flow-title">Stage 3: Agentic RAG (Full Architecture)</div>
+      <div style="display:flex;flex-direction:column;gap:8px;">
+        <div class="flow"><div class="flow-node fn-start">User Query</div><div class="flow-arr">→</div><div class="flow-node fn-agent">Agent (Reasoner)</div><div class="flow-arr">↕</div><div class="flow-node fn-mem">Memory<br><span class="flow-sublabel">Short + Long</span></div><div class="flow-arr">↕</div><div class="flow-node fn-gate">Planning<br><span class="flow-sublabel">ReACT + CoT</span></div></div>
+        <div class="flow"><div class="flow-branch"><div class="flow-branch-row"><div class="flow-arr">→</div><div class="flow-node fn-tool">Vector Search X<br><span class="flow-sublabel">Internal KB</span></div></div><div class="flow-branch-row"><div class="flow-arr">→</div><div class="flow-node fn-tool">Vector Search Y<br><span class="flow-sublabel">Product docs</span></div></div><div class="flow-branch-row"><div class="flow-arr">→</div><div class="flow-node fn-tool">Google Search<br><span class="flow-sublabel">Live web</span></div></div><div class="flow-branch-row"><div class="flow-arr">→</div><div class="flow-node fn-tool">Mail<br><span class="flow-sublabel">Comms context</span></div></div></div></div>
+        <div class="flow"><div class="flow-node fn-llm">LLM Generate<br><span class="flow-sublabel">With full retrieved context</span></div><div class="flow-arr">→</div><div class="flow-node fn-end">Grounded, Reasoned Output</div></div>
+      </div>
+    </div>`,
+  usecases: `
+    <div class="uc-grid">
+      <div class="uc-card"><div class="uc-head"><div class="uc-icon">🔍</div><div><div class="uc-name">Perplexity AI</div><div class="uc-co">Agentic RAG in Production</div></div></div><div class="uc-desc">Agent decides which sources to search (news, academic, web), formulates optimized queries, retrieves from multiple sources simultaneously, evaluates source quality, generates cited answers — in 3–5 seconds.</div><div class="uc-steps"><div class="uc-step" data-n="1">Query → agent determines search strategy</div><div class="uc-step" data-n="2">Parallel retrieval from web + news + academic</div><div class="uc-step" data-n="3">Agent evaluates retrieved content quality</div><div class="uc-step" data-n="4">LLM synthesizes into cited, accurate response</div></div></div>
+      <div class="uc-card"><div class="uc-head"><div class="uc-icon">🏢</div><div><div class="uc-name">Enterprise Knowledge Agent</div><div class="uc-co">Fortune 500 Company</div></div></div><div class="uc-desc">"What's our refund policy for EU enterprise customers?" Agent searches policy DB + legal docs + recent email threads. Detects conflict between old policy and new email. Flags conflict in its answer, cites both sources.</div><div class="uc-steps"><div class="uc-step" data-n="1">Agent detects query spans multiple sources</div><div class="uc-step" data-n="2">Retrieves from policy DB + legal + email</div><div class="uc-step" data-n="3">Detects conflict between sources</div><div class="uc-step" data-n="4">Flags conflict, cites both in answer</div></div></div>
+    </div>`
+},
+
+mcp: {
+  title: "Tool Calling via MCP",
+  breadcrumb: "Module 05 · RAG & Tools",
+  tabs: ["Overview","Workflow","Use Cases"],
+  overview: `
+    <div class="p-section">
+      <div class="p-label">What is MCP</div>
+      <div class="p-text"><p>The <strong>Model Context Protocol (MCP)</strong> is Anthropic's open standard for connecting LLMs to external tools — without hardcoded integrations. It's the "USB port" for AI agents: write a tool once as an MCP Server, and it works with any MCP-compatible agent.</p></div>
+    </div>
+    <table class="cmp">
+      <tr><th>Step</th><th>Traditional Workflow</th><th>MCP Workflow</th></tr>
+      <tr><td>1. Describe Tools</td><td>Manually write JSON schema for each tool</td><td>MCP Client auto-discovers tools from MCP Server</td></tr>
+      <tr><td>2. Tool Call</td><td>LLM generates JSON → code parses it</td><td>LLM call → MCP Client handles protocol</td></tr>
+      <tr><td>3. Dispatch</td><td>You write routing code per function</td><td>MCP Server routes via adapters automatically</td></tr>
+      <tr><td>4. New Tools</td><td>New JSON schema + routing code per tool</td><td>Point to new MCP Server — auto-discovered</td></tr>
+    </table>
+    <div class="callout" style="border-color:#a5b4fc;background:#eef2ff;">
+      <div class="callout-title" style="color:#3730a3;">The USB Analogy</div>
+      <div class="callout-body">Before USB, every device needed a different port. Before MCP, every tool needed a custom integration. MCP is the USB-C of AI tools: write once, works everywhere. Any MCP-compatible agent (Claude, GPT, open-source) can use any MCP Server.</div>
+    </div>`,
+  workflow: `
+    <div class="flow-box">
+      <div class="flow-title">Traditional Tool Calling (Before MCP)</div>
+      <div class="flow"><div class="flow-node fn-start">Query</div><div class="flow-arr">→</div><div class="flow-node fn-llm">LLM + Planning</div><div class="flow-arr">↕</div><div class="flow-branch"><div class="flow-branch-row"><div class="flow-arr">→</div><div class="flow-node fn-tool">Google (Unique API)</div></div><div class="flow-branch-row"><div class="flow-arr">→</div><div class="flow-node fn-tool">Gmail (Unique API)</div></div><div class="flow-branch-row"><div class="flow-arr">→</div><div class="flow-node fn-tool">Slack (Unique API)</div></div></div><div class="flow-arr">→</div><div class="flow-node fn-end">Result</div></div>
+    </div>
+    <div class="flow-box">
+      <div class="flow-title">With MCP (Standardized Protocol)</div>
+      <div class="flow"><div class="flow-node fn-start">Query</div><div class="flow-arr">→</div><div class="flow-node fn-llm">LLM + MCP Client</div><div class="flow-arr">→</div><div class="flow-node fn-gate">MCP Server<br><span class="flow-sublabel">Standard protocol</span></div><div class="flow-branch"><div class="flow-branch-row"><div class="flow-arr">→</div><div class="flow-node fn-tool">Search (HTTPS/SSE)</div></div><div class="flow-branch-row"><div class="flow-arr">→</div><div class="flow-node fn-tool">Local DB (STDIO)</div></div><div class="flow-branch-row"><div class="flow-arr">→</div><div class="flow-node fn-tool">AWS (via adapter)</div></div></div><div class="flow-arr">→</div><div class="flow-node fn-end">Result</div></div>
+    </div>`,
+  usecases: `
+    <div class="uc-grid">
+      <div class="uc-card"><div class="uc-head"><div class="uc-icon">🔧</div><div><div class="uc-name">Cursor IDE</div><div class="uc-co">Modern Tool Use via MCP</div></div></div><div class="uc-desc">Cursor connects to MCP Servers for code search, docs lookup, test runners, Git ops, and deployment. "Fix this bug and deploy" → Cursor uses MCP to call the right tools in the right order — zero integration code written by you.</div><div class="uc-steps"><div class="uc-step" data-n="1">Cursor starts with MCP Client built in</div><div class="uc-step" data-n="2">You add MCP Servers (GitHub, Vercel, tests)</div><div class="uc-step" data-n="3">Cursor discovers all tools automatically</div><div class="uc-step" data-n="4">Agent calls tools using standard protocol</div></div></div>
+      <div class="uc-card"><div class="uc-head"><div class="uc-icon">🏗️</div><div><div class="uc-name">Enterprise Agent Platform</div><div class="uc-co">Platform Architecture</div></div></div><div class="uc-desc">One platform with MCP Client. MCP Servers for: CRM (Salesforce), ERP (SAP), Docs (Confluence), Comms (Slack). Every new tool added as MCP Server is immediately available to all agents on the platform — zero integration work per tool.</div></div>
+    </div>`
+},
+
+agvag: {
+  title: "AI Agents vs. Agentic AI",
+  breadcrumb: "Module 02 · Agent Concepts",
+  tabs: ["Overview","Workflow","Use Cases"],
+  overview: `
+    <div class="p-section">
+      <div class="p-label">The most confused distinction in AI</div>
+      <div class="p-text"><p>AI Agents and Agentic AI are related but architecturally distinct. The difference: an AI Agent is a <strong>specialist employee</strong> — excellent at one job, responds when prompted. Agentic AI is a <strong>self-managing team</strong> — multiple agents coordinating to run entire processes without a human manager at each step.</p></div>
+    </div>
+    <table class="cmp">
+      <tr><th>Feature</th><th>AI Agents</th><th>Agentic AI</th><th>Generative Agent</th></tr>
+      <tr><td>Primary Capability</td><td>Task execution via tools</td><td>Autonomous goal setting</td><td>Content generation</td></tr>
+      <tr><td>Planning Horizon</td><td>Single-step</td><td>Multi-step</td><td>N/A (content only)</td></tr>
+      <tr><td>Learning</td><td>Rule-based / supervised</td><td>RL / meta-learning</td><td>Large-scale pre-training</td></tr>
+      <tr><td>Interaction</td><td>Reactive (responds to prompts)</td><td>Proactive (pursues goals)</td><td>Creative (generates)</td></tr>
+      <tr><td>Structure</td><td>LLM + tool(s)</td><td>Multi-agent system</td><td>Single model</td></tr>
+      <tr><td>Key Trait</td><td>Tool-use</td><td>Collaboration</td><td>Creativity</td></tr>
+    </table>`,
+  workflow: `
+    <div class="flow-box">
+      <div class="flow-title">AI Agent: Perception → Reasoning → Action</div>
+      <div class="flow"><div class="flow-node fn-start">AI Agent</div><div class="flow-arr">→</div><div class="flow-node fn-llm">Perception</div><div class="flow-arr">→</div><div class="flow-node fn-llm">Reasoning</div><div class="flow-arr">→</div><div class="flow-node fn-tool">Action</div><div style="padding-left:12px;font-size:10px;color:var(--muted2);align-self:center;">Handles specific tasks</div></div>
+    </div>
+    <div class="flow-box">
+      <div class="flow-title">Agentic AI: Multi-Agent Collaboration</div>
+      <div class="flow"><div class="flow-node fn-start">Complex Goal</div><div class="flow-arr">→</div><div class="flow-node fn-agent">Specialized Agents</div><div class="flow-arr">→</div><div class="flow-node fn-mem">Persistent Memory</div><div class="flow-arr">→</div><div class="flow-node fn-gate">Advanced Planning</div><div class="flow-arr">→</div><div class="flow-node fn-llm">Orchestration</div><div class="flow-arr">→</div><div class="flow-node fn-end">Process Automated</div></div>
+    </div>`,
+  usecases: `
+    <div class="uc-grid">
+      <div class="uc-card"><div class="uc-head"><div class="uc-icon">🎫</div><div><div class="uc-name">Customer Support Bot</div><div class="uc-co">AI Agent Example</div></div></div><div class="uc-desc">A customer support AI Agent handles tickets autonomously — reads the issue, looks up order history, checks policy docs, and either resolves or escalates. It's a specialist: excellent at support, terrible at coding. Reactive — only acts when a ticket arrives.</div></div>
+      <div class="uc-card"><div class="uc-head"><div class="uc-icon">🏭</div><div><div class="uc-name">Supply Chain Management</div><div class="uc-co">Agentic AI Example</div></div></div><div class="uc-desc">Multiple agents collaborate: Monitor Agent checks inventory 24/7 → triggers Procurement Agent when low → Procurement negotiates with Supplier API → Finance Agent approves POs → Reporting Agent updates dashboards. No human in the loop for routine operations.</div></div>
+    </div>`
+},
+
+rpa: {
+  title: "RPA vs. AI Agents",
+  breadcrumb: "Module 02 · Agent Concepts",
+  tabs: ["Overview","Workflow","Use Cases"],
+  overview: `
+    <div class="p-section">
+      <div class="p-label">Previous vs. Next generation automation</div>
+      <div class="p-text"><p>Robotic Process Automation (RPA) was the previous generation of enterprise automation. AI Agents are the next. The architectural difference: RPA follows hardcoded scripts; Agents use intelligence to decide what to do. RPA breaks when processes change; Agents adapt.</p></div>
+    </div>
+    <table class="cmp">
+      <tr><th>Dimension</th><th>RPA</th><th>AI Agents</th></tr>
+      <tr><td>Tool Selection</td><td>Fixed — always uses predefined tools in order</td><td>Auto — LLM decides which tool to use dynamically</td></tr>
+      <tr><td>Logic</td><td>Rule-based if/else — every scenario must be programmed</td><td>Reason-based — handles novel situations autonomously</td></tr>
+      <tr><td>Adaptability</td><td>Breaks when UI or process changes</td><td>Adapts to changes without reprogramming</td></tr>
+      <tr><td>Unstructured data</td><td>Poor — needs structured, formatted inputs</td><td>Strong — handles PDFs, emails, natural language</td></tr>
+      <tr><td>Failure handling</td><td>Goes to exception handler or crashes</td><td>Reasons about what to do, tries alternatives</td></tr>
+      <tr><td>Cost model</td><td>Fixed infra cost, scales cheaply</td><td>Per-LLM-call cost, more expensive per task</td></tr>
+      <tr><td>Best for</td><td>Stable, high-volume, structured processes</td><td>Variable, judgment-heavy, multi-system tasks</td></tr>
+    </table>
+    <div class="callout" style="border-color:#fcd34d;background:#fffbeb;">
+      <div class="callout-title" style="color:#78350f;">When to Still Use RPA</div>
+      <div class="callout-body">RPA beats agents for extremely high-volume, perfectly predictable, structured processes (e.g., extracting data from 10,000 identical invoices/day). The determinism and low per-transaction cost wins. Use agents when judgment, unstructured data, or variability is involved.</div>
+    </div>`,
+  workflow: `
+    <div class="flow-box">
+      <div class="flow-title">RPA: Fixed, Rule-Based Execution</div>
+      <div class="flow"><div class="flow-node fn-start">Query</div><div class="flow-arr">→</div><div class="flow-node fn-gate">Workflow Instructions<br><span class="flow-sublabel">+ Database</span></div><div class="flow-arr">→</div><div class="flow-node fn-tool">Fixed Tool Selection<br><span class="flow-sublabel">Gmail, Google, Slack</span></div><div class="flow-arr">→</div><div class="flow-node fn-llm">Rule-Based Execution<br><span class="flow-sublabel">If/Else hardcoded</span></div><div class="flow-arr">→</div><div class="flow-node fn-end">Output</div></div>
+    </div>
+    <div class="flow-box">
+      <div class="flow-title">AI Agents: Intelligent, Adaptive Execution</div>
+      <div class="flow"><div class="flow-node fn-start">Query</div><div class="flow-arr">→</div><div class="flow-node fn-mem">Memory<br><span class="flow-sublabel">+ Query Agent</span></div><div class="flow-arr">→</div><div class="flow-node fn-tool">Auto Tool Selection<br><span class="flow-sublabel">Dynamic decision</span></div><div class="flow-arr">→</div><div class="flow-node fn-agent">Multi-Agent Workflow<br><span class="flow-sublabel">Control → Retriever → Data</span></div><div class="flow-arr">→</div><div class="flow-node fn-end">Output</div></div>
+    </div>`,
+  usecases: `
+    <div class="uc-grid">
+      <div class="uc-card"><div class="uc-head"><div class="uc-icon">📄</div><div><div class="uc-name">Invoice Processing</div><div class="uc-co">RPA Wins Here</div></div></div><div class="uc-desc">10,000 identical PDF invoices per day → extract vendor, amount, date → enter into ERP. Perfectly structured, zero variation, high volume. RPA cost per transaction: ~$0.001. Agent cost: ~$0.10. RPA wins by 100x on cost for this use case.</div></div>
+      <div class="uc-card"><div class="uc-head"><div class="uc-icon">📧</div><div><div class="uc-name">Email Triage & Response</div><div class="uc-co">AI Agent Wins Here</div></div></div><div class="uc-desc">Thousands of emails with varying formats, requests, sentiment, and urgency. RPA: can't understand natural language, breaks on format changes. AI Agent: reads email, classifies intent, looks up order history, drafts appropriate response — handles any format, any request.</div></div>
+      <div class="uc-card"><div class="uc-head"><div class="uc-icon">🔄</div><div><div class="uc-name">HR Onboarding</div><div class="uc-co">Hybrid Approach</div></div></div><div class="uc-desc">RPA handles: creating accounts in 5 systems (structured, repeatable). AI Agent handles: writing the personalized welcome email, answering the new hire's questions, generating the custom 30-60-90 day plan. Use each where it's strongest.</div></div>
+      <div class="uc-card"><div class="uc-head"><div class="uc-icon">📊</div><div><div class="uc-name">Compliance Reporting</div><div class="uc-co">AI Agent Wins Here</div></div></div><div class="uc-desc">Regulations change constantly. An AI Agent can adapt to new rules, interpret ambiguous regulatory language, and decide how to classify edge-case transactions. RPA would need reprogramming every time a regulation updates.</div></div>
+    </div>`
+},
+
+archprac: {
+  title: "Agent Architectures in Practice",
+  breadcrumb: "Module 03 · Architecture",
+  tabs: ["Overview","Workflow","Use Cases"],
+  overview: `
+    <div class="p-section">
+      <div class="p-label">7 production architectures</div>
+      <div class="p-text"><p>These are real, concrete agent architectures used in production systems. Start with Architecture 1 (Single Agent + Tools) and upgrade complexity only when your use case genuinely demands it. Each architecture adds specific capabilities at the cost of additional complexity.</p></div>
+    </div>
+    <div class="steps">
+      <div class="step-card"><div class="step-num">1</div><div class="step-body"><div class="step-title">Single Agent + Tools</div><div class="step-desc">One agent connected directly to tools (OpenAI API, Memory, Contacts, Calendar, Gmail). Receives a message, decides which tools to use, responds. <strong>Best for:</strong> Personal assistants, simple customer support, internal helpdesk bots. Most common starting architecture.</div></div></div>
+      <div class="step-card"><div class="step-num">2</div><div class="step-body"><div class="step-title">Single Agent + MCP Servers + Tools</div><div class="step-desc">Extends basic architecture with MCP Servers as middleware. Auth, logging, and rate limiting handled centrally by MCP Servers. Agent calls MCP endpoints instead of APIs directly. <strong>Best for:</strong> Enterprise deployments requiring audit trails and centralized tool management.</div></div></div>
+      <div class="step-card"><div class="step-num">3</div><div class="step-body"><div class="step-title">Single Agent + Router</div><div class="step-desc">Agent output feeds a conditional router (if/else logic). Different outputs trigger different downstream paths. Same agent handles multiple distinct workflows. <strong>Best for:</strong> Multi-intent systems where query type determines the processing path.</div></div></div>
+      <div class="step-card"><div class="step-num">4</div><div class="step-body"><div class="step-title">Single Agent + Human in the Loop</div><div class="step-desc">After task completion, execution <strong>pauses for human approval</strong> via Stack Approval. Gate: approved → continue; denied → explain why. <strong>Best for:</strong> High-risk or irreversible actions: financial transactions, legal docs, sending mass communications.</div></div></div>
+      <div class="step-card"><div class="step-num">5</div><div class="step-body"><div class="step-title">Single Agent Dynamically Calls Other Agents</div><div class="step-desc">Primary agent has "Call another Agent" as a tool. Delegates out-of-specialty tasks to specialist agents. <strong>Best for:</strong> When one agent needs to occasionally leverage a specialist without building a full multi-agent system.</div></div></div>
+      <div class="step-card"><div class="step-num">6</div><div class="step-body"><div class="step-title">Sequential Agents</div><div class="step-desc">Agents in an assembly-line chain. Agent 1 output → Agent 2 input → Agent 3 input. Each specializes in its step. <strong>Best for:</strong> Document processing pipelines, content workflows (research → write → edit → format).</div></div></div>
+      <div class="step-card"><div class="step-num">7</div><div class="step-body"><div class="step-title">Hierarchy + Parallel Agents + Shared Tools</div><div class="step-desc">Switch node routes to parallel agent trees. Multiple agent hierarchies share tools. Merge node combines all parallel outputs. <strong>Best for:</strong> Large-scale research, complex enterprise automation, competitive intelligence.</div></div></div>
+    </div>`,
+  workflow: `
+    <div class="flow-box">
+      <div class="flow-title">Architecture 1: Single Agent + Tools</div>
+      <div class="flow"><div class="flow-node fn-start">Message via Webhook</div><div class="flow-arr">→</div><div class="flow-node fn-llm">AI Agent<br><span class="flow-sublabel">LLM + Memory</span></div><div class="flow-arr">↕</div><div class="flow-branch"><div class="flow-branch-row"><div class="flow-node fn-tool">OpenAI API</div></div><div class="flow-branch-row"><div class="flow-node fn-tool">Contacts</div></div><div class="flow-branch-row"><div class="flow-node fn-tool">Calendar</div></div><div class="flow-branch-row"><div class="flow-node fn-tool">Gmail</div></div></div><div class="flow-arr">→</div><div class="flow-node fn-end">Response</div></div>
+    </div>
+    <div class="flow-box">
+      <div class="flow-title">Architecture 4: Human in the Loop</div>
+      <div class="flow"><div class="flow-node fn-start">Webhook</div><div class="flow-arr">→</div><div class="flow-node fn-llm">Agent</div><div class="flow-arr">→</div><div class="flow-node fn-gate">Stack Approval<br><span class="flow-sublabel">Human review</span></div><div class="flow-branch"><div class="flow-branch-row"><div class="flow-arr">→</div><div class="flow-node fn-end" style="border-color:#6ee7b7;color:#065f46;">✓ Approved → Continue</div></div><div class="flow-branch-row"><div class="flow-arr">→</div><div class="flow-node fn-end" style="border-color:#fda4af;color:#881337;">✗ Denied → Explain</div></div></div></div>
+    </div>
+    <div class="flow-box">
+      <div class="flow-title">Architecture 7: Hierarchy + Parallel + Shared Tools</div>
+      <div class="flow"><div class="flow-node fn-start">Webhook</div><div class="flow-arr">→</div><div class="flow-node fn-gate">Switch</div><div class="flow-branch"><div class="flow-branch-row"><div class="flow-arr">→</div><div class="flow-node fn-agent">Agent Tree A</div></div><div class="flow-branch-row"><div class="flow-arr">→</div><div class="flow-node fn-agent">Agent Tree B</div></div></div><div class="flow-arr">→</div><div class="flow-node fn-gate">Merge</div><div class="flow-arr">→</div><div class="flow-node fn-end">Response</div></div>
+    </div>`,
+  usecases: `
+    <table class="cmp">
+      <tr><th>Architecture</th><th>Best Use Case</th><th>Example</th></tr>
+      <tr><td>1. Single + Tools</td><td>Personal/simple assistants</td><td>WhatsApp bot that manages your calendar</td></tr>
+      <tr><td>2. Single + MCP</td><td>Enterprise with audit requirements</td><td>Internal Jira/Confluence/Slack assistant</td></tr>
+      <tr><td>3. Single + Router</td><td>Multi-intent handling</td><td>Support bot: billing vs tech vs returns</td></tr>
+      <tr><td>4. Human in Loop</td><td>High-stakes actions</td><td>AI that sends legal notices (needs approval)</td></tr>
+      <tr><td>5. Calls Other Agents</td><td>Occasional specialist delegation</td><td>General assistant that calls a tax agent</td></tr>
+      <tr><td>6. Sequential</td><td>Pipeline processing</td><td>Research → Write → Edit → Format report</td></tr>
+      <tr><td>7. Hierarchy + Parallel</td><td>Complex enterprise automation</td><td>Competitive intelligence across 50 companies</td></tr>
+    </table>`
+},
+
+mapats: {
+  title: "Multi-Agent Design Patterns",
+  breadcrumb: "Module 03 · Architecture",
+  tabs: ["Overview","Workflow","Use Cases"],
+  overview: `
+    <div class="p-section">
+      <div class="p-label">6 patterns for agent coordination</div>
+      <div class="p-text"><p>These patterns define how multiple AI agents can be organized to collaborate on solving problems. Choose based on your task structure: if order matters → Sequential; if independence matters → Parallel; if specialization matters → Router; if iteration matters → Network.</p></div>
+    </div>
+    <div class="info-grid">
+      <div class="info-card" style="border-top-color:#a5b4fc;"><div class="info-card-label">Pattern 1</div><div class="info-card-title">Sequential</div><div class="info-card-body">Agents in a pipeline. Output of Agent A → input to Agent B. Linear, deterministic. Best for step-by-step processes where each step enriches data for the next. <strong>Example:</strong> Classify → Analyze Sentiment → Draft Response → Send Email.</div></div>
+      <div class="info-card" style="border-top-color:#6ee7b7;"><div class="info-card-label">Pattern 2</div><div class="info-card-title">Router</div><div class="info-card-body">Meta-Agent receives query → routes to specialized agents. Key: router's classification quality determines system quality. <strong>Example:</strong> Travel Agent routes to Flight Agent or Hotel Agent based on query.</div></div>
+      <div class="info-card" style="border-top-color:#7dd3fc;"><div class="info-card-label">Pattern 3</div><div class="info-card-title">Parallel</div><div class="info-card-body">Divisor splits work across concurrent agents. All run simultaneously, Merger combines. Massive latency improvement. <strong>Example:</strong> Research query → Web Search Agent + DB Search Agent run at once, merged into comprehensive answer.</div></div>
+      <div class="info-card" style="border-top-color:#fda4af;"><div class="info-card-label">Pattern 4</div><div class="info-card-title">Generator</div><div class="info-card-body">Divisor creates parallel specialized generators. A Generator Agent combines outputs. Better than one agent doing everything. <strong>Example:</strong> "Build feature" → Coding Agent + Documentation Agent + Debugging Agent, all combined.</div></div>
+      <div class="info-card" style="border-top-color:#c4b5fd;"><div class="info-card-label">Pattern 5</div><div class="info-card-title">Network</div><div class="info-card-body">Agents communicate in a mesh — any output can feed any other agent. A Meta-Agent coordinates. <strong>Example:</strong> Coding Agent ↔ Debugging Agent iterate until all tests pass.</div></div>
+      <div class="info-card" style="border-top-color:#fcd34d;"><div class="info-card-label">Pattern 6</div><div class="info-card-title">Autonomous</div><div class="info-card-body">Agents operate independently with no central coordinator. Each has own goal, memory, tools. Communicate only when needed. Closest to true multi-agent autonomy — hardest to control and debug.</div></div>
+    </div>`,
+  workflow: `
+    <div class="flow-box">
+      <div class="flow-title">Sequential Pattern</div>
+      <div class="flow"><div class="flow-node fn-start">Query</div><div class="flow-arr">→</div><div class="flow-node fn-agent">Agent 1</div><div class="flow-arr">→</div><div class="flow-node fn-agent">Agent 2</div><div class="flow-arr">→</div><div class="flow-node fn-agent">Agent 3</div><div class="flow-arr">→</div><div class="flow-node fn-end">Output</div></div>
+    </div>
+    <div class="flow-box">
+      <div class="flow-title">Router Pattern</div>
+      <div class="flow"><div class="flow-node fn-start">Query</div><div class="flow-arr">→</div><div class="flow-node fn-agent">Meta-Agent<br><span class="flow-sublabel">Router</span></div><div class="flow-branch"><div class="flow-branch-row"><div class="flow-arr">→</div><div class="flow-node fn-agent">Specialist A</div><div class="flow-arr">→</div><div class="flow-node fn-end">Output A</div></div><div class="flow-branch-row"><div class="flow-arr">→</div><div class="flow-node fn-agent">Specialist B</div><div class="flow-arr">→</div><div class="flow-node fn-end">Output B</div></div></div></div>
+    </div>
+    <div class="flow-box">
+      <div class="flow-title">Parallel Pattern</div>
+      <div class="flow"><div class="flow-node fn-start">Query</div><div class="flow-arr">→</div><div class="flow-node fn-gate">Divisor</div><div class="flow-branch"><div class="flow-branch-row"><div class="flow-arr">→</div><div class="flow-node fn-agent">Agent A (web)</div></div><div class="flow-branch-row"><div class="flow-arr">→</div><div class="flow-node fn-agent">Agent B (db)</div></div></div><div class="flow-arr">→</div><div class="flow-node fn-gate">Merge</div><div class="flow-arr">→</div><div class="flow-node fn-end">Output</div></div>
+    </div>`,
+  usecases: `
+    <table class="cmp">
+      <tr><th>If your task is...</th><th>Pattern</th><th>Why</th></tr>
+      <tr><td>Linear process, each step depends on last</td><td>Sequential</td><td>Clear data dependencies, easy to debug</td></tr>
+      <tr><td>Different task types needing different specialists</td><td>Router</td><td>Separation of concerns</td></tr>
+      <tr><td>Multiple independent subtasks</td><td>Parallel</td><td>Massive latency reduction</td></tr>
+      <tr><td>One output with multiple distinct components</td><td>Generator</td><td>Each component gets a specialist</td></tr>
+      <tr><td>Iterative refinement between 2+ agents</td><td>Network</td><td>Flexible back-and-forth</td></tr>
+      <tr><td>Long-running autonomous monitoring</td><td>Autonomous</td><td>No human-in-loop needed</td></tr>
+    </table>`
+},
+
+agpats: {
+  title: "6 Agentic Design Patterns",
+  breadcrumb: "Module 03 · Architecture",
+  tabs: ["Overview","Workflow","Use Cases"],
+  overview: `
+    <div class="p-section">
+      <div class="p-label">Patterns used in production today</div>
+      <div class="p-text"><p>These six patterns are used by real commercial AI products right now. Understanding them lets you reverse-engineer any agent system you encounter and choose the right architecture for what you're building.</p></div>
+    </div>
+    <div class="steps">
+      <div class="step-card"><div class="step-num">1</div><div class="step-body"><div class="step-title">ReAct Agent — Reason + Act (Used by: most AI agent products)</div><div class="step-desc">Alternates between reasoning (LLM thinks about what to do) and acting (calls a tool). After each action, observes the result and reasons again. Think → Act → Observe loop continues until task complete. The default pattern in LangChain, LlamaIndex, most agent frameworks.</div></div></div>
+      <div class="step-card"><div class="step-num">2</div><div class="step-body"><div class="step-title">CodeAct Agent — Execute Python directly (Used by: Manus AI)</div><div class="step-desc">Instead of JSON tool calls, agent writes and executes Python code. The code IS the action. No predefined function signature limits — agent can do arbitrary computation, data manipulation, API calls, all in one code block. More powerful than JSON tool calling.</div></div></div>
+      <div class="step-card"><div class="step-num">3</div><div class="step-body"><div class="step-title">Modern Tool Use via MCP (Used by: Cursor)</div><div class="step-desc">Agent uses the Model Context Protocol to access tools without hardcoded integrations. Discovers tools dynamically at runtime. Enables plug-and-play tool ecosystems. Add new MCP Server = agent immediately has new capabilities.</div></div></div>
+      <div class="step-card"><div class="step-num">4</div><div class="step-body"><div class="step-title">Self-Reflection / Reflexion (Used by: Open Serve AI)</div><div class="step-desc">Main LLM generates draft → Critic LLM evaluates and writes critique → Generator revises. Loop until quality threshold or max iterations. Agent literally writes "what was wrong with my last answer" and uses it to improve.</div></div></div>
+      <div class="step-card"><div class="step-num">5</div><div class="step-body"><div class="step-title">Multi-Agent Workflow (Used by: Gemini Deep Research)</div><div class="step-desc">Multiple specialized sub-agents work in parallel on different aspects of a task. Coordinator orchestrates, collects results, Aggregator LLM merges into unified output. Greater precision than single-agent architectures.</div></div></div>
+      <div class="step-card"><div class="step-num">6</div><div class="step-body"><div class="step-title">Agentic RAG (Used by: Perplexity)</div><div class="step-desc">Agent dynamically retrieves from multiple sources guided by its reasoning. Decides what to retrieve, from where, and when. Combines memory (short & long-term), planning (ReACT/CoT), and multi-source retrieval for context-aware, well-reasoned output.</div></div></div>
+    </div>`,
+  workflow: `
+    <div class="flow-box">
+      <div class="flow-title">Pattern 1: ReAct Loop</div>
+      <div class="flow"><div class="flow-node fn-start">Query</div><div class="flow-arr">→</div><div class="flow-node fn-llm">Think<br><span class="flow-sublabel">"I need to search X"</span></div><div class="flow-arr">→</div><div class="flow-node fn-tool">Act<br><span class="flow-sublabel">Call tool</span></div><div class="flow-arr">→</div><div class="flow-node fn-mem">Observe<br><span class="flow-sublabel">Tool result</span></div><div class="flow-arr">↺</div><div class="flow-node fn-llm">Think Again</div><div class="flow-arr">→</div><div class="flow-node fn-end">Answer</div></div>
+    </div>
+    <div class="flow-box">
+      <div class="flow-title">Pattern 2: CodeAct Loop</div>
+      <div class="flow"><div class="flow-node fn-start">Query</div><div class="flow-arr">→</div><div class="flow-node fn-llm">Think & Plan</div><div class="flow-arr">→</div><div class="flow-node fn-tool">Write Python Code<br><span class="flow-sublabel">CodeAct action</span></div><div class="flow-arr">→</div><div class="flow-node fn-gate">Execute in Sandbox</div><div class="flow-arr">→</div><div class="flow-node fn-mem">Observe Outcome</div><div class="flow-arr">→</div><div class="flow-node fn-end">Result</div></div>
+    </div>
+    <div class="flow-box">
+      <div class="flow-title">Pattern 4: Self-Reflection Loop</div>
+      <div class="flow"><div class="flow-node fn-start">Query</div><div class="flow-arr">→</div><div class="flow-node fn-llm">Main LLM<br><span class="flow-sublabel">generates draft</span></div><div class="flow-arr">→</div><div class="flow-node fn-gate">Critic LLM<br><span class="flow-sublabel">evaluates + critiques</span></div><div class="flow-arr">↺</div><div class="flow-node fn-llm">Generator<br><span class="flow-sublabel">revises N times</span></div><div class="flow-arr">→</div><div class="flow-node fn-end">Quality Output</div></div>
+    </div>`,
+  usecases: `
+    <table class="cmp">
+      <tr><th>Pattern</th><th>Used By</th><th>Ideal When</th></tr>
+      <tr><td>ReAct</td><td>Most AI Agent products</td><td>General-purpose tool-using agents</td></tr>
+      <tr><td>CodeAct</td><td>Manus AI</td><td>Complex data tasks needing arbitrary computation</td></tr>
+      <tr><td>Modern Tool Use (MCP)</td><td>Cursor</td><td>Plug-and-play tool ecosystems</td></tr>
+      <tr><td>Self-Reflection</td><td>Open Serve AI</td><td>Quality-critical output (writing, code, analysis)</td></tr>
+      <tr><td>Multi-Agent Workflow</td><td>Gemini Deep Research</td><td>Complex multi-faceted research tasks</td></tr>
+      <tr><td>Agentic RAG</td><td>Perplexity</td><td>Questions spanning multiple knowledge sources</td></tr>
+    </table>`
+},
+
+roadmap7: {
+  title: "7-Step Building Roadmap",
+  breadcrumb: "Module 04 · Building",
+  tabs: ["Overview","Workflow","Use Cases"],
+  overview: `
+    <div class="steps">
+      <div class="step-card"><div class="step-num">1</div><div class="step-body"><div class="step-title">Pick an LLM</div><div class="step-desc">Choose: handles reasoning well, supports Chain of Thought, gives stable/consistent answers. <strong>Tip:</strong> Start with Llama 3, Claude Opus, or Mistral. Claude for long-context reasoning. GPT-4o for instruction following. Llama for on-premise. For niche sub-agents, consider smaller SLMs.</div></div></div>
+      <div class="step-card"><div class="step-num">2</div><div class="step-body"><div class="step-title">Build Agent's Logic</div><div class="step-desc">Tell your agent "how to think": Should it reflect before answering? Plan steps or act immediately? Use tools when stuck? <strong>Tip:</strong> Start with ReAct or Plan-then-Execute. ReAct covers 80% of cases. Don't over-engineer — a ReAct agent with good tools beats a complex agent with bad tools every time.</div></div></div>
+      <div class="step-card"><div class="step-num">3</div><div class="step-body"><div class="step-title">Write Operating Instructions</div><div class="step-desc">Define rules: How should it respond? When should it use external tools? What format to reply in (JSON, markdown, prose)? <strong>Tip:</strong> Use reusable prompt templates stored in config — not hardcoded. Version your system prompts like production code. Your system prompt IS your agent's brain stem.</div></div></div>
+      <div class="step-card"><div class="step-num">4</div><div class="step-body"><div class="step-title">Add Memory</div><div class="step-desc">AI forgets between sessions. Fix it: (1) Sliding window for short-term context, (2) Summarize older chats, (3) Store key facts in DB for long-term. <strong>Tools:</strong> Mem0 or ZepAI for faster execution. For knowledge-heavy agents: add a knowledge graph layer.</div></div></div>
+      <div class="step-card"><div class="step-num">5</div><div class="step-body"><div class="step-title">Connect Tools & APIs</div><div class="step-desc">Let your agent "do" things: search DB, fetch prices, call CRM, send emails, book meetings. <strong>Tip:</strong> Just define what each tool does and when to call it — the LLM figures out how. Start with 3–5 core tools. More tools = more context = LLM struggles. Add incrementally as validated.</div></div></div>
+      <div class="step-card"><div class="step-num">6</div><div class="step-body"><div class="step-title">Give it a Job</div><div class="step-desc">Good agents are specific: "Summarize user feedback and suggest improvements" beats "Be helpful." <strong>Critical:</strong> Define what NOT to do more carefully than what to do. An agent that refuses out-of-scope tasks is more reliable than one that tries everything. Limit scope explicitly.</div></div></div>
+      <div class="step-card"><div class="step-num">7</div><div class="step-body"><div class="step-title">Scale to Multi-Agent Teams</div><div class="step-desc">One agent gathers data → one interprets → one formats results. <strong>Tip:</strong> Use task-specific naming ("DataGathererAgent" not "Agent1"). Choose protocol: A2A (Google, enterprise-grade), ACP (IBM, rich multimodal), AGP (Cisco, open market negotiation). Treat agent teams like employees with specific roles.</div></div></div>
+    </div>`,
+  workflow: `
+    <div class="flow-box">
+      <div class="flow-title">7-Step Build Flow</div>
+      <div style="display:flex;flex-direction:column;gap:8px;">
+        <div class="flow"><div class="flow-node fn-start">1. Pick LLM<br><span class="flow-sublabel">Claude / Llama / Mistral</span></div><div class="flow-arr">→</div><div class="flow-node fn-llm">2. Build Logic<br><span class="flow-sublabel">ReAct or Plan-Execute</span></div><div class="flow-arr">→</div><div class="flow-node fn-gate">3. Write Instructions<br><span class="flow-sublabel">System prompt templates</span></div></div>
+        <div class="flow"><div class="flow-node fn-mem">4. Add Memory<br><span class="flow-sublabel">Mem0 / ZepAI</span></div><div class="flow-arr">→</div><div class="flow-node fn-tool">5. Connect Tools<br><span class="flow-sublabel">3–5 core APIs</span></div><div class="flow-arr">→</div><div class="flow-node fn-agent">6. Define Job<br><span class="flow-sublabel">Specific scope + limits</span></div></div>
+        <div class="flow"><div class="flow-node fn-agent">7. Scale to Multi-Agent<br><span class="flow-sublabel">A2A / ACP / AGP protocols</span></div><div class="flow-arr">→</div><div class="flow-node fn-end">Production Agent System</div></div>
+      </div>
+    </div>`,
+  usecases: `
+    <div class="uc-card" style="margin-bottom:12px;">
+      <div class="uc-head"><div class="uc-icon">🚀</div><div><div class="uc-name">Sales Intelligence Agent: 7 Steps Applied</div><div class="uc-co">B2B SaaS Company</div></div></div>
+      <div class="uc-desc">Goal: Agent that researches prospects and generates personalized outreach emails automatically.</div>
+      <div class="uc-steps">
+        <div class="uc-step" data-n="1">LLM: Claude Sonnet (long context, excellent writing)</div>
+        <div class="uc-step" data-n="2">Logic: ReAct (research → reason → write → validate)</div>
+        <div class="uc-step" data-n="3">Instructions: "Research prospect, find pain points, write email in &lt;100 words, never mention competitors"</div>
+        <div class="uc-step" data-n="4">Memory: Store previous emails + research notes in Supabase</div>
+        <div class="uc-step" data-n="5">Tools: LinkedIn API, Google Search, HubSpot, Gmail send</div>
+        <div class="uc-step" data-n="6">Job: "Generate personalized cold emails for new leads with no prior outreach"</div>
+        <div class="uc-step" data-n="7">Scale: ResearchAgent → WriterAgent → QualityCheckAgent → SendAgent</div>
+      </div>
+    </div>`
+},
+
+buildguide: {
+  title: "Comprehensive Build Guide",
+  breadcrumb: "Module 04 · Building",
+  tabs: ["Overview","Workflow","Use Cases"],
+  overview: `
+    <div class="p-section">
+      <div class="p-label">What is (and isn't) an AI Agent</div>
+      <div class="callout" style="border-color:#a5b4fc;background:#eef2ff;">
+        <div class="callout-title" style="color:#3730a3;">Definition</div>
+        <div class="callout-body">An AI Agent is an autonomous piece of software built with a central reasoning model connected with multiple tools and memory for autonomous action.</div>
+      </div>
+      <div class="callout" style="border-color:#fda4af;background:#fff1f2;">
+        <div class="callout-title" style="color:#881337;">NOT an AI Agent</div>
+        <div class="callout-body">(1) Chatbot using only LLM — no tools, no memory, no autonomy. (2) Script-based automation — hardcoded steps, this is RPA. (3) LLM workflow with simple feedback loops — even with loops, if the structure is hardcoded, it's a workflow.</div>
+      </div>
+    </div>
+    <div class="p-label">Framework Selection</div>
+    <table class="cmp">
+      <tr><th>Framework</th><th>Best For</th><th>Key Feature</th></tr>
+      <tr><td>Agent SDK (Anthropic)</td><td>Streaming + multi-agents</td><td>Native Claude integration</td></tr>
+      <tr><td>LangGraph</td><td>Complex enterprise agents</td><td>Graph-based stateful flows</td></tr>
+      <tr><td>Google ADK</td><td>All-around dev + eval</td><td>Built-in evals, GCP integration</td></tr>
+      <tr><td>Autogen (Microsoft)</td><td>Detailed multi-agent customization</td><td>Agent-to-agent conversations</td></tr>
+      <tr><td>LlamaIndex</td><td>Data-driven agents</td><td>Best RAG integration</td></tr>
+      <tr><td>CrewAI</td><td>Easy to build + deploy</td><td>Role-based agents, simple API</td></tr>
+    </table>
+    <div class="p-label">Multi-Agent Protocols</div>
+    <div class="info-grid">
+      <div class="info-card" style="border-top-color:#6ee7b7;"><div class="info-card-label">Google</div><div class="info-card-title">A2A Protocol</div><div class="info-card-body">Enterprise-grade cross-agent communication. Structured message passing with auth, routing, reliability. Best for: enterprise multi-agent systems requiring audit trails.</div></div>
+      <div class="info-card" style="border-top-color:#7dd3fc;"><div class="info-card-label">IBM</div><div class="info-card-title">ACP Protocol</div><div class="info-card-body">Rich communication with multimodal support (text, images, audio). Best for: agents sharing rich context beyond plain text.</div></div>
+      <div class="info-card" style="border-top-color:#fcd34d;"><div class="info-card-label">Cisco</div><div class="info-card-title">AGP Protocol</div><div class="info-card-body">Open market agent negotiation. Enables agents from different organizations to discover and communicate. Best for: open agent marketplace systems.</div></div>
+    </div>`,
+  workflow: `
+    <div class="flow-box">
+      <div class="flow-title">Single Agent System</div>
+      <div class="flow"><div class="flow-node fn-start">Query</div><div class="flow-arr">→</div><div class="flow-node fn-agent">Agent<br><span class="flow-sublabel">LLM + Memory + Tools</span></div><div class="flow-arr">→</div><div class="flow-node fn-end">Output</div></div>
+    </div>
+    <div class="flow-box">
+      <div class="flow-title">Multi-Agent System</div>
+      <div class="flow"><div class="flow-node fn-start">Query</div><div class="flow-arr">→</div><div class="flow-node fn-agent">Meta-Agent</div><div class="flow-branch"><div class="flow-branch-row"><div class="flow-arr">→</div><div class="flow-node fn-agent">Data Agent<br><span class="flow-sublabel">+ MCP Server</span></div></div><div class="flow-branch-row"><div class="flow-arr">→</div><div class="flow-node fn-agent">Search Agent<br><span class="flow-sublabel">+ MCP Server</span></div></div></div><div class="flow-arr">→</div><div class="flow-node fn-end">Output</div></div>
+    </div>`,
+  usecases: `
+    <table class="cmp">
+      <tr><th>Decision Point</th><th>Single Agent</th><th>Multi-Agent</th></tr>
+      <tr><td>Task scope</td><td>Focused, well-scoped</td><td>Complex, requiring specialization</td></tr>
+      <tr><td>Build complexity</td><td>Low — easy to build + debug</td><td>Higher — need protocols</td></tr>
+      <tr><td>Memory</td><td>Attached to one agent</td><td>Shared via MCP Server</td></tr>
+      <tr><td>Start here</td><td>✓ Always start here</td><td>Upgrade only when single agent hits limits</td></tr>
+    </table>`
+},
+
+anthropic: {
+  title: "Anthropic's Agent Guide",
+  breadcrumb: "Module 04 · Building",
+  tabs: ["Overview","Workflow","Use Cases"],
+  overview: `
+    <div class="p-section">
+      <div class="p-label">Anthropic's core guidance</div>
+      <div class="callout" style="border-color:#6ee7b7;background:#ecfdf5;">
+        <div class="callout-title" style="color:#065f46;">Start Simple First</div>
+        <div class="callout-body">Start with the simplest solution — a single LLM call or basic workflow — and only move to agents when workflows fall short. Every added layer of agent complexity is also added cost, latency, and debugging surface.</div>
+      </div>
+      <div class="callout" style="border-color:#fcd34d;background:#fffbeb;">
+        <div class="callout-title" style="color:#78350f;">Agents Need Extensive Testing</div>
+        <div class="callout-body">An agent that works 95% of the time is not production-ready for high-stakes tasks. You need: unit tests per tool, integration tests for tool chains, red-teaming for adversarial inputs, and monitoring in production.</div>
+      </div>
+      <div class="callout" style="border-color:#fda4af;background:#fff1f2;">
+        <div class="callout-title" style="color:#881337;">Workflows Are Often Enough</div>
+        <div class="callout-body">Workflows are often implemented with a few lines of code. If your workflow is not complex, refrain from using complex frameworks to build agents. The overhead adds cost and latency that may not be justified.</div>
+      </div>
+    </div>
+    <div class="p-label">4 Framework Selection Tips</div>
+    <div class="steps">
+      <div class="step-card"><div class="step-num">T1</div><div class="step-body"><div class="step-title">Align with your specific needs</div><div class="step-desc">Don't use LangChain because it's popular. Use it because its architecture fits your use case. Mismatched framework = fighting the tool instead of building the product.</div></div></div>
+      <div class="step-card"><div class="step-num">T2</div><div class="step-body"><div class="step-title">Evaluate on accuracy, speed, and complexity handling</div><div class="step-desc">Benchmark before committing. A framework that works on toy examples may collapse on production-scale complexity. Measure latency, accuracy, and graceful failure.</div></div></div>
+      <div class="step-card"><div class="step-num">T3</div><div class="step-body"><div class="step-title">Prioritize robust safety features</div><div class="step-desc">Look for: rate limiting, tool call approval mechanisms, output filtering, audit logging, rollback capabilities. Safety features must be built-in, not bolted on after.</div></div></div>
+      <div class="step-card"><div class="step-num">T4</div><div class="step-body"><div class="step-title">Confirm integration with existing systems</div><div class="step-desc">Check: does it support your DB? Work with your auth system? Can you add custom connectors? A framework with 100 pre-built integrations beats a "better" one requiring infrastructure rewrites.</div></div></div>
+    </div>`,
+  workflow: `
+    <div class="flow-box">
+      <div class="flow-title">Anthropic's 5 Core Patterns</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+        <div style="background:var(--bg);border:1px solid var(--border);border-radius:6px;padding:12px;"><div style="font-size:10px;color:var(--muted2);margin-bottom:4px;">Pattern 1</div><div style="font-size:12px;font-weight:700;margin-bottom:4px;">Prompt Chaining</div><div style="font-size:10px;color:var(--muted);">In → LLM 1 → Gate → LLM 2 → Out</div></div>
+        <div style="background:var(--bg);border:1px solid var(--border);border-radius:6px;padding:12px;"><div style="font-size:10px;color:var(--muted2);margin-bottom:4px;">Pattern 2</div><div style="font-size:12px;font-weight:700;margin-bottom:4px;">Routing</div><div style="font-size:10px;color:var(--muted);">In → LLM → [A | B | C] specialized</div></div>
+        <div style="background:var(--bg);border:1px solid var(--border);border-radius:6px;padding:12px;"><div style="font-size:10px;color:var(--muted2);margin-bottom:4px;">Pattern 3</div><div style="font-size:12px;font-weight:700;margin-bottom:4px;">Parallelization</div><div style="font-size:10px;color:var(--muted);">In → [A+B+C parallel] → Aggregator → Out</div></div>
+        <div style="background:var(--bg);border:1px solid var(--border);border-radius:6px;padding:12px;"><div style="font-size:10px;color:var(--muted2);margin-bottom:4px;">Pattern 4</div><div style="font-size:12px;font-weight:700;margin-bottom:4px;">Orchestrator-Worker</div><div style="font-size:10px;color:var(--muted);">In → Orchestrator → Workers → Synthesizer</div></div>
+        <div style="background:var(--bg);border:1px solid var(--border);border-radius:6px;padding:12px;grid-column:span 2;"><div style="font-size:10px;color:var(--muted2);margin-bottom:4px;">Pattern 5</div><div style="font-size:12px;font-weight:700;margin-bottom:4px;">Evaluator-Optimizer</div><div style="font-size:10px;color:var(--muted);">Generator → Validator → ✓ Accept or ✗ Reject+Feedback → loop</div></div>
+      </div>
+    </div>`,
+  usecases: `
+    <table class="cmp">
+      <tr><th>Situation</th><th>Anthropic's Recommendation</th></tr>
+      <tr><td>Task has fixed, known steps</td><td>Use a workflow, not an agent</td></tr>
+      <tr><td>Task requires judgment & adapts to context</td><td>Build an agent</td></tr>
+      <tr><td>Agent works 95% of the time</td><td>Not production-ready for high-stakes tasks</td></tr>
+      <tr><td>Choosing a framework</td><td>Align to needs, benchmark on your data, check safety features</td></tr>
+      <tr><td>Unsure if you need agents</td><td>Start with simplest solution, upgrade only when it falls short</td></tr>
+    </table>`
+},
+
+lrnmap: {
+  title: "AI Agent Learning Roadmap",
+  breadcrumb: "Module 04 · Building",
+  tabs: ["Overview","Workflow","Use Cases"],
+  overview: `
+    <div class="p-section">
+      <div class="p-label">Complete learning path</div>
+      <div class="p-text"><p>The structured learning path from Python basics to production multi-agent systems. Each node is a prerequisite for the next. Don't skip — gaps in foundation knowledge show up as bugs in production.</p></div>
+    </div>
+    <div class="steps">
+      <div class="step-card"><div class="step-num">1</div><div class="step-body"><div class="step-title">Python / TypeScript Basics</div><div class="step-desc">Data types, control structures, File I/O, Network requests. Target: write a working REST API client from scratch without googling syntax.</div></div></div>
+      <div class="step-card"><div class="step-num">2</div><div class="step-body"><div class="step-title">Basics of Machine Learning</div><div class="step-desc">Types of ML (supervised, unsupervised, RL), Neural Network architecture, Reinforcement Learning basics. Understanding training vs inference distinction is critical.</div></div></div>
+      <div class="step-card"><div class="step-num">3</div><div class="step-body"><div class="step-title">Basics of LLMs</div><div class="step-desc">Transformers (attention mechanism), MoE, Fine-tuning approaches, Context Window. Understanding context windows explains why memory matters in agents.</div></div></div>
+      <div class="step-card"><div class="step-num">4</div><div class="step-body"><div class="step-title">Prompt Engineering</div><div class="step-desc">Chain of Thoughts, Graph of Thoughts, Few Shot / Zero Shot, Role-based prompts. Chain of Thought alone improves accuracy by 40%+ on complex reasoning tasks.</div></div></div>
+      <div class="step-card"><div class="step-num">5</div><div class="step-body"><div class="step-title">API Wrappers</div><div class="step-desc">API Types (REST, GraphQL, gRPC), Anthropic/OpenAI SDKs, Authentication. Tools in your agent are API calls — fluent API integration is non-negotiable.</div></div></div>
+      <div class="step-card"><div class="step-num">6</div><div class="step-body"><div class="step-title">RAG Basics</div><div class="step-desc">Embeddings (text → vectors), Vector Store (Chroma, Qdrant), Retrieval Models, Generation Models. The core technique for grounding agents in real data.</div></div></div>
+      <div class="step-card"><div class="step-num">7</div><div class="step-body"><div class="step-title">AI Agent Basics</div><div class="step-desc">Types of Agents, Design Patterns (ReAct, CodeAct), Tools and MCP, Agent Memory. The conceptual foundation for all architectural decisions ahead.</div></div></div>
+      <div class="step-card"><div class="step-num">8</div><div class="step-body"><div class="step-title">Agent Frameworks</div><div class="step-desc">Orchestration (LangGraph, CrewAI), Planning (ReAct, Plan-Execute), Feedback Loop, Streaming. Frameworks abstract the plumbing — you define agents, frameworks handle execution.</div></div></div>
+      <div class="step-card"><div class="step-num">9</div><div class="step-body"><div class="step-title">Multi-Agent Systems</div><div class="step-desc">Types of MAS, Communication Patterns, Hand-offs between agents, A2A Protocol. Where the most powerful (and complex) systems live.</div></div></div>
+      <div class="step-card"><div class="step-num">10</div><div class="step-body"><div class="step-title">Evaluation and Observability</div><div class="step-desc">Metrics (accuracy, RAGAS, latency), Logging (trace every LLM call), Latency profiling, Stress testing. Can't improve what you don't measure. This separates hobby projects from production systems.</div></div></div>
+    </div>`,
+  workflow: `
+    <div class="flow-box">
+      <div class="flow-title">Learning Dependency Graph</div>
+      <div style="display:flex;flex-direction:column;gap:8px;">
+        <div class="flow"><div class="flow-node fn-start">Python / TS</div><div class="flow-arr">→</div><div class="flow-node fn-llm">ML Basics</div><div class="flow-arr">→</div><div class="flow-node fn-llm">LLMs</div><div class="flow-arr">→</div><div class="flow-node fn-llm">Prompt Eng.</div><div class="flow-arr">→</div><div class="flow-node fn-tool">API Wrappers</div></div>
+        <div class="flow"><div class="flow-node fn-tool">RAG Basics</div><div class="flow-arr">→</div><div class="flow-node fn-agent">AI Agents</div><div class="flow-arr">→</div><div class="flow-node fn-agent">Frameworks</div><div class="flow-arr">→</div><div class="flow-node fn-agent">Multi-Agent</div><div class="flow-arr">→</div><div class="flow-node fn-gate">Evals & Observability</div></div>
+        <div class="flow"><div class="flow-node fn-end">🏆 Ready to Build Production AI Agents</div></div>
+      </div>
+    </div>`,
+  usecases: `
+    <table class="cmp">
+      <tr><th>Node</th><th>Key Skills</th><th>Practice Project</th></tr>
+      <tr><td>Python Basics</td><td>REST API client, file parsing</td><td>Fetch weather API and format output</td></tr>
+      <tr><td>ML Basics</td><td>Train a simple classifier</td><td>Sentiment analysis on movie reviews</td></tr>
+      <tr><td>LLMs</td><td>Use Anthropic SDK</td><td>Build a simple chatbot with system prompt</td></tr>
+      <tr><td>Prompt Engineering</td><td>Chain of Thought</td><td>Solve a math problem step by step with LLM</td></tr>
+      <tr><td>RAG Basics</td><td>Embed docs + retrieve</td><td>Q&A over your own documents</td></tr>
+      <tr><td>AI Agents</td><td>ReAct loop with tools</td><td>Agent that searches web + answers questions</td></tr>
+      <tr><td>Frameworks</td><td>LangGraph or CrewAI</td><td>Build a 2-tool agent using a framework</td></tr>
+      <tr><td>Multi-Agent</td><td>A2A protocol</td><td>Research agent + writer agent collaborate</td></tr>
+    </table>`
+},
+
+toolstrat: {
+  title: "Tool Using Strategies",
+  breadcrumb: "Module 05 · RAG & Tools",
+  tabs: ["Overview","Workflow","Use Cases"],
+  overview: `
+    <div class="p-section">
+      <div class="p-label">Why strategies matter</div>
+      <div class="p-text"><p>How your agent calls tools determines its <strong>cost, latency, and reliability</strong>. Naive tool use (call each tool one at a time, no caching) leads to slow, expensive agents. These four strategies solve specific production problems.</p></div>
+    </div>
+    <div class="info-grid">
+      <div class="info-card" style="border-top-color:#a5b4fc;"><div class="info-card-label">Strategy 1</div><div class="info-card-title">Tool Caching</div><div class="info-card-body">Cache frequently-called tool results. Agent doesn't re-call the API for the same query. <strong>When:</strong> Agentic search that constantly calls the same Search API. <strong>Savings:</strong> Up to 90% fewer API calls for cached trajectories.</div></div>
+      <div class="info-card" style="border-top-color:#6ee7b7;"><div class="info-card-label">Strategy 2</div><div class="info-card-title">Parallelization</div><div class="info-card-body">Call multiple tools simultaneously. <strong>When:</strong> Need data from multiple independent sources. <strong>Example:</strong> Financial analysis: stock price API + earnings DB + news API run at the same time. 3×500ms sequential = 1.5s; 3×500ms parallel = 500ms.</div></div>
+      <div class="info-card" style="border-top-color:#fcd34d;"><div class="info-card-label">Strategy 3</div><div class="info-card-title">Tool Chaining</div><div class="info-card-body">Run tools in defined sequence — each output feeds the next. <strong>When:</strong> Order matters (travel planning: need destination before flights, need flights before hotels). Guarantees correct data dependencies.</div></div>
+      <div class="info-card" style="border-top-color:#fda4af;"><div class="info-card-label">Strategy 4</div><div class="info-card-title">Grouping</div><div class="info-card-body">Bundle co-used tools into named groups. Agent calls the group, not individual tools. Reduces prompt complexity and token usage. <strong>When:</strong> Agent uses 10+ tools and makes wrong selections. Grouping simplifies the LLM's decision.</div></div>
+    </div>`,
+  workflow: `
+    <div class="flow-box">
+      <div class="flow-title">Strategy 2: Parallelization (Reduces Latency)</div>
+      <div class="flow"><div class="flow-node fn-start">User Query</div><div class="flow-arr">→</div><div class="flow-node fn-agent">Retrieval Agent</div><div class="flow-branch"><div class="flow-branch-row"><div class="flow-arr">→</div><div class="flow-node fn-tool">Google Search API<br><span class="flow-sublabel">Retrieve from web</span></div></div><div class="flow-branch-row"><div class="flow-arr">→</div><div class="flow-node fn-tool">Enterprise DB<br><span class="flow-sublabel">Internal knowledge</span></div></div></div><div class="flow-arr">→</div><div class="flow-node fn-end">Combined Output</div></div>
+    </div>
+    <div class="flow-box">
+      <div class="flow-title">Strategy 3: Tool Chaining (Travel Agent)</div>
+      <div class="flow"><div class="flow-node fn-start">User</div><div class="flow-arr">→</div><div class="flow-node fn-agent">Travel Agent</div><div class="flow-arr">→</div><div class="flow-node fn-tool">1. Search<br><span class="flow-sublabel">Find destination</span></div><div class="flow-arr">→</div><div class="flow-node fn-tool">2. Flights<br><span class="flow-sublabel">Get flight details</span></div><div class="flow-arr">→</div><div class="flow-node fn-tool">3. Docs<br><span class="flow-sublabel">Update itinerary</span></div></div>
+    </div>`,
+  usecases: `
+    <table class="cmp">
+      <tr><th>Your Situation</th><th>Strategy</th><th>Why</th></tr>
+      <tr><td>Same tool called repeatedly with same inputs</td><td>Tool Caching</td><td>Avoid redundant API calls, reduce cost</td></tr>
+      <tr><td>Need data from multiple independent sources fast</td><td>Parallelization</td><td>Reduce latency by running concurrently</td></tr>
+      <tr><td>Multi-step process where B needs A's output</td><td>Tool Chaining</td><td>Enforce correct data dependencies</td></tr>
+      <tr><td>Agent uses 10+ tools and makes wrong choices</td><td>Grouping</td><td>Reduce tool selection complexity for LLM</td></tr>
+      <tr><td>Complex agent needing all of the above</td><td>Combine all</td><td>Cache + Parallelize + Chain + Group as needed</td></tr>
+    </table>`
+},
+
+oss: {
+  title: "Open-Source AI Ecosystem",
+  breadcrumb: "Module 01 · Foundations",
+  tabs: ["Overview","Workflow","Use Cases"],
+  overview: `
+    <div class="p-section">
+      <div class="p-label">10-layer open-source AI stack</div>
+      <div class="p-text"><p>The complete landscape of open-source tools organized by function. Understanding this map lets you pick the right tool for each layer of your AI system — from raw data to production deployment — using entirely free, self-hostable tools.</p></div>
+    </div>
+    <div class="info-grid">
+      <div class="info-card" style="border-top-color:#6ee7b7;"><div class="info-card-label">Layer 1</div><div class="info-card-title">Data Sources</div><div class="info-card-body">HuggingFace Datasets, Common Crawl, Wikipedia dumps. Used for: training, benchmarking, RAG indexing. Data quality directly determines model quality.</div></div>
+      <div class="info-card" style="border-top-color:#a5b4fc;"><div class="info-card-label">Layer 2</div><div class="info-card-title">Open-Source LLMs</div><div class="info-card-body">Llama 3 (Meta), Mistral, Falcon, Gemma (Google), Qwen (Alibaba). Full transparency, customizable, no API fees, full data privacy. Run locally or on your GPU cluster.</div></div>
+      <div class="info-card" style="border-top-color:#7dd3fc;"><div class="info-card-label">Layer 3</div><div class="info-card-title">Embedding Models</div><div class="info-card-body">Sentence Transformers, E5, BGE, Instructor. Convert text → dense vectors capturing semantic meaning. Power RAG retrieval and semantic search.</div></div>
+      <div class="info-card" style="border-top-color:#fda4af;"><div class="info-card-label">Layer 4</div><div class="info-card-title">Vector Databases</div><div class="info-card-body">Chroma, Weaviate, Milvus, Pinecone (hybrid), Qdrant. Fast semantic search + memory storage for AI agents. Backbone of every RAG system.</div></div>
+      <div class="info-card" style="border-top-color:#c4b5fd;"><div class="info-card-label">Layer 5</div><div class="info-card-title">Fine-Tuning Tools</div><div class="info-card-body">PEFT, LoRA, QLoRA, Axolotl, Alpaca-Lite. Lightweight fine-tuning without retraining from scratch. LoRA: 90% cheaper than full fine-tuning, similar results.</div></div>
+      <div class="info-card" style="border-top-color:#fcd34d;"><div class="info-card-label">Layer 6</div><div class="info-card-title">Deployment & Serving</div><div class="info-card-body">FastAPI, Triton, VLLM, HuggingFace Inference. VLLM: 24x faster serving via PagedAttention. Turn trained model into production API.</div></div>
+    </div>`,
+  workflow: `
+    <div class="flow-box">
+      <div class="flow-title">Complete OSS RAG Pipeline</div>
+      <div class="flow"><div class="flow-node fn-start">📄 Documents</div><div class="flow-arr">→</div><div class="flow-node fn-llm">Sentence Transformers<br><span class="flow-sublabel">Embed to vectors</span></div><div class="flow-arr">→</div><div class="flow-node fn-tool">Qdrant / Chroma<br><span class="flow-sublabel">Vector storage</span></div><div class="flow-arr">→</div><div class="flow-node fn-gate">LlamaIndex RAG<br><span class="flow-sublabel">Retrieve top-k</span></div><div class="flow-arr">→</div><div class="flow-node fn-llm">Llama 3 / Mistral<br><span class="flow-sublabel">Generate answer</span></div><div class="flow-arr">→</div><div class="flow-node fn-end">✅ Grounded Answer</div></div>
+    </div>
+    <div class="callout" style="border-color:#6ee7b7;background:#ecfdf5;">
+      <div class="callout-title" style="color:#065f46;">100% Free, On-Premise</div>
+      <div class="callout-body">This entire pipeline can be built with free open-source tools. A company can have a production-grade AI assistant over internal docs, running on their own servers, with zero data leaving their infrastructure.</div>
+    </div>`,
+  usecases: `
+    <div class="uc-grid">
+      <div class="uc-card"><div class="uc-head"><div class="uc-icon">🏥</div><div><div class="uc-name">Medical Knowledge Assistant</div><div class="uc-co">Healthcare · On-Premise</div></div></div><div class="uc-desc">Hospital uses HuggingFace medical datasets + BGE embeddings + Milvus + Llama-3 to answer clinical questions from internal documentation. All patient data stays on-premise. Zero HIPAA risk from cloud APIs.</div></div>
+      <div class="uc-card"><div class="uc-head"><div class="uc-icon">⚖️</div><div><div class="uc-name">Legal Contract AI</div><div class="uc-co">Law Firm · Fine-Tuning</div></div></div><div class="uc-desc">Law firm fine-tunes Mistral-7B using LoRA/QLoRA on their contract library. Result: legal AI that understands their specific contract language and jurisdiction — trained for $50 instead of $50,000.</div></div>
+    </div>`
+},
+
+agent_eco: { // alias
+  title: "AI Agent Ecosystem",
+  breadcrumb: "Module 01 · Foundations",
+  tabs: ["Overview","Workflow","Use Cases"],
+  overview: `<div class="p-section"><div class="p-label">8 ecosystem categories</div><div class="p-text"><p>The commercial AI agent landscape organized around Digital Ops Orchestration. Every AI automation product fits into one of these 8 categories.</p></div></div>
+    <div class="info-grid">
+      <div class="info-card" style="border-top-color:#a5b4fc;"><div class="info-card-label">Core</div><div class="info-card-title">AI Engines</div><div class="info-card-body">The foundational LLMs: Google (Gemini), Anthropic (Claude), OpenAI (GPT-4o), Meta (LLaMA), Cohere. The "brains" every other layer depends on.</div></div>
+      <div class="info-card" style="border-top-color:#6ee7b7;"><div class="info-card-label">Consumer</div><div class="info-card-title">Workspace Agents</div><div class="info-card-body">Gemini, ChatGPT, Copilot, Claude, Apple Intelligence. Handle email, docs, scheduling within familiar apps.</div></div>
+      <div class="info-card" style="border-top-color:#7dd3fc;"><div class="info-card-label">Developer</div><div class="info-card-title">Dev Frameworks</div><div class="info-card-body">AutoGen (Microsoft), LangChain, CAMEL-AI, LlamaIndex, AutoGPT. Code-level tools for building custom agents.</div></div>
+      <div class="info-card" style="border-top-color:#fcd34d;"><div class="info-card-label">No-Code</div><div class="info-card-title">Agent Builders</div><div class="info-card-body">CrewAI, Agent.ai, Relevance AI, SuperAGI, SmythOS, UiPath, Lindy. No-code/low-code agent platforms.</div></div>
+      <div class="info-card" style="border-top-color:#fda4af;"><div class="info-card-label">Browser</div><div class="info-card-title">Web Browser Agents</div><div class="info-card-body">Bardeen, axiom.ai, SOLA, induced.ai. Control browsers autonomously for scraping, form filling, data extraction.</div></div>
+      <div class="info-card" style="border-top-color:#c4b5fd;"><div class="info-card-label">RL</div><div class="info-card-title">RL Agents</div><div class="info-card-body">OfferFit (personalizes every customer interaction), aampe (push notification optimization), hightouch (AI audience segmentation). Learn from feedback.</div></div>
+      <div class="info-card" style="border-top-color:#a5b4fc;"><div class="info-card-label">Automation</div><div class="info-card-title">iPaaS & Automation</div><div class="info-card-body">Zapier (6000+ integrations), Workato (enterprise), Relay.app (human-in-the-loop), Make, Magical, Orby. Wrap AI agents in business process workflows.</div></div>
+      <div class="info-card" style="border-top-color:#6ee7b7;"><div class="info-card-label">Role-Specific</div><div class="info-card-title">Role Agents</div><div class="info-card-body">Artisan (AI SDR), AiSDR, Sierra (customer service), Intercom (support), Decagon, Maven, 11x. AI agents built for specific job functions end-to-end.</div></div>
+    </div>`,
+  workflow: `<div class="flow-box"><div class="flow-title">AI-Powered Outbound Sales Pipeline</div><div class="flow"><div class="flow-node fn-start">New Lead<br><span class="flow-sublabel">CRM event</span></div><div class="flow-arr">→</div><div class="flow-node fn-tool">Zapier<br><span class="flow-sublabel">iPaaS trigger</span></div><div class="flow-arr">→</div><div class="flow-node fn-agent">Artisan/AiSDR<br><span class="flow-sublabel">Role-specific agent</span></div><div class="flow-arr">→</div><div class="flow-node fn-llm">Claude/GPT-4o<br><span class="flow-sublabel">AI Engine</span></div><div class="flow-arr">→</div><div class="flow-node fn-gate">Personalized Email<br><span class="flow-sublabel">via Gmail API</span></div><div class="flow-arr">→</div><div class="flow-node fn-mem">OfferFit<br><span class="flow-sublabel">RL optimizes timing</span></div></div></div>`,
+  usecases: `<div class="uc-grid"><div class="uc-card"><div class="uc-head"><div class="uc-icon">📧</div><div><div class="uc-name">Automated Outbound Sales</div><div class="uc-co">B2B SaaS</div></div></div><div class="uc-desc">Zapier triggers on new CRM lead → AiSDR researches the prospect (web search + LinkedIn) → Claude writes personalized email → OfferFit determines optimal send time → email sent. 100% automated from lead → first touch.</div></div><div class="uc-card"><div class="uc-head"><div class="uc-icon">🎫</div><div><div class="uc-name">24/7 Customer Support</div><div class="uc-co">E-commerce</div></div></div><div class="uc-desc">Intercom's AI agent handles: returns, tracking, refunds, account issues — all autonomously. Escalates to human only for edge cases. Resolves 70%+ of tickets without human intervention, 24/7, in 18 languages.</div></div></div>`
+},
+
+careers: {
+  title: "AI Career Paths & Skills",
+  breadcrumb: "Module 01 · Foundations",
+  tabs: ["Overview","Workflow","Use Cases"],
+  overview: `
+    <div class="p-section">
+      <div class="p-label">14 distinct AI career roles</div>
+      <div class="p-text"><p>The AI job market has expanded dramatically beyond "ML Engineer." There are now 14 distinct career paths — from deeply technical engineering to business analysis, ethics, and education. Each requires a different skill set.</p></div>
+    </div>
+    <table class="cmp">
+      <tr><th>Role</th><th>Core Skills</th><th>Focus</th></tr>
+      <tr><td>ML Engineer</td><td>Python, TF, PyTorch, AWS, Scikit-learn</td><td>Build + deploy ML models for business decisions</td></tr>
+      <tr><td>Computer Vision Specialist</td><td>OpenCV, Keras, PyTorch, MATLAB</td><td>Visual data interpretation (healthcare, autonomy, security)</td></tr>
+      <tr><td>NLP Specialist</td><td>SpaCy, Gensim, HuggingFace, BERT</td><td>Language processing algorithms + voice/text interfaces</td></tr>
+      <tr><td>Data Scientist</td><td>Python, R, Apache Spark, Power BI</td><td>Extract insights from structured + unstructured data</td></tr>
+      <tr><td>AI Infrastructure Architect</td><td>AWS, Azure, Docker, Kubernetes, GCP</td><td>Scalable AI infrastructure + cloud integration</td></tr>
+      <tr><td>System Integrator for AI</td><td>Python, Docker, Java, Kubernetes, Linux</td><td>Integrate AI into existing business systems</td></tr>
+      <tr><td>Robotics Software Engineer</td><td>ROS, C++, Python, SolidWorks, MATLAB</td><td>Robotic systems for manufacturing, healthcare, agriculture</td></tr>
+      <tr><td>AI Consultant</td><td>Python, Tableau, TensorFlow, SQL</td><td>Advise businesses on AI implementation strategies</td></tr>
+      <tr><td>AI Business Analyst</td><td>Python, Tableau, Power BI, SQL</td><td>Identify AI opportunities in business processes</td></tr>
+      <tr><td>AI Educator</td><td>Python, Jupyter, TensorFlow, Scikit-learn</td><td>Develop + deliver AI training programs</td></tr>
+      <tr><td>AI Researcher</td><td>Python, PyTorch, TensorFlow, Git</td><td>Push AI boundaries, publish findings</td></tr>
+      <tr><td>AI Product Strategist</td><td>Jira, Figma, Confluence, Analytics</td><td>Roadmap for AI-driven products</td></tr>
+      <tr><td>Algorithm Engineer</td><td>Python, C++, TensorFlow, MATLAB</td><td>Efficient algorithms for speed, accuracy, resource use</td></tr>
+      <tr><td>AI Ethics & Policy Advisor</td><td>Legal Research, Data Ethics, Risk Assessment</td><td>Ethical standards, bias, fairness, compliance</td></tr>
+    </table>`,
+  workflow: `<div class="flow-box"><div class="flow-title">Career Path Decision Flow</div><div class="flow"><div class="flow-node fn-start">Your background?</div></div><div style="margin-top:12px;display:grid;grid-template-columns:1fr 1fr;gap:10px;"><div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:12px;"><div style="font-size:10px;color:var(--muted2);margin-bottom:6px;">Strong in math/code</div><div class="flow"><div class="flow-node fn-llm">ML Engineer</div></div><div class="flow" style="margin-top:6px;"><div class="flow-node fn-tool">Data Scientist</div></div><div class="flow" style="margin-top:6px;"><div class="flow-node fn-agent">AI Researcher</div></div></div><div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:12px;"><div style="font-size:10px;color:var(--muted2);margin-bottom:6px;">Strong in business/comms</div><div class="flow"><div class="flow-node fn-gate">AI Consultant</div></div><div class="flow" style="margin-top:6px;"><div class="flow-node fn-mem">AI Business Analyst</div></div><div class="flow" style="margin-top:6px;"><div class="flow-node fn-end">AI Ethics Advisor</div></div></div></div></div>`,
+  usecases: `<div class="callout" style="border-color:#6ee7b7;background:#ecfdf5;"><div class="callout-title" style="color:#065f46;">Which role should you target?</div><div class="callout-body">Start by mapping your current skills to the closest role. Then identify the 2–3 skill gaps between where you are and that role. The AI job market rewards T-shaped skills: deep expertise in one area + broad AI literacy across the spectrum.</div></div><table class="cmp"><tr><th>Background</th><th>Entry AI Role</th><th>Growth Path</th></tr><tr><td>Software Engineer</td><td>ML Engineer</td><td>→ AI Infrastructure Architect → AI Solutions Engineer</td></tr><tr><td>Business Analyst</td><td>AI Business Analyst</td><td>→ AI Consultant → AI Product Strategist</td></tr><tr><td>Data Analyst</td><td>Data Scientist</td><td>→ ML Engineer → AI Researcher</td></tr><tr><td>UX Designer</td><td>Voice Interaction Designer</td><td>→ AI Product Strategist → AI Educator</td></tr><tr><td>Policy/Legal</td><td>AI Ethics & Policy Advisor</td><td>→ AI Consultant → AI Governance Lead</td></tr></table>`
+},
+
+resources: {
+  title: "26 Best Learning Resources (2026)",
+  breadcrumb: "Module 01 · Foundations",
+  tabs: ["Overview","Workflow","Use Cases"],
+  overview: `
+    <div class="p-section">
+      <div class="p-label">5 resource categories</div>
+      <div class="p-text"><p>Curated library across 5 categories. Rule: commit to 1–2 sources per category maximum. More resources = less depth. Choose based on your current level and learning style.</p></div>
+    </div>
+    <div class="p-label">📚 Books (4)</div>
+    <table class="cmp">
+      <tr><th>Book</th><th>Best For</th></tr>
+      <tr><td>AI Engineering</td><td>Engineers building AI products in production</td></tr>
+      <tr><td>Designing ML Systems (Chip Huyen)</td><td>ML engineers moving to production deployments</td></tr>
+      <tr><td>ML & GenAI System Design Interview</td><td>Senior ML/AI engineering roles at top companies</td></tr>
+      <tr><td>Hands-On Large Language Models</td><td>Developers building with LLMs right now</td></tr>
+    </table>
+    <div class="p-label">📰 Tech Blogs (6)</div>
+    <table class="cmp">
+      <tr><th>Blog</th><th>Best For</th></tr>
+      <tr><td>OpenAI Research</td><td>GPT, DALL-E, Sora, safety — frontier updates</td></tr>
+      <tr><td>Anthropic Engineering</td><td>Claude, Constitutional AI, interpretability, alignment</td></tr>
+      <tr><td>HuggingFace Blog</td><td>Open-source AI — fine-tuning, model releases, tooling</td></tr>
+      <tr><td>Google AI / DeepMind</td><td>Gemini, AlphaFold, foundational AI research</td></tr>
+      <tr><td>AI2 Blog</td><td>OLMo, NLP research, AI for science — underrated</td></tr>
+    </table>
+    <div class="p-label">📄 5 Influential Papers</div>
+    <table class="cmp">
+      <tr><th>Paper</th><th>Why It Matters</th></tr>
+      <tr><td>Attention Is All You Need (2017)</td><td>The Transformer paper — foundation of all modern LLMs. Must-read.</td></tr>
+      <tr><td>Scaling Laws for Neural Language Models</td><td>How performance scales with compute, data, parameters.</td></tr>
+      <tr><td>InstructGPT / RLHF Paper</td><td>How to align LLMs to follow instructions. Foundation of ChatGPT.</td></tr>
+      <tr><td>BERT (2018)</td><td>Bidirectional transformers for NLP understanding tasks.</td></tr>
+      <tr><td>DDPM — Diffusion Models</td><td>Mathematical foundation of Stable Diffusion, DALL-E, Sora.</td></tr>
+    </table>`,
+  workflow: `<div class="flow-box"><div class="flow-title">Learning Sequence Recommendation</div><div style="display:flex;flex-direction:column;gap:8px;"><div class="flow"><div class="flow-node fn-start">Beginner</div><div class="flow-arr">→</div><div class="flow-node fn-llm">Stanford CS229 / CS230<br><span class="flow-sublabel">Theory foundation</span></div><div class="flow-arr">→</div><div class="flow-node fn-tool">Hands-On LLMs book<br><span class="flow-sublabel">Practical building</span></div></div><div class="flow"><div class="flow-node fn-start">Intermediate</div><div class="flow-arr">→</div><div class="flow-node fn-llm">Designing ML Systems<br><span class="flow-sublabel">Production knowledge</span></div><div class="flow-arr">→</div><div class="flow-node fn-tool">Two Minute Papers<br><span class="flow-sublabel">Stay current on research</span></div></div><div class="flow"><div class="flow-node fn-start">Advanced</div><div class="flow-arr">→</div><div class="flow-node fn-llm">AI Engineering book<br><span class="flow-sublabel">Scale + architecture</span></div><div class="flow-arr">→</div><div class="flow-node fn-tool">Read primary papers<br><span class="flow-sublabel">Attention, BERT, DDPM</span></div></div></div></div>`,
+  usecases: `<div class="callout" style="border-color:#a5b4fc;background:#eef2ff;"><div class="callout-title" style="color:#3730a3;">Newsletter Strategy</div><div class="callout-body">Subscribe to: The Batch (weekly, high-quality curation by Andrew Ng) + Rundown AI (daily, quick news) + AI Deep Dives (when you want depth on a specific topic). That's all you need to stay current without information overload.</div></div>`
+}
+
+};
+
+// alias
+nodes['agent-eco'] = nodes['agent_eco'];
+
+let currentNodeId = null;
+let currentTab = 0;
+let done = new Set();
+
+function openNode(id) {
+  const data = nodes[id];
+  if (!data) return;
+  currentNodeId = id;
+  currentTab = 0;
+
+  document.getElementById('panelBreadcrumb').textContent = data.breadcrumb;
+  document.getElementById('panelTitle').textContent = data.title;
+
+  // Build tabs
+  const tabsEl = document.getElementById('panelTabs');
+  tabsEl.innerHTML = data.tabs.map((t,i) =>
+    `<button class="panel-tab ${i===0?'active':''}" onclick="switchTab(${i})">${t}</button>`
+  ).join('');
+
+  // Build body
+  const bodyEl = document.getElementById('panelBody');
+  bodyEl.innerHTML = data.tabs.map((t,i) =>
+    `<div class="tab-content ${i===0?'active':''}" data-tab="${i}">${
+      i===0 ? data.overview : i===1 ? data.workflow : data.usecases
+    }</div>`
+  ).join('');
+
+  // Mark done button
+  updateDoneBtn();
+
+  // Open panel
+  document.getElementById('panel').classList.add('open');
+  document.getElementById('overlay').classList.add('open');
+
+  // Mark node active
+  document.querySelectorAll('.node').forEach(n => n.classList.remove('active'));
+  const nodeEl = document.getElementById('node-'+id);
+  if (nodeEl) nodeEl.classList.add('active');
+}
+
+function switchTab(i) {
+  currentTab = i;
+  document.querySelectorAll('.panel-tab').forEach((t,j) =>
+    t.classList.toggle('active', j===i));
+  document.querySelectorAll('.tab-content').forEach((c,j) =>
+    c.classList.toggle('active', j===i));
+}
+
+function closePanel() {
+  document.getElementById('panel').classList.remove('open');
+  document.getElementById('overlay').classList.remove('open');
+  document.querySelectorAll('.node').forEach(n => n.classList.remove('active'));
+  currentNodeId = null;
+}
+
+function toggleDone() {
+  if (!currentNodeId) return;
+  if (done.has(currentNodeId)) {
+    done.delete(currentNodeId);
+  } else {
+    done.add(currentNodeId);
+  }
+  updateDoneBtn();
+  updateProgress();
+  // Update node checkmark
+  const nodeEl = document.getElementById('node-'+currentNodeId);
+  if (nodeEl) nodeEl.classList.toggle('done', done.has(currentNodeId));
+}
+
+function updateDoneBtn() {
+  const btn = document.getElementById('markDoneBtn');
+  const isDone = done.has(currentNodeId);
+  btn.innerHTML = isDone ? '<span>✓</span> Completed' : '<span>☐</span> Mark as done';
+  btn.classList.toggle('done-state', isDone);
+}
+
+function updateProgress() {
+  const total = 20;
+  const n = done.size;
+  const pct = Math.round(n/total*100);
+  document.getElementById('globalBar').style.width = pct+'%';
+  document.getElementById('globalPct').textContent = `${n} / ${total} done`;
+  document.getElementById('doneCount').textContent = n;
+  document.getElementById('opBar').style.width = pct+'%';
+  document.getElementById('opPct').textContent = pct > 0
+    ? `${pct}% complete — keep going!`
+    : `0% complete · Click any node to start learning`;
+}
+
+// Scroll progress line
+window.addEventListener('scroll', () => {
+  const doc = document.documentElement;
+  const pct = doc.scrollTop / (doc.scrollHeight - doc.clientHeight) * 100;
+  document.getElementById('scrollLine').style.width = pct + '%';
+});
+
+// ESC to close
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') closePanel();
+});
+</script>
+</body>
+</html>
