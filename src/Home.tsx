@@ -81,9 +81,10 @@ function Home() {
                   rel="noreferrer"
                 >
                   <span className="blog-link-label">AI Landscape</span>
-                  <span className="blog-link-url">
-                    https://shyamzzp.github.io/ai
+                  <span className="blog-link-meta">
+                    Interactive ecosystem map
                   </span>
+                  <span className="blog-link-url">/ai</span>
                 </a>
                 <a
                   className="blog-link-card"
@@ -92,9 +93,10 @@ function Home() {
                   rel="noreferrer"
                 >
                   <span className="blog-link-label">AI Roadmap</span>
-                  <span className="blog-link-url">
-                    https://shyamzzp.github.io/ai-roadmap
+                  <span className="blog-link-meta">
+                    Structured learning path
                   </span>
+                  <span className="blog-link-url">/ai-roadmap</span>
                 </a>
               </div>
             </div>
