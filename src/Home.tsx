@@ -71,6 +71,25 @@ function Home() {
 
             <SocialMedia />
             <Skills />
+            <div className="blogs-section">
+              <p className="blogs-section-title">Blogs</p>
+              <div className="tags">
+                <a
+                  href="https://shyamzzp.github.io/ai"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  <span className="tag">AI Landscape</span>
+                </a>
+                <a
+                  href="https://shyamzzp.github.io/ai-roadmap"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  <span className="tag">AI Roadmap</span>
+                </a>
+              </div>
+            </div>
             {showProjects ? (
               <div className="mt-5 flex gap-4 tags">
                 <span

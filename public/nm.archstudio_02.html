@@ -1,0 +1,1176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ar. Nikita Mistry — Architect | Irani Architects</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Outfit:wght@200;300;400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --black: #0A0A0A;
+  --white: #FFFFFF;
+  --off: #F7F7F5;
+  --gray: #E8E8E8;
+  --mid: #999999;
+  --gold: #C9A84C;
+  --gold2: #E8C97A;
+  --serif: 'Playfair Display', Georgia, serif;
+  --sans: 'Outfit', system-ui, sans-serif;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--white);
+  color: var(--black);
+  font-family: var(--sans);
+  font-weight: 300;
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+/* CURSOR */
+.cursor {
+  width: 6px; height: 6px;
+  background: var(--gold);
+  border-radius: 50%;
+  position: fixed;
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+  transition: left 0.08s, top 0.08s;
+}
+
+/* NAV */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 200;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.4rem 3.5rem;
+  background: rgba(255,255,255,0.97);
+  border-bottom: 1px solid var(--gray);
+}
+
+.nav-logo {
+  font-family: var(--serif);
+  font-size: 1rem;
+  font-weight: 400;
+  letter-spacing: 0.04em;
+  color: var(--black);
+  text-decoration: none;
+}
+
+.nav-logo span { color: var(--gold); font-style: italic; }
+
+.nav-links {
+  display: flex;
+  gap: 2.2rem;
+  list-style: none;
+  align-items: center;
+}
+
+.nav-links a {
+  font-size: 0.68rem;
+  font-weight: 400;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--mid);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.nav-links a:hover { color: var(--black); }
+
+.nav-cta {
+  font-size: 0.68rem !important;
+  font-weight: 500 !important;
+  color: var(--white) !important;
+  background: var(--black);
+  padding: 0.55rem 1.3rem;
+  transition: background 0.2s !important;
+}
+.nav-cta:hover { background: var(--gold) !important; }
+
+/* HERO */
+.hero {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 55% 45%;
+  padding-top: 72px;
+}
+
+.hero-left {
+  padding: 0 4rem 0 3.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.hero-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  font-size: 0.65rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--mid);
+  margin-bottom: 2rem;
+}
+
+.hero-eyebrow::before {
+  content: '';
+  width: 40px; height: 1px;
+  background: var(--gold);
+}
+
+.hero-name {
+  font-family: var(--serif);
+  font-size: clamp(3.5rem, 6vw, 6.5rem);
+  font-weight: 900;
+  line-height: 0.95;
+  letter-spacing: -0.02em;
+  margin-bottom: 0.4rem;
+}
+
+.hero-sub {
+  font-family: var(--serif);
+  font-size: clamp(2rem, 3.5vw, 3.8rem);
+  font-weight: 400;
+  font-style: italic;
+  color: var(--gold);
+  line-height: 1;
+  margin-bottom: 2.5rem;
+}
+
+.hero-divider {
+  width: 60px; height: 1px;
+  background: var(--black);
+  margin-bottom: 2rem;
+}
+
+.hero-tagline {
+  font-size: 0.95rem;
+  font-weight: 300;
+  color: var(--mid);
+  max-width: 340px;
+  line-height: 1.85;
+  margin-bottom: 3rem;
+}
+
+.hero-actions {
+  display: flex;
+  gap: 1.5rem;
+  align-items: center;
+}
+
+.btn-primary {
+  font-size: 0.68rem;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--white);
+  background: var(--black);
+  padding: 0.9rem 2rem;
+  text-decoration: none;
+  border: 1px solid var(--black);
+  transition: background 0.25s, border-color 0.25s;
+  display: inline-block;
+}
+.btn-primary:hover { background: var(--gold); border-color: var(--gold); }
+
+.btn-ghost {
+  font-size: 0.68rem;
+  font-weight: 400;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--black);
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: gap 0.2s;
+}
+.btn-ghost:hover { gap: 0.9rem; }
+.btn-ghost::after { content: '→'; }
+
+.hero-right {
+  position: relative;
+  overflow: hidden;
+  background: var(--off);
+}
+
+.hero-right img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.hero-badge {
+  position: absolute;
+  bottom: 2.5rem;
+  left: 2rem;
+  background: var(--white);
+  border: 1px solid var(--gray);
+  padding: 1.2rem 1.5rem;
+}
+
+.hero-badge-num {
+  font-family: var(--serif);
+  font-size: 2.2rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.hero-badge-num sup { font-size: 1rem; font-weight: 400; vertical-align: super; }
+
+.hero-badge-label {
+  font-size: 0.62rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--mid);
+  margin-top: 0.3rem;
+}
+
+/* MARQUEE */
+.marquee-strip {
+  background: var(--black);
+  padding: 0.9rem 0;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.marquee-inner {
+  display: inline-flex;
+  animation: marquee 22s linear infinite;
+}
+
+.marquee-item {
+  font-size: 0.6rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.45);
+  padding: 0 2.5rem;
+}
+
+.marquee-dot { color: var(--gold); padding: 0 0.3rem; }
+
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+/* NUMBERS */
+.numbers-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  border-top: 1px solid var(--gray);
+  border-left: 1px solid var(--gray);
+}
+
+.number-cell {
+  padding: 3rem 2.5rem;
+  border-right: 1px solid var(--gray);
+  border-bottom: 1px solid var(--gray);
+  transition: background 0.25s;
+}
+.number-cell:hover { background: var(--off); }
+
+.number-big {
+  font-family: var(--serif);
+  font-size: 3.5rem;
+  font-weight: 900;
+  line-height: 1;
+  letter-spacing: -0.03em;
+}
+.number-big sup { font-size: 1.4rem; font-weight: 400; vertical-align: super; }
+
+.number-label {
+  font-size: 0.66rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--mid);
+  margin-top: 0.6rem;
+}
+
+.number-desc {
+  font-size: 0.78rem;
+  color: var(--mid);
+  margin-top: 0.4rem;
+  line-height: 1.6;
+}
+
+/* SECTION COMMON */
+.section { padding: 7rem 3.5rem; }
+.section-off { background: var(--off); }
+
+.label-row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.2rem;
+}
+
+.label-tag {
+  font-size: 0.62rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--gold);
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.label-line {
+  flex: 1; height: 1px;
+  background: var(--gray);
+}
+
+.section-title {
+  font-family: var(--serif);
+  font-size: clamp(2.2rem, 4vw, 3.8rem);
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  margin-bottom: 1rem;
+}
+.section-title em { font-style: italic; font-weight: 400; color: var(--mid); }
+
+/* ABOUT */
+.about-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6rem;
+  align-items: start;
+  margin-top: 3rem;
+}
+
+.about-img-wrap { position: relative; }
+
+.about-img-wrap img {
+  width: 100%;
+  aspect-ratio: 3/4;
+  object-fit: cover;
+  display: block;
+}
+
+.about-year-tag {
+  position: absolute;
+  top: 2rem; left: -1.2rem;
+  background: var(--gold);
+  color: var(--white);
+  font-family: var(--serif);
+  font-size: 0.85rem;
+  font-weight: 700;
+  writing-mode: vertical-rl;
+  padding: 1.2rem 0.5rem;
+  letter-spacing: 0.08em;
+}
+
+.about-img-caption {
+  position: absolute;
+  bottom: 0; right: 0;
+  background: var(--black);
+  color: var(--white);
+  font-size: 0.6rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  padding: 0.7rem 1.3rem;
+}
+
+.about-body p {
+  font-size: 0.92rem;
+  color: #555;
+  line-height: 1.95;
+  margin-bottom: 1.3rem;
+}
+
+.about-body strong { color: var(--black); font-weight: 500; }
+
+.about-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 2rem;
+}
+
+.tag {
+  font-size: 0.6rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--black);
+  border: 1px solid var(--gray);
+  padding: 0.45rem 1rem;
+  transition: border-color 0.2s, color 0.2s;
+  cursor: default;
+}
+.tag:hover { border-color: var(--gold); color: var(--gold); }
+
+/* EXPERTISE */
+.expertise-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: var(--gray);
+  border: 1px solid var(--gray);
+  margin-top: 3rem;
+}
+
+.exp-card {
+  background: var(--white);
+  padding: 2.8rem 2.2rem;
+  position: relative;
+  overflow: hidden;
+  transition: background 0.25s;
+}
+
+.exp-card::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0;
+  width: 0; height: 2px;
+  background: var(--gold);
+  transition: width 0.35s ease;
+}
+.exp-card:hover::after { width: 100%; }
+.exp-card:hover { background: var(--off); }
+
+.exp-num {
+  font-family: var(--serif);
+  font-size: 4rem;
+  font-weight: 900;
+  color: var(--gray);
+  line-height: 1;
+  margin-bottom: 1.2rem;
+  letter-spacing: -0.04em;
+}
+
+.exp-title {
+  font-family: var(--serif);
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin-bottom: 0.8rem;
+  line-height: 1.2;
+}
+
+.exp-desc {
+  font-size: 0.82rem;
+  color: var(--mid);
+  line-height: 1.8;
+}
+
+/* QUOTE */
+.quote-section {
+  background: var(--black);
+  padding: 6rem 3.5rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 5rem;
+  align-items: center;
+}
+
+.quote-mark {
+  font-family: var(--serif);
+  font-size: 8rem;
+  color: var(--gold);
+  line-height: 0.6;
+  margin-bottom: 1.5rem;
+  opacity: 0.35;
+}
+
+.quote-text {
+  font-family: var(--serif);
+  font-size: clamp(1.5rem, 2.5vw, 2.1rem);
+  font-weight: 400;
+  font-style: italic;
+  color: var(--white);
+  line-height: 1.55;
+}
+
+.quote-attr {
+  font-size: 0.65rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-top: 2rem;
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+.quote-attr::before { content: ''; width: 30px; height: 1px; background: var(--gold); }
+
+.quote-right p {
+  font-size: 0.88rem;
+  color: rgba(255,255,255,0.4);
+  line-height: 1.9;
+  margin-bottom: 1rem;
+}
+.quote-right strong { color: rgba(255,255,255,0.75); font-weight: 400; }
+
+/* PROJECTS */
+.projects-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 3rem;
+}
+
+.see-all {
+  font-size: 0.65rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--mid);
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: color 0.2s, gap 0.2s;
+}
+.see-all:hover { color: var(--black); gap: 0.9rem; }
+.see-all::after { content: '→'; }
+
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 1.2rem;
+}
+
+.proj { overflow: hidden; cursor: pointer; position: relative; }
+.proj:nth-child(1) { grid-column: span 7; }
+.proj:nth-child(2) { grid-column: span 5; }
+.proj:nth-child(3) { grid-column: span 4; }
+.proj:nth-child(4) { grid-column: span 4; }
+.proj:nth-child(5) { grid-column: span 4; }
+
+.proj-img {
+  width: 100%;
+  aspect-ratio: 4/3;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.7s cubic-bezier(0.25,0.46,0.45,0.94), filter 0.4s;
+  filter: brightness(0.9);
+}
+.proj:hover .proj-img { transform: scale(1.06); filter: brightness(1); }
+
+.proj-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.5) 0%, transparent 55%);
+  opacity: 0;
+  transition: opacity 0.4s;
+  display: flex;
+  align-items: flex-end;
+  padding: 1.5rem;
+}
+.proj:hover .proj-overlay { opacity: 1; }
+
+.proj-overlay span {
+  font-size: 0.62rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--white);
+}
+
+.proj-info {
+  padding: 1rem 0 0.3rem;
+  border-bottom: 1px solid var(--gray);
+}
+
+.proj-cat {
+  font-size: 0.6rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 0.2rem;
+  font-weight: 500;
+}
+
+.proj-name {
+  font-family: var(--serif);
+  font-size: 1.05rem;
+  font-weight: 700;
+}
+
+.proj-meta {
+  font-size: 0.75rem;
+  color: var(--mid);
+  margin-top: 0.2rem;
+}
+
+/* PROCESS */
+.process-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  margin-top: 3rem;
+  border-left: 1px solid var(--gray);
+  border-top: 1px solid var(--gray);
+}
+
+.process-step {
+  padding: 2.5rem 1.8rem;
+  border-right: 1px solid var(--gray);
+  border-bottom: 1px solid var(--gray);
+  transition: background 0.25s;
+}
+.process-step:hover { background: var(--white); }
+
+.step-num {
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: var(--gold);
+  letter-spacing: 0.1em;
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+.step-num::after { content: ''; flex: 1; height: 1px; background: var(--gray); }
+
+.step-title {
+  font-family: var(--serif);
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin-bottom: 0.7rem;
+  line-height: 1.2;
+}
+
+.step-desc {
+  font-size: 0.78rem;
+  color: var(--mid);
+  line-height: 1.8;
+}
+
+/* FIRM */
+.firm-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6rem;
+  align-items: start;
+  margin-top: 3rem;
+}
+
+.firm-info-list {
+  border-top: 1px solid var(--gray);
+}
+
+.firm-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 1.2rem 0;
+  border-bottom: 1px solid var(--gray);
+  gap: 2rem;
+}
+
+.firm-key {
+  font-size: 0.6rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--mid);
+  flex-shrink: 0;
+}
+
+.firm-val {
+  font-size: 0.88rem;
+  text-align: right;
+  color: var(--black);
+}
+
+.firm-val small {
+  display: block;
+  font-size: 0.7rem;
+  color: var(--mid);
+  margin-top: 0.15rem;
+}
+
+.firm-body p {
+  font-size: 0.92rem;
+  color: #555;
+  line-height: 1.95;
+  margin-bottom: 1.2rem;
+}
+.firm-body strong { color: var(--black); font-weight: 500; }
+
+.firm-img-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.8rem;
+  margin-top: 2rem;
+}
+.firm-img-grid img {
+  width: 100%;
+  aspect-ratio: 4/3;
+  object-fit: cover;
+  filter: brightness(0.9);
+  transition: filter 0.3s;
+}
+.firm-img-grid img:hover { filter: brightness(1); }
+
+/* FOOTER */
+.footer-gold-line { height: 2px; background: linear-gradient(to right, var(--gold), transparent); }
+
+footer {
+  background: var(--black);
+  color: var(--white);
+}
+
+.footer-top {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr 1fr;
+  gap: 4rem;
+  padding: 5rem 3.5rem;
+  border-bottom: 1px solid #1C1C1C;
+}
+
+.footer-brand {
+  font-family: var(--serif);
+  font-size: 2.2rem;
+  font-weight: 700;
+  line-height: 1.1;
+  margin-bottom: 1.2rem;
+}
+.footer-brand span { color: var(--gold); font-style: italic; }
+
+.footer-tagline {
+  font-size: 0.82rem;
+  color: rgba(255,255,255,0.3);
+  line-height: 1.85;
+  max-width: 260px;
+  margin-bottom: 2rem;
+}
+
+.footer-col-head {
+  font-size: 0.6rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 1.5rem;
+  font-weight: 500;
+}
+
+.footer-col p, .footer-col a {
+  font-size: 0.82rem;
+  color: rgba(255,255,255,0.35);
+  line-height: 2;
+  text-decoration: none;
+  display: block;
+  transition: color 0.2s;
+}
+.footer-col a:hover { color: var(--gold2); }
+
+.footer-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.8rem 3.5rem;
+}
+
+.footer-bottom p {
+  font-size: 0.62rem;
+  letter-spacing: 0.1em;
+  color: rgba(255,255,255,0.18);
+  text-transform: uppercase;
+}
+
+/* RESPONSIVE */
+@media (max-width: 960px) {
+  nav { padding: 1.2rem 1.5rem; }
+  .nav-links { display: none; }
+  .hero { grid-template-columns: 1fr; }
+  .hero-left { padding: 5rem 1.5rem 3rem; }
+  .hero-right { height: 65vw; }
+  .section { padding: 4rem 1.5rem; }
+  .numbers-row { grid-template-columns: 1fr 1fr; }
+  .about-grid, .firm-grid { grid-template-columns: 1fr; gap: 3rem; }
+  .expertise-grid { grid-template-columns: 1fr; }
+  .process-grid { grid-template-columns: 1fr 1fr; }
+  .projects-grid { grid-template-columns: 1fr; }
+  .proj:nth-child(n) { grid-column: span 1; }
+  .quote-section { grid-template-columns: 1fr; gap: 3rem; padding: 4rem 1.5rem; }
+  .footer-top { grid-template-columns: 1fr; gap: 2.5rem; padding: 3.5rem 1.5rem; }
+  .footer-bottom { padding: 1.5rem; flex-direction: column; gap: 0.5rem; }
+  .projects-header { flex-direction: column; align-items: flex-start; gap: 1rem; }
+}
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">Ar. Nikita Mistry &nbsp;<span>·</span>&nbsp; Architect</a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#expertise">Expertise</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#process">Process</a></li>
+    <li><a href="#firm">Firm</a></li>
+    <li><a href="#contact" class="nav-cta">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-left">
+    <div class="hero-eyebrow">Irani Architects, Mumbai &nbsp;·&nbsp; Est. 40+ Years</div>
+    <h1 class="hero-name">Nikita<br>Mistry</h1>
+    <p class="hero-sub">Architect</p>
+    <div class="hero-divider"></div>
+    <p class="hero-tagline">
+      Specialist in bungalow design. A decade of disciplined practice rooted in
+      precision, craft, and an unwavering dedication to the people who inhabit the
+      spaces she creates.
+    </p>
+    <div class="hero-actions">
+      <a href="#projects" class="btn-primary">View Projects</a>
+      <a href="#about" class="btn-ghost">About Nikita</a>
+    </div>
+  </div>
+  <div class="hero-right">
+    <img
+      src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=1200&q=90&fit=crop"
+      alt="Bungalow Architecture"
+      onerror="this.src='https://images.unsplash.com/photo-1582268611958-ebfd161ef9cf?w=1200&q=85&fit=crop'"
+    />
+    <div class="hero-badge">
+      <div class="hero-badge-num">40<sup>+</sup></div>
+      <div class="hero-badge-label">Bungalows Designed</div>
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-strip">
+  <div class="marquee-inner">
+    <span class="marquee-item">Bungalow Design</span><span class="marquee-dot">✦</span>
+    <span class="marquee-item">Irani Architects</span><span class="marquee-dot">✦</span>
+    <span class="marquee-item">Mumbai</span><span class="marquee-dot">✦</span>
+    <span class="marquee-item">Residential Architecture</span><span class="marquee-dot">✦</span>
+    <span class="marquee-item">10+ Years Experience</span><span class="marquee-dot">✦</span>
+    <span class="marquee-item">Site Planning</span><span class="marquee-dot">✦</span>
+    <span class="marquee-item">Space Design</span><span class="marquee-dot">✦</span>
+    <span class="marquee-item">Project Management</span><span class="marquee-dot">✦</span>
+    <span class="marquee-item">Bungalow Design</span><span class="marquee-dot">✦</span>
+    <span class="marquee-item">Irani Architects</span><span class="marquee-dot">✦</span>
+    <span class="marquee-item">Mumbai</span><span class="marquee-dot">✦</span>
+    <span class="marquee-item">Residential Architecture</span><span class="marquee-dot">✦</span>
+    <span class="marquee-item">10+ Years Experience</span><span class="marquee-dot">✦</span>
+    <span class="marquee-item">Site Planning</span><span class="marquee-dot">✦</span>
+    <span class="marquee-item">Space Design</span><span class="marquee-dot">✦</span>
+    <span class="marquee-item">Project Management</span><span class="marquee-dot">✦</span>
+  </div>
+</div>
+
+<!-- NUMBERS -->
+<div class="numbers-row">
+  <div class="number-cell">
+    <div class="number-big">40<sup>+</sup></div>
+    <div class="number-label">Bungalows Designed</div>
+    <div class="number-desc">Across Mumbai, Pune, Nashik &amp; beyond</div>
+  </div>
+  <div class="number-cell">
+    <div class="number-big">10<sup>+</sup></div>
+    <div class="number-label">Years of Practice</div>
+    <div class="number-desc">Deep expertise in residential architecture</div>
+  </div>
+  <div class="number-cell">
+    <div class="number-big">4.6<sup>★</sup></div>
+    <div class="number-label">Client Rating</div>
+    <div class="number-desc">59 verified reviews at Irani Architects</div>
+  </div>
+  <div class="number-cell">
+    <div class="number-big">100<sup>%</sup></div>
+    <div class="number-label">Dedicated</div>
+    <div class="number-desc">Present from first sketch to final handover</div>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section class="section" id="about">
+  <div class="label-row">
+    <span class="label-tag">The Architect</span>
+    <span class="label-line"></span>
+  </div>
+  <div class="about-grid">
+    <div class="about-img-wrap">
+      <span class="about-year-tag">Ar. Nikita Mistry</span>
+      <img
+        src="https://images.unsplash.com/photo-1600585154526-990dced4db0d?w=900&q=85&fit=crop"
+        alt="Architecture"
+        onerror="this.src='https://images.unsplash.com/photo-1513584684374-8bab748fbf90?w=900&q=85'"
+      />
+      <div class="about-img-caption">Irani Architects · Colaba, Mumbai</div>
+    </div>
+    <div class="about-body">
+      <h2 class="section-title" style="margin-bottom:2rem">Dedicated to the<br><em>art of bungalows</em></h2>
+      <p>Ar. Nikita Mistry is a Mumbai-based architect with over <strong>a decade of focused practice</strong> in residential bungalow design. Working at the distinguished firm of <strong>Irani Architects</strong> in Colaba — one of Mumbai's longest-standing architectural practices — she has built a reputation for design that is both technically rigorous and deeply human.</p>
+      <p>Her specialization in bungalows is deliberate. She believes the bungalow is architecture at its most intimate: <strong>single-storeyed, grounded, human in scale</strong>. It demands that the architect think about space as it is experienced at eye level — how light enters a room at dawn, how a verandah frames the garden, how a threshold signals arrival.</p>
+      <p>She is known for her <strong>uncommon dedication</strong> — clients consistently remark that she listens before she draws, remains present through construction, and treats every home as if it were her own. This quality of attention is not a style. It is a standard she holds herself to on every single project.</p>
+      <div class="about-tags">
+        <span class="tag">Bungalow Specialist</span>
+        <span class="tag">Residential Design</span>
+        <span class="tag">Space Planning</span>
+        <span class="tag">Site Analysis</span>
+        <span class="tag">Vastu-Conscious</span>
+        <span class="tag">Materials Expert</span>
+        <span class="tag">Interior Architecture</span>
+        <span class="tag">Project Management</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERTISE -->
+<section class="section section-off" id="expertise">
+  <div class="label-row">
+    <span class="label-tag">Areas of Mastery</span>
+    <span class="label-line"></span>
+  </div>
+  <h2 class="section-title">What she brings<br><em>to every project</em></h2>
+  <div class="expertise-grid">
+    <div class="exp-card">
+      <div class="exp-num">01</div>
+      <div class="exp-title">Bungalow Design &amp; Planning</div>
+      <p class="exp-desc">Deep specialization in single-family bungalow typologies — from compact urban plots to expansive estates. Mastery in proportion, flow, and the relationship between indoor and outdoor living.</p>
+    </div>
+    <div class="exp-card">
+      <div class="exp-num">02</div>
+      <div class="exp-title">Site &amp; Context Analysis</div>
+      <p class="exp-desc">Every bungalow begins with the land. Thorough site studies — solar orientation, wind, topography, views, neighborhood context — ensure each design grows naturally from its place.</p>
+    </div>
+    <div class="exp-card">
+      <div class="exp-num">03</div>
+      <div class="exp-title">Spatial Flow &amp; Vastu</div>
+      <p class="exp-desc">Thoughtful integration of Vastu principles with contemporary spatial planning to create homes that feel auspicious and deeply comfortable for the families who inhabit them.</p>
+    </div>
+    <div class="exp-card">
+      <div class="exp-num">04</div>
+      <div class="exp-title">Materials &amp; Finishes</div>
+      <p class="exp-desc">A refined sensibility for materials — natural stone, exposed brick, timber, handcrafted plaster — chosen for how they age, breathe, and respond to the local climate over time.</p>
+    </div>
+    <div class="exp-card">
+      <div class="exp-num">05</div>
+      <div class="exp-title">Interior–Architecture Integration</div>
+      <p class="exp-desc">Built-in joinery, ceiling treatments, threshold details, and lighting designed as integral parts of the architectural concept — not surface decoration applied at the end.</p>
+    </div>
+    <div class="exp-card">
+      <div class="exp-num">06</div>
+      <div class="exp-title">End-to-End Project Management</div>
+      <p class="exp-desc">From municipal approvals and structural coordination to contractor supervision and quality inspections — the full lifecycle managed with meticulous attention and genuine care.</p>
+    </div>
+  </div>
+</section>
+
+<!-- QUOTE -->
+<div class="quote-section">
+  <div>
+    <div class="quote-mark">"</div>
+    <blockquote class="quote-text">A bungalow is not a reduced form of architecture — it is architecture in its most honest and human expression.</blockquote>
+    <div class="quote-attr">Ar. Nikita Mistry</div>
+  </div>
+  <div class="quote-right">
+    <p>Her design philosophy centers on the conviction that a home should serve the <strong>specific life of its inhabitants</strong> — not a generic idea of living. She spends considerable time understanding how a family moves through a day before she begins to draw.</p>
+    <p>This dedication — to truly understanding before designing — is what sets her work apart at Irani Architects. <strong>Architecture, she believes, is ultimately an act of care.</strong></p>
+    <p>Every site visit, every client conversation, every material sample held up to natural light — these are not tasks to be completed. They are the work itself.</p>
+  </div>
+</div>
+
+<!-- PROJECTS -->
+<section class="section" id="projects">
+  <div class="label-row">
+    <span class="label-tag">Selected Works</span>
+    <span class="label-line"></span>
+  </div>
+  <div class="projects-header">
+    <h2 class="section-title" style="margin-bottom:0">Bungalows crafted<br><em>with intention</em></h2>
+    <a href="#contact" class="see-all">Discuss your project</a>
+  </div>
+  <div class="projects-grid">
+    <div class="proj">
+      <img class="proj-img" src="https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?w=1200&q=85&fit=crop" alt="The Courtyard Bungalow" onerror="this.src='https://images.unsplash.com/photo-1580587771525-78b9dba3b914?w=1200&q=80'"/>
+      <div class="proj-overlay"><span>View Project →</span></div>
+      <div class="proj-info">
+        <p class="proj-cat">Residential · Bungalow</p>
+        <p class="proj-name">The Courtyard Bungalow</p>
+        <p class="proj-meta">Pune &nbsp;·&nbsp; 4,200 sq ft &nbsp;·&nbsp; 2023</p>
+      </div>
+    </div>
+    <div class="proj">
+      <img class="proj-img" src="https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?w=900&q=85&fit=crop" alt="Garden Terrace Residence" onerror="this.src='https://images.unsplash.com/photo-1583608205776-bfd35f0d9f83?w=900&q=80'"/>
+      <div class="proj-overlay"><span>View Project →</span></div>
+      <div class="proj-info">
+        <p class="proj-cat">Residential · Bungalow</p>
+        <p class="proj-name">Garden Terrace Residence</p>
+        <p class="proj-meta">Mumbai &nbsp;·&nbsp; 3,100 sq ft &nbsp;·&nbsp; 2022</p>
+      </div>
+    </div>
+    <div class="proj">
+      <img class="proj-img" src="https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=800&q=85&fit=crop" alt="The Verandah House" onerror="this.src='https://images.unsplash.com/photo-1570129477492-45c003edd2be?w=800&q=80'"/>
+      <div class="proj-overlay"><span>View Project →</span></div>
+      <div class="proj-info">
+        <p class="proj-cat">Residential · Bungalow</p>
+        <p class="proj-name">The Verandah House</p>
+        <p class="proj-meta">Nashik &nbsp;·&nbsp; 3,800 sq ft &nbsp;·&nbsp; 2022</p>
+      </div>
+    </div>
+    <div class="proj">
+      <img class="proj-img" src="https://images.unsplash.com/photo-1613977257592-4871e5fcd7c4?w=800&q=85&fit=crop" alt="Hillside Bungalow" onerror="this.src='https://images.unsplash.com/photo-1523217582562-09d0def993a6?w=800&q=80'"/>
+      <div class="proj-overlay"><span>View Project →</span></div>
+      <div class="proj-info">
+        <p class="proj-cat">Residential · Bungalow</p>
+        <p class="proj-name">Hillside Bungalow</p>
+        <p class="proj-meta">Lonavala &nbsp;·&nbsp; 5,500 sq ft &nbsp;·&nbsp; 2021</p>
+      </div>
+    </div>
+    <div class="proj">
+      <img class="proj-img" src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&q=85&fit=crop" alt="Stone and Light House" onerror="this.src='https://images.unsplash.com/photo-1568605114967-8130f3a36994?w=800&q=80'"/>
+      <div class="proj-overlay"><span>View Project →</span></div>
+      <div class="proj-info">
+        <p class="proj-cat">Residential · Renovation</p>
+        <p class="proj-name">Stone &amp; Light House</p>
+        <p class="proj-meta">Alibag &nbsp;·&nbsp; 2,600 sq ft &nbsp;·&nbsp; 2021</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section class="section section-off" id="process">
+  <div class="label-row">
+    <span class="label-tag">How She Works</span>
+    <span class="label-line"></span>
+  </div>
+  <h2 class="section-title">A process built<br><em>on dedication</em></h2>
+  <div class="process-grid">
+    <div class="process-step">
+      <div class="step-num">01</div>
+      <div class="step-title">Listening First</div>
+      <p class="step-desc">Every project begins with an extended discovery conversation — understanding not just the brief but the life that will be lived inside the building. How does the family spend its mornings?</p>
+    </div>
+    <div class="process-step">
+      <div class="step-num">02</div>
+      <div class="step-title">Reading the Land</div>
+      <p class="step-desc">Detailed on-site analysis: solar path, prevailing breezes, soil conditions, neighboring structures, views worth framing. The design emerges from the site's own character.</p>
+    </div>
+    <div class="process-step">
+      <div class="step-num">03</div>
+      <div class="step-title">Sketching the Vision</div>
+      <p class="step-desc">Hand sketches and massing studies exploring multiple spatial ideas before committing to a direction. Clients are invited into this stage — it is a collaboration, not a presentation.</p>
+    </div>
+    <div class="process-step">
+      <div class="step-num">04</div>
+      <div class="step-title">Detailing Every Corner</div>
+      <p class="step-desc">Working drawings, material specs, structural coordination, and municipal documentation — handled with the same care as the design itself. Nothing is left to chance.</p>
+    </div>
+    <div class="process-step">
+      <div class="step-num">05</div>
+      <div class="step-title">Present on Site</div>
+      <p class="step-desc">She remains involved through construction — regular site visits, contractor briefings, quality checks. The design intent is protected at every stage, right through to handover.</p>
+    </div>
+  </div>
+</section>
+
+<!-- FIRM -->
+<section class="section" id="firm">
+  <div class="label-row">
+    <span class="label-tag">The Firm</span>
+    <span class="label-line"></span>
+  </div>
+  <div class="firm-grid">
+    <div>
+      <h2 class="section-title" style="margin-bottom:2rem">Irani<br><em>Architects</em></h2>
+      <div class="firm-body">
+        <p>Irani Architects is a Mumbai-based practice of over <strong>40 years standing</strong> — one of Colaba's most respected architectural firms. Founded by Mr. B.J. Irani, the firm has built its reputation on delivering intelligent, enduring architecture across residential, commercial, industrial, and institutional projects.</p>
+        <p>The firm's philosophy — understanding the client's world before designing their space — mirrors Ar. Nikita Mistry's own approach to bungalow work. It is this <strong>alignment of values</strong> that makes Irani Architects the natural home for her practice.</p>
+        <p>Based at <strong>121, Kartan Bhavan, Colaba Causeway</strong> — a short distance from the city's most celebrated built landmarks and a fitting address for a firm of its stature.</p>
+      </div>
+      <div class="firm-img-grid">
+        <img src="https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?w=600&q=80&fit=crop" alt="Architecture" onerror="this.src='https://images.unsplash.com/photo-1600047509358-9dc75507daeb?w=600&q=80'"/>
+        <img src="https://images.unsplash.com/photo-1600607688969-a5bfcd646154?w=600&q=80&fit=crop" alt="Architecture" onerror="this.src='https://images.unsplash.com/photo-1560185007-cde436f6a4d0?w=600&q=80'"/>
+      </div>
+    </div>
+    <div class="firm-info-list">
+      <div class="firm-row">
+        <span class="firm-key">Firm</span>
+        <span class="firm-val">Irani Architects<small>Architecture · Interiors · Planning · Engineering</small></span>
+      </div>
+      <div class="firm-row">
+        <span class="firm-key">Established</span>
+        <span class="firm-val">40+ Years<small>One of Mumbai's most longstanding practices</small></span>
+      </div>
+      <div class="firm-row">
+        <span class="firm-key">Location</span>
+        <span class="firm-val">Colaba, Mumbai<small>121, Kartan Bhavan, Colaba Causeway — 400005</small></span>
+      </div>
+      <div class="firm-row">
+        <span class="firm-key">Hours</span>
+        <span class="firm-val">Mon – Sat<small>10:30 AM – 7:30 PM</small></span>
+      </div>
+      <div class="firm-row">
+        <span class="firm-key">Phone</span>
+        <span class="firm-val">+91 22 2284 0961</span>
+      </div>
+      <div class="firm-row">
+        <span class="firm-key">Email</span>
+        <span class="firm-val">iraniare@vsnl.net</span>
+      </div>
+      <div class="firm-row">
+        <span class="firm-key">Rating</span>
+        <span class="firm-val">4.6 / 5 ★<small>59 verified client reviews</small></span>
+      </div>
+      <div class="firm-row">
+        <span class="firm-key">Scope</span>
+        <span class="firm-val">Residential · Commercial<small>Industrial · Institutional</small></span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<div class="footer-gold-line"></div>
+<footer id="contact">
+  <div class="footer-top">
+    <div>
+      <div class="footer-brand">Let's build<br>something <span>beautiful.</span></div>
+      <p class="footer-tagline">Every home begins with a conversation. Reach out to discuss your bungalow project — no brief is too early in its thinking.</p>
+      <a href="mailto:iraniare@vsnl.net" class="btn-primary">Start a Conversation</a>
+    </div>
+    <div class="footer-col">
+      <p class="footer-col-head">Contact</p>
+      <p>Irani Architects</p>
+      <p>121, Kartan Bhavan</p>
+      <p>Colaba Causeway, Colaba</p>
+      <p>Mumbai — 400005</p>
+      <br>
+      <a href="tel:02222840961">+91 22 2284 0961</a>
+      <a href="mailto:iraniare@vsnl.net">iraniare@vsnl.net</a>
+    </div>
+    <div class="footer-col">
+      <p class="footer-col-head">Specializations</p>
+      <p>Bungalow Design</p>
+      <p>Residential Architecture</p>
+      <p>Interior Architecture</p>
+      <p>Site &amp; Context Planning</p>
+      <p>Renovation &amp; Restoration</p>
+      <p>Project Management</p>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>Ar. Nikita Mistry &nbsp;·&nbsp; Irani Architects, Colaba, Mumbai</p>
+    <p>Architecture is an act of care</p>
+  </div>
+</footer>
+
+<script>
+  const cursor = document.getElementById('cursor');
+  document.addEventListener('mousemove', e => {
+    cursor.style.left = e.clientX + 'px';
+    cursor.style.top = e.clientY + 'px';
+  });
+</script>
+</body>
+</html>

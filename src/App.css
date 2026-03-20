@@ -56,6 +56,14 @@ hr {
   .project-header-sub-title {
     font-size: .8em !important;
   }
+
+  .blogs-section {
+    margin-top: 1.2rem;
+  }
+
+  .blogs-section-title {
+    font-size: 0.9rem;
+  }
 }
 
 .tags:not(:last-child) {
@@ -64,6 +72,18 @@ hr {
 
 .hero.is-info .title {
   font-size: 3rem;
+}
+
+.blogs-section {
+  margin-top: 1.5rem;
+  max-width: 40rem;
+}
+
+.blogs-section-title {
+  color: rgba(52, 53, 65);
+  font-size: 1.05rem;
+  font-weight: 600;
+  margin-bottom: 0.75rem;
 }
 
 #ctre_wnd {
