@@ -64,6 +64,18 @@ hr {
   .blogs-section-title {
     font-size: 0.9rem;
   }
+
+  .published-files-section {
+    margin-top: 1.5rem;
+  }
+
+  .published-files-copy {
+    font-size: 0.95rem;
+  }
+
+  .published-file-card {
+    min-height: auto;
+  }
 }
 
 .tags:not(:last-child) {
@@ -77,6 +89,70 @@ hr {
 .blogs-section {
   margin-top: 1.5rem;
   max-width: 40rem;
+}
+
+.published-files-section {
+  margin-top: 2rem;
+  max-width: 68rem;
+}
+
+.published-files-copy {
+  color: rgba(52, 53, 65, 0.82);
+  margin-bottom: 1rem;
+  max-width: 42rem;
+}
+
+.published-files-grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+}
+
+.published-file-card {
+  background: rgba(255, 255, 255, 0.72);
+  border: 1px solid rgba(17, 24, 39, 0.08);
+  border-radius: 16px;
+  color: #1f2937;
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  min-height: 140px;
+  padding: 1rem;
+  text-decoration: none;
+  transition: transform 0.15s ease, box-shadow 0.15s ease,
+    border-color 0.15s ease;
+}
+
+.published-file-card:hover {
+  border-color: rgba(59, 130, 246, 0.3);
+  box-shadow: 0 16px 36px rgba(15, 23, 42, 0.08);
+  transform: translateY(-2px);
+}
+
+.published-file-type {
+  align-self: flex-start;
+  background: rgba(59, 130, 246, 0.12);
+  border-radius: 999px;
+  color: #1d4ed8;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  padding: 0.3rem 0.55rem;
+  text-transform: uppercase;
+}
+
+.published-file-title {
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1.35;
+}
+
+.published-file-link {
+  color: rgba(31, 41, 55, 0.64);
+  font-family: "Fira Code", monospace;
+  font-size: 0.8rem;
+  margin-top: auto;
+  word-break: break-word;
 }
 
 .blogs-section-title {
