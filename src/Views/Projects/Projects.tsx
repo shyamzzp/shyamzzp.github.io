@@ -1,77 +1,81 @@
 import React from "react";
 import ProjectCard from "../../components/ProjectCard/ProjectCard";
+import "./Projects.css";
+import { projectData } from "./projectData";
 
 function Projects() {
-  const BikeDB = [
-    "A Web App for bike rental service.",
-    "A REST API using Node.js and Express.js.",
-    "Used MongoDB for database.",
-    "Used JWT for authentication.",
-  ];
-  const FindMentor = [
-    "A Web App for finding mentors in your field.",
-    "Access to Experienced Mentors.",
-    "Skill Development and Learning Opportunities.",
-    "Trackable Progress and Feedback",
-  ];
-  const InterviewPreparation = [
-    "Enhance technical skills.",
-    "Prepare for Coding Interviews.",
-    "Structural approach to tackle challenges.",
-    "Deep dive into System Design.",
-  ];
-  const DocsGoto = [
-    "A Web App for easy read-on for documentation.",
-    "Contains documentation for various technologies.",
-    "Easy to read and understand.",
-    "Contains code snippets for better understanding.",
-  ];
-  const OffPay = ["An Offline Payment Solution."];
-  const FindMentorTags = ["TypeScript", "PocketBase", "VueJS", "REST"];
-  const InterviewPreparationTags = [
-    "ReactJS",
-    "Docusaurus",
-    "TypeScript",
-    "Markdown",
-  ];
+  const [activeProjectId, setActiveProjectId] = React.useState(projectData[0].id);
+  const activeProject =
+    projectData.find((project) => project.id === activeProjectId) ?? projectData[0];
+
   return (
-    <div
-      style={{
-        display: "flex",
-        justifyContent: "space-between",
-        flexDirection: "column",
-      }}
-    >
-      <div>
-        <div style={{ display: "flex", gap: "20px", flexDirection: "column" }}>
-          <ProjectCard
-            header="Interview Preparation"
-            tags={InterviewPreparationTags}
-            description={InterviewPreparation}
-            github_source_code_link="https://github.com/shyamzzp/interview"
-            live_demo="https://shyamzzp.github.io/interview/"
-          />
-          <ProjectCard
-            header="Off Pay"
-            description={OffPay}
-            tags={FindMentorTags}
-          />
-          <ProjectCard
-            header="Docs Goto"
-            description={DocsGoto}
-            tags={FindMentorTags}
-          />
-          <ProjectCard
-            header="Find Mentor"
-            description={FindMentor}
-            tags={FindMentorTags}
-          />
-          <ProjectCard
-            header="Bike Rental Service"
-            description={BikeDB}
-            tags={FindMentorTags}
-          />
+    <div className="projects-page">
+      <div className="projects-page-copy">
+        <p className="projects-page-eyebrow">Projects</p>
+        <h1 className="projects-page-title">Detailed project explanations</h1>
+        <p className="projects-page-subtitle">
+          Select a project from the list to inspect the problem, implementation,
+          and decision-making details in the sidebar.
+        </p>
+      </div>
+
+      <div className="projects-layout">
+        <div className="projects-list">
+          {projectData.map((project) => (
+            <ProjectCard
+              key={project.id}
+              header={project.title}
+              status={project.status}
+              summary={project.summary}
+              description={project.description}
+              tags={project.tags}
+              links={project.links}
+              isActive={project.id === activeProject.id}
+              onClick={() => setActiveProjectId(project.id)}
+            />
+          ))}
         </div>
+
+        <aside className="project-detail-sidebar">
+          <div className="project-detail-shell">
+            <p className="project-detail-eyebrow">{activeProject.status}</p>
+            <h2 className="project-detail-title">{activeProject.title}</h2>
+            <p className="project-detail-summary">{activeProject.summary}</p>
+
+            <div className="project-detail-links">
+              {activeProject.links?.map((link) => (
+                <a
+                  key={link.href}
+                  href={link.href}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="project-detail-link"
+                >
+                  {link.label}
+                </a>
+              ))}
+            </div>
+
+            <div className="project-detail-tags">
+              {activeProject.tags.map((tag) => (
+                <span key={tag} className="tag is-dark tech-stack">
+                  {tag}
+                </span>
+              ))}
+            </div>
+
+            {activeProject.sections.map((section) => (
+              <section key={section.title} className="project-detail-section">
+                <h3 className="project-detail-section-title">{section.title}</h3>
+                <ul className="project-detail-list">
+                  {section.items.map((item) => (
+                    <li key={item}>{item}</li>
+                  ))}
+                </ul>
+              </section>
+            ))}
+          </div>
+        </aside>
       </div>
     </div>
   );

@@ -1,6 +1,4 @@
 import React from "react";
-import { Drawer } from "rsuite";
-import ProjectCarousel from "../../Views/Projects-Carousel/ProjectCarousel";
 
 const skillGroups = [
   {
@@ -100,7 +98,6 @@ const skillGroups = [
 ];
 
 export default function Skills() {
-  const [openProjects, setModalOpenProjects] = React.useState(false);
   return (
     <>
       <div className="skills-group">
@@ -111,14 +108,9 @@ export default function Skills() {
               {item}
             </span>
           ))}{" "}
-          <span
-            className="tag cursor-pointer border"
-            onClick={() => {
-              setModalOpenProjects(true);
-            }}
-          >
+          <a href="/projects" className="tag cursor-pointer border">
             Projects
-          </span>
+          </a>
         </div>
       </div>
       {skillGroups.slice(1).map((group) => (
@@ -133,19 +125,6 @@ export default function Skills() {
           </div>
         </div>
       ))}
-      <Drawer
-        size={"full"}
-        backdrop={"static"}
-        open={openProjects}
-        onClose={() => setModalOpenProjects(false)}
-      >
-        <Drawer.Header>
-          <Drawer.Title>Projects</Drawer.Title>
-        </Drawer.Header>
-        <Drawer.Body>
-          <ProjectCarousel />
-        </Drawer.Body>
-      </Drawer>
     </>
   );
 }

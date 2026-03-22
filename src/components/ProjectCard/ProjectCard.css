@@ -6,3 +6,71 @@
 .project-card {
     cursor: pointer;
 }
+
+.project-card-active .project-card-section {
+    border-color: rgba(60, 179, 113, 0.45) !important;
+    box-shadow: 0 16px 30px rgba(15, 23, 42, 0.08);
+}
+
+.project-card-section {
+    color: black;
+    width: 100%;
+    height: fit-content;
+    padding-inline: 2rem;
+    padding-block: 2rem;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.project-card-header {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+.project-header-title {
+    font-size: 20px;
+    text-align: start;
+    font-weight: 400;
+    margin: 0;
+}
+
+.project-card-status-dot {
+    color: #45f545;
+    margin-left: 5px;
+}
+
+.project-card-status-label {
+    color: rgba(52, 53, 65, 0.7);
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    margin-top: 0.4rem;
+    text-transform: uppercase;
+}
+
+.project-card-links {
+    display: flex;
+    font-size: 25px;
+    margin-left: 40px;
+}
+
+.project-card-summary {
+    color: rgba(52, 53, 65, 0.9);
+    font-size: 0.95rem;
+    line-height: 1.5;
+    margin-top: 0.85rem;
+    margin-bottom: 0;
+}
+
+.project-card-description {
+    font-size: 16px;
+    margin-top: 10px;
+    padding-left: 1.2rem;
+}
+
+.project-card-tags {
+    margin-top: 5px;
+    display: flex;
+    gap: 5px;
+    flex-wrap: wrap;
+}

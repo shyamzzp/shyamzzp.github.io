@@ -1,0 +1,131 @@
+.projects-page {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.projects-page-copy {
+  max-width: 42rem;
+}
+
+.projects-page-eyebrow {
+  color: #1d4ed8;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  margin-bottom: 0.35rem;
+  text-transform: uppercase;
+}
+
+.projects-page-title {
+  color: #111827;
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin-bottom: 0.45rem;
+}
+
+.projects-page-subtitle {
+  color: rgba(52, 53, 65, 0.82);
+  line-height: 1.6;
+  margin: 0;
+}
+
+.projects-layout {
+  display: grid;
+  gap: 1.25rem;
+  grid-template-columns: minmax(0, 1.2fr) minmax(300px, 0.8fr);
+  align-items: start;
+}
+
+.projects-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.project-detail-sidebar {
+  position: sticky;
+  top: 1.5rem;
+}
+
+.project-detail-shell {
+  background: rgba(255, 255, 255, 0.88);
+  border: 1px solid rgba(17, 24, 39, 0.08);
+  border-radius: 18px;
+  box-shadow: 0 18px 40px rgba(15, 23, 42, 0.08);
+  padding: 1.35rem;
+}
+
+.project-detail-eyebrow {
+  color: #1d4ed8;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  margin-bottom: 0.4rem;
+  text-transform: uppercase;
+}
+
+.project-detail-title {
+  color: #111827;
+  font-size: 1.35rem;
+  font-weight: 700;
+  margin-bottom: 0.55rem;
+}
+
+.project-detail-summary {
+  color: rgba(31, 41, 55, 0.84);
+  line-height: 1.6;
+  margin-bottom: 1rem;
+}
+
+.project-detail-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin-bottom: 1rem;
+}
+
+.project-detail-link {
+  border: 1px solid rgba(29, 78, 216, 0.14);
+  border-radius: 999px;
+  color: #1d4ed8;
+  font-size: 0.85rem;
+  font-weight: 600;
+  padding: 0.42rem 0.75rem;
+  text-decoration: none;
+}
+
+.project-detail-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  margin-bottom: 1rem;
+}
+
+.project-detail-section + .project-detail-section {
+  margin-top: 1rem;
+}
+
+.project-detail-section-title {
+  color: #111827;
+  font-size: 0.92rem;
+  font-weight: 700;
+  margin-bottom: 0.45rem;
+}
+
+.project-detail-list {
+  color: rgba(31, 41, 55, 0.84);
+  line-height: 1.6;
+  margin: 0;
+  padding-left: 1.1rem;
+}
+
+@media screen and (max-width: 1024px) {
+  .projects-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .project-detail-sidebar {
+    position: static;
+  }
+}
