@@ -530,6 +530,19 @@ hr {
   margin-bottom: 0.8rem !important;
 }
 
+.skills-group {
+  margin-bottom: 1rem;
+}
+
+.skills-group-heading {
+  color: rgba(52, 53, 65, 0.82);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  margin: 0 0 0.45rem;
+  text-transform: uppercase;
+}
+
 /* .rs-btn-subtle{
   background-color: #e5e5ea !important;
 } */

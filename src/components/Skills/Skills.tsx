@@ -4,10 +4,12 @@ import ProjectCarousel from "../../Views/Projects-Carousel/ProjectCarousel";
 
 const skillGroups = [
   {
+    title: "Platforms",
     className: "is-warning",
     items: ["Windows", "Linux"],
   },
   {
+    title: "Languages",
     className: "is-dark",
     items: [
       "TypeScript",
@@ -21,6 +23,7 @@ const skillGroups = [
     ],
   },
   {
+    title: "Frontend",
     className: "is-success",
     items: [
       "ReactJS",
@@ -34,6 +37,7 @@ const skillGroups = [
     ],
   },
   {
+    title: "Backend",
     className: "is-link",
     items: [
       "Node.js",
@@ -47,6 +51,7 @@ const skillGroups = [
     ],
   },
   {
+    title: "Data, Cloud & Infra",
     className: "is-light-grey-pink",
     items: [
       "PostgreSQL",
@@ -62,6 +67,7 @@ const skillGroups = [
     ],
   },
   {
+    title: "DevOps & Tools",
     className: "is-js-frameworks",
     items: [
       "Git",
@@ -77,6 +83,7 @@ const skillGroups = [
     ],
   },
   {
+    title: "Testing & Design",
     className: "is-light-orange",
     items: [
       "Jest",
@@ -96,29 +103,34 @@ export default function Skills() {
   const [openProjects, setModalOpenProjects] = React.useState(false);
   return (
     <>
-      <div className="tags">
-        {skillGroups[0].items.map((item) => (
-          <span key={item} className={`tag ${skillGroups[0].className}`}>
-            {item}
-          </span>
-        ))}{" "}
-        <span
-          className="tag cursor-pointer border"
-          onClick={() => {
-            setModalOpenProjects(true);
-          }}
-        >
-          Projects
-        </span>
-      </div>
-      <br />
-      {skillGroups.slice(1).map((group) => (
-        <div key={group.className} className="tags">
-          {group.items.map((item) => (
-            <span key={item} className={`tag ${group.className}`}>
+      <div className="skills-group">
+        <p className="skills-group-heading">{skillGroups[0].title}</p>
+        <div className="tags">
+          {skillGroups[0].items.map((item) => (
+            <span key={item} className={`tag ${skillGroups[0].className}`}>
               {item}
             </span>
-          ))}
+          ))}{" "}
+          <span
+            className="tag cursor-pointer border"
+            onClick={() => {
+              setModalOpenProjects(true);
+            }}
+          >
+            Projects
+          </span>
+        </div>
+      </div>
+      {skillGroups.slice(1).map((group) => (
+        <div key={group.title} className="skills-group">
+          <p className="skills-group-heading">{group.title}</p>
+          <div className="tags">
+            {group.items.map((item) => (
+              <span key={item} className={`tag ${group.className}`}>
+                {item}
+              </span>
+            ))}
+          </div>
         </div>
       ))}
       <Drawer
