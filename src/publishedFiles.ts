@@ -9,6 +9,11 @@ export const publishedFiles = [
   },
   { title: "Notes", href: "/notes.html", type: "HTML" },
   { title: "Prep-Arch Pitch", href: "/prep-arch-pitch.html", type: "HTML" },
+  {
+    title: "Voxos Brand Identity",
+    href: "/voxos_brand_identity.html",
+    type: "HTML",
+  },
   { title: "NM Archstudio 01", href: "/nm.archstudio_01.html", type: "HTML" },
   { title: "NM Archstudio 02", href: "/nm.archstudio_02.html", type: "HTML" },
   { title: "NM Archstudio 03", href: "/nm.archstudio_03.html", type: "HTML" },
