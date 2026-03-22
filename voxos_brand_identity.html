@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VoxOS — Brand Identity</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    min-height: 100vh;
+    background: #0D0D12;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Space Grotesk', sans-serif;
+    padding: 40px 20px;
+  }
+
+  /* subtle background grid */
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background-image:
+      linear-gradient(rgba(93,202,165,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(93,202,165,0.04) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+  }
+
+  /* ── iPad shell ── */
+  .ipad-outer {
+    width: 680px;
+    background: linear-gradient(160deg, #2E2E35 0%, #1A1A20 50%, #222228 100%);
+    border-radius: 44px;
+    padding: 18px;
+    box-shadow:
+      0 0 0 1px rgba(255,255,255,0.12),
+      0 0 0 2px rgba(0,0,0,0.6),
+      0 60px 120px rgba(0,0,0,0.7),
+      0 20px 40px rgba(0,0,0,0.5),
+      inset 0 1px 0 rgba(255,255,255,0.08);
+    position: relative;
+  }
+
+  /* side buttons */
+  .ipad-outer::before {
+    content: '';
+    position: absolute;
+    right: -4px; top: 120px;
+    width: 4px; height: 60px;
+    background: linear-gradient(180deg, #2a2a30, #1e1e24);
+    border-radius: 0 3px 3px 0;
+    box-shadow: 0 70px 0 #1e1e24, 0 140px 0 #1e1e24;
+  }
+  .ipad-outer::after {
+    content: '';
+    position: absolute;
+    left: -4px; top: 160px;
+    width: 4px; height: 80px;
+    background: linear-gradient(180deg, #2a2a30, #1e1e24);
+    border-radius: 3px 0 0 3px;
+  }
+
+  /* camera bar top */
+  .ipad-camera-bar {
+    height: 28px;
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 6px;
+    position: relative;
+  }
+  .ipad-camera {
+    width: 10px; height: 10px; border-radius: 50%;
+    background: #111116;
+    border: 1.5px solid #333338;
+    box-shadow: inset 0 0 0 2px #0a0a0f, 0 0 6px rgba(93,202,165,0.15);
+  }
+
+  /* screen bezel */
+  .ipad-screen {
+    background: #0A0A0F;
+    border-radius: 30px;
+    overflow: hidden;
+    position: relative;
+  }
+
+  /* screen inner content — scrollable */
+  .screen-content {
+    padding: 32px 28px 40px;
+    overflow-y: auto;
+    max-height: 820px;
+  }
+  .screen-content::-webkit-scrollbar { width: 0; }
+
+  /* ── Brand content ── */
+
+  /* Hero */
+  .hero {
+    display: flex; align-items: center; gap: 24px;
+    padding: 24px; margin-bottom: 14px;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(93,202,165,0.15);
+    border-radius: 20px;
+    position: relative; overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; top: -60px; right: -60px;
+    width: 200px; height: 200px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(93,202,165,0.08) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .logo-mark {
+    width: 64px; height: 64px; border-radius: 16px;
+    background: #0A0A0F;
+    border: 1.5px solid rgba(93,202,165,0.4);
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0; position: relative;
+    box-shadow: 0 0 20px rgba(93,202,165,0.12), inset 0 0 20px rgba(93,202,165,0.04);
+  }
+  .ring {
+    position: absolute; border-radius: 50%;
+    border: 1px solid rgba(93,202,165,0.2);
+    animation: pulse-ring 3s ease-in-out infinite;
+  }
+  @keyframes pulse-ring {
+    0%,100% { opacity: 0.2; transform: scale(1); }
+    50%      { opacity: 0.5; transform: scale(1.06); }
+  }
+  .ring:nth-child(2) { animation-delay: .5s; }
+  .ring:nth-child(3) { animation-delay: 1s; }
+  .logo-v {
+    font-family: 'Space Mono', monospace;
+    font-size: 18px; font-weight: 700; color: #5DCAA5;
+    position: relative; z-index: 2;
+  }
+
+  .hero-name {
+    font-family: 'Space Mono', monospace;
+    font-size: 34px; font-weight: 700;
+    letter-spacing: -.02em; line-height: 1;
+  }
+  .hero-name .vox { color: #FFFFFF; }
+  .hero-name .os  { color: #5DCAA5; }
+  .hero-tagline {
+    font-size: 12px; color: rgba(255,255,255,0.35);
+    margin-top: 6px; font-weight: 300; letter-spacing: .04em;
+  }
+  .hero-wake {
+    display: inline-flex; align-items: center; gap: 6px;
+    margin-top: 12px; padding: 4px 12px;
+    border: 1px solid rgba(93,202,165,0.3);
+    border-radius: 20px; font-family: 'Space Mono', monospace;
+    font-size: 10px; color: #5DCAA5; letter-spacing: .06em;
+  }
+  .hero-wake::before {
+    content: '';
+    width: 6px; height: 6px; border-radius: 50%;
+    background: #5DCAA5;
+    animation: blink 1.5s ease-in-out infinite;
+  }
+  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:.2} }
+
+  /* two col */
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px; }
+  .one-col  { margin-bottom: 10px; }
+
+  .panel {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 16px; padding: 14px;
+  }
+  .panel-label {
+    font-size: 9px; font-weight: 600; letter-spacing: .12em;
+    text-transform: uppercase; color: rgba(255,255,255,0.25);
+    margin-bottom: 12px; padding-bottom: 8px;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+
+  /* Colors */
+  .swatches { display: flex; gap: 6px; }
+  .swatch { flex: 1; border-radius: 10px; overflow: hidden; border: 1px solid rgba(255,255,255,0.06); }
+  .swatch-color { height: 36px; }
+  .swatch-info { padding: 5px 7px; background: rgba(255,255,255,0.04); }
+  .swatch-name { font-size: 9px; font-weight: 500; color: rgba(255,255,255,0.6); }
+  .swatch-hex  { font-family: 'Space Mono', monospace; font-size: 8px; color: rgba(255,255,255,0.3); margin-top: 1px; }
+
+  /* Typography */
+  .type-rows { display: flex; flex-direction: column; gap: 6px; }
+  .type-item { padding: 8px 10px; background: rgba(255,255,255,0.03); border-radius: 10px; border: 1px solid rgba(255,255,255,0.05); }
+  .type-role { font-size: 8px; color: rgba(255,255,255,0.25); letter-spacing: .08em; text-transform: uppercase; margin-bottom: 3px; }
+  .td { font-family: 'Space Grotesk', sans-serif; font-size: 20px; font-weight: 700; color: #fff; letter-spacing: -.02em; }
+  .tb { font-family: 'Space Grotesk', sans-serif; font-size: 12px; color: rgba(255,255,255,0.55); }
+  .tm { font-family: 'Space Mono', monospace; font-size: 10px; color: #5DCAA5; letter-spacing: .04em; }
+
+  /* Logo variants */
+  .logo-variants { display: flex; gap: 8px; }
+  .lv {
+    flex: 1; border-radius: 12px; padding: 16px 10px;
+    display: flex; flex-direction: column; align-items: center; gap: 8px;
+    border: 1px solid rgba(255,255,255,0.07);
+  }
+  .lv-label { font-size: 8px; color: rgba(255,255,255,0.25); letter-spacing: .08em; text-transform: uppercase; }
+  .lv-dark  { background: #0A0A0F; }
+  .lv-light { background: #F0F0EC; }
+  .lv-teal  { background: #1D9E75; }
+  .lv-icon  { background: #0A0A0F; border: 1px solid rgba(93,202,165,0.3); }
+
+  .wm { font-family: 'Space Mono', monospace; font-size: 16px; font-weight: 700; }
+  .wm-d .v { color:#fff; } .wm-d .o { color:#5DCAA5; }
+  .wm-l .v { color:#0A0A0F; } .wm-l .o { color:#1D9E75; }
+  .wm-t .v { color:#fff; }  .wm-t .o { color:#0A0A0F; }
+  .wm-icon { font-family:'Space Mono',monospace; font-size:26px; font-weight:700; color:#5DCAA5; }
+
+  /* Wave / live UI */
+  .wave-panel {
+    background: #0A0A0F;
+    border: 1px solid rgba(93,202,165,0.2);
+    border-radius: 16px; padding: 18px 20px;
+    display: flex; align-items: center; gap: 18px;
+  }
+  .wave-bars { display: flex; align-items: center; gap: 3px; height: 36px; flex-shrink: 0; }
+  .bar {
+    width: 3px; border-radius: 2px; background: #5DCAA5;
+    animation: wave 1.2s ease-in-out infinite;
+    transform-origin: center;
+  }
+  .bar:nth-child(1){height:25%;animation-delay:0s}
+  .bar:nth-child(2){height:55%;animation-delay:.1s}
+  .bar:nth-child(3){height:85%;animation-delay:.2s}
+  .bar:nth-child(4){height:100%;animation-delay:.3s}
+  .bar:nth-child(5){height:65%;animation-delay:.4s}
+  .bar:nth-child(6){height:85%;animation-delay:.3s}
+  .bar:nth-child(7){height:45%;animation-delay:.2s}
+  .bar:nth-child(8){height:25%;animation-delay:.1s}
+  @keyframes wave {
+    0%,100%{ opacity:.25; transform:scaleY(.3); }
+    50%     { opacity:1;   transform:scaleY(1); }
+  }
+  .wave-text { flex:1; }
+  .wave-listen { font-size:11px; color:rgba(255,255,255,0.3); font-weight:300; margin-bottom:3px; }
+  .wave-cmd   { font-size:14px; color:#fff; font-weight:500; line-height:1.3; }
+  .wave-state { font-family:'Space Mono',monospace; font-size:9px; color:#5DCAA5; letter-spacing:.06em; margin-top:8px; }
+
+  /* States */
+  .states { display: flex; gap: 6px; }
+  .state-pill {
+    flex:1; padding:10px 6px; border-radius:10px;
+    border:1px solid rgba(255,255,255,0.07);
+    background: rgba(255,255,255,0.02);
+    text-align:center;
+  }
+  .state-dot { width:7px;height:7px;border-radius:50%;margin:0 auto 6px; }
+  .state-name { font-size:10px;font-weight:500;color:rgba(255,255,255,0.7); }
+  .state-desc { font-size:8.5px;color:rgba(255,255,255,0.25);margin-top:2px; }
+
+  /* Home button bar */
+  .ipad-home-bar {
+    height: 24px;
+    display: flex; align-items: center; justify-content: center;
+    margin-top: 6px;
+  }
+  .home-indicator {
+    width: 120px; height: 4px; border-radius: 2px;
+    background: rgba(255,255,255,0.2);
+  }
+</style>
+</head>
+<body>
+
+<div class="ipad-outer">
+  <div class="ipad-camera-bar">
+    <div class="ipad-camera"></div>
+  </div>
+
+  <div class="ipad-screen">
+    <div class="screen-content">
+
+      <!-- Hero -->
+      <div class="hero">
+        <div class="logo-mark">
+          <div class="ring" style="width:54px;height:54px;"></div>
+          <div class="ring" style="width:40px;height:40px;"></div>
+          <div class="ring" style="width:26px;height:26px;"></div>
+          <span class="logo-v">V</span>
+        </div>
+        <div>
+          <div class="hero-name"><span class="vox">Vox</span><span class="os">OS</span></div>
+          <div class="hero-tagline">YOUR PHONE · NO SCREEN REQUIRED</div>
+          <div class="hero-wake">HEY VOX — WAKE WORD</div>
+        </div>
+      </div>
+
+      <!-- Colors + Typography -->
+      <div class="two-col">
+        <div class="panel">
+          <div class="panel-label">Color palette</div>
+          <div class="swatches">
+            <div class="swatch">
+              <div class="swatch-color" style="background:#0A0A0F;border-bottom:1px solid rgba(255,255,255,0.06)"></div>
+              <div class="swatch-info"><div class="swatch-name">Void</div><div class="swatch-hex">#0A0A0F</div></div>
+            </div>
+            <div class="swatch">
+              <div class="swatch-color" style="background:#5DCAA5;"></div>
+              <div class="swatch-info"><div class="swatch-name">Voice</div><div class="swatch-hex">#5DCAA5</div></div>
+            </div>
+            <div class="swatch">
+              <div class="swatch-color" style="background:#1D9E75;"></div>
+              <div class="swatch-info"><div class="swatch-name">Active</div><div class="swatch-hex">#1D9E75</div></div>
+            </div>
+            <div class="swatch">
+              <div class="swatch-color" style="background:#F0F0EC;border-bottom:1px solid rgba(0,0,0,0.08)"></div>
+              <div class="swatch-info"><div class="swatch-name">Surface</div><div class="swatch-hex">#F0F0EC</div></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-label">Typography</div>
+          <div class="type-rows">
+            <div class="type-item">
+              <div class="type-role">Display — Space Grotesk 700</div>
+              <div class="td">VoxOS</div>
+            </div>
+            <div class="type-item">
+              <div class="type-role">Body — Space Grotesk 400</div>
+              <div class="tb">Calling Priya now.</div>
+            </div>
+            <div class="type-item">
+              <div class="type-role">Status — Space Mono</div>
+              <div class="tm">LISTENING · 0.94s</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Logo variants -->
+      <div class="panel one-col">
+        <div class="panel-label">Logo variants</div>
+        <div class="logo-variants">
+          <div class="lv lv-dark">
+            <div class="wm wm-d"><span class="v">Vox</span><span class="o">OS</span></div>
+            <div class="lv-label">Primary dark</div>
+          </div>
+          <div class="lv lv-light">
+            <div class="wm wm-l"><span class="v">Vox</span><span class="o">OS</span></div>
+            <div class="lv-label">Light bg</div>
+          </div>
+          <div class="lv lv-teal">
+            <div class="wm wm-t"><span class="v">Vox</span><span class="o">OS</span></div>
+            <div class="lv-label">Accent bg</div>
+          </div>
+          <div class="lv lv-icon">
+            <div class="wm-icon">V</div>
+            <div class="lv-label" style="color:rgba(93,202,165,0.4);">Icon only</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Live UI preview -->
+      <div class="wave-panel one-col">
+        <div class="wave-bars">
+          <div class="bar"></div><div class="bar"></div><div class="bar"></div>
+          <div class="bar"></div><div class="bar"></div><div class="bar"></div>
+          <div class="bar"></div><div class="bar"></div>
+        </div>
+        <div class="wave-text">
+          <div class="wave-listen">Hey Vox —</div>
+          <div class="wave-cmd">"Call Priya and tell her I'm on my way"</div>
+          <div class="wave-state">PROCESSING · RHINO INTENT MATCHED</div>
+        </div>
+      </div>
+
+      <!-- States -->
+      <div class="panel one-col" style="margin-bottom:0;">
+        <div class="panel-label">App states — visual language</div>
+        <div class="states">
+          <div class="state-pill">
+            <div class="state-dot" style="background:#3a3a40;"></div>
+            <div class="state-name">Idle</div>
+            <div class="state-desc">Waiting for wake word</div>
+          </div>
+          <div class="state-pill">
+            <div class="state-dot" style="background:#5DCAA5;box-shadow:0 0 6px rgba(93,202,165,0.5);"></div>
+            <div class="state-name">Listening</div>
+            <div class="state-desc">Cobra active</div>
+          </div>
+          <div class="state-pill">
+            <div class="state-dot" style="background:#EF9F27;box-shadow:0 0 6px rgba(239,159,39,0.5);"></div>
+            <div class="state-name">Processing</div>
+            <div class="state-desc">Claude resolving</div>
+          </div>
+          <div class="state-pill">
+            <div class="state-dot" style="background:#7F77DD;box-shadow:0 0 6px rgba(127,119,221,0.5);"></div>
+            <div class="state-name">Speaking</div>
+            <div class="state-desc">Orca playing</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="ipad-home-bar">
+      <div class="home-indicator"></div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
