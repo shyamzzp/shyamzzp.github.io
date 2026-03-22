@@ -1,5 +1,6 @@
 // @ts-ignore
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import Blogs from "./Blogs";
 import Home from "./Home";
 import Help from "./Help";
 import Work from "./Work";
@@ -9,6 +10,7 @@ function App() {
     <Router>
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/blogs" element={<Blogs />} />
         <Route path="/help" element={<Help />} />
         <Route path="/work" element={<Work />} />
       </Routes>
