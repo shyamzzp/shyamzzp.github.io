@@ -1,0 +1,212 @@
+<style>
+* { box-sizing: border-box; }
+body { margin: 0; }
+
+.board-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 0 14px; flex-wrap: wrap; gap: 8px;
+}
+.board-title { font-size: 16px; font-weight: 500; color: var(--color-text-primary); }
+.filters { display: flex; gap: 6px; flex-wrap: wrap; }
+.filter-btn {
+  font-size: 12px; padding: 4px 10px; border-radius: 20px;
+  border: 0.5px solid var(--color-border-secondary);
+  background: transparent; color: var(--color-text-secondary);
+  cursor: pointer; transition: all .15s;
+}
+.filter-btn.active { background: var(--color-text-primary); color: var(--color-background-primary); border-color: var(--color-text-primary); }
+
+.stats-row {
+  display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 8px; margin-bottom: 14px;
+}
+.stat-card {
+  background: var(--color-background-secondary);
+  border-radius: var(--border-radius-md); padding: 10px 12px;
+}
+.stat-label { font-size: 11px; color: var(--color-text-secondary); margin-bottom: 4px; }
+.stat-val { font-size: 20px; font-weight: 500; color: var(--color-text-primary); }
+
+.columns { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 10px; align-items: start; }
+
+.col-header {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 8px; padding-bottom: 8px;
+  border-bottom: 2px solid var(--col-color);
+}
+.col-title { font-size: 13px; font-weight: 500; color: var(--color-text-primary); }
+.col-count {
+  font-size: 11px; font-weight: 500; padding: 2px 7px;
+  border-radius: 10px; background: var(--col-color-lt); color: var(--col-color);
+}
+
+.task-card {
+  background: var(--color-background-primary);
+  border: 0.5px solid var(--color-border-tertiary);
+  border-radius: var(--border-radius-md);
+  padding: 10px 11px; margin-bottom: 7px;
+  cursor: pointer; transition: border-color .15s;
+}
+.task-card:hover { border-color: var(--color-border-secondary); }
+.task-card.hidden { display: none; }
+
+.task-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 6px; margin-bottom: 6px; }
+.task-name { font-size: 12.5px; font-weight: 500; color: var(--color-text-primary); line-height: 1.35; }
+.phase-dot {
+  width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; margin-top: 3px;
+}
+.task-meta { display: flex; align-items: center; gap: 5px; flex-wrap: wrap; }
+.tag {
+  font-size: 10.5px; padding: 2px 7px; border-radius: 10px;
+  font-weight: 500;
+}
+.tag-p1 { background: #E1F5EE; color: #0F6E56; }
+.tag-p2 { background: #EEEDFE; color: #534AB7; }
+.tag-p3 { background: #FAEEDA; color: #854F0B; }
+.tag-blocker { background: #FCEBEB; color: #A32D2D; }
+.task-days { font-size: 10.5px; color: var(--color-text-tertiary); margin-left: auto; }
+
+.priority-badge {
+  font-size: 10px; padding: 1px 5px; border-radius: 4px; font-weight: 500;
+}
+.p-critical { background: #FCEBEB; color: #A32D2D; }
+.p-high { background: #FAEEDA; color: #854F0B; }
+.p-medium { background: #E1F5EE; color: #0F6E56; }
+.p-low { background: #F1EFE8; color: #5F5E5A; }
+
+.dep-note { font-size: 10.5px; color: var(--color-text-tertiary); margin-top: 4px; }
+</style>
+
+<div style="padding: 1rem 0 0;">
+
+<div class="board-header">
+  <div class="board-title">Voice app — development board</div>
+  <div class="filters">
+    <button class="filter-btn active" onclick="filterPhase('all', this)">All</button>
+    <button class="filter-btn" onclick="filterPhase('p1', this)">Phase 1</button>
+    <button class="filter-btn" onclick="filterPhase('p2', this)">Phase 2</button>
+    <button class="filter-btn" onclick="filterPhase('p3', this)">Phase 3</button>
+  </div>
+</div>
+
+<div class="stats-row">
+  <div class="stat-card"><div class="stat-label">Total tasks</div><div class="stat-val" id="s-total">20</div></div>
+  <div class="stat-card"><div class="stat-label">Phase 1 tasks</div><div class="stat-val" id="s-p1" style="color:#1D9E75">8</div></div>
+  <div class="stat-card"><div class="stat-label">Est. weeks (P1)</div><div class="stat-val" id="s-weeks">6</div></div>
+  <div class="stat-card"><div class="stat-label">Blockers</div><div class="stat-val" id="s-blockers" style="color:#A32D2D">3</div></div>
+</div>
+
+<div class="columns" id="board">
+
+  <div>
+    <div class="col-header" style="--col-color:#5F5E5A; --col-color-lt:#F1EFE8">
+      <span class="col-title">Backlog</span>
+      <span class="col-count" id="cnt-backlog">8</span>
+    </div>
+    <div id="col-backlog"></div>
+  </div>
+
+  <div>
+    <div class="col-header" style="--col-color:#534AB7; --col-color-lt:#EEEDFE">
+      <span class="col-title">Up next</span>
+      <span class="col-count" id="cnt-next">5</span>
+    </div>
+    <div id="col-next"></div>
+  </div>
+
+  <div>
+    <div class="col-header" style="--col-color:#BA7517; --col-color-lt:#FAEEDA">
+      <span class="col-title">In progress</span>
+      <span class="col-count" id="cnt-progress">4</span>
+    </div>
+    <div id="col-progress"></div>
+  </div>
+
+  <div>
+    <div class="col-header" style="--col-color:#1D9E75; --col-color-lt:#E1F5EE">
+      <span class="col-title">Done</span>
+      <span class="col-count" id="cnt-done">3</span>
+    </div>
+    <div id="col-done"></div>
+  </div>
+
+</div>
+</div>
+
+<script>
+const PHASE_COLORS = { p1: '#1D9E75', p2: '#534AB7', p3: '#BA7517' };
+
+const tasks = [
+  { id:1,  col:'progress', phase:'p1', name:'Android project setup', priority:'critical', days:'2d', dep:'', detail:'Init React Native / Kotlin project, configure build tools, add Picovoice SDK dependencies' },
+  { id:2,  col:'progress', phase:'p1', name:'Picovoice access key', priority:'critical', days:'1d', dep:'', detail:'Register at console.picovoice.ai, generate AccessKey, store securely in env config' },
+  { id:3,  col:'progress', phase:'p1', name:'Microphone permission flow', priority:'critical', days:'2d', dep:'', detail:'Android runtime permission request, handle deny/grant states, foreground service setup' },
+  { id:4,  col:'progress', phase:'p1', name:'Push-to-talk prototype', priority:'high', days:'3d', dep:'Needs #3', detail:'Basic UI button that starts/stops mic recording — validates audio pipeline before wake word' },
+  { id:5,  col:'next',     phase:'p1', name:'Porcupine integration', priority:'critical', days:'3d', dep:'Needs #1 #2', detail:'Embed Porcupine SDK, train custom wake word ("Hey [AppName]"), configure sensitivity 0.5' },
+  { id:6,  col:'next',     phase:'p1', name:'Cobra VAD integration', priority:'high', days:'2d', dep:'Needs #5', detail:'Detect when user stops speaking, configure silence threshold, trigger Rhino on speech end' },
+  { id:7,  col:'next',     phase:'p1', name:'Rhino speech-to-intent', priority:'high', days:'4d', dep:'Needs #6', detail:'Define context (commands: call, text, alarm, open app), test structured intent parsing' },
+  { id:8,  col:'next',     phase:'p1', name:'Orca TTS response', priority:'high', days:'3d', dep:'Needs #7', detail:'Integrate Orca, generate voice responses, handle audio playback on Android' },
+  { id:9,  col:'next',     phase:'p1', name:'Full voice loop test', priority:'high', days:'3d', dep:'Needs #5-#8', detail:'End-to-end: wake word → Cobra → Rhino → action → Orca → back to listening' },
+  { id:10, col:'backlog',  phase:'p1', name:'Phone actions (calls/SMS)', priority:'medium', days:'4d', dep:'Needs #9', detail:'Android Telephony API, call/SMS intents, permission handling for CALL_PHONE' },
+  { id:11, col:'backlog',  phase:'p2', name:'Koala noise suppression', priority:'medium', days:'2d', dep:'Needs #3', detail:'Wrap mic stream through Koala before Porcupine — improves accuracy in noisy environments' },
+  { id:12, col:'backlog',  phase:'p2', name:'Cheetah streaming STT', priority:'medium', days:'4d', dep:'Needs #6', detail:'Add free-form speech transcription path for open queries like "what is the weather"' },
+  { id:13, col:'backlog',  phase:'p2', name:'LLM intent engine', priority:'high', days:'5d', dep:'Needs #12', detail:'Connect Claude/Gemini API, pass Rhino/Cheetah output, resolve context and ambiguity' },
+  { id:14, col:'backlog',  phase:'p2', name:'Web queries (weather/search)', priority:'medium', days:'3d', dep:'Needs #13', detail:'Integrate weather API and search API, route open queries through LLM to web data' },
+  { id:15, col:'backlog',  phase:'p2', name:'App open integrations', priority:'medium', days:'3d', dep:'Needs #10', detail:'Open Spotify, Maps, Gmail via Android intents — voice-triggered deep links' },
+  { id:16, col:'backlog',  phase:'p2', name:'Conversational context', priority:'medium', days:'4d', dep:'Needs #13', detail:'Maintain session memory across turns — resolve "him", "her", "it" references correctly' },
+  { id:17, col:'backlog',  phase:'p3', name:'Eagle speaker recognition', priority:'low', days:'5d', dep:'Needs P2 done', detail:'Enrol voice profiles, personalise responses per user — "your calendar" vs "a calendar"' },
+  { id:18, col:'backlog',  phase:'p3', name:'iOS port', priority:'low', days:'7d', dep:'Needs P2 done', detail:'Adapt for iOS mic restrictions — push-to-talk only, foreground-only listening, App Store review' },
+  { id:19, col:'done',     phase:'p1', name:'Idea scoping & stack decision', priority:'high', days:'done', dep:'', detail:'Android-first confirmed, Picovoice stack chosen, push-to-talk MVP approach agreed' },
+  { id:20, col:'done',     phase:'p1', name:'Architecture diagram', priority:'medium', days:'done', dep:'', detail:'Full workflow mapped: mic → Porcupine → Cobra → Rhino/Cheetah → LLM → action → Orca' },
+  { id:21, col:'done',     phase:'p1', name:'PDF reference doc', priority:'low', days:'done', dep:'', detail:'Printable architecture + workflow PDF exported for reference' },
+];
+
+function phaseTag(p) {
+  const labels = { p1:'Phase 1', p2:'Phase 2', p3:'Phase 3' };
+  return `<span class="tag tag-${p}">${labels[p]}</span>`;
+}
+function priorityBadge(p) {
+  const map = { critical:'p-critical', high:'p-high', medium:'p-medium', low:'p-low' };
+  return `<span class="priority-badge ${map[p]}">${p}</span>`;
+}
+
+function renderBoard(filter) {
+  const cols = { backlog:[], next:[], progress:[], done:[] };
+  tasks.forEach(t => {
+    if (filter !== 'all' && t.phase !== filter) return;
+    cols[t.col].push(t);
+  });
+
+  ['backlog','next','progress','done'].forEach(col => {
+    const el = document.getElementById('col-' + col);
+    el.innerHTML = cols[col].map(t => `
+      <div class="task-card" onclick="sendPrompt('Tell me more about the task: ${t.name}')">
+        <div class="task-top">
+          <span class="task-name">${t.name}</span>
+          <span class="phase-dot" style="background:${PHASE_COLORS[t.phase]}"></span>
+        </div>
+        <div class="task-meta">
+          ${phaseTag(t.phase)}
+          ${priorityBadge(t.priority)}
+          ${t.days !== 'done' ? `<span class="task-days">${t.days}</span>` : ''}
+        </div>
+        ${t.dep ? `<div class="dep-note">${t.dep}</div>` : ''}
+      </div>
+    `).join('');
+    document.getElementById('cnt-' + col).textContent = cols[col].length;
+  });
+
+  const visible = tasks.filter(t => filter === 'all' || t.phase === filter);
+  document.getElementById('s-total').textContent = visible.length;
+  const p1 = visible.filter(t => t.phase === 'p1').length;
+  document.getElementById('s-p1').textContent = p1;
+  const blockers = visible.filter(t => t.priority === 'critical' && t.col !== 'done').length;
+  document.getElementById('s-blockers').textContent = blockers;
+}
+
+function filterPhase(phase, btn) {
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderBoard(phase);
+}
+
+renderBoard('all');
+</script>
