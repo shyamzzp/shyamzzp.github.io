@@ -2,13 +2,106 @@ import React from "react";
 import { Drawer } from "rsuite";
 import ProjectCarousel from "../../Views/Projects-Carousel/ProjectCarousel";
 
+const skillGroups = [
+  {
+    className: "is-warning",
+    items: ["Windows", "Linux"],
+  },
+  {
+    className: "is-dark",
+    items: [
+      "TypeScript",
+      "JavaScript",
+      "Python",
+      "Java",
+      "C# (UWP/WPF)",
+      "SQL",
+      "SuiteScript",
+      "PHP",
+    ],
+  },
+  {
+    className: "is-success",
+    items: [
+      "ReactJS",
+      "Next.js",
+      "Vue.js",
+      "NuxtJS",
+      "TailwindCSS",
+      "GraphQL",
+      "WebSockets",
+      "D3.js",
+    ],
+  },
+  {
+    className: "is-link",
+    items: [
+      "Node.js",
+      "Express.js",
+      "NestJS",
+      "FastAPI",
+      "Flask",
+      "NetSuite",
+      "Kony Visualizer",
+      "Chrome Extensions",
+    ],
+  },
+  {
+    className: "is-light-grey-pink",
+    items: [
+      "PostgreSQL",
+      "MySQL",
+      "MongoDB",
+      "Redis",
+      "NoSQL",
+      "Elasticsearch",
+      "Oracle Cloud",
+      "AWS (EC2/S3/Lambda)",
+      "Docker",
+      "Kubernetes",
+    ],
+  },
+  {
+    className: "is-js-frameworks",
+    items: [
+      "Git",
+      "GitHub",
+      "GitHub Actions",
+      "GitLab",
+      "GitLab CI",
+      "Perforce",
+      "Jenkins",
+      "CI/CD",
+      "JIRA",
+      "Postman",
+    ],
+  },
+  {
+    className: "is-light-orange",
+    items: [
+      "Jest",
+      "Jasmine",
+      "Karma",
+      "Playwright",
+      "Nightwatch",
+      "Selenium",
+      "REST Assured",
+      "Figma",
+      "Sketch",
+    ],
+  },
+];
+
 export default function Skills() {
   const [openProjects, setModalOpenProjects] = React.useState(false);
   return (
     <>
       <div className="tags">
-        <span className="tag is-warning">Windows</span>
-        <span className="tag is-warning">Linux</span>{" "}
+        {skillGroups[0].items.map((item) => (
+          <span key={item} className={`tag ${skillGroups[0].className}`}>
+            {item}
+          </span>
+        ))}{" "}
         <span
           className="tag cursor-pointer border"
           onClick={() => {
@@ -19,58 +112,15 @@ export default function Skills() {
         </span>
       </div>
       <br />
-      <div className="tags">
-        <span className="tag is-dark">Python</span>
-        <span className="tag is-dark">Java - Spring</span>
-        <span className="tag is-dark">MongoDB</span>
-        <span className="tag is-dark">GraphQL</span>
-        <span className="tag is-dark">NodeJS</span>
-        <span className="tag is-dark">C# - UWP/WPF</span>
-      </div>
-      <div className="tags">
-        <span className="tag is-success">TypeScript</span>
-        <span className="tag is-success">Javascript</span>
-        <span className="tag is-success">TailwindCSS</span>
-        <span className="tag is-success">NodeJS</span>
-        <span className="tag is-success">ReactJS</span>
-        <span className="tag is-success">NextJS</span>
-        <span className="tag is-success">NestJS</span>
-      </div>
-      <div className="tags">
-        <span className="tag is-link">Github</span>
-        <span className="tag is-link">Github - Actions/Workflows</span>
-        <span className="tag is-link">JIRA</span>
-        <span className="tag is-link">CI/CD</span>
-        <span className="tag is-link">AWS - Lambda/EC2</span>
-        <span className="tag is-link">Docker</span>
-      </div>
-      <div className="tags">
-        <span className="tag is-link">Figma (Design & Prototype)</span>
-        <span className="tag is-link">Sketch</span>
-        <span className="tag is-link">Chrome Extensions</span>
-        <span className="tag is-link">Postman</span>
-      </div>
-      <div className="tags">
-        <span className="tag is-light-grey-pink">Playwright</span>
-        <span className="tag is-light-grey-pink">NightWatch</span>
-        <span className="tag is-light-grey-pink">MQTT</span>
-        <span className="tag is-light-grey-pink">Mosquito</span>
-        <span className="tag is-light-grey-pink">
-          D3(Data-Driven Documents)
-        </span>
-      </div>
-      <div className="tags">
-        <span className="tag is-js-frameworks">Ant Design (antd)</span>
-        <span className="tag is-js-frameworks">Material UI (mui)</span>
-        <span className="tag is-js-frameworks">Shadcn UI</span>
-        <span className="tag is-js-frameworks">Framework7</span>
-        <span className="tag is-js-frameworks">NextUI</span>
-      </div>
-
-      <div className="tags">
-        <span className="tag is-light-orange">RasberryPi</span>
-        <span className="tag is-light-orange">Embedded System - Arduino</span>
-      </div>
+      {skillGroups.slice(1).map((group) => (
+        <div key={group.className} className="tags">
+          {group.items.map((item) => (
+            <span key={item} className={`tag ${group.className}`}>
+              {item}
+            </span>
+          ))}
+        </div>
+      ))}
       <Drawer
         size={"full"}
         backdrop={"static"}
