@@ -530,6 +530,15 @@ hr {
   margin-bottom: 0.8rem !important;
 }
 
+.skills-group .tag {
+  height: auto;
+  max-width: 12rem;
+  min-height: 2em;
+  white-space: normal;
+  word-break: break-word;
+  text-align: center;
+}
+
 .skills-group {
   margin-bottom: 1rem;
 }
