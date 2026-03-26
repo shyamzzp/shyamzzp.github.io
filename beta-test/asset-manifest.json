@@ -1,0 +1,26 @@
+{
+  "files": {
+    "main.css": "/beta-test/static/css/main.ab3f9ccb.css",
+    "main.js": "/beta-test/static/js/main.3fb6fd08.js",
+    "static/js/787.27502e5e.chunk.js": "/beta-test/static/js/787.27502e5e.chunk.js",
+    "static/media/skype.png": "/beta-test/static/media/skype.ab4e958cf232a0d52b44.png",
+    "static/media/cv.png": "/beta-test/static/media/cv.02b00606e243f8945ade.png",
+    "static/media/live.png": "/beta-test/static/media/live.73c390f0374e4a7ae99c.png",
+    "static/media/whatsapp.png": "/beta-test/static/media/whatsapp.1dd8ca2765f1f177ab22.png",
+    "static/media/stack-overflow.png": "/beta-test/static/media/stack-overflow.579cff432dec19bc3d23.png",
+    "static/media/github.png": "/beta-test/static/media/github.f11021803f68852df283.png",
+    "static/media/linkedin.png": "/beta-test/static/media/linkedin.f249b38224ca41a0b909.png",
+    "static/media/zero-day-vulnerability.md": "/beta-test/static/media/zero-day-vulnerability.ba1d606104404f1f45bd.md",
+    "index.html": "/beta-test/index.html",
+    "static/media/agile-development.md": "/beta-test/static/media/agile-development.4ce4456c57805cf3acf0.md",
+    "static/media/github-site.md": "/beta-test/static/media/github-site.4ce4456c57805cf3acf0.md",
+    "static/media/not-available.md": "/beta-test/static/media/not-available.730b22ad26a5448338a4.md",
+    "main.ab3f9ccb.css.map": "/beta-test/static/css/main.ab3f9ccb.css.map",
+    "main.3fb6fd08.js.map": "/beta-test/static/js/main.3fb6fd08.js.map",
+    "787.27502e5e.chunk.js.map": "/beta-test/static/js/787.27502e5e.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.ab3f9ccb.css",
+    "static/js/main.3fb6fd08.js"
+  ]
+}

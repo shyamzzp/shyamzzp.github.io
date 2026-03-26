@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Voice App — Flutter Tech Stack</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --teal-50: #E1F5EE; --teal-400: #1D9E75; --teal-600: #0F6E56; --teal-900: #04342C;
+    --purple-50: #EEEDFE; --purple-200: #CECBF6; --purple-600: #534AB7; --purple-900: #26215C;
+    --amber-50: #FAEEDA; --amber-200: #FAC775; --amber-600: #854F0B; --amber-900: #412402;
+    --blue-50: #E6F1FB; --blue-200: #B5D4F4; --blue-600: #185FA5; --blue-900: #042C53;
+    --gray-50: #F1EFE8; --gray-200: #D3D1C7; --gray-600: #5F5E5A; --gray-900: #2C2C2A;
+    --bg: #FAFAF8;
+    --surface: #FFFFFF;
+    --ink: #1A1A18;
+    --muted: #6B6A64;
+    --border: rgba(0,0,0,0.08);
+  }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    padding: 40px 32px 60px;
+    max-width: 920px;
+    margin: 0 auto;
+    min-height: 100vh;
+  }
+
+  /* Header */
+  .header { margin-bottom: 36px; }
+  .header-eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; font-weight: 500; letter-spacing: .12em;
+    text-transform: uppercase; color: var(--teal-400);
+    margin-bottom: 8px;
+  }
+  .header-title {
+    font-size: 28px; font-weight: 500; line-height: 1.2;
+    color: var(--ink); margin-bottom: 6px;
+  }
+  .header-sub { font-size: 14px; color: var(--muted); font-weight: 300; }
+
+  /* Stack layers */
+  .stack { display: flex; flex-direction: column; gap: 12px; }
+
+  .layer {
+    border-radius: 14px;
+    border: 1px solid var(--border);
+    overflow: hidden;
+  }
+
+  .layer-header {
+    padding: 9px 16px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .layer-header-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase;
+  }
+  .layer-header-note {
+    font-size: 11px; opacity: .65;
+  }
+
+  .layer-body {
+    padding: 12px 14px 14px;
+    display: grid; gap: 8px;
+  }
+
+  /* Package cards */
+  .pkg {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 10px 12px;
+    transition: border-color .15s, transform .1s;
+    cursor: default;
+  }
+  .pkg:hover { border-color: rgba(0,0,0,0.18); transform: translateY(-1px); }
+
+  .pkg-name {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11.5px; font-weight: 500;
+    color: var(--ink); margin-bottom: 3px;
+  }
+  .pkg-desc { font-size: 11.5px; color: var(--muted); line-height: 1.45; }
+
+  .badges { display: flex; gap: 5px; margin-top: 7px; flex-wrap: wrap; }
+  .badge {
+    font-size: 9.5px; font-weight: 600; padding: 2px 7px;
+    border-radius: 20px; letter-spacing: .02em; text-transform: uppercase;
+  }
+  .badge-essential   { background: var(--teal-50);   color: var(--teal-600); }
+  .badge-recommended { background: var(--purple-50); color: var(--purple-600); }
+  .badge-optional    { background: var(--gray-50);   color: var(--gray-600); }
+
+  /* Layer color themes */
+  .theme-blue   { background: var(--blue-50); }
+  .theme-teal   { background: var(--teal-50); }
+  .theme-gray   { background: var(--gray-50); }
+  .theme-purple { background: var(--purple-50); }
+  .theme-amber  { background: var(--amber-50); }
+
+  .header-blue   { background: var(--blue-200);   color: var(--blue-900); }
+  .header-teal   { background: #9FE1CB;            color: var(--teal-900); }
+  .header-gray   { background: var(--gray-200);   color: var(--gray-900); }
+  .header-purple { background: var(--purple-200); color: var(--purple-900); }
+  .header-amber  { background: var(--amber-200);  color: var(--amber-900); }
+
+  /* Grid layouts per layer */
+  .grid-3 { grid-template-columns: repeat(3, minmax(0,1fr)); }
+  .grid-4 { grid-template-columns: repeat(4, minmax(0,1fr)); }
+
+  /* Legend */
+  .legend {
+    display: flex; align-items: center; gap: 16px;
+    margin-top: 20px; padding-top: 16px;
+    border-top: 1px solid var(--border);
+    flex-wrap: wrap;
+  }
+  .legend-label { font-size: 11px; color: var(--muted); margin-right: 4px; }
+  .legend-item { display: flex; align-items: center; gap: 5px; font-size: 11px; color: var(--muted); }
+
+  /* Footer */
+  .footer {
+    margin-top: 28px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px; color: var(--muted);
+    opacity: .6;
+  }
+
+  @media (max-width: 600px) {
+    .grid-3, .grid-4 { grid-template-columns: repeat(2, minmax(0,1fr)); }
+    body { padding: 24px 16px 40px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-eyebrow">Voice-first Android app</div>
+  <div class="header-title">Flutter + Python tech stack</div>
+  <div class="header-sub">Picovoice on-device voice engine · FastAPI + Claude backend · Android-first</div>
+</div>
+
+<div class="stack">
+
+  <!-- App Framework -->
+  <div class="layer theme-blue">
+    <div class="layer-header header-blue">
+      <span class="layer-header-label">App framework</span>
+      <span class="layer-header-note">Your Flutter project</span>
+    </div>
+    <div class="layer-body grid-3">
+      <div class="pkg">
+        <div class="pkg-name">Flutter 3.19+</div>
+        <div class="pkg-desc">Dart-based cross-platform — Android first, iOS later</div>
+        <div class="badges"><span class="badge badge-essential">essential</span></div>
+      </div>
+      <div class="pkg">
+        <div class="pkg-name">Riverpod 2</div>
+        <div class="pkg-desc">State management for voice session, app state, async streams</div>
+        <div class="badges"><span class="badge badge-recommended">recommended</span></div>
+      </div>
+      <div class="pkg">
+        <div class="pkg-name">go_router</div>
+        <div class="pkg-desc">Navigation — minimal UI means minimal routing needed</div>
+        <div class="badges"><span class="badge badge-optional">optional</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Picovoice -->
+  <div class="layer theme-teal">
+    <div class="layer-header header-teal">
+      <span class="layer-header-label">Voice engine — Picovoice Flutter SDKs</span>
+      <span class="layer-header-note">All on-device · official Dart packages</span>
+    </div>
+    <div class="layer-body grid-4">
+      <div class="pkg">
+        <div class="pkg-name">porcupine_flutter</div>
+        <div class="pkg-desc">Wake word detection — custom phrase, always-on loop</div>
+        <div class="badges"><span class="badge badge-essential">essential</span></div>
+      </div>
+      <div class="pkg">
+        <div class="pkg-name">cobra_flutter</div>
+        <div class="pkg-desc">Voice activity detection — detects speech end</div>
+        <div class="badges"><span class="badge badge-essential">essential</span></div>
+      </div>
+      <div class="pkg">
+        <div class="pkg-name">rhino_flutter</div>
+        <div class="pkg-desc">Speech-to-intent — structured command parsing</div>
+        <div class="badges"><span class="badge badge-essential">essential</span></div>
+      </div>
+      <div class="pkg">
+        <div class="pkg-name">orca_flutter</div>
+        <div class="pkg-desc">On-device text-to-speech response output</div>
+        <div class="badges"><span class="badge badge-essential">essential</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Audio & Permissions -->
+  <div class="layer theme-gray">
+    <div class="layer-header header-gray">
+      <span class="layer-header-label">Audio &amp; permissions</span>
+      <span class="layer-header-note">Flutter native bridge</span>
+    </div>
+    <div class="layer-body grid-3">
+      <div class="pkg">
+        <div class="pkg-name">flutter_sound</div>
+        <div class="pkg-desc">Raw PCM mic stream — required for Picovoice frame input at 16kHz</div>
+        <div class="badges"><span class="badge badge-essential">essential</span></div>
+      </div>
+      <div class="pkg">
+        <div class="pkg-name">permission_handler</div>
+        <div class="pkg-desc">Runtime RECORD_AUDIO permission request on Android</div>
+        <div class="badges"><span class="badge badge-essential">essential</span></div>
+      </div>
+      <div class="pkg">
+        <div class="pkg-name">just_audio</div>
+        <div class="pkg-desc">Low-latency audio playback for Orca TTS output</div>
+        <div class="badges"><span class="badge badge-essential">essential</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Python Backend -->
+  <div class="layer theme-purple">
+    <div class="layer-header header-purple">
+      <span class="layer-header-label">AI intent engine — Python backend</span>
+      <span class="layer-header-note">FastAPI + Anthropic SDK</span>
+    </div>
+    <div class="layer-body grid-3">
+      <div class="pkg">
+        <div class="pkg-name">FastAPI</div>
+        <div class="pkg-desc">Async Python API server — single /intent endpoint, auto-docs at /docs</div>
+        <div class="badges"><span class="badge badge-essential">essential</span></div>
+      </div>
+      <div class="pkg">
+        <div class="pkg-name">anthropic</div>
+        <div class="pkg-desc">Python SDK — Claude API for context resolution and ambiguity handling</div>
+        <div class="badges"><span class="badge badge-essential">essential</span></div>
+      </div>
+      <div class="pkg">
+        <div class="pkg-name">Redis · redis-py</div>
+        <div class="pkg-desc">Session memory — persists conversation context between voice turns</div>
+        <div class="badges"><span class="badge badge-recommended">recommended</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Dev Tooling -->
+  <div class="layer theme-amber">
+    <div class="layer-header header-amber">
+      <span class="layer-header-label">Dev tooling</span>
+      <span class="layer-header-note">Setup once, use always</span>
+    </div>
+    <div class="layer-body grid-4">
+      <div class="pkg">
+        <div class="pkg-name">Android Studio</div>
+        <div class="pkg-desc">Emulator + ADB + Flutter plugin</div>
+        <div class="badges"><span class="badge badge-essential">essential</span></div>
+      </div>
+      <div class="pkg">
+        <div class="pkg-name">Python 3.11+</div>
+        <div class="pkg-desc">Backend runtime — use venv for isolation</div>
+        <div class="badges"><span class="badge badge-essential">essential</span></div>
+      </div>
+      <div class="pkg">
+        <div class="pkg-name">ngrok</div>
+        <div class="pkg-desc">Expose local FastAPI to Android device during development</div>
+        <div class="badges"><span class="badge badge-recommended">recommended</span></div>
+      </div>
+      <div class="pkg">
+        <div class="pkg-name">uv</div>
+        <div class="pkg-desc">Fast Python package manager — replaces pip + venv</div>
+        <div class="badges"><span class="badge badge-optional">optional</span></div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="legend">
+  <span class="legend-label">Legend:</span>
+  <div class="legend-item"><span class="badge badge-essential">essential</span> Required for MVP</div>
+  <div class="legend-item"><span class="badge badge-recommended">recommended</span> Strongly advised</div>
+  <div class="legend-item"><span class="badge badge-optional">optional</span> Nice to have</div>
+</div>
+
+<div class="footer">
+  Voice-first Android app · Flutter + Python · Picovoice stack · picovoice.ai/use-cases
+</div>
+
+</body>
+</html>
