@@ -191,6 +191,97 @@ a {
   margin-top: 14px;
 }
 
+.search-wrap {
+  margin-top: 16px;
+}
+
+.search-box {
+  position: relative;
+}
+
+.search-input {
+  width: 100%;
+  min-height: 46px;
+  padding: 12px 44px 12px 14px;
+  border-radius: 14px;
+  border: 1px solid var(--border);
+  background: rgba(255, 255, 255, 0.9);
+  color: var(--text);
+  font: inherit;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.search-input:focus {
+  outline: none;
+  border-color: rgba(31, 122, 82, 0.34);
+  box-shadow: 0 0 0 4px rgba(31, 122, 82, 0.12);
+}
+
+.search-icon {
+  position: absolute;
+  top: 50%;
+  right: 14px;
+  transform: translateY(-50%);
+  color: var(--muted-soft);
+  font-size: 14px;
+  pointer-events: none;
+}
+
+.search-results {
+  display: none;
+  margin-top: 10px;
+  padding: 8px;
+  border-radius: 16px;
+  border: 1px solid var(--border);
+  background: rgba(255, 255, 255, 0.96);
+  box-shadow: var(--shadow-soft);
+}
+
+.search-results.open {
+  display: block;
+}
+
+.search-empty {
+  padding: 10px 12px;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.search-result {
+  display: block;
+  width: 100%;
+  padding: 10px 12px;
+  border: 0;
+  border-radius: 12px;
+  background: transparent;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.search-result:hover,
+.search-result:focus {
+  outline: none;
+  background: rgba(223, 245, 233, 0.78);
+}
+
+.search-result-title {
+  display: block;
+  font-size: 13px;
+  font-weight: 800;
+  line-height: 1.4;
+}
+
+.search-result-meta {
+  display: block;
+  margin-top: 3px;
+  color: var(--muted);
+  font-size: 11px;
+  line-height: 1.45;
+}
+
 .sidebar-link {
   display: block;
   padding: 14px 14px 15px;
@@ -452,6 +543,12 @@ a {
   border-radius: 16px;
   border: 1px solid var(--border);
   background: rgba(255, 255, 255, 0.82);
+}
+
+.item-card.search-hit {
+  border-color: rgba(31, 122, 82, 0.34);
+  background: rgba(223, 245, 233, 0.86);
+  box-shadow: 0 0 0 4px rgba(31, 122, 82, 0.12);
 }
 
 .item-copy {
@@ -724,6 +821,19 @@ a {
           </p>
         </div>
         <div class="topbar-meta" id="metaStats"></div>
+        <div class="search-wrap">
+          <div class="search-box">
+            <input
+              class="search-input"
+              id="desktopSearchInput"
+              type="search"
+              placeholder="Search any roadmap item"
+              aria-label="Search roadmap items"
+            >
+            <span class="search-icon">⌕</span>
+          </div>
+          <div class="search-results" id="desktopSearchResults"></div>
+        </div>
       </div>
 
       <div class="sidebar-card">
@@ -752,6 +862,19 @@ a {
           </p>
         </div>
         <div class="topbar-meta" id="metaStatsMobile"></div>
+        <div class="search-wrap">
+          <div class="search-box">
+            <input
+              class="search-input"
+              id="mobileSearchInput"
+              type="search"
+              placeholder="Search any roadmap item"
+              aria-label="Search roadmap items"
+            >
+            <span class="search-icon">⌕</span>
+          </div>
+          <div class="search-results" id="mobileSearchResults"></div>
+        </div>
       </section>
 
       <nav class="mobile-nav" id="mobileNav" aria-label="Roadmap stages"></nav>
@@ -1507,7 +1630,11 @@ function renderStages() {
             <p class="group-note">${group.note}</p>
             <div class="item-list">
               ${group.items.map((item) => `
-                <div class="item-card">
+                <div
+                  class="item-card"
+                  data-item-card="${item.toLowerCase()}"
+                  data-stage-id="${stage.id}"
+                >
                   <div class="item-copy">
                     <span class="item-title">${item}</span>
                     <span class="item-desc">${getItemDescription(item)}</span>
@@ -1582,10 +1709,142 @@ function bindActiveStage() {
   }
 }
 
+function createSearchIndex() {
+  return roadmapStages.flatMap((stage) =>
+    stage.groups.flatMap((group) =>
+      group.items.map((item) => ({
+        key: item.toLowerCase(),
+        item,
+        stageId: stage.id,
+        stageTitle: stage.title,
+        groupTitle: group.title
+      }))
+    )
+  );
+}
+
+function scrollToItem(stageId, item) {
+  const mainPane = document.querySelector(".main");
+  const stage = document.getElementById(stageId);
+  const cards = document.querySelectorAll("[data-item-card]");
+
+  cards.forEach((card) => card.classList.remove("search-hit"));
+
+  const normalized = item.toLowerCase();
+  const targetCard = document.querySelector(`[data-item-card="${normalized}"][data-stage-id="${stageId}"]`);
+
+  if (targetCard) {
+    targetCard.classList.add("search-hit");
+  }
+
+  if (mainPane && stage && window.innerWidth > 1180) {
+    const targetTop = stage.offsetTop - 8;
+    mainPane.scrollTo({ top: targetTop, behavior: "smooth" });
+  } else if (stage) {
+    stage.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+
+  if (targetCard) {
+    setTimeout(() => {
+      targetCard.scrollIntoView({ behavior: "smooth", block: "center" });
+    }, 120);
+  }
+}
+
+function setupSearch() {
+  const searchIndex = createSearchIndex();
+  const pairs = [
+    {
+      input: document.getElementById("desktopSearchInput"),
+      results: document.getElementById("desktopSearchResults")
+    },
+    {
+      input: document.getElementById("mobileSearchInput"),
+      results: document.getElementById("mobileSearchResults")
+    }
+  ];
+
+  function closeAllResults() {
+    pairs.forEach(({ results }) => {
+      if (results) {
+        results.classList.remove("open");
+        results.innerHTML = "";
+      }
+    });
+  }
+
+  function renderResults(resultsEl, matches, query) {
+    if (!resultsEl) return;
+
+    if (!query) {
+      resultsEl.classList.remove("open");
+      resultsEl.innerHTML = "";
+      return;
+    }
+
+    resultsEl.classList.add("open");
+
+    if (!matches.length) {
+      resultsEl.innerHTML = `<div class="search-empty">No roadmap items matched "${query}".</div>`;
+      return;
+    }
+
+    resultsEl.innerHTML = matches.slice(0, 8).map((match) => `
+      <button
+        class="search-result"
+        type="button"
+        data-search-item="${match.item}"
+        data-search-stage="${match.stageId}"
+      >
+        <span class="search-result-title">${match.item}</span>
+        <span class="search-result-meta">${match.stageTitle} · ${match.groupTitle}</span>
+      </button>
+    `).join("");
+  }
+
+  pairs.forEach(({ input, results }) => {
+    if (!input || !results) return;
+
+    input.addEventListener("input", () => {
+      const query = input.value.trim().toLowerCase();
+      const matches = searchIndex.filter((entry) => entry.key.includes(query));
+      renderResults(results, matches, input.value.trim());
+    });
+
+    input.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") {
+        input.value = "";
+        renderResults(results, [], "");
+      }
+    });
+
+    results.addEventListener("click", (event) => {
+      const button = event.target.closest("[data-search-item]");
+      if (!button) return;
+
+      const item = button.getAttribute("data-search-item");
+      const stageId = button.getAttribute("data-search-stage");
+
+      closeAllResults();
+      pairs.forEach(({ input: otherInput }) => {
+        if (otherInput) otherInput.value = item;
+      });
+      scrollToItem(stageId, item);
+    });
+  });
+
+  document.addEventListener("click", (event) => {
+    if (!event.target.closest(".search-wrap")) {
+      closeAllResults();
+    }
+  });
+}
+
 renderMeta();
 renderSidebar();
 renderStages();
 bindActiveStage();
+setupSearch();
 </script>
 </body>
 </html>
