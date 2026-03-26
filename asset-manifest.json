@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/static/css/main.6dd02a6e.css",
-    "main.js": "/static/js/main.c0c157bc.js",
+    "main.css": "/static/css/main.357f17a8.css",
+    "main.js": "/static/js/main.ced16d78.js",
     "static/js/787.27502e5e.chunk.js": "/static/js/787.27502e5e.chunk.js",
     "static/media/skype.png": "/static/media/skype.ab4e958cf232a0d52b44.png",
     "static/media/cv.png": "/static/media/cv.02b00606e243f8945ade.png",
@@ -15,12 +15,12 @@
     "static/media/agile-development.md": "/static/media/agile-development.4ce4456c57805cf3acf0.md",
     "static/media/github-site.md": "/static/media/github-site.4ce4456c57805cf3acf0.md",
     "static/media/not-available.md": "/static/media/not-available.730b22ad26a5448338a4.md",
-    "main.6dd02a6e.css.map": "/static/css/main.6dd02a6e.css.map",
-    "main.c0c157bc.js.map": "/static/js/main.c0c157bc.js.map",
+    "main.357f17a8.css.map": "/static/css/main.357f17a8.css.map",
+    "main.ced16d78.js.map": "/static/js/main.ced16d78.js.map",
     "787.27502e5e.chunk.js.map": "/static/js/787.27502e5e.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.6dd02a6e.css",
-    "static/js/main.c0c157bc.js"
+    "static/css/main.357f17a8.css",
+    "static/js/main.ced16d78.js"
   ]
 }
