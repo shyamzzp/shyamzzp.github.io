@@ -454,11 +454,23 @@ a {
   background: rgba(255, 255, 255, 0.82);
 }
 
-.item-title {
+.item-copy {
   min-width: 0;
+}
+
+.item-title {
+  display: block;
   color: var(--text);
   font-size: 12px;
   font-weight: 800;
+  line-height: 1.45;
+}
+
+.item-desc {
+  display: block;
+  margin-top: 3px;
+  color: var(--muted);
+  font-size: 11px;
   line-height: 1.45;
 }
 
@@ -1195,6 +1207,164 @@ const roadmapStages = [
   }
 ];
 
+const itemDescriptions = {
+  "What is an AI Engineer?": "Defines the role around applying models to product problems.",
+  "AI Engineer vs ML Engineer": "Compares application-focused AI work with model-building work.",
+  "Impact on Product Development": "Shows how AI changes UX, workflows, and delivery strategy.",
+  "Roles and Responsibilities": "Summarizes the day-to-day work expected from the role.",
+  "AI vs AGI": "Separates current narrow systems from hypothetical general intelligence.",
+  "LLMs": "Introduces large language models and what they are good at.",
+  "Inference": "Explains how a trained model produces outputs at runtime.",
+  "Training": "Covers how models learn from data before deployment.",
+  "Embeddings": "Turns text or other inputs into searchable numeric vectors.",
+  "Vector Databases": "Stores and queries embeddings for similarity-based retrieval.",
+  "RAG": "Combines retrieval with generation to ground model responses.",
+  "AI Agents": "Uses models with tools, memory, and task execution loops.",
+  "Prompt Engineering": "Designs prompts that improve quality, control, and reliability.",
+  "Benefits of Pre-trained Models": "Why transfer learning beats training from scratch for most teams.",
+  "Limitations and Considerations": "Tradeoffs around cost, latency, privacy, and control.",
+  "Choosing the Right Model": "Matches capability, price, speed, and context window to the job.",
+  "Capabilities / Context Length": "Compares feature depth and how much input a model can hold.",
+  "Cut-off Dates / Knowledge": "Explains why hosted models know only up to a point.",
+  "OpenAI Models": "OpenAI's current hosted model families for text, vision, and reasoning.",
+  "Open Models": "Publicly available models you can host, fine-tune, or inspect.",
+  "Anthropic Claude": "Claude models focused on long context and strong writing quality.",
+  "Google Gemini": "Google's multimodal model family for consumer and developer use.",
+  "Azure AI": "Microsoft's managed AI platform with enterprise controls and hosting.",
+  "AWS Sagemaker": "AWS platform for building, training, and serving ML systems.",
+  "Hugging Face Models": "The main model discovery hub for open-source AI.",
+  "Mistral AI": "Open and hosted models known for efficiency and strong performance.",
+  "Cohere": "Enterprise-oriented language and embedding model provider.",
+  "Replicate": "API marketplace for running many third-party AI models.",
+  "Using Pre-trained Models": "How teams adopt existing models instead of building new ones.",
+  "Pre-trained Models": "Foundation models already trained and ready for adaptation or use.",
+  "OpenAI Platform": "OpenAI's developer surface for models, tooling, and APIs.",
+  "OpenAI API": "Core API for calling OpenAI models from applications.",
+  "OpenAI Responses API": "Newer unified API for multimodal and agent-ready workflows.",
+  "Google Gemini API": "Developer API for Gemini text, image, audio, and video tasks.",
+  "Claude Messages API": "Anthropic's primary API for conversational model interactions.",
+  "OpenAI Compatible APIs": "Providers that mirror the OpenAI API contract.",
+  "OpenRouter": "Gateway for routing prompts across many model providers.",
+  "Writing Prompts": "Crafting clear instructions, context, and examples for model behavior.",
+  "Prompt Engineering Roadmap": "A dedicated learning path for prompt design skills.",
+  "OpenAI Playground": "Interactive environment for trying prompts and model settings.",
+  "System Prompting": "Sets high-level behavior and constraints for the assistant.",
+  "Few-shot": "Improves outputs by showing examples inside the prompt.",
+  "Zero-shot": "Asks the model to perform a task without examples.",
+  "Maximum Tokens": "Controls response length and budget consumption.",
+  "Token Counting": "Measures prompt and output size in model billing units.",
+  "Pricing Considerations": "Tracks cost implications of prompts, models, and traffic.",
+  "Prompt Caching": "Reuses repeated prompt prefixes to reduce cost and latency.",
+  "Streaming Responses": "Returns output progressively instead of waiting for the full answer.",
+  "Prompt Injection Attacks": "Malicious instructions that attempt to override system behavior.",
+  "Security and Privacy Concerns": "Risks around leakage, misuse, and unsafe data flows.",
+  "Bias and Fairness": "Uneven model behavior across people, inputs, or decisions.",
+  "Content Moderation APIs": "APIs for flagging unsafe or disallowed generated content.",
+  "OpenAI Moderation API": "OpenAI endpoint for policy and safety classification.",
+  "Adding end-user IDs in prompts": "Associates requests with users for monitoring and abuse controls.",
+  "Conducting adversarial testing": "Stress tests prompts and systems with hostile inputs.",
+  "Robust prompt engineering": "Builds prompts that fail less often in production.",
+  "Know your Customers / Usecases": "Scope model behavior around real users and business needs.",
+  "Constraining outputs and inputs": "Restricts allowed inputs and expected response formats.",
+  "Open vs Closed Source Models": "Compares transparency, cost, flexibility, and vendor lock-in.",
+  "Popular Open Source Models": "Survey of the open models most teams evaluate first.",
+  "Self-hosted Models": "Running models on your own infrastructure for control or privacy.",
+  "Hugging Face": "The main ecosystem for open models, datasets, and demos.",
+  "Hugging Face Hub": "Repository and discovery layer for open-source AI assets.",
+  "Hugging Face Tasks": "Task pages that map problems to models and examples.",
+  "Inference SDK": "SDK for calling hosted inference endpoints programmatically.",
+  "Transformers.js": "Runs transformer models directly in JavaScript environments.",
+  "Ollama": "Local runtime for downloading and serving models on-device.",
+  "Ollama Models": "Catalog of models available through the Ollama ecosystem.",
+  "Ollama SDK": "Developer SDK for integrating local Ollama-hosted models.",
+  "LM Studio": "Desktop tool for running and experimenting with local models.",
+  "What are Embeddings": "Explains dense vector representations for semantic similarity.",
+  "Semantic Search": "Finds meaning-related matches instead of keyword-only matches.",
+  "Data Classification": "Assigns categories or labels to inputs automatically.",
+  "Recommendation Systems": "Ranks relevant items based on similarity and behavior signals.",
+  "Anomaly Detection": "Finds unusual patterns that differ from the normal baseline.",
+  "OpenAI Embeddings API": "Hosted API for generating embedding vectors from content.",
+  "Embedding Models": "Models specialized for semantic retrieval and clustering tasks.",
+  "Gemini Embedding": "Google embedding models for retrieval and similarity use cases.",
+  "Open-Source Embeddings": "Embedding models you can inspect, host, and tune yourself.",
+  "Sentence Transformers": "Popular open-source library for high-quality text embeddings.",
+  "Models on Hugging Face": "Open embedding model options available through the Hub.",
+  "Purpose and Functionality": "Why vector stores exist and what operations they support.",
+  "Indexing Embeddings": "Organizes vectors so nearest-neighbor search is fast.",
+  "Performing Similarity Search": "Retrieves vectors closest to a query representation.",
+  "Chroma": "Simple developer-friendly vector database for prototypes and apps.",
+  "Pinecone": "Managed vector database focused on scale and production operations.",
+  "Weaviate": "Vector database with schema, hybrid search, and modular features.",
+  "FAISS": "Fast similarity search library from Meta for vector retrieval.",
+  "LanceDB": "Columnar vector database designed for local and cloud workflows.",
+  "Qdrant": "Vector database known for filtering, payloads, and production use.",
+  "Supabase": "Backend platform with vector support built on PostgreSQL.",
+  "MongoDB Atlas": "Managed MongoDB with vector search and retrieval features.",
+  "What are RAGs": "Explains retrieval-augmented generation and when it helps.",
+  "RAG Usecases": "Common product scenarios where retrieval improves answers.",
+  "RAG vs Fine-tuning": "When to retrieve external facts versus retrain behavior.",
+  "Chunking": "Splits documents into retrieval-friendly pieces before indexing.",
+  "Embedding": "Converts chunks and queries into comparable vectors.",
+  "Vector Database": "The retrieval layer that stores and searches chunk vectors.",
+  "Retrieval Process": "Fetches the most relevant context for a given query.",
+  "Generation": "Uses retrieved context to produce the final answer.",
+  "Using SDKs Directly": "Builds RAG with native provider tools and less abstraction.",
+  "LangChain": "Framework for chaining prompts, tools, retrieval, and agents.",
+  "LlamaIndex": "Framework focused on data connectors and retrieval pipelines.",
+  "RAGFlow": "Visual and pipeline-oriented tooling for retrieval systems.",
+  "OpenAI Assistant API": "Older agent-like API for tools, files, and threads.",
+  "RAG and Dynamic Filters": "Improves retrieval by narrowing search using metadata.",
+  "Context Engineering": "Shapes what context gets passed to the model and why.",
+  "Context Compaction": "Compresses long context while keeping key information intact.",
+  "Structured Output": "Forces responses into predictable schemas or typed objects.",
+  "Agents Usecases": "Examples where agents outperform simple chat or RAG.",
+  "ReAct Prompting": "Prompt pattern that alternates reasoning and tool actions.",
+  "React": "Agent loop style for reasoning, acting, and observation updates.",
+  "Context": "The working information an agent sees while solving a task.",
+  "External Memory": "Storage outside the prompt window for longer-lived state.",
+  "Tools / Function Calling": "Let models invoke tools through structured calls.",
+  "Function Calling": "Maps model intent into executable, typed tool invocations.",
+  "OpenAI AgentKit": "Toolkit for building agent workflows on OpenAI primitives.",
+  "Google ADK": "Google's agent development kit for orchestration patterns.",
+  "Claude Agent SDK": "Anthropic tooling for agentic development with Claude.",
+  "Model Context Protocol (MCP)": "Open protocol for exposing tools and context to models.",
+  "MCP Host": "Application that loads clients and coordinates MCP tool access.",
+  "MCP Client": "Component that connects to MCP servers and uses their tools.",
+  "MCP Server": "Server that exposes tools, prompts, or resources over MCP.",
+  "Building an MCP Client": "Implements the consumer side of the MCP protocol.",
+  "Building an MCP Server": "Implements a tool server that agents can discover.",
+  "Connect to Local Server": "Wires MCP clients to local tools or processes.",
+  "Connect to Remote Server": "Wires MCP clients to network-accessible MCP servers.",
+  "Multi Agents": "Systems where specialized agents collaborate on shared tasks.",
+  "Context Isolation": "Keeps agent memory and prompts separated where needed.",
+  "Transport Layer": "Messaging layer used for agent-to-agent or tool communication.",
+  "Data Layer": "Shared storage and state used by multi-agent systems.",
+  "Image Understanding": "Analyzing and describing what appears in images.",
+  "Image Generation": "Creating images from prompts or instructions.",
+  "Video Understanding": "Extracting meaning, events, or summaries from video.",
+  "Audio Processing": "Handling audio analysis, transformation, or generation tasks.",
+  "Text-to-Speech": "Generates spoken audio from text input.",
+  "Speech-to-Text": "Transcribes spoken audio into text.",
+  "OpenAI Vision API": "OpenAI support for image and visual understanding tasks.",
+  "DALL-E API": "OpenAI image generation API for synthetic visual content.",
+  "Whisper API": "Speech transcription and audio understanding through OpenAI.",
+  "LangChain for Multimodal Apps": "Uses LangChain abstractions for multimodal pipelines.",
+  "LlamaIndex for Multimodal Apps": "Uses LlamaIndex to retrieve and reason over mixed media.",
+  "Nanobanana API": "Specialized multimodal API surfaced in the official content set.",
+  "Cursor": "AI-native code editor with chat, edits, and agent workflows.",
+  "Windsurf": "AI coding environment focused on navigation and assisted development.",
+  "Claude Code": "Anthropic's coding product for agentic software tasks.",
+  "Replit": "Browser-based development environment with built-in AI assistance.",
+  "Codex": "OpenAI coding model and workflow surface for software generation.",
+  "Code Completion Tools": "Inline coding assistants that predict and write code.",
+  "AI Code Editors": "Editors built around AI-native authoring and refactoring loops.",
+  "AI & Data Scientist": "Adjacent roadmap for deeper modeling and data science work."
+};
+
+function getItemDescription(item) {
+  return itemDescriptions[item] || "Launch a guided prompt for this topic in your preferred assistant.";
+}
+
 function uniquePreviewItems(groups) {
   const seen = new Set();
   const preview = [];
@@ -1299,7 +1469,10 @@ function renderStages() {
             <div class="item-list">
               ${group.items.map((item) => `
                 <div class="item-card">
-                  <span class="item-title">${item}</span>
+                  <div class="item-copy">
+                    <span class="item-title">${item}</span>
+                    <span class="item-desc">${getItemDescription(item)}</span>
+                  </div>
                   <div class="item-actions">
                     <a
                       class="item-action"
