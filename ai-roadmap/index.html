@@ -58,23 +58,7 @@ a {
 .page-shell {
   max-width: 1460px;
   margin: 0 auto;
-  padding: 28px 20px 56px;
-}
-
-.topbar {
-  position: sticky;
-  top: 0;
-  z-index: 50;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 24px;
-  padding: 18px 24px;
-  margin-bottom: 22px;
-  backdrop-filter: blur(18px);
-  background: rgba(246, 244, 237, 0.86);
-  border: 1px solid rgba(28, 32, 27, 0.08);
-  border-radius: 22px;
+  padding: 20px 20px 56px;
 }
 
 .brand-block {
@@ -123,7 +107,7 @@ a {
 .topbar-meta {
   display: flex;
   flex-wrap: wrap;
-  justify-content: flex-end;
+  justify-content: flex-start;
   gap: 10px;
 }
 
@@ -152,13 +136,14 @@ a {
 
 .sidebar {
   position: sticky;
-  top: 142px;
+  top: 20px;
   display: flex;
   flex-direction: column;
   gap: 16px;
 }
 
 .sidebar-card,
+.mobile-topbar,
 .hero,
 .stage-card {
   border: 1px solid var(--border);
@@ -170,6 +155,10 @@ a {
 
 .sidebar-card {
   padding: 18px;
+}
+
+.sidebar-brand {
+  padding: 20px;
 }
 
 .sidebar-heading {
@@ -589,6 +578,12 @@ a {
   margin-bottom: 18px;
 }
 
+.mobile-topbar {
+  display: none;
+  padding: 18px;
+  margin-bottom: 18px;
+}
+
 .mobile-nav::-webkit-scrollbar {
   display: none;
 }
@@ -620,17 +615,17 @@ a {
     display: none;
   }
 
+  .mobile-topbar {
+    display: block;
+  }
+
   .mobile-nav {
     display: flex;
   }
 }
 
 @media (max-width: 900px) {
-  .topbar {
-    position: static;
-    padding: 18px;
-  }
-
+  .mobile-topbar,
   .hero,
   .stage-card,
   .footer-card,
@@ -665,6 +660,7 @@ a {
   }
 
   .topbar,
+  .mobile-topbar,
   .hero,
   .stage-card,
   .footer-card {
@@ -689,19 +685,19 @@ a {
 </head>
 <body>
 <div class="page-shell">
-  <header class="topbar">
-    <div class="brand-block">
-      <div class="eyebrow">AI Roadmap Sync</div>
-      <h1 class="brand-title">AI Engineer Roadmap</h1>
-      <p class="brand-copy">
-        This version tracks the current roadmap.sh AI Engineer flow: role framing, model APIs, safety, open-source AI, embeddings, vector databases, RAG, agents, multimodal systems, and the latest AI-native developer tooling. The sidebar is generated from the same roadmap data as the stage content.
-      </p>
-    </div>
-    <div class="topbar-meta" id="metaStats"></div>
-  </header>
-
   <div class="layout">
     <aside class="sidebar">
+      <div class="sidebar-card sidebar-brand">
+        <div class="brand-block">
+          <div class="eyebrow">AI Roadmap Sync</div>
+          <h1 class="brand-title">AI Engineer Roadmap</h1>
+          <p class="brand-copy">
+            This version tracks the current roadmap.sh AI Engineer flow: role framing, model APIs, safety, open-source AI, embeddings, vector databases, RAG, agents, multimodal systems, and the latest AI-native developer tooling. The sidebar is generated from the same roadmap data as the stage content.
+          </p>
+        </div>
+        <div class="topbar-meta" id="metaStats"></div>
+      </div>
+
       <div class="sidebar-card">
         <h2 class="sidebar-heading">Sidebar</h2>
         <p class="sidebar-copy">
@@ -719,6 +715,17 @@ a {
     </aside>
 
     <main class="main">
+      <section class="mobile-topbar">
+        <div class="brand-block">
+          <div class="eyebrow">AI Roadmap Sync</div>
+          <h1 class="brand-title">AI Engineer Roadmap</h1>
+          <p class="brand-copy">
+            This version tracks the current roadmap.sh AI Engineer flow: role framing, model APIs, safety, open-source AI, embeddings, vector databases, RAG, agents, multimodal systems, and the latest AI-native developer tooling.
+          </p>
+        </div>
+        <div class="topbar-meta" id="metaStatsMobile"></div>
+      </section>
+
       <nav class="mobile-nav" id="mobileNav" aria-label="Roadmap stages"></nav>
 
       <section class="hero">
@@ -1391,13 +1398,16 @@ function renderMeta() {
   const stageCount = roadmapStages.length;
   const topicCount = roadmapStages.reduce((sum, stage) => sum + stageTopicCount(stage), 0);
   const groupCount = roadmapStages.reduce((sum, stage) => sum + stage.groups.length, 0);
-  const meta = document.getElementById("metaStats");
-  meta.innerHTML = [
+  const html = [
     `<div class="meta-pill">${ROADMAP_VERSION} · ${ROADMAP_UPDATED_AT}</div>`,
     `<div class="meta-pill">${stageCount} stages</div>`,
     `<div class="meta-pill">${groupCount} branch groups</div>`,
     `<div class="meta-pill">${topicCount}+ roadmap items</div>`
   ].join("");
+  const meta = document.getElementById("metaStats");
+  const mobileMeta = document.getElementById("metaStatsMobile");
+  if (meta) meta.innerHTML = html;
+  if (mobileMeta) mobileMeta.innerHTML = html;
 }
 
 function buildAiPrompt(item, stageTitle, groupTitle) {
