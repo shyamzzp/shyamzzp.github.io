@@ -449,6 +449,23 @@ a {
   line-height: 1.35;
 }
 
+.item-chip-link {
+  text-decoration: none;
+  transition: transform 140ms ease, border-color 140ms ease, background 140ms ease, color 140ms ease;
+}
+
+.item-chip-link:hover {
+  transform: translateY(-1px);
+  border-color: rgba(31, 122, 82, 0.28);
+  background: rgba(223, 245, 233, 0.92);
+  color: var(--accent-strong);
+}
+
+.item-chip-link::after {
+  content: " \2197";
+  font-size: 11px;
+}
+
 .footer-card {
   margin-top: 20px;
   padding: 22px 24px;
@@ -688,6 +705,9 @@ a {
 </div>
 
 <script>
+const ROADMAP_VERSION = "v3";
+const ROADMAP_UPDATED_AT = "2026-03-26";
+
 const roadmapStages = [
   {
     id: "introduction",
@@ -1154,10 +1174,16 @@ function renderMeta() {
   const groupCount = roadmapStages.reduce((sum, stage) => sum + stage.groups.length, 0);
   const meta = document.getElementById("metaStats");
   meta.innerHTML = [
+    `<div class="meta-pill">${ROADMAP_VERSION} · ${ROADMAP_UPDATED_AT}</div>`,
     `<div class="meta-pill">${stageCount} stages</div>`,
     `<div class="meta-pill">${groupCount} branch groups</div>`,
     `<div class="meta-pill">${topicCount}+ roadmap items</div>`
   ].join("");
+}
+
+function buildPerplexityUrl(item, stageTitle, groupTitle) {
+  const prompt = `Teach me "${item}" in the context of the AI Engineer roadmap. Explain what it is, why it matters, when to use it, common pitfalls, and what I should learn next. The roadmap stage is "${stageTitle}" and the branch is "${groupTitle}".`;
+  return `https://www.perplexity.ai/search?q=${encodeURIComponent(prompt)}`;
 }
 
 function renderSidebar() {
@@ -1212,7 +1238,16 @@ function renderStages() {
             <h3 class="group-title">${group.title}</h3>
             <p class="group-note">${group.note}</p>
             <div class="item-list">
-              ${group.items.map((item) => `<span class="item-chip">${item}</span>`).join("")}
+              ${group.items.map((item) => `
+                <a
+                  class="item-chip item-chip-link"
+                  href="${buildPerplexityUrl(item, stage.title, group.title)}"
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label="Open ${item} in Perplexity"
+                  title="Open ${item} in Perplexity"
+                >${item}</a>
+              `).join("")}
             </div>
           </article>
         `).join("")}
