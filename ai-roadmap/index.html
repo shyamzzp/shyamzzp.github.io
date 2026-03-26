@@ -438,32 +438,80 @@ a {
 }
 
 .item-list {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
   gap: 8px;
   margin-top: 14px;
 }
 
-.item-chip {
+.item-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: 16px;
+  border: 1px solid var(--border);
+  background: rgba(255, 255, 255, 0.82);
+}
+
+.item-title {
+  min-width: 0;
+  color: var(--text);
   font-size: 12px;
-  line-height: 1.35;
+  font-weight: 800;
+  line-height: 1.45;
 }
 
-.item-chip-link {
+.item-actions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.item-action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background: rgba(255, 255, 255, 0.94);
   text-decoration: none;
-  transition: transform 140ms ease, border-color 140ms ease, background 140ms ease, color 140ms ease;
+  transition: transform 140ms ease, border-color 140ms ease, background 140ms ease, color 140ms ease, box-shadow 140ms ease;
 }
 
-.item-chip-link:hover {
+.item-action:hover {
   transform: translateY(-1px);
   border-color: rgba(31, 122, 82, 0.28);
   background: rgba(223, 245, 233, 0.92);
-  color: var(--accent-strong);
+  box-shadow: 0 10px 16px rgba(31, 122, 82, 0.1);
 }
 
-.item-chip-link::after {
-  content: " \2197";
-  font-size: 11px;
+.item-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 999px;
+  font-size: 9px;
+  font-weight: 900;
+  letter-spacing: 0.02em;
+  color: #fff;
+}
+
+.item-icon.gpt {
+  background: #10a37f;
+}
+
+.item-icon.claude {
+  background: #d97706;
+}
+
+.item-icon.perplexity {
+  background: #111827;
 }
 
 .footer-card {
@@ -705,7 +753,7 @@ a {
 </div>
 
 <script>
-const ROADMAP_VERSION = "v3";
+const ROADMAP_VERSION = "v4";
 const ROADMAP_UPDATED_AT = "2026-03-26";
 
 const roadmapStages = [
@@ -1181,9 +1229,20 @@ function renderMeta() {
   ].join("");
 }
 
+function buildAiPrompt(item, stageTitle, groupTitle) {
+  return `Teach me "${item}" in the context of the AI Engineer roadmap. Explain what it is, why it matters, when to use it, common pitfalls, and what I should learn next. The roadmap stage is "${stageTitle}" and the branch is "${groupTitle}".`;
+}
+
+function buildChatGPTUrl(item, stageTitle, groupTitle) {
+  return `https://chatgpt.com/?q=${encodeURIComponent(buildAiPrompt(item, stageTitle, groupTitle))}`;
+}
+
+function buildClaudeUrl(item, stageTitle, groupTitle) {
+  return `https://claude.ai/new?q=${encodeURIComponent(buildAiPrompt(item, stageTitle, groupTitle))}`;
+}
+
 function buildPerplexityUrl(item, stageTitle, groupTitle) {
-  const prompt = `Teach me "${item}" in the context of the AI Engineer roadmap. Explain what it is, why it matters, when to use it, common pitfalls, and what I should learn next. The roadmap stage is "${stageTitle}" and the branch is "${groupTitle}".`;
-  return `https://www.perplexity.ai/search?q=${encodeURIComponent(prompt)}`;
+  return `https://www.perplexity.ai/search?q=${encodeURIComponent(buildAiPrompt(item, stageTitle, groupTitle))}`;
 }
 
 function renderSidebar() {
@@ -1239,14 +1298,35 @@ function renderStages() {
             <p class="group-note">${group.note}</p>
             <div class="item-list">
               ${group.items.map((item) => `
-                <a
-                  class="item-chip item-chip-link"
-                  href="${buildPerplexityUrl(item, stage.title, group.title)}"
-                  target="_blank"
-                  rel="noreferrer"
-                  aria-label="Open ${item} in Perplexity"
-                  title="Open ${item} in Perplexity"
-                >${item}</a>
+                <div class="item-card">
+                  <span class="item-title">${item}</span>
+                  <div class="item-actions">
+                    <a
+                      class="item-action"
+                      href="${buildChatGPTUrl(item, stage.title, group.title)}"
+                      target="_blank"
+                      rel="noreferrer"
+                      aria-label="Open ${item} in ChatGPT"
+                      title="Open ${item} in ChatGPT"
+                    ><span class="item-icon gpt">GPT</span></a>
+                    <a
+                      class="item-action"
+                      href="${buildClaudeUrl(item, stage.title, group.title)}"
+                      target="_blank"
+                      rel="noreferrer"
+                      aria-label="Open ${item} in Claude"
+                      title="Open ${item} in Claude"
+                    ><span class="item-icon claude">CL</span></a>
+                    <a
+                      class="item-action"
+                      href="${buildPerplexityUrl(item, stage.title, group.title)}"
+                      target="_blank"
+                      rel="noreferrer"
+                      aria-label="Open ${item} in Perplexity"
+                      title="Open ${item} in Perplexity"
+                    ><span class="item-icon perplexity">PX</span></a>
+                  </div>
+                </div>
               `).join("")}
             </div>
           </article>
