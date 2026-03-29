@@ -37,4 +37,9 @@ export const publishedFiles = [
     href: "/RAG_Systems_Complete_Notes.pdf",
     type: "PDF",
   },
+  {
+    title: "Software Idea Pre-Check Checklist",
+    href: "/software_idea_checklist",
+    type: "HTML",
+  },
 ];
