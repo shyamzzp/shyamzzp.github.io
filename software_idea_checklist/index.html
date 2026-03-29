@@ -411,11 +411,6 @@
     </div>
   </div>
 
-  <div class="toc-title">Quick Navigation</div>
-  <div class="toc" id="toc"></div>
-
-  <div id="sections"></div>
-
   <div class="total-bar">
     <div class="total-score-col">
       <div class="prog-track"><div class="prog-fill" id="progFill" style="width:0%"></div></div>
@@ -441,11 +436,17 @@
     </div>
   </div>
 
+  <div class="toc-title">Quick Navigation</div>
+  <div class="toc" id="toc"></div>
+
+  <div id="sections"></div>
+
 </div>
 
 <div class="toast" id="toast">Copied - paste directly into Codex or any AI assistant</div>
 
 <script>
+const STORAGE_KEY = "software-idea-checklist:v1";
 const SECTIONS = [
   {
     id:1, name:"Problem Validation", cls:"s1",
@@ -647,8 +648,80 @@ const SECTIONS = [
   }
 ];
 
-const scores = SECTIONS.map(s => s.items.map(() => null));
-const notes = SECTIONS.map(s => s.items.map(() => ""));
+function getEmptyScores() {
+  return SECTIONS.map(s => s.items.map(() => null));
+}
+
+function getEmptyNotes() {
+  return SECTIONS.map(s => s.items.map(() => ""));
+}
+
+function getEmptyMeta() {
+  return {
+    ideaName: "",
+    oneLiner: "",
+    scoredBy: ""
+  };
+}
+
+function isValidStoredGrid(grid, template) {
+  return Array.isArray(grid)
+    && grid.length === template.length
+    && grid.every((row, index) => Array.isArray(row) && row.length === template[index].length);
+}
+
+function loadState() {
+  const fallback = {
+    scores: getEmptyScores(),
+    notes: getEmptyNotes(),
+    meta: getEmptyMeta()
+  };
+
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (!raw) return fallback;
+
+    const parsed = JSON.parse(raw);
+    const scoreTemplate = getEmptyScores();
+    const noteTemplate = getEmptyNotes();
+
+    return {
+      scores: isValidStoredGrid(parsed.scores, scoreTemplate)
+        ? parsed.scores.map(row => row.map(value => value === 0 || value === 1 || value === 2 ? value : null))
+        : scoreTemplate,
+      notes: isValidStoredGrid(parsed.notes, noteTemplate)
+        ? parsed.notes.map(row => row.map(value => typeof value === "string" ? value : ""))
+        : noteTemplate,
+      meta: {
+        ideaName: typeof parsed.meta?.ideaName === "string" ? parsed.meta.ideaName : "",
+        oneLiner: typeof parsed.meta?.oneLiner === "string" ? parsed.meta.oneLiner : "",
+        scoredBy: typeof parsed.meta?.scoredBy === "string" ? parsed.meta.scoredBy : ""
+      }
+    };
+  } catch (error) {
+    return fallback;
+  }
+}
+
+function getMetaState() {
+  return {
+    ideaName: document.getElementById("ideaName").value,
+    oneLiner: document.getElementById("oneLiner").value,
+    scoredBy: document.getElementById("scoredBy").value
+  };
+}
+
+function saveState() {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify({
+    scores,
+    notes,
+    meta: getMetaState()
+  }));
+}
+
+const savedState = loadState();
+const scores = savedState.scores;
+const notes = savedState.notes;
 const totalMax = SECTIONS.reduce((a, s) => a + s.items.length * 2, 0);
 
 function pad(n) { return n < 10 ? "0" + n : "" + n; }
@@ -728,6 +801,7 @@ function saveNote(si, ii, el) {
   notes[si][ii] = el.value;
   el.style.height = "auto";
   el.style.height = el.scrollHeight + "px";
+  saveState();
 }
 
 function updateTotal() {
@@ -749,6 +823,7 @@ function resetAll() {
   notes.forEach(s => s.fill(""));
   renderSections();
   ["ideaName", "oneLiner", "scoredBy"].forEach(id => document.getElementById(id).value = "");
+  localStorage.removeItem(STORAGE_KEY);
 }
 
 function copyForCodex() {
@@ -820,8 +895,25 @@ function showToast() {
   setTimeout(() => t.classList.remove("show"), 3200);
 }
 
+function hydrateMetaFields() {
+  const meta = savedState.meta;
+  document.getElementById("ideaName").value = meta.ideaName;
+  document.getElementById("oneLiner").value = meta.oneLiner;
+  document.getElementById("scoredBy").value = meta.scoredBy;
+
+  ["ideaName", "oneLiner", "scoredBy"].forEach(id => {
+    document.getElementById(id).addEventListener("input", saveState);
+  });
+}
+
 buildTOC();
+hydrateMetaFields();
 renderSections();
+
+document.querySelectorAll(".item-ta").forEach((el) => {
+  el.style.height = "auto";
+  el.style.height = el.scrollHeight + "px";
+});
 </script>
 </body>
 </html>
