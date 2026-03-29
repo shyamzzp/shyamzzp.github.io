@@ -1,0 +1,827 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Software Idea Pre-Check Checklist</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Syne:wght@700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f7f7f5;
+    --surface: #ffffff;
+    --surface2: #f2f2ef;
+    --border: #e2e2dd;
+    --border2: #ccccc6;
+    --accent-color: #2563eb;
+    --accent-light: #eff6ff;
+    --accent-border: #bfdbfe;
+    --text: #1a1a1a;
+    --muted: #888882;
+    --muted2: #b8b8b2;
+    --s0-bg: #f5f5f3; --s0-bd: #d0d0ca; --s0-tx: #aaaaaa;
+    --s1-bg: #fffbeb; --s1-bd: #fbbf24; --s1-tx: #92400e;
+    --s2-bg: #f0fdf4; --s2-bd: #22c55e; --s2-tx: #14532d;
+    --green: #16a34a; --yellow: #d97706; --red: #dc2626;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 400;
+    min-height: 100vh;
+    padding: 52px 24px 140px;
+  }
+
+  .wrapper { max-width: 920px; margin: 0 auto; }
+
+  .header {
+    margin-bottom: 52px;
+    padding-bottom: 40px;
+    border-bottom: 2px solid var(--border);
+  }
+
+  .badge {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-family: 'DM Mono', monospace; font-size: 10px;
+    letter-spacing: 0.16em; text-transform: uppercase;
+    color: var(--accent-color); background: var(--accent-light);
+    border: 1px solid var(--accent-border);
+    padding: 5px 14px; border-radius: 20px; margin-bottom: 22px;
+  }
+
+  h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(2.4rem, 6vw, 4rem);
+    font-weight: 800; line-height: 1.03;
+    letter-spacing: -0.03em; color: var(--text);
+    margin-bottom: 10px;
+  }
+
+  .header-sub {
+    font-size: 15px; color: var(--muted);
+    line-height: 1.65; margin-bottom: 30px; max-width: 640px;
+  }
+
+  .meta-grid {
+    display: grid; grid-template-columns: 1fr 1fr 1fr;
+    gap: 14px; margin-bottom: 20px;
+  }
+
+  .meta-field { display: flex; flex-direction: column; gap: 5px; }
+
+  .meta-field label {
+    font-family: 'DM Mono', monospace; font-size: 9px;
+    letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--muted); font-weight: 500;
+  }
+
+  .meta-field input {
+    background: white; border: 1.5px solid var(--border);
+    border-radius: 7px; color: var(--text);
+    font-family: 'DM Sans', sans-serif; font-size: 14px;
+    padding: 10px 14px; outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+
+  .meta-field input:focus {
+    border-color: var(--accent-color);
+    box-shadow: 0 0 0 3px rgba(37,99,235,0.09);
+  }
+
+  .meta-field input::placeholder { color: var(--muted2); }
+
+  .legend {
+    display: flex; gap: 8px; align-items: center;
+    flex-wrap: wrap; padding: 12px 16px;
+    background: white; border: 1px solid var(--border);
+    border-radius: 8px;
+  }
+
+  .leg-lbl {
+    font-family: 'DM Mono', monospace; font-size: 9px;
+    letter-spacing: 0.15em; text-transform: uppercase;
+    color: var(--muted); margin-right: 4px;
+  }
+
+  .leg-item {
+    display: flex; align-items: center; gap: 6px;
+    font-size: 12px; color: var(--muted);
+    font-family: 'DM Mono', monospace;
+    padding: 4px 11px; border-radius: 20px;
+    border: 1px solid var(--border); background: var(--bg);
+  }
+
+  .ld {
+    width: 20px; height: 20px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 10px; font-weight: 700;
+  }
+
+  .ld0 { background:var(--s0-bg); border:1.5px solid var(--s0-bd); color:var(--s0-tx); }
+  .ld1 { background:var(--s1-bg); border:1.5px solid var(--s1-bd); color:var(--s1-tx); }
+  .ld2 { background:var(--s2-bg); border:1.5px solid var(--s2-bd); color:var(--s2-tx); }
+
+  .toc-title {
+    font-family: 'DM Mono', monospace; font-size: 9px;
+    letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--muted); margin-bottom: 12px;
+  }
+
+  .toc {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 8px; margin-bottom: 44px;
+  }
+
+  .toc-a {
+    background: white; border: 1px solid var(--border);
+    border-radius: 8px; padding: 11px 13px;
+    text-decoration: none; color: inherit;
+    display: flex; align-items: center; gap: 9px;
+    transition: all 0.15s;
+  }
+
+  .toc-a:hover { border-color: var(--accent-color); background: var(--accent-light); }
+
+  .toc-num {
+    font-family: 'DM Mono', monospace; font-size: 10px;
+    color: var(--accent-color); background: var(--accent-light);
+    border: 1px solid var(--accent-border);
+    padding: 2px 8px; border-radius: 3px; flex-shrink: 0;
+  }
+
+  .toc-name { font-size: 12px; font-weight: 500; color: var(--text); line-height: 1.3; }
+
+  .section {
+    margin-bottom: 26px; background: white;
+    border: 1.5px solid var(--border); border-radius: 10px;
+    overflow: hidden; border-left: 4px solid transparent;
+    transition: box-shadow 0.2s, border-color 0.2s;
+  }
+
+  .section:hover { box-shadow: 0 3px 16px rgba(0,0,0,0.06); }
+
+  .s1  { border-left-color: #6366f1; }
+  .s2  { border-left-color: #f59e0b; }
+  .s3  { border-left-color: #0ea5e9; }
+  .s4  { border-left-color: #06b6d4; }
+  .s5  { border-left-color: #10b981; }
+  .s6  { border-left-color: #8b5cf6; }
+  .s7  { border-left-color: #ec4899; }
+  .s8  { border-left-color: #14b8a6; }
+  .s9  { border-left-color: #ef4444; }
+  .s10 { border-left-color: #f97316; }
+  .s11 { border-left-color: #84cc16; }
+  .s12 { border-left-color: #2563eb; }
+
+  .sec-hdr {
+    display: flex; align-items: center;
+    justify-content: space-between;
+    padding: 16px 22px; gap: 12px;
+    border-bottom: 1px solid var(--border);
+    background: var(--surface2);
+  }
+
+  .sec-left { display: flex; align-items: center; gap: 12px; }
+
+  .sec-num {
+    font-family: 'DM Mono', monospace; font-size: 10px;
+    color: var(--accent-color); background: var(--accent-light);
+    border: 1px solid var(--accent-border);
+    padding: 3px 10px; border-radius: 4px;
+    letter-spacing: 0.06em; flex-shrink: 0;
+  }
+
+  .sec-info .sec-name {
+    font-family: 'Syne', sans-serif; font-size: 13px;
+    font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase;
+  }
+
+  .sec-info .sec-desc {
+    font-size: 11px; color: var(--muted); margin-top: 1px;
+  }
+
+  .sec-pill {
+    font-family: 'DM Mono', monospace; font-size: 12px;
+    color: var(--muted); background: white;
+    border: 1px solid var(--border); padding: 4px 13px;
+    border-radius: 20px; white-space: nowrap; flex-shrink: 0;
+  }
+
+  .sec-pill b { color: var(--accent-color); font-size: 15px; font-weight: 600; }
+
+  .item {
+    padding: 18px 22px;
+    border-bottom: 1px solid var(--border);
+    transition: background 0.12s;
+  }
+
+  .item:last-child { border-bottom: none; }
+  .item:hover { background: #fafaf8; }
+
+  .item-top {
+    display: flex; justify-content: space-between;
+    align-items: flex-start; gap: 16px; margin-bottom: 11px;
+  }
+
+  .item-left { flex: 1; }
+
+  .item-q {
+    font-size: 14px; font-weight: 500; color: var(--text);
+    line-height: 1.55; margin-bottom: 3px;
+  }
+
+  .item-hint {
+    font-family: 'DM Mono', monospace; font-size: 10px;
+    color: var(--muted2); letter-spacing: 0.03em;
+  }
+
+  .sbtns { display: flex; gap: 5px; align-items: center; flex-shrink: 0; }
+
+  .sb {
+    width: 33px; height: 33px; border-radius: 50%;
+    border: 1.5px solid var(--border2); background: var(--s0-bg);
+    color: var(--muted2); font-family: 'DM Mono', monospace;
+    font-size: 12px; font-weight: 700; cursor: pointer;
+    transition: all 0.13s; display: flex;
+    align-items: center; justify-content: center;
+  }
+
+  .sb:hover { transform: scale(1.12); border-color: var(--muted); color: var(--text); }
+
+  .sb.a0 { background:var(--s0-bg); border-color:var(--s0-bd); color:var(--s0-tx); }
+  .sb.a1 { background:var(--s1-bg); border-color:var(--s1-bd); color:var(--s1-tx); box-shadow:0 0 0 3px rgba(251,191,36,.18); }
+  .sb.a2 { background:var(--s2-bg); border-color:var(--s2-bd); color:var(--s2-tx); box-shadow:0 0 0 3px rgba(34,197,94,.18); }
+
+  .ans-lbl {
+    font-family: 'DM Mono', monospace; font-size: 9px;
+    letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--muted2); margin-bottom: 5px;
+  }
+
+  .item-ta {
+    width: 100%; background: var(--bg);
+    border: 1.5px solid var(--border); border-radius: 7px;
+    color: var(--text); font-family: 'DM Sans', sans-serif;
+    font-size: 13.5px; font-weight: 400;
+    padding: 10px 14px; resize: vertical; outline: none;
+    line-height: 1.65; min-height: 44px;
+    transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
+    display: block;
+  }
+
+  .item-ta::placeholder { color: var(--muted2); font-style: italic; }
+
+  .item-ta:focus {
+    border-color: var(--accent-color);
+    box-shadow: 0 0 0 3px rgba(37,99,235,0.08);
+    background: white; min-height: 80px;
+  }
+
+  .total-bar {
+    position: sticky; bottom: 20px;
+    background: white; border: 1.5px solid var(--border2);
+    border-radius: 12px; padding: 18px 24px;
+    display: flex; align-items: center;
+    justify-content: space-between; gap: 20px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.11), 0 2px 8px rgba(0,0,0,0.06);
+    margin-top: 32px; flex-wrap: wrap; z-index: 10;
+  }
+
+  .total-score-col {}
+
+  .prog-track {
+    height: 4px; background: var(--border);
+    border-radius: 4px; overflow: hidden; margin-bottom: 6px;
+    min-width: 140px;
+  }
+
+  .prog-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent-color), #60a5fa);
+    border-radius: 4px;
+    transition: width 0.4s cubic-bezier(.4,0,.2,1);
+  }
+
+  .total-row { display: flex; align-items: baseline; gap: 5px; }
+
+  .total-n {
+    font-family: 'Syne', sans-serif; font-size: 2.8rem;
+    font-weight: 800; color: var(--accent-color); line-height: 1;
+    transition: all 0.3s;
+  }
+
+  .total-d { font-family: 'DM Mono', monospace; font-size: 14px; color: var(--muted); }
+
+  .verdict-col { display: flex; flex-direction: column; gap: 2px; }
+
+  .verdict-lbl {
+    font-family: 'DM Mono', monospace; font-size: 9px;
+    letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted);
+  }
+
+  .verdict-val {
+    font-family: 'Syne', sans-serif; font-size: 1.25rem;
+    font-weight: 800; transition: color 0.3s;
+  }
+
+  .verdict-sub { font-size: 11px; color: var(--muted); font-family: 'DM Mono', monospace; }
+
+  .v-g { color: var(--green); } .v-y { color: var(--yellow); }
+  .v-r { color: var(--red); } .v-d { color: var(--muted); }
+
+  .bar-btns { display: flex; gap: 10px; flex-wrap: wrap; }
+
+  .btn {
+    display: inline-flex; align-items: center; gap: 7px;
+    padding: 11px 18px; border-radius: 8px; border: none;
+    font-family: 'DM Mono', monospace; font-size: 11px;
+    letter-spacing: 0.07em; text-transform: uppercase;
+    cursor: pointer; transition: all 0.17s; font-weight: 500;
+  }
+
+  .btn svg { width: 13px; height: 13px; flex-shrink: 0; }
+
+  .btn-reset {
+    background: var(--surface2); color: var(--muted);
+    border: 1.5px solid var(--border);
+  }
+
+  .btn-reset:hover { border-color: var(--border2); color: var(--text); }
+
+  .btn-copy { background: var(--accent-color); color: white; }
+
+  .btn-copy:hover {
+    background: #1d4ed8; transform: translateY(-1px);
+    box-shadow: 0 4px 14px rgba(37,99,235,.32);
+  }
+
+  .toast {
+    position: fixed; top: 24px; right: 24px;
+    background: var(--text); color: white;
+    font-family: 'DM Mono', monospace; font-size: 12px;
+    letter-spacing: 0.05em; padding: 12px 20px;
+    border-radius: 8px; z-index: 999;
+    opacity: 0; transform: translateY(-8px);
+    transition: all 0.28s; pointer-events: none;
+  }
+
+  .toast.show { opacity: 1; transform: translateY(0); }
+
+  @media (max-width: 640px) {
+    .meta-grid { grid-template-columns: 1fr; }
+    .toc { grid-template-columns: 1fr 1fr; }
+    .total-bar { flex-direction: column; align-items: flex-start; }
+    .total-n { font-size: 2.2rem; }
+  }
+</style>
+</head>
+<body>
+<div class="wrapper">
+
+  <div class="header">
+    <div class="badge">⚡ Founder Tool · Pre-Launch · Thorough Edition</div>
+    <h1>Software Idea<br>Pre-Check Checklist</h1>
+    <p class="header-sub">Score every dimension before writing a single line of code. Fill in your answers below each question, then hit <strong>Copy for Codex</strong> to hand off a complete, context-rich brief to any AI coding assistant.</p>
+
+    <div class="meta-grid">
+      <div class="meta-field">
+        <label>Idea / Project Name</label>
+        <input type="text" id="ideaName" placeholder="e.g. Notion for Athletes">
+      </div>
+      <div class="meta-field">
+        <label>One-Line Pitch</label>
+        <input type="text" id="oneLiner" placeholder="What it does for whom">
+      </div>
+      <div class="meta-field">
+        <label>Scored By · Date</label>
+        <input type="text" id="scoredBy" placeholder="Your name · today's date">
+      </div>
+    </div>
+
+    <div class="legend">
+      <span class="leg-lbl">Score each item →</span>
+      <div class="leg-item"><div class="ld ld0">0</div>No / Skip</div>
+      <div class="leg-item"><div class="ld ld1">1</div>Maybe / Partial</div>
+      <div class="leg-item"><div class="ld ld2">2</div>Yes / Strong</div>
+    </div>
+  </div>
+
+  <div class="toc-title">Quick Navigation</div>
+  <div class="toc" id="toc"></div>
+
+  <div id="sections"></div>
+
+  <div class="total-bar">
+    <div class="total-score-col">
+      <div class="prog-track"><div class="prog-fill" id="progFill" style="width:0%"></div></div>
+      <div class="total-row">
+        <div class="total-n" id="totalN">0</div>
+        <div class="total-d">/ <span id="totalMax">0</span> pts</div>
+      </div>
+    </div>
+    <div class="verdict-col">
+      <div class="verdict-lbl">Verdict</div>
+      <div class="verdict-val v-d" id="verdictV">-</div>
+      <div class="verdict-sub" id="verdictS">Score items to see your verdict</div>
+    </div>
+    <div class="bar-btns">
+      <button class="btn btn-reset" onclick="resetAll()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
+        Reset All
+      </button>
+      <button class="btn btn-copy" onclick="copyForCodex()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+        Copy for Codex
+      </button>
+    </div>
+  </div>
+
+</div>
+
+<div class="toast" id="toast">Copied - paste directly into Codex or any AI assistant</div>
+
+<script>
+const SECTIONS = [
+  {
+    id:1, name:"Problem Validation", cls:"s1",
+    desc:"Is the pain real, frequent, and worth solving?",
+    items:[
+      {q:"Can you describe the core problem in one brutal sentence?", hint:"Vague problem -> vague product"},
+      {q:"Have you personally experienced this pain yourself?", hint:"Founder-market fit is your earliest moat"},
+      {q:"Do 3+ people face this problem at least weekly?", hint:"Frequency = urgency = willingness to pay"},
+      {q:"Is the pain expensive, embarrassing, or time-consuming enough?", hint:"Intensity drives purchase decisions"},
+      {q:"Is this a painkiller, not a vitamin?", hint:"Painkillers get bought without reminders; vitamins get abandoned"},
+      {q:"Have you spoken to 5+ potential users before writing any code?", hint:"No code before conversations - non-negotiable"},
+      {q:"Can users clearly articulate the before/after state?", hint:"If they can't describe the gap, you'll struggle to sell"},
+      {q:"Is there an existing community around this problem? (subreddit, Slack, forum)", hint:"Community = built-in distribution + validation signal"},
+    ]
+  },
+  {
+    id:2, name:"Market & Distribution", cls:"s2",
+    desc:"Can you reach buyers efficiently and grow?",
+    items:[
+      {q:"Is there a searchable market? (people Googling or searching app stores for this)", hint:"Demand signal exists before you build"},
+      {q:"Are people paying for a workaround today? (Excel, manual process, agency)", hint:"Workarounds = unserved pain = your opportunity"},
+      {q:"Can you find and contact 100 target users right now?", hint:"Subreddit, LinkedIn niche, Slack community, conference list"},
+      {q:"Is the market growing or emerging, not shrinking?", hint:"Timing matters more than idea quality"},
+      {q:"TAM > $100M at a rough estimate?", hint:"Small markets cap your upside permanently"},
+      {q:"Is there a primary distribution channel you own or have strong access to?", hint:"Product Hunt, SEO, newsletter, API ecosystem, partnership"},
+      {q:"Can you acquire your first 10 users without paid ads?", hint:"Organic traction proves real pull exists"},
+      {q:"Is there a viral, referral, or network-effect distribution path?", hint:"Shared output, invite flows, embed mechanisms"},
+      {q:"Is the full funnel mapped? (awareness -> signup -> activation -> revenue)", hint:"Know the path before you build each step"},
+      {q:"Any regulatory, platform, or distribution red-flags to resolve?", hint:"GDPR, App Store rules, fintech licence, health data law"},
+    ]
+  },
+  {
+    id:3, name:"Authentication & Authorization", cls:"s3",
+    desc:"How do users prove identity and what can they access?",
+    items:[
+      {q:"Is your auth method chosen? (OAuth, magic link, password, SSO, passkeys)", hint:"Don't design auth as an afterthought - it touches everything"},
+      {q:"Will you support social login? (Google, GitHub, Apple)", hint:"Reduces signup friction; users expect it in 2025"},
+      {q:"Is role-based access control (RBAC) needed from day 1?", hint:"Admin / member / viewer - define early or pay the refactor tax"},
+      {q:"Is multi-tenant architecture defined? (orgs, workspaces, teams)", hint:"Per-user vs per-org data isolation has massive DB implications"},
+      {q:"Is SSO / SAML required for your enterprise buyer tier?", hint:"Enterprise deals often block on SSO absence - plan for it"},
+      {q:"Token strategy defined? (JWT, session cookies, refresh token rotation)", hint:"Short-lived access tokens + silent refresh is the safe default"},
+      {q:"Is MFA (multi-factor auth) planned or required for your vertical?", hint:"Required for fintech, healthcare, enterprise - table stakes"},
+      {q:"Are secure password reset and account recovery flows designed?", hint:"Overlooked edge case that destroys trust when it fails"},
+      {q:"Are API keys / service tokens handled securely? (rotation, scoping, revocation)", hint:"Generation alone isn't enough - build revocation from the start"},
+      {q:"Is OAuth scope minimisation practiced? (request least privilege)", hint:"Broad permission requests cause immediate user distrust"},
+      {q:"Is account lockout / brute-force protection implemented?", hint:"Rate-limit failed auth attempts on login, password reset, OTP"},
+    ]
+  },
+  {
+    id:4, name:"Technical Feasibility & Architecture", cls:"s4",
+    desc:"Can it be built, maintained, and scaled by your team?",
+    items:[
+      {q:"MVP buildable solo (or small team) in under 4-6 weeks?", hint:"If not - descope aggressively"},
+      {q:"No dependency on unproven or unstable third-party APIs?", hint:"Map every 3rd-party and assess their reliability"},
+      {q:"Is the core stack a team strength, not a learning experiment?", hint:"Don't learn a new language AND build a product simultaneously"},
+      {q:"Data requirements are clear and legally obtainable?", hint:"Training data rights, scraping legality, partnerships"},
+      {q:"Can you test the riskiest technical assumption with a prototype?", hint:"Prototype the unknown before committing to the full build"},
+      {q:"Is a rough system architecture documented? (even a napkin diagram)", hint:"Monolith vs microservices should be an intentional choice"},
+      {q:"Infrastructure provider chosen and costs modelled? (AWS, GCP, Vercel, Fly)", hint:"Egress costs, GPU costs, and DB costs can surprise you at scale"},
+      {q:"Is the system stateless enough for horizontal scaling?", hint:"Sticky sessions and local state are scaling landmines"},
+      {q:"Have you identified the main expected bottleneck in advance?", hint:"Usually DB queries, file I/O, or external API latency"},
+      {q:"Logging, error tracking, and alerting planned from day 1? (Sentry, Datadog)", hint:"You can't debug what you can't observe"},
+      {q:"Is a CI/CD pipeline set up before the first feature ships?", hint:"Manual deploys are a productivity and reliability tax"},
+    ]
+  },
+  {
+    id:5, name:"Database & Data Store", cls:"s5",
+    desc:"What stores your data, how does it scale, and is it safe?",
+    items:[
+      {q:"Primary database chosen and justified? (Postgres, MySQL, MongoDB, DynamoDB...)", hint:"Relational vs document vs wide-column - know why you chose it"},
+      {q:"Is the data model / schema designed before writing application code?", hint:"Schema migrations are painful in production - think ahead"},
+      {q:"Is a caching layer needed? (Redis, Memcached, CDN edge cache)", hint:"Cache hot reads before they stress your primary DB"},
+      {q:"Search requirements addressed? (full-text, semantic, faceted filters)", hint:"Elasticsearch, Typesense, Algolia, or pgvector for vector search"},
+      {q:"File / object storage strategy defined? (S3, GCS, Cloudflare R2)", hint:"Never store binary blobs in the relational DB"},
+      {q:"Is a vector database needed for AI/ML features? (Pinecone, Weaviate, pgvector)", hint:"Required for RAG, semantic search, recommendations"},
+      {q:"Database backup, point-in-time restore, and DR planned?", hint:"Automated daily backups are the absolute minimum - test restores"},
+      {q:"Is a data migration / seeding strategy in place for launch?", hint:"Cold-start data problem can kill early user experience"},
+      {q:"Multi-region or data-residency requirements identified?", hint:"GDPR, CCPA, or customer SLAs may force geographic constraints"},
+      {q:"Database indexing strategy reviewed for main query patterns?", hint:"Missing indexes are the silent killer of app performance at scale"},
+      {q:"Is there a strategy for large data volumes, archiving, and TTL policies?", hint:"Partition old data before your DB bill becomes unmanageable"},
+      {q:"Is a message queue or event streaming system needed? (RabbitMQ, Kafka, SQS)", hint:"Async workloads, decoupling services, reliable event processing"},
+    ]
+  },
+  {
+    id:6, name:"AI Integration", cls:"s6",
+    desc:"Where does intelligence live, and how do you control it?",
+    items:[
+      {q:"Is there a clear AI use-case that meaningfully improves core user value?", hint:"AI for AI's sake kills products - what specific job does it do better?"},
+      {q:"LLM provider chosen and compared? (OpenAI, Anthropic, Gemini, open-source)", hint:"Cost, latency, context window, and data privacy differ significantly"},
+      {q:"Is RAG (retrieval-augmented generation) needed for grounding responses?", hint:"Required when the product must answer from user-specific data"},
+      {q:"Is prompt engineering / system prompt strategy version-controlled?", hint:"Treat prompts as code - they are part of your product"},
+      {q:"AI output moderation and safety guardrails planned?", hint:"Content filters, output validation, hallucination detection"},
+      {q:"Is fine-tuning needed, or will prompt engineering suffice for v1?", hint:"Fine-tuning is expensive and slow - exhaust prompt strategies first"},
+      {q:"AI cost-per-request estimated and within unit economics?", hint:"Token costs at scale can destroy margins - model this early"},
+      {q:"Is streaming response output implemented for better perceived latency?", hint:"Users tolerate latency better when they see output appearing incrementally"},
+      {q:"AI feature fallback designed for model downtime or API failures?", hint:"Never make AI a hard dependency on critical user paths"},
+      {q:"Is there an agentic / tool-calling component? (multi-step, autonomous actions)", hint:"Plan retry logic, timeout handling, and action auditing carefully"},
+      {q:"Is AI output auditable and explainable where required?", hint:"Healthcare, finance, legal verticals require rationale - not just answers"},
+      {q:"Are embeddings and vector search planned for semantic features?", hint:"Similarity search, recommendations, document Q&A all require embeddings"},
+      {q:"Is there a plan for AI evaluation and regression testing? (evals, golden datasets)", hint:"You need to know when model updates change your product's behaviour"},
+    ]
+  },
+  {
+    id:7, name:"User Usability & Onboarding", cls:"s7",
+    desc:"How fast do users get value and how easily do they stay?",
+    items:[
+      {q:"Is the time-to-value (TTV) under 5 minutes for a brand-new user?", hint:"Every minute beyond 5 loses users before they convert"},
+      {q:"Is the onboarding flow mapped with 5 or fewer required steps?", hint:"Every extra signup step reduces completion by ~10%"},
+      {q:"Is there an empty-state strategy? (templates, sample data, guided tour)", hint:"Empty screens are conversion killers - give users a running start"},
+      {q:"Is a product tour or contextual tooltip system planned? (Intercom, Shepherd)", hint:"Help users discover features without reading a manual"},
+      {q:"Is the core action (magic moment) reachable in 1-2 clicks from landing?", hint:"The wow moment must not be buried under menus"},
+      {q:"Is keyboard navigation and accessibility (WCAG AA) addressed?", hint:"Legal requirement in many regions; improves power-user productivity"},
+      {q:"Is the UI responsive and fully usable on mobile screens?", hint:"50%+ of first-time visitors arrive on mobile"},
+      {q:"Are error messages human, specific, and actionable?", hint:"'Something went wrong' is not an error message - say what and why"},
+      {q:"Is an in-product feedback and bug reporting mechanism included?", hint:"Make it effortless for users to surface issues before churning"},
+      {q:"Are loading states, skeleton screens, and optimistic UI planned?", hint:"Perceived performance is as important as real performance"},
+      {q:"Is there a clear user retention mechanism? (email, push, digest, reminders)", hint:"Acquisition without retention is a leaky bucket"},
+      {q:"Is dark mode / theming support expected by your target users?", hint:"Increasingly a hygiene expectation across developer and productivity tools"},
+    ]
+  },
+  {
+    id:8, name:"Documentation & Developer Experience", cls:"s8",
+    desc:"Can users, contributors, and your future self understand the system?",
+    items:[
+      {q:"Is a public-facing README or landing-page documentation written?", hint:"Users should understand what the product does before signing up"},
+      {q:"Is API documentation auto-generated or actively maintained? (Swagger, Redoc)", hint:"Undocumented APIs block integrations and enterprise partnerships"},
+      {q:"Are installation and setup instructions clear for a cold-start environment?", hint:"'It works on my machine' is not a setup guide"},
+      {q:"Is there a local dev environment setup script or Dockerfile?", hint:"A new contributor should be running locally in under 30 minutes"},
+      {q:"Are all environment variable requirements documented with examples?", hint:".env.example is the minimum; secrets manager docs for production"},
+      {q:"Is a changelog or release notes process planned?", hint:"Users want to know what changed and why - it builds trust"},
+      {q:"Is there an in-product help centre, FAQ, or contextual help system?", hint:"Reduces support volume dramatically; scales without headcount"},
+      {q:"Are architecture decisions recorded? (ADRs - Architecture Decision Records)", hint:"Future team members need to know why, not just what"},
+      {q:"Is there a contribution guide if any part of the project is open-source?", hint:"CONTRIBUTING.md dramatically lowers the barrier for PRs"},
+      {q:"Is user-facing documentation versioned alongside product releases?", hint:"Stale docs erode trust faster than having no docs at all"},
+    ]
+  },
+  {
+    id:9, name:"Security & Privacy", cls:"s9",
+    desc:"Are you protecting your users and your company from day one?",
+    items:[
+      {q:"Are all user inputs sanitised and validated server-side?", hint:"XSS, SQL injection, command injection - validate and escape everything"},
+      {q:"Is HTTPS enforced everywhere, including internal service communication?", hint:"HTTP in 2025 is indefensible"},
+      {q:"Are secrets stored in a secrets manager, never in source control?", hint:"AWS Secrets Manager, Vault, Doppler - never commit .env to git"},
+      {q:"Is rate limiting implemented on all public-facing endpoints?", hint:"Brute force and abuse protection is the non-negotiable baseline"},
+      {q:"Is CSRF protection in place for all state-changing browser requests?", hint:"SameSite cookies + CSRF tokens for POST/PUT/DELETE endpoints"},
+      {q:"Is PII encrypted at rest and in transit?", hint:"GDPR / CCPA / HIPAA compliance baseline - not optional"},
+      {q:"Is a data retention and right-to-erasure policy defined?", hint:"GDPR right to erasure is a legal obligation, not a feature request"},
+      {q:"Has a security audit or penetration test been planned pre-launch?", hint:"Even a basic OWASP checklist scan catches critical issues"},
+      {q:"Is a responsible disclosure / bug bounty policy published?", hint:"Security researchers need a safe, legal channel to report issues"},
+      {q:"Is dependency vulnerability scanning automated? (Snyk, Dependabot, Trivy)", hint:"Outdated packages with CVEs are the most common production attack vector"},
+      {q:"Is a WAF or DDoS protection layer planned? (Cloudflare, AWS Shield)", hint:"Required before any meaningful traffic or public launch"},
+    ]
+  },
+  {
+    id:10, name:"Testing Strategy", cls:"s10",
+    desc:"How confident are you the product works at every layer, at every scale?",
+    items:[
+      {q:"Is a unit testing framework set up and enforced in CI? (Jest, Pytest, Vitest)", hint:"Cover critical business logic first - aim for meaningful coverage, not 100%"},
+      {q:"Are integration tests planned for critical user flows?", hint:"Auth, payment, data submission - these must not break silently"},
+      {q:"Is end-to-end (E2E) testing planned for main user journeys? (Playwright, Cypress)", hint:"Automated E2E tests catch regressions before your users do"},
+      {q:"Is load / stress testing planned before public launch? (k6, Locust, Artillery)", hint:"Know your breaking point before users discover it for you"},
+      {q:"Is performance testing (Lighthouse, Web Vitals) part of the CI pipeline?", hint:"Core Web Vitals affect both SEO rankings and real user experience"},
+      {q:"Is API contract testing planned? (Pact, Dredd, OpenAPI validation)", hint:"Prevents breaking changes between frontend and backend teams or external consumers"},
+      {q:"Is accessibility testing automated? (axe-core, pa11y, jest-axe)", hint:"Catch a11y regressions before they become legal liability"},
+      {q:"Is database migration testing part of the release process?", hint:"Failed or irreversible DB migrations can corrupt production data"},
+      {q:"Is chaos / resilience testing planned? (kill a pod, throttle DB, inject failures)", hint:"Ensures graceful degradation when things inevitably break in production"},
+      {q:"Is visual regression testing considered for UI-heavy features? (Percy, Chromatic)", hint:"Catches unintended UI changes introduced during component updates"},
+      {q:"Is test data management standardised? (factories, fixtures, seed scripts)", hint:"Consistent test data = reproducible tests = trustworthy CI pipeline"},
+      {q:"Is security / penetration testing automated in any form? (OWASP ZAP, Semgrep)", hint:"Static analysis and dynamic scanning should be continuous, not one-time"},
+    ]
+  },
+  {
+    id:11, name:"Business Viability", cls:"s11",
+    desc:"Will this survive, monetise, and grow as a real business?",
+    items:[
+      {q:"Clear monetisation path defined from day 1?", hint:"Freemium, SaaS subscription, usage-based, marketplace take-rate..."},
+      {q:"Unit economics make sense at small scale? (LTV > 3x CAC target)", hint:"Model this on a spreadsheet before building a single feature"},
+      {q:"Can you name 3+ direct competitors? (no competitors = no market)", hint:"Study them - know what you're better at and where you're exposed"},
+      {q:"Is differentiation specific and defensible, not just vague claims?", hint:"'Faster' and 'cheaper' alone are not defensible moats"},
+      {q:"Is revenue possible within 6 months of public launch?", hint:"Ramen profitability check - can you survive without fundraising?"},
+      {q:"Does this compound over time? (data flywheel, network effects, switching costs)", hint:"Harder to copy = more valuable = more fundable"},
+      {q:"Is a pricing page / tier structure designed with clear value fences?", hint:"Free / Pro / Teams / Enterprise - where's the paywall and why there?"},
+      {q:"Is customer support budgeted and tooled from day 1? (Intercom, Linear, email)", hint:"Every unsupported user is a churn risk and a trust problem"},
+      {q:"Is a partnership or integration ecosystem strategy considered?", hint:"Integrations with Slack, Notion, Zapier etc. can be major distribution"},
+    ]
+  },
+  {
+    id:12, name:"Go / No-Go Gate", cls:"s12",
+    desc:"Final sanity check before you commit to building.",
+    items:[
+      {q:"Overall score is strong - no section critically weak?", hint:"A single section below 40% should be treated as a blocking issue"},
+      {q:"Has at least one person said 'I'd pay for this today'?", hint:"Not 'that's cool' - 'I want it, when can I buy it?'"},
+      {q:"Can you ship a working, testable prototype in the next 7 days?", hint:"Ideas without action are just intentions with a deadline problem"},
+      {q:"Have you shared this plan with a brutally honest critic?", hint:"Echo chambers kill ideas - you need adversarial feedback before building"},
+      {q:"Is the idea logged in your idea journal with today's date?", hint:"Track the journey - you'll want the history when writing the origin story"},
+      {q:"Are you genuinely excited to work on this for the next 2-3 years?", hint:"Founder energy is the first and most durable competitive moat"},
+      {q:"Is there a clear Week 1 action plan written down?", hint:"Who does what, by when - even a rough plan beats no plan"},
+    ]
+  }
+];
+
+const scores = SECTIONS.map(s => s.items.map(() => null));
+const notes = SECTIONS.map(s => s.items.map(() => ""));
+const totalMax = SECTIONS.reduce((a, s) => a + s.items.length * 2, 0);
+
+function pad(n) { return n < 10 ? "0" + n : "" + n; }
+
+function buildTOC() {
+  const toc = document.getElementById("toc");
+  SECTIONS.forEach((sec, si) => {
+    const a = document.createElement("a");
+    a.className = "toc-a";
+    a.href = `#section-${si}`;
+    a.innerHTML = `<span class="toc-num">${pad(sec.id)}</span><span class="toc-name">${sec.name}</span>`;
+    toc.appendChild(a);
+  });
+}
+
+function renderSections() {
+  const container = document.getElementById("sections");
+  container.innerHTML = "";
+  document.getElementById("totalMax").textContent = totalMax;
+
+  SECTIONS.forEach((sec, si) => {
+    const secScore = scores[si].reduce((a, v) => a + (v ?? 0), 0);
+    const secMax = sec.items.length * 2;
+    const div = document.createElement("div");
+    div.className = `section ${sec.cls}`;
+    div.id = `section-${si}`;
+    div.innerHTML = `
+      <div class="sec-hdr">
+        <div class="sec-left">
+          <span class="sec-num">${pad(sec.id)}</span>
+          <div class="sec-info">
+            <div class="sec-name">${sec.name}</div>
+            <div class="sec-desc">${sec.desc}</div>
+          </div>
+        </div>
+        <div class="sec-pill"><b id="ss${si}">${secScore}</b> / ${secMax}</div>
+      </div>
+      <div id="si${si}"></div>
+    `;
+    container.appendChild(div);
+
+    const itemsEl = document.getElementById(`si${si}`);
+    sec.items.forEach((item, ii) => {
+      const cur = scores[si][ii];
+      const d = document.createElement("div");
+      d.className = "item";
+      d.innerHTML = `
+        <div class="item-top">
+          <div class="item-left">
+            <div class="item-q">${item.q}</div>
+            <div class="item-hint">${item.hint}</div>
+          </div>
+          <div class="sbtns">
+            ${[0,1,2].map(v => `<button class="sb${cur===v ? " a" + v : ""}" onclick="setScore(${si},${ii},${v})">${v}</button>`).join("")}
+          </div>
+        </div>
+        <div class="ans-lbl">Your answer / notes</div>
+        <textarea class="item-ta" id="n${si}_${ii}" placeholder="Write your answer here - this will be included in the Codex brief..." oninput="saveNote(${si},${ii},this)">${notes[si][ii]}</textarea>
+      `;
+      itemsEl.appendChild(d);
+    });
+  });
+
+  updateTotal();
+}
+
+function setScore(si, ii, val) {
+  scores[si][ii] = scores[si][ii] === val ? null : val;
+  document.getElementById(`si${si}`).children[ii].querySelectorAll(".sb").forEach((btn, v) => {
+    btn.className = "sb" + (scores[si][ii] === v ? " a" + v : "");
+  });
+  document.getElementById(`ss${si}`).textContent = scores[si].reduce((a, v) => a + (v ?? 0), 0);
+  updateTotal();
+}
+
+function saveNote(si, ii, el) {
+  notes[si][ii] = el.value;
+  el.style.height = "auto";
+  el.style.height = el.scrollHeight + "px";
+}
+
+function updateTotal() {
+  const total = scores.flat().reduce((a, v) => a + (v ?? 0), 0);
+  document.getElementById("totalN").textContent = total;
+  document.getElementById("progFill").style.width = (total / totalMax * 100).toFixed(1) + "%";
+  const pct = total / totalMax;
+  const vv = document.getElementById("verdictV");
+  const vs = document.getElementById("verdictS");
+  if (total === 0) { vv.textContent = "-"; vv.className = "verdict-val v-d"; vs.textContent = "Score items to see your verdict"; }
+  else if (pct >= 0.80) { vv.textContent = "BUILD IT"; vv.className = "verdict-val v-g"; vs.textContent = "All signals green. Ship."; }
+  else if (pct >= 0.60) { vv.textContent = "ITERATE"; vv.className = "verdict-val v-y"; vs.textContent = "Fix weak sections, then ship."; }
+  else { vv.textContent = "RECONSIDER"; vv.className = "verdict-val v-r"; vs.textContent = "Multiple gaps - research more or pivot."; }
+}
+
+function resetAll() {
+  if (!confirm("Reset all scores and answers? This cannot be undone.")) return;
+  scores.forEach(s => s.fill(null));
+  notes.forEach(s => s.fill(""));
+  renderSections();
+  ["ideaName", "oneLiner", "scoredBy"].forEach(id => document.getElementById(id).value = "");
+}
+
+function copyForCodex() {
+  const ideaName = document.getElementById("ideaName").value || "(unnamed)";
+  const oneLiner = document.getElementById("oneLiner").value || "(no pitch provided)";
+  const scoredBy = document.getElementById("scoredBy").value || "(anonymous)";
+  const total = scores.flat().reduce((a, v) => a + (v ?? 0), 0);
+  const pct = total / totalMax;
+  const verdict = pct >= 0.80 ? "BUILD IT - All signals green."
+                : pct >= 0.60 ? "ITERATE - Fix weak sections first."
+                : "RECONSIDER - Multiple critical gaps exist.";
+
+  const L = [];
+  L.push("# SOFTWARE IDEA PRE-CHECK BRIEF");
+  L.push(`## ${ideaName}`);
+  L.push(`**Pitch:** ${oneLiner}`);
+  L.push(`**Scored by:** ${scoredBy}`);
+  L.push(`**Total Score:** ${total} / ${totalMax} (${(pct * 100).toFixed(0)}%)`);
+  L.push(`**Verdict:** ${verdict}`);
+  L.push("");
+  L.push("---");
+  L.push("");
+  L.push("## INSTRUCTIONS FOR CODEX");
+  L.push("This document is the complete project pre-check brief. Each section has a score (0=No/Skip, 1=Maybe/Partial, 2=Yes/Strong) and the founder's written answer. Use the answers as the living specification. Sections with low scores or empty answers represent the highest-risk gaps - address those first in any build plan or architecture recommendation.");
+  L.push("");
+  L.push("---");
+  L.push("");
+
+  SECTIONS.forEach((sec, si) => {
+    const secScore = scores[si].reduce((a, v) => a + (v ?? 0), 0);
+    const secMax = sec.items.length * 2;
+    const pctSec = (secScore / secMax * 100).toFixed(0);
+    L.push(`## ${pad(sec.id)}. ${sec.name.toUpperCase()} - [${secScore}/${secMax} · ${pctSec}%]`);
+    L.push(`> ${sec.desc}`);
+    L.push("");
+    sec.items.forEach((item, ii) => {
+      const val = scores[si][ii];
+      const lbl = val === null ? "[ NOT SCORED ]" : val === 0 ? "[NO · 0]" : val === 1 ? "[MAYBE · 1]" : "[YES · 2]";
+      const note = notes[si][ii].trim();
+      L.push(`**${lbl}** ${item.q}`);
+      L.push(`_Hint: ${item.hint}_`);
+      L.push(`**Answer:** ${note || "*(no answer provided - needs input)*"}`);
+      L.push("");
+    });
+    L.push("---");
+    L.push("");
+  });
+
+  L.push("## NEXT STEPS");
+  L.push("1. Address every section below 60% before writing production code.");
+  L.push("2. For each unanswered item, conduct minimum research needed to fill it in.");
+  L.push("3. Use this document as the living spec - update it as the project evolves.");
+
+  const text = L.join("\n");
+  navigator.clipboard.writeText(text).then(showToast).catch(() => {
+    const ta = document.createElement("textarea");
+    ta.value = text;
+    document.body.appendChild(ta);
+    ta.select();
+    document.execCommand("copy");
+    document.body.removeChild(ta);
+    showToast();
+  });
+}
+
+function showToast() {
+  const t = document.getElementById("toast");
+  t.classList.add("show");
+  setTimeout(() => t.classList.remove("show"), 3200);
+}
+
+buildTOC();
+renderSections();
+</script>
+</body>
+</html>
