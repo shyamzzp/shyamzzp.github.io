@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Redirecting to Projects</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script type="text/javascript">
+      (function () {
+        var locationData = window.location;
+        var target =
+          locationData.protocol +
+          "//" +
+          locationData.host +
+          "/?/projects" +
+          locationData.hash;
+
+        locationData.replace(target);
+      })();
+    </script>
+  </head>
+  <body></body>
+</html>
