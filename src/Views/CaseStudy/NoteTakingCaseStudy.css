@@ -115,14 +115,32 @@
   display: block;
 }
 
+.note-case-example {
+  color: rgba(31, 41, 55, 0.66);
+  display: block;
+  font-size: 0.82rem;
+  line-height: 1.48;
+  margin-top: 0.28rem;
+}
+
+.note-case-line {
+  display: block;
+}
+
+.note-case-line + .note-case-line {
+  margin-top: 0.18rem;
+}
+
 .note-case-section-title {
   color: #111827 !important;
   display: block;
   font-family: "Google Sans Display", Arial, Helvetica, sans-serif;
-  font-size: 0.92rem !important;
+  font-size: 0.78rem !important;
   font-weight: 900;
+  letter-spacing: 0.04em;
   line-height: 1.2 !important;
   margin: 0 0 0.2rem;
+  text-transform: uppercase;
 }
 
 .note-case-content {

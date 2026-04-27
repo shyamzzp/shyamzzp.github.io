@@ -80,6 +80,11 @@ export default function NoteTakingCaseStudy() {
               <mark className="note-case-mark">learning activity</mark>. The
               more students produce, organize, and explain ideas in their own
               words, the more useful the notes become for performance.
+              <span className="note-case-example">
+                Example: after a lecture on memory, a useful note is not just
+                "retrieval practice matters"; it becomes "testing myself after
+                class is part of learning, not only checking what I remember."
+              </span>
             </span>
             <span className="note-case-block">
               <span className="note-case-section-title">Problem</span>
@@ -89,6 +94,11 @@ export default function NoteTakingCaseStudy() {
               not simply fast notes. College students often choose note-taking
               tools based on speed or convenience, but the real outcome depends
               on comprehension, retention, and later retrieval.
+              <span className="note-case-example">
+                Example: a student may type every sentence from a lecture and
+                still struggle in the exam because the notes captured words, not
+                the relationship between concepts.
+              </span>
             </span>
             <span className="note-case-block">
               <span className="note-case-section-title">
@@ -101,6 +111,11 @@ export default function NoteTakingCaseStudy() {
               selection and synthesis. The production effect matters because
               learning improves when students actively produce meaning instead
               of passively recording content.
+              <span className="note-case-example">
+                Example: typing "photosynthesis converts light into energy" is
+                fast; writing "plants turn light into stored food through a
+                chemical process" requires selection and rephrasing.
+              </span>
             </span>
             <span className="note-case-block">
               <span className="note-case-section-title">Sub-Problems</span>
@@ -108,6 +123,11 @@ export default function NoteTakingCaseStudy() {
               can reduce mental filtering during lectures, while handwritten
               notes can miss details when lectures move quickly. Review habits
               often matter as much as the note-taking medium.
+              <span className="note-case-example">
+                Example: handwritten notes may be conceptually stronger but
+                incomplete; typed notes may be complete but too close to a
+                transcript. Both need review and transformation.
+              </span>
             </span>
             <span className="note-case-block">
               <span className="note-case-section-title">
@@ -119,6 +139,11 @@ export default function NoteTakingCaseStudy() {
               : capture enough detail, then actively transform notes into
               summaries, questions, diagrams, flashcards, or teaching-style
               explanations.
+              <span className="note-case-example">
+                Example: after class, convert notes into three questions, one
+                short summary, and one explanation you could teach to another
+                student.
+              </span>
             </span>
             <span className="note-case-block">
               <span className="note-case-section-title">
@@ -130,6 +155,10 @@ export default function NoteTakingCaseStudy() {
                   {finding.rest}
                 </span>
               ))}
+              <span className="note-case-example">
+                Example: the strongest result usually comes from using notes as
+                a working tool: recall, explain, correct, and repeat.
+              </span>
             </span>
           </section>
 
