@@ -412,7 +412,8 @@ hr {
 }
 
 .portfolio-panel .tags {
-  gap: 0.3rem;
+  column-gap: 0.38rem;
+  row-gap: 0.62rem;
 }
 
 .portfolio-panel .tag {
@@ -1025,7 +1026,8 @@ hr {
 .skills-group .tags {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.3rem;
+  column-gap: 0.38rem;
+  row-gap: 0.62rem;
   max-width: 100%;
 }
 
