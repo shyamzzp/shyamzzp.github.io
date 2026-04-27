@@ -227,26 +227,6 @@ hr {
   gap: 0.45rem;
 }
 
-.skill-icon-image-wrap {
-  align-items: center;
-  background: rgba(255, 255, 255, 0.92);
-  border-radius: 4px;
-  display: inline-flex;
-  height: 1.08rem;
-  justify-content: center;
-  overflow: hidden;
-  padding: 0;
-  width: 1.08rem;
-  flex-shrink: 0;
-}
-
-.skill-icon-image {
-  width: 100%;
-  height: 100%;
-  display: block;
-  object-fit: contain;
-}
-
 .hero.is-info .title {
   font-size: 3rem;
 }
