@@ -173,6 +173,30 @@ const previousWorkItems = [
     routeOnly: true,
   },
   {
+    id: "temp-mail-case-study",
+    title: "Temp Mail Automation",
+    summary:
+      "A workflow case study on generating temporary inboxes, polling them over a timeout, reading messages, and automating multiple disposable addresses through APIs.",
+    status: "Published",
+    href: "/temp-mail-case-study",
+    type: "Case study",
+    details: [
+      "Covers temporary mailbox creation, inbox polling, message parsing, and timeout handling.",
+      "Explains how to automate two or three temporary inboxes using an API pattern.",
+    ],
+    features: [
+      "Feature breakdown for domains, accounts, tokens, inboxes, message details, polling, webhooks, parsing, and cleanup.",
+      "API requirements for creating multiple inboxes and reading incoming messages.",
+      "Safety constraints for legitimate testing and privacy-preserving workflows.",
+    ],
+    problemsFaced: [
+      "Balancing automation usefulness with anti-abuse and terms-of-service boundaries.",
+      "Designing polling that is reliable without hammering provider APIs.",
+      "Handling delayed delivery, duplicate messages, HTML parsing, and provider retention rules.",
+    ],
+    routeOnly: true,
+  },
+  {
     id: "ai-roadmap",
     title: "AI Roadmap",
     summary:
