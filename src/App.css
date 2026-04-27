@@ -717,6 +717,18 @@ hr {
   width: 0.42rem;
 }
 
+.project-preview-status-public {
+  background: rgba(22, 163, 74, 0.12);
+  color: #166534;
+}
+
+.project-preview-status-link.project-preview-status-public:hover {
+  background: rgba(22, 163, 74, 0.18);
+  color: #14532d;
+  text-decoration: underline;
+  text-underline-offset: 0.12rem;
+}
+
 @keyframes status-pulse {
   0% {
     box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.5);
