@@ -4,6 +4,7 @@ import Blogs from "./Blogs";
 import Home from "./Home";
 import Help from "./Help";
 import NoteTakingCaseStudy from "./Views/CaseStudy/NoteTakingCaseStudy";
+import WorkflowyCaseStudy from "./Views/CaseStudy/WorkflowyCaseStudy";
 import Projects from "./Views/Projects/Projects";
 import Work from "./Work";
 
@@ -18,6 +19,7 @@ function App() {
           path="/production-effect-case-study"
           element={<NoteTakingCaseStudy />}
         />
+        <Route path="/workflowy-case-study" element={<WorkflowyCaseStudy />} />
         <Route path="/projects" element={<Projects />} />
         <Route path="/work" element={<Work />} />
       </Routes>

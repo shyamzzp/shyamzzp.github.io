@@ -24,13 +24,14 @@ This repository powers Shyam S. Suthar's GitHub Pages portfolio. The current imp
 - Previous-work cards can expand inline to show features and problems faced.
 - Previous-work modal navigation supports keyboard left/right for cycling between items.
 - The Production Effect case study is route-only and opens `/production-effect-case-study`.
+- The Workflowy case study is route-only and opens `/workflowy-case-study`.
 
-### Production Effect Case Study
+### Case Study Pages
 
-- Route: `/production-effect-case-study`.
-- Title displays as uppercase: `THE PRODUCTION EFFECT`.
-- The case study is currently a single flowing page with normal vertical scrolling. The slider interaction was removed because it made the page unnecessarily complex.
-- Pressing `Esc` on the case-study page navigates back to `/`.
+- Current case-study routes: `/production-effect-case-study` and `/workflowy-case-study`.
+- Case-study titles display uppercase through shared case-study styling.
+- Case studies are currently single flowing pages with normal vertical scrolling. The slider interaction was removed because it made the pages unnecessarily complex.
+- Pressing `Esc` on a case-study page navigates back to `/`.
 - The back link includes a left icon and underlined `Back to profile` text.
 - Meta fields currently shown: Author, Published, Category, and Reading Time. Focus and Format were removed.
 - Sections are plain text, not cards or grid panels. Current sections include Core Idea, Problem, Base of the Problem, Sub-Problems, Practical Takeaway, Performance Implications, and References.

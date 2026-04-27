@@ -125,6 +125,30 @@ const previousWorkItems = [
     routeOnly: true,
   },
   {
+    id: "workflowy-case-study",
+    title: "Workflowy",
+    summary:
+      "A product workflow case study on using one structured outline for notes, tasks, projects, and knowledge work.",
+    status: "Published",
+    href: "/workflowy-case-study",
+    type: "Case study",
+    details: [
+      "Studies how a single outline can reduce tool switching.",
+      "Frames nesting, zooming, search, and tags as workflow primitives.",
+    ],
+    features: [
+      "Problem, base problem, and sub-problem breakdown.",
+      "Practical examples for capture, retrieval, and project planning.",
+      "References to Workflowy's official product positioning and basics.",
+    ],
+    problemsFaced: [
+      "Explaining the product model without turning it into a feature list.",
+      "Balancing simplicity with the deeper workflow implications.",
+      "Showing why an outline can support both messy thinking and structured execution.",
+    ],
+    routeOnly: true,
+  },
+  {
     id: "ai-roadmap",
     title: "AI Roadmap",
     summary:
