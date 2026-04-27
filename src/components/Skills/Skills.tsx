@@ -345,9 +345,13 @@ export default function Skills() {
           {skillGroups[0].items.map((item) =>
             renderItem(skillGroups[0].title, item, skillGroups[0].className)
           )}{" "}
-          <a href="/?/projects" className="tag cursor-pointer border">
+          <span
+            className="tag skills-disabled-tag"
+            aria-disabled="true"
+            title="Projects link disabled"
+          >
             Projects
-          </a>
+          </span>
         </div>
       </div>
       {skillGroups.slice(1).map((group) => (

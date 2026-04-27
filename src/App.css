@@ -994,6 +994,16 @@ hr {
   word-break: break-word;
 }
 
+.skills-disabled-tag {
+  cursor: not-allowed;
+  filter: grayscale(0.35);
+  opacity: 0.62;
+}
+
+.skills-disabled-tag:hover {
+  cursor: not-allowed;
+}
+
 .skills-group {
   margin-bottom: 1rem;
 }
