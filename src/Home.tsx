@@ -17,18 +17,39 @@ import cv from "./img/cv.png";
 const activeProblems = [
   {
     title: "AI learning systems",
-    description:
-      "Building structured AI roadmaps and knowledge bases that turn scattered research into practical learning paths.",
+    problem:
+      "People collect AI links, notes, and tools faster than they can turn them into a usable learning path.",
+    basis:
+      "The problem starts with fragmented sources, fast-moving model changes, and unclear sequencing between fundamentals, tools, and production patterns.",
+    subProblems: [
+      "Separating durable concepts from hype.",
+      "Mapping topics into beginner, intermediate, and advanced tracks.",
+      "Keeping examples current without rewriting the whole knowledge base.",
+    ],
   },
   {
     title: "Developer productivity",
-    description:
-      "Exploring tools that make documentation, prep material, and implementation notes easier to browse and maintain.",
+    problem:
+      "Engineering notes, docs, and implementation context often live in too many places to be useful during real work.",
+    basis:
+      "The base issue is retrieval and maintenance: developers need context quickly, but most knowledge systems are optimized for storage, not action.",
+    subProblems: [
+      "Making docs scannable under time pressure.",
+      "Connecting decisions, code examples, and follow-up tasks.",
+      "Reducing repeated explanations across projects and teams.",
+    ],
   },
   {
     title: "Offline-first product flows",
-    description:
-      "Thinking through resilient payment and workflow experiences for low-connectivity environments.",
+    problem:
+      "Important workflows break when connectivity is weak, especially payments, field operations, and approval flows.",
+    basis:
+      "The base of the problem is trust: users need clear status, conflict handling, and recovery when the network disappears.",
+    subProblems: [
+      "Designing reliable pending and retry states.",
+      "Reconciling local actions with server truth later.",
+      "Preventing duplicate actions, fraud, and unclear user feedback.",
+    ],
   },
 ];
 
@@ -247,7 +268,22 @@ function Home() {
                     {activeProblems.map((problem) => (
                       <article key={problem.title} className="problem-item">
                         <h3>{problem.title}</h3>
-                        <p>{problem.description}</p>
+                        <div className="problem-detail">
+                          <p className="problem-detail-label">Problem</p>
+                          <p>{problem.problem}</p>
+                        </div>
+                        <div className="problem-detail">
+                          <p className="problem-detail-label">Base</p>
+                          <p>{problem.basis}</p>
+                        </div>
+                        <div className="problem-detail">
+                          <p className="problem-detail-label">Sub-problems</p>
+                          <ul>
+                            {problem.subProblems.map((subProblem) => (
+                              <li key={subProblem}>{subProblem}</li>
+                            ))}
+                          </ul>
+                        </div>
                       </article>
                     ))}
                   </div>
