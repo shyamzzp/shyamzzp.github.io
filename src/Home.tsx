@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import ReactMarkdown from "react-markdown";
+import { useNavigate } from "react-router-dom";
 import { Drawer, Modal } from "rsuite";
 
 import "./App.css";
@@ -54,25 +55,23 @@ const activeProblems = [
 
 const panelIds = ["about", "problems", "projects"] as const;
 type PanelId = (typeof panelIds)[number];
+const previousWorkTypes = ["Project", "Case study", "Blog"] as const;
+type PreviousWorkType = (typeof previousWorkTypes)[number];
 
 const cvOptions = [
   {
-    title: "Full-time professional CV",
-    description: "For senior software engineering roles and long-term product teams.",
+    title: "Professional CV",
+    description:
+      "Focused on full-time senior software engineering work, product teams, delivery ownership, and production systems.",
     href: "/ShyamSS-resume.pdf",
-    status: "Available",
+    status: "Full-time",
   },
   {
-    title: "Contract CV",
-    description: "For fixed-term delivery, consulting, and technical execution roles.",
+    title: "Personal CV",
+    description:
+      "A broader profile for personal projects, experiments, open-source work, prototypes, and technologies I explore outside full-time roles.",
     href: "/ShyamSS-resume.pdf",
-    status: "Available soon",
-  },
-  {
-    title: "Freelance CV",
-    description: "For project-based web, automation, and product engineering work.",
-    href: "/ShyamSS-resume.pdf",
-    status: "Available soon",
+    status: "Experiments",
   },
 ];
 
@@ -94,7 +93,37 @@ const previousWorkItems = [
       ...project.description,
       ...project.sections.flatMap((section) => section.items),
     ].slice(0, 5),
+    problemsFaced: [
+      "Keeping the scope focused while still showing meaningful product value.",
+      "Balancing implementation detail with a clean, readable user experience.",
+      "Choosing what to simplify so the project stays maintainable.",
+    ],
+    routeOnly: false,
   })),
+  {
+    id: "production-effect",
+    title: "The Production Effect",
+    summary:
+      "A case study on handwritten versus typed note-taking effects on college students' performance.",
+    status: "Published",
+    href: "/production-effect-case-study",
+    type: "Case study",
+    details: [
+      "Compares typed capture speed with handwritten synthesis.",
+      "Frames note-taking as active production rather than passive storage.",
+    ],
+    features: [
+      "Problem, base problem, and sub-problem breakdown.",
+      "Performance implications for college learning workflows.",
+      "Practical hybrid note-taking recommendations.",
+    ],
+    problemsFaced: [
+      "Balancing nuance without turning the case study into an academic paper.",
+      "Explaining the production effect in practical student-facing language.",
+      "Separating note-taking medium from review and retrieval habits.",
+    ],
+    routeOnly: true,
+  },
   {
     id: "ai-roadmap",
     title: "AI Roadmap",
@@ -112,6 +141,12 @@ const previousWorkItems = [
       "Practical sequencing from fundamentals to implementation patterns.",
       "Reference-style pages that support fast scanning and revision.",
     ],
+    problemsFaced: [
+      "AI topics change quickly, so the structure had to support updates.",
+      "The roadmap needed to avoid becoming a flat list of disconnected links.",
+      "Balancing depth with scanability was the main content-design challenge.",
+    ],
+    routeOnly: false,
   },
   {
     id: "software-idea-checklist",
@@ -130,6 +165,12 @@ const previousWorkItems = [
       "Sections for market, distribution, build risk, launch, and operations.",
       "Actionable prompts for turning vague ideas into testable decisions.",
     ],
+    problemsFaced: [
+      "The questions needed to be strict without becoming too academic.",
+      "It was easy to over-expand the checklist and make it hard to finish.",
+      "The structure had to work for both small ideas and larger products.",
+    ],
+    routeOnly: false,
   },
   {
     id: "prep-arch-pitch",
@@ -148,6 +189,12 @@ const previousWorkItems = [
       "Product pitch sections with roadmap and business thinking.",
       "Architecture-oriented narrative for how the product could scale.",
     ],
+    problemsFaced: [
+      "Connecting pitch content with architecture details without losing focus.",
+      "Making the idea concrete enough to evaluate before implementation.",
+      "Separating useful roadmap thinking from speculative product scope.",
+    ],
+    routeOnly: false,
   },
   {
     id: "architecture-studio",
@@ -166,10 +213,65 @@ const previousWorkItems = [
       "Studio positioning and project storytelling sections.",
       "Multiple visual directions for comparing presentation styles.",
     ],
+    problemsFaced: [
+      "Keeping visual layouts polished across mobile and desktop.",
+      "Presenting project imagery without making the page feel crowded.",
+      "Balancing brand personality with practical portfolio navigation.",
+    ],
+    routeOnly: false,
+  },
+  {
+    id: "github-site-blog",
+    title: "GitHub Site Notes",
+    summary:
+      "A practical blog-style note on publishing, maintaining, and thinking through a personal GitHub Pages site.",
+    status: "Published",
+    href: "/blogs",
+    type: "Blog",
+    details: [
+      "Documents learnings around maintaining a personal web presence.",
+      "Connects publishing workflow decisions with portfolio iteration.",
+    ],
+    features: [
+      "Personal-site publishing notes.",
+      "Developer-friendly writing format.",
+      "Useful context for future site maintenance.",
+    ],
+    problemsFaced: [
+      "Keeping the notes useful without turning them into long documentation.",
+      "Balancing implementation detail with reader-friendly writing.",
+      "Making the content easy to revisit later.",
+    ],
+    routeOnly: false,
+  },
+  {
+    id: "agile-development-blog",
+    title: "Agile Development Notes",
+    summary:
+      "A concise blog-style reference for agile development concepts, team rituals, and delivery vocabulary.",
+    status: "Published",
+    href: "/blogs",
+    type: "Blog",
+    details: [
+      "Captures glossary-style thinking around agile delivery practices.",
+      "Useful for quickly revisiting terminology and workflow concepts.",
+    ],
+    features: [
+      "Short-form agile reference notes.",
+      "Simple structure for repeated reading.",
+      "Reusable content for onboarding and interview preparation.",
+    ],
+    problemsFaced: [
+      "Avoiding generic definitions that do not help in real project work.",
+      "Keeping the writing compact while still being useful.",
+      "Selecting concepts that are worth revisiting.",
+    ],
+    routeOnly: false,
   },
 ];
 
 function Home() {
+  const navigate = useNavigate();
   const [openBlogs, setOpenBlogs] = React.useState(false);
   const [openCaseStudies, setOpenCaseStudies] = React.useState(false);
   const [openGlossary, setOpenGlossary] = React.useState(false);
@@ -178,9 +280,14 @@ function Home() {
   const [tosText, setTosText] = useState("");
   const [tosTextBlog, setTosTextBlog] = useState("");
   const [openCvModal, setOpenCvModal] = React.useState(false);
+  const [activePreviousWorkId, setActivePreviousWorkId] = React.useState<
+    string | null
+  >(null);
   const [expandedPreviousWorkIds, setExpandedPreviousWorkIds] = React.useState<
     string[]
   >([]);
+  const [previousWorkType, setPreviousWorkType] =
+    React.useState<PreviousWorkType>("Project");
   const [visiblePreviousWorkCount, setVisiblePreviousWorkCount] =
     React.useState(4);
   const panelRefs = React.useRef<Record<PanelId, HTMLElement | null>>({
@@ -302,6 +409,70 @@ function Home() {
 
   const isPublicPreviousWork = (status: string) =>
     ["Live", "Published"].includes(status);
+
+  const openPreviousWork = (project: (typeof previousWorkItems)[number]) => {
+    if (project.routeOnly && project.href) {
+      navigate(project.href);
+      return;
+    }
+
+    setActivePreviousWorkId(project.id);
+  };
+
+  const activePreviousWorkIndex = activePreviousWorkId
+    ? previousWorkItems.findIndex((item) => item.id === activePreviousWorkId)
+    : -1;
+
+  const activePreviousWork =
+    activePreviousWorkIndex >= 0
+      ? previousWorkItems[activePreviousWorkIndex]
+      : null;
+
+  const filteredPreviousWorkItems = previousWorkItems.filter(
+    (item) => item.type === previousWorkType
+  );
+
+  useEffect(() => {
+    setVisiblePreviousWorkCount(4);
+  }, [previousWorkType]);
+
+  const movePreviousWorkModal = React.useCallback((direction: 1 | -1) => {
+    setActivePreviousWorkId((currentId) => {
+      const currentIndex = currentId
+        ? previousWorkItems.findIndex((item) => item.id === currentId)
+        : -1;
+      const nextIndex =
+        currentIndex < 0
+          ? 0
+          : (currentIndex + direction + previousWorkItems.length) %
+            previousWorkItems.length;
+      return previousWorkItems[nextIndex].id;
+    });
+  }, []);
+
+  useEffect(() => {
+    if (!activePreviousWorkId) {
+      return;
+    }
+
+    const handlePreviousWorkKeys = (event: KeyboardEvent) => {
+      if (event.key === "ArrowRight") {
+        event.preventDefault();
+        movePreviousWorkModal(1);
+      }
+
+      if (event.key === "ArrowLeft") {
+        event.preventDefault();
+        movePreviousWorkModal(-1);
+      }
+    };
+
+    window.addEventListener("keydown", handlePreviousWorkKeys);
+
+    return () => {
+      window.removeEventListener("keydown", handlePreviousWorkKeys);
+    };
+  }, [activePreviousWorkId, movePreviousWorkModal]);
 
   const setReadMeFileContext = (data: string) => {
     setValue(data);
@@ -450,18 +621,49 @@ function Home() {
                 >
                   <div className="portfolio-panel-header">
                     <p className="portfolio-panel-kicker">03 / Previous work</p>
-                    <h2>Projects | Case studies</h2>
+                    <h2>Projects | Case studies | Blogs</h2>
                     <p>
                       A snapshot of products, prototypes, and technical systems I
                       have shipped or explored.
                     </p>
+                    <div
+                      className="previous-work-filter"
+                      aria-label="Filter previous work"
+                    >
+                      {previousWorkTypes.map((type) => (
+                        <button
+                          key={type}
+                          type="button"
+                          className={`previous-work-filter-button ${
+                            previousWorkType === type
+                              ? "previous-work-filter-button-active"
+                              : ""
+                          }`}
+                          onClick={() => setPreviousWorkType(type)}
+                        >
+                          {type === "Case study" ? "Case studies" : `${type}s`}
+                        </button>
+                      ))}
+                    </div>
                   </div>
 
                   <div className="project-preview-list">
-                    {previousWorkItems
+                    {filteredPreviousWorkItems
                       .slice(0, visiblePreviousWorkCount)
                       .map((project) => (
-                      <article key={project.id} className="project-preview-item">
+                      <article
+                        key={project.id}
+                        className="project-preview-item"
+                        role="button"
+                        tabIndex={0}
+                        onClick={() => openPreviousWork(project)}
+                        onKeyDown={(event) => {
+                          if (event.key === "Enter" || event.key === " ") {
+                            event.preventDefault();
+                            openPreviousWork(project);
+                          }
+                        }}
+                      >
                         <div className="project-preview-content">
                           <div className="project-preview-main-row">
                             <div className="project-preview-copy">
@@ -482,6 +684,7 @@ function Home() {
                                   href={project.href}
                                   target="_blank"
                                   rel="noreferrer"
+                                  onClick={(event) => event.stopPropagation()}
                                 >
                                   {project.status}
                                 </a>
@@ -504,11 +707,19 @@ function Home() {
                           {expandedPreviousWorkIds.includes(project.id) ? (
                             <div className="project-preview-features">
                               <p className="project-preview-features-title">
-                                Important features
+                                Features
                               </p>
                               <ul>
                                 {project.features.map((feature) => (
                                   <li key={feature}>{feature}</li>
+                                ))}
+                              </ul>
+                              <p className="project-preview-features-title project-preview-problems-title">
+                                Problems faced
+                              </p>
+                              <ul>
+                                {project.problemsFaced.map((problemFaced) => (
+                                  <li key={problemFaced}>{problemFaced}</li>
                                 ))}
                               </ul>
                             </div>
@@ -529,19 +740,23 @@ function Home() {
                           aria-expanded={expandedPreviousWorkIds.includes(
                             project.id
                           )}
-                          onClick={() => togglePreviousWorkFeatures(project.id)}
+                          onMouseDown={(event) => event.stopPropagation()}
+                          onClick={(event) => {
+                            event.stopPropagation();
+                            togglePreviousWorkFeatures(project.id);
+                          }}
                         />
                       </article>
                     ))}
                   </div>
 
-                  {visiblePreviousWorkCount < previousWorkItems.length ? (
+                  {visiblePreviousWorkCount < filteredPreviousWorkItems.length ? (
                     <button
                       type="button"
                       className="portfolio-panel-action"
                       onClick={() => {
                         setVisiblePreviousWorkCount((count) =>
-                          Math.min(count + 4, previousWorkItems.length)
+                          Math.min(count + 4, filteredPreviousWorkItems.length)
                         );
                       }}
                     >
@@ -607,6 +822,103 @@ function Home() {
                   ))}
                 </div>
               </Modal.Body>
+            </Modal>
+
+            <Modal
+              open={Boolean(activePreviousWork)}
+              onClose={() => setActivePreviousWorkId(null)}
+              size="full"
+              className="previous-work-modal"
+            >
+              {activePreviousWork ? (
+                <>
+                  <Modal.Header>
+                    <Modal.Title>{activePreviousWork.title}</Modal.Title>
+                  </Modal.Header>
+                  <Modal.Body>
+                    <div className="previous-work-modal-shell">
+                      <button
+                        type="button"
+                        className="previous-work-modal-nav previous-work-modal-nav-left"
+                        aria-label="Previous project"
+                        onClick={() => movePreviousWorkModal(-1)}
+                      />
+                      <div className="previous-work-modal-content">
+                        <div className="previous-work-modal-top">
+                          <div>
+                            <p className="portfolio-panel-kicker">
+                              {activePreviousWorkIndex + 1} /{" "}
+                              {previousWorkItems.length}
+                            </p>
+                            <h2>{activePreviousWork.title}</h2>
+                            <p>{activePreviousWork.summary}</p>
+                          </div>
+                          <div className="project-preview-badges previous-work-modal-badges">
+                            {activePreviousWork.href &&
+                            isPublicPreviousWork(activePreviousWork.status) ? (
+                              <a
+                                className="project-preview-status project-preview-status-link project-preview-status-public"
+                                href={activePreviousWork.href}
+                                target="_blank"
+                                rel="noreferrer"
+                              >
+                                {activePreviousWork.status}
+                              </a>
+                            ) : (
+                              <span
+                                className={`project-preview-status ${
+                                  isPublicPreviousWork(activePreviousWork.status)
+                                    ? "project-preview-status-public"
+                                    : ""
+                                }`}
+                              >
+                                {activePreviousWork.status}
+                              </span>
+                            )}
+                            <span className="project-preview-kind">
+                              {activePreviousWork.type}
+                            </span>
+                          </div>
+                        </div>
+                        <div className="previous-work-modal-grid">
+                          <section>
+                            <h3>Details</h3>
+                            <ul>
+                              {activePreviousWork.details.map((detail) => (
+                                <li key={detail}>{detail}</li>
+                              ))}
+                            </ul>
+                          </section>
+                          <section>
+                            <h3>Features</h3>
+                            <ul>
+                              {activePreviousWork.features.map((feature) => (
+                                <li key={feature}>{feature}</li>
+                              ))}
+                            </ul>
+                          </section>
+                          <section>
+                            <h3>Problems Faced</h3>
+                            <ul>
+                              {activePreviousWork.problemsFaced.map(
+                                (problemFaced) => (
+                                  <li key={problemFaced}>{problemFaced}</li>
+                                )
+                              )}
+                            </ul>
+                          </section>
+                        </div>
+                      </div>
+                      <button
+                        type="button"
+                        className="previous-work-modal-nav previous-work-modal-nav-right"
+                        aria-label="Next project"
+                        onClick={() => movePreviousWorkModal(1)}
+                      />
+                    </div>
+                  </Modal.Body>
+                </>
+              ) : null}
             </Modal>
 
             {/* <BorderedSection
