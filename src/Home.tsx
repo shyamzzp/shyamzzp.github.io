@@ -149,6 +149,30 @@ const previousWorkItems = [
     routeOnly: true,
   },
   {
+    id: "raycast-case-study",
+    title: "Raycast",
+    summary:
+      "A product workflow case study on Raycast as a command center for launching, searching, scripting, automating, and extending desktop workflows.",
+    status: "Published",
+    href: "/raycast-case-study",
+    type: "Case study",
+    details: [
+      "Breaks Raycast into launcher, commands, extensions, shortcuts, and scripts.",
+      "Explains script commands, custom inputs, aliases, and keyboard shortcuts.",
+    ],
+    features: [
+      "Component and feature breakdown across core commands, extensions, scripts, snippets, quicklinks, AI, and window management.",
+      "Examples for custom script commands and shortcut-driven automation.",
+      "References to Raycast's official manual, script-command docs, and extension guidelines.",
+    ],
+    problemsFaced: [
+      "Covering the breadth of Raycast without making the case study feel like a manual copy.",
+      "Separating core product primitives from specific extension implementations.",
+      "Explaining custom scripts and shortcuts in practical workflow terms.",
+    ],
+    routeOnly: true,
+  },
+  {
     id: "ai-roadmap",
     title: "AI Roadmap",
     summary:
