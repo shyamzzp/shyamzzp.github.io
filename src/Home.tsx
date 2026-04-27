@@ -32,6 +32,9 @@ const activeProblems = [
   },
 ];
 
+const panelIds = ["about", "problems", "projects"] as const;
+type PanelId = (typeof panelIds)[number];
+
 function Home() {
   const [openProjects, setModalOpenProjects] = React.useState(false);
   const [openBlogs, setOpenBlogs] = React.useState(false);
@@ -41,6 +44,25 @@ function Home() {
   const [viewForClicked, setViewForClicked] = React.useState("github-site");
   const [tosText, setTosText] = useState("");
   const [tosTextBlog, setTosTextBlog] = useState("");
+  const panelRefs = React.useRef<Record<PanelId, HTMLElement | null>>({
+    about: null,
+    problems: null,
+    projects: null,
+  });
+  const [scrollablePanels, setScrollablePanels] = React.useState<
+    Record<PanelId, boolean>
+  >({
+    about: false,
+    problems: false,
+    projects: false,
+  });
+  const [panelAtBottom, setPanelAtBottom] = React.useState<
+    Record<PanelId, boolean>
+  >({
+    about: false,
+    problems: false,
+    projects: false,
+  });
 
   useEffect(() => {
     fetch(getGlossaryReadMe(value))
@@ -53,6 +75,83 @@ function Home() {
       .then((res) => res.text())
       .then((text) => setTosTextBlog(text));
   });
+
+  useEffect(() => {
+    const updateScrollablePanels = () => {
+      setScrollablePanels((current) => {
+        const next = panelIds.reduce((state, panelId) => {
+          const panel = panelRefs.current[panelId];
+          state[panelId] = panel
+            ? panel.scrollHeight > panel.clientHeight + 1
+            : false;
+          return state;
+        }, {} as Record<PanelId, boolean>);
+
+        if (panelIds.every((panelId) => current[panelId] === next[panelId])) {
+          return current;
+        }
+
+        return next;
+      });
+    };
+
+    const updatePanelBottomState = () => {
+      setPanelAtBottom((current) => {
+        const next = panelIds.reduce((state, panelId) => {
+          const panel = panelRefs.current[panelId];
+          state[panelId] = panel
+            ? panel.scrollTop + panel.clientHeight >= panel.scrollHeight - 2
+            : false;
+          return state;
+        }, {} as Record<PanelId, boolean>);
+
+        if (panelIds.every((panelId) => current[panelId] === next[panelId])) {
+          return current;
+        }
+
+        return next;
+      });
+    };
+
+    updateScrollablePanels();
+    updatePanelBottomState();
+
+    const resizeObserver = new ResizeObserver(updateScrollablePanels);
+    const panelElements = panelIds
+      .map((panelId) => panelRefs.current[panelId])
+      .filter((panel): panel is HTMLElement => Boolean(panel));
+
+    panelElements.forEach((panel) => {
+      if (panel) {
+        resizeObserver.observe(panel);
+        panel.addEventListener("scroll", updatePanelBottomState);
+      }
+    });
+
+    window.addEventListener("resize", updateScrollablePanels);
+    window.addEventListener("resize", updatePanelBottomState);
+
+    return () => {
+      resizeObserver.disconnect();
+      panelElements.forEach((panel) => {
+        panel.removeEventListener("scroll", updatePanelBottomState);
+      });
+      window.removeEventListener("resize", updateScrollablePanels);
+      window.removeEventListener("resize", updatePanelBottomState);
+    };
+  }, []);
+
+  const handleScrollIndicatorClick = (panelId: PanelId) => {
+    const panel = panelRefs.current[panelId];
+    if (!panel) {
+      return;
+    }
+
+    panel.scrollTo({
+      top: panelAtBottom[panelId] ? 0 : panel.scrollHeight,
+      behavior: "smooth",
+    });
+  };
 
   const setReadMeFileContext = (data: string) => {
     setValue(data);
@@ -67,27 +166,6 @@ function Home() {
       <section className="hero is-info is-fullheight">
         <div className="hero-body" style={{ backgroundColor: "#f7f6ee" }}>
           <div className="container">
-            <h4 className="title flex items-center !mb-2">
-              Shyam Suthar{" "}
-              <span className="ml-2">
-                <a
-                  href="/ShyamSS-resume.pdf"
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  <img src={cv} width="40" className="mr-1" alt="" />
-                </a>
-              </span>
-            </h4>
-            <h3
-              className="title title-sub"
-              style={{ fontSize: "25px", marginBottom: "10px" }}
-            >
-              Sen. Software Engineer (9+)
-            </h3>
-
-            <SocialMedia />
-
             <div className="portfolio-swipe-cue" aria-hidden="true">
               <span>Swipe horizontally</span>
               <span className="portfolio-swipe-arrow">-&gt;</span>
@@ -97,70 +175,153 @@ function Home() {
               className="portfolio-panel-track"
               aria-label="Portfolio overview sections"
             >
-              <section className="portfolio-panel portfolio-panel-about">
-                <div className="portfolio-panel-header">
-                  <p className="portfolio-panel-kicker">01 / About</p>
-                  <h2>Shyam Suthar</h2>
-                  <p>
-                    Senior software engineer building full-stack products,
-                    internal tools, technical content, and systems with strong
-                    frontend and backend ownership.
-                  </p>
-                </div>
-                <Skills />
-              </section>
-
-              <section className="portfolio-panel portfolio-panel-problems">
-                <div className="portfolio-panel-header">
-                  <p className="portfolio-panel-kicker">02 / Current focus</p>
-                  <h2>Problems I am working on</h2>
-                  <p>
-                    I like problems where product clarity, engineering depth,
-                    and useful interfaces all matter.
-                  </p>
-                </div>
-
-                <div className="problem-list">
-                  {activeProblems.map((problem) => (
-                    <article key={problem.title} className="problem-item">
-                      <h3>{problem.title}</h3>
-                      <p>{problem.description}</p>
-                    </article>
-                  ))}
-                </div>
-              </section>
-
-              <section className="portfolio-panel portfolio-panel-projects">
-                <div className="portfolio-panel-header">
-                  <p className="portfolio-panel-kicker">03 / Previous work</p>
-                  <h2>Projects I worked on before</h2>
-                  <p>
-                    A snapshot of products, prototypes, and technical systems I
-                    have shipped or explored.
-                  </p>
-                </div>
-
-                <div className="project-preview-list">
-                  {projectData.slice(0, 4).map((project) => (
-                    <article key={project.id} className="project-preview-item">
-                      <div>
-                        <h3>{project.title}</h3>
-                        <p>{project.summary}</p>
-                      </div>
-                      <span>{project.status}</span>
-                    </article>
-                  ))}
-                </div>
-
-                <button
-                  type="button"
-                  className="portfolio-panel-action"
-                  onClick={() => {
-                    setModalOpenProjects(true);
+              <section
+                className="portfolio-panel portfolio-panel-about"
+              >
+                <div
+                  className="portfolio-panel-scroll"
+                  ref={(element) => {
+                    panelRefs.current.about = element;
                   }}
                 >
-                  View all projects
-                </button>
+                  <div className="portfolio-panel-header">
+                    <p className="portfolio-panel-kicker">01 / About</p>
+                    <div className="portfolio-profile-heading">
+                      <h2>Shyam S. Suthar</h2>
+                      <a
+                        href="/ShyamSS-resume.pdf"
+                        target="_blank"
+                        rel="noreferrer"
+                        aria-label="Open Shyam Suthar resume"
+                      >
+                        <img src={cv} width="34" className="mr-1" alt="" />
+                      </a>
+                    </div>
+                    <p className="portfolio-role">Sen. Software Engineer (9+)</p>
+                    <p>
+                      Senior software engineer building full-stack products,
+                      internal tools, technical content, and systems with strong
+                      frontend and backend ownership.
+                    </p>
+                    <div className="portfolio-profile-links">
+                      <SocialMedia />
+                    </div>
+                  </div>
+                  <Skills />
+                </div>
+                {scrollablePanels.about ? (
+                  <button
+                    type="button"
+                    className={`portfolio-scroll-hint ${
+                      panelAtBottom.about ? "portfolio-scroll-hint-up" : ""
+                    }`}
+                    aria-label={
+                      panelAtBottom.about
+                        ? "Scroll about column to top"
+                        : "Scroll about column down"
+                    }
+                    onClick={() => handleScrollIndicatorClick("about")}
+                  />
+                ) : null}
+              </section>
+
+              <section
+                className="portfolio-panel portfolio-panel-problems"
+              >
+                <div
+                  className="portfolio-panel-scroll"
+                  ref={(element) => {
+                    panelRefs.current.problems = element;
+                  }}
+                >
+                  <div className="portfolio-panel-header">
+                    <p className="portfolio-panel-kicker">02 / Current focus</p>
+                    <h2>Problems I am working on</h2>
+                    <p>
+                      I like problems where product clarity, engineering depth,
+                      and useful interfaces all matter.
+                    </p>
+                  </div>
+
+                  <div className="problem-list">
+                    {activeProblems.map((problem) => (
+                      <article key={problem.title} className="problem-item">
+                        <h3>{problem.title}</h3>
+                        <p>{problem.description}</p>
+                      </article>
+                    ))}
+                  </div>
+                </div>
+                {scrollablePanels.problems ? (
+                  <button
+                    type="button"
+                    className={`portfolio-scroll-hint ${
+                      panelAtBottom.problems ? "portfolio-scroll-hint-up" : ""
+                    }`}
+                    aria-label={
+                      panelAtBottom.problems
+                        ? "Scroll problems column to top"
+                        : "Scroll problems column down"
+                    }
+                    onClick={() => handleScrollIndicatorClick("problems")}
+                  />
+                ) : null}
+              </section>
+
+              <section
+                className="portfolio-panel portfolio-panel-projects"
+              >
+                <div
+                  className="portfolio-panel-scroll"
+                  ref={(element) => {
+                    panelRefs.current.projects = element;
+                  }}
+                >
+                  <div className="portfolio-panel-header">
+                    <p className="portfolio-panel-kicker">03 / Previous work</p>
+                    <h2>Projects | Case studies</h2>
+                    <p>
+                      A snapshot of products, prototypes, and technical systems I
+                      have shipped or explored.
+                    </p>
+                  </div>
+
+                  <div className="project-preview-list">
+                    {projectData.slice(0, 4).map((project) => (
+                      <article key={project.id} className="project-preview-item">
+                        <div>
+                          <h3>{project.title}</h3>
+                          <p>{project.summary}</p>
+                        </div>
+                        <span>{project.status}</span>
+                      </article>
+                    ))}
+                  </div>
+
+                  <button
+                    type="button"
+                    className="portfolio-panel-action"
+                    onClick={() => {
+                      setModalOpenProjects(true);
+                    }}
+                  >
+                    Load more projects
+                  </button>
+                </div>
+                {scrollablePanels.projects ? (
+                  <button
+                    type="button"
+                    className={`portfolio-scroll-hint ${
+                      panelAtBottom.projects ? "portfolio-scroll-hint-up" : ""
+                    }`}
+                    aria-label={
+                      panelAtBottom.projects
+                        ? "Scroll projects column to top"
+                        : "Scroll projects column down"
+                    }
+                    onClick={() => handleScrollIndicatorClick("projects")}
+                  />
+                ) : null}
               </section>
             </div>
 
