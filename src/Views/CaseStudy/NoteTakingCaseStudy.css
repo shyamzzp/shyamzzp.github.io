@@ -137,3 +137,17 @@
   font-weight: 500;
   padding: 0.01rem 0.14rem;
 }
+
+.note-case-references {
+  display: grid;
+  gap: 0.35rem;
+  margin-top: 1rem;
+}
+
+.note-case-references a {
+  color: rgba(29, 78, 216, 0.86);
+  font-size: 0.76rem;
+  line-height: 1.45;
+  text-decoration: underline;
+  text-underline-offset: 0.16rem;
+}

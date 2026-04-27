@@ -25,6 +25,24 @@ const publicationMeta = [
   { label: "Reading Time", value: "4 min read" },
 ];
 
+const references = [
+  {
+    label:
+      "Mueller, P. A., & Oppenheimer, D. M. (2014). The Pen Is Mightier Than the Keyboard.",
+    href: "https://doi.org/10.1177/0956797614524581",
+  },
+  {
+    label:
+      "MacLeod, C. M., Gopie, N., Hourihan, K. L., Neary, K. R., & Ozubko, J. D. (2010). The production effect.",
+    href: "https://doi.org/10.1037/a0020270",
+  },
+  {
+    label:
+      "Kiewra, K. A. (1985). Students' note-taking behaviors and the efficacy of providing the instructor's notes.",
+    href: "https://doi.org/10.1016/0361-476X(85)90034-7",
+  },
+];
+
 export default function NoteTakingCaseStudy() {
   return (
     <main className="note-case-page">
@@ -113,6 +131,20 @@ export default function NoteTakingCaseStudy() {
                 </span>
               ))}
             </span>
+          </section>
+
+          <section className="note-case-references">
+            <span className="note-case-section-title">References</span>
+            {references.map((reference) => (
+              <a
+                href={reference.href}
+                key={reference.href}
+                rel="noreferrer"
+                target="_blank"
+              >
+                {reference.label}
+              </a>
+            ))}
           </section>
         </section>
       </section>
