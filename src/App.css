@@ -462,7 +462,6 @@ hr {
 }
 
 .problem-detail-label {
-  color: rgba(17, 24, 39, 0.58) !important;
   font-family: "Fira Code", monospace;
   font-size: 0.66rem !important;
   font-weight: 800;
@@ -470,6 +469,18 @@ hr {
   line-height: 1.2 !important;
   margin-bottom: 0.2rem !important;
   text-transform: uppercase;
+}
+
+.problem-detail-label-problem {
+  color: #dc2626 !important;
+}
+
+.problem-detail-label-base {
+  color: #ea580c !important;
+}
+
+.problem-detail-label-sub {
+  color: #7c3aed !important;
 }
 
 .problem-detail ul {

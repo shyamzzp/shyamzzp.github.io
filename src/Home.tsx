@@ -311,15 +311,21 @@ function Home() {
                       <article key={problem.title} className="problem-item">
                         <h3>{problem.title}</h3>
                         <div className="problem-detail">
-                          <p className="problem-detail-label">Problem</p>
+                          <p className="problem-detail-label problem-detail-label-problem">
+                            Problem
+                          </p>
                           <p>{problem.problem}</p>
                         </div>
                         <div className="problem-detail">
-                          <p className="problem-detail-label">Base</p>
+                          <p className="problem-detail-label problem-detail-label-base">
+                            Base
+                          </p>
                           <p>{problem.basis}</p>
                         </div>
                         <div className="problem-detail">
-                          <p className="problem-detail-label">Sub-problems</p>
+                          <p className="problem-detail-label problem-detail-label-sub">
+                            Sub-problems
+                          </p>
                           <ul>
                             {problem.subProblems.map((subProblem) => (
                               <li key={subProblem}>{subProblem}</li>
