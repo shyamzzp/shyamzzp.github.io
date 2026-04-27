@@ -358,6 +358,13 @@ hr {
   margin-bottom: 0;
 }
 
+.portfolio-cv-button {
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  padding: 0;
+}
+
 .portfolio-role {
   color: rgba(17, 24, 39, 0.84);
   font-size: 1.08rem;
@@ -367,6 +374,52 @@ hr {
 
 .portfolio-profile-links {
   margin-top: 0.8rem;
+}
+
+.cv-option-list {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.cv-option-card {
+  align-items: flex-start;
+  background: rgba(247, 246, 238, 0.9);
+  border: 1px solid rgba(17, 24, 39, 0.1);
+  border-radius: 8px;
+  color: #111827;
+  display: flex;
+  gap: 1rem;
+  justify-content: space-between;
+  padding: 0.85rem;
+  text-decoration: none;
+}
+
+.cv-option-card h3 {
+  font-size: 0.98rem;
+  font-weight: 800;
+  margin: 0 0 0.25rem;
+}
+
+.cv-option-card p {
+  color: rgba(31, 41, 55, 0.72);
+  font-size: 0.88rem;
+  line-height: 1.45;
+  margin: 0;
+}
+
+.cv-option-card span {
+  background: rgba(37, 99, 235, 0.12);
+  border-radius: 6px;
+  color: #1d4ed8;
+  flex-shrink: 0;
+  font-size: 0.68rem;
+  font-weight: 800;
+  padding: 0.2rem 0.42rem;
+}
+
+.cv-option-card-muted {
+  cursor: not-allowed;
+  opacity: 0.62;
 }
 
 .portfolio-panel-kicker {

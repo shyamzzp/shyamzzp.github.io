@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import ReactMarkdown from "react-markdown";
-import { Drawer } from "rsuite";
+import { Drawer, Modal } from "rsuite";
 
 import "./App.css";
 import { getBlogReadMe, getGlossaryReadMe } from "./ReadMeFiles/Glossaries";
@@ -54,6 +54,27 @@ const activeProblems = [
 
 const panelIds = ["about", "problems", "projects"] as const;
 type PanelId = (typeof panelIds)[number];
+
+const cvOptions = [
+  {
+    title: "Full-time professional CV",
+    description: "For senior software engineering roles and long-term product teams.",
+    href: "/ShyamSS-resume.pdf",
+    status: "Available",
+  },
+  {
+    title: "Contract CV",
+    description: "For fixed-term delivery, consulting, and technical execution roles.",
+    href: "/ShyamSS-resume.pdf",
+    status: "Available soon",
+  },
+  {
+    title: "Freelance CV",
+    description: "For project-based web, automation, and product engineering work.",
+    href: "/ShyamSS-resume.pdf",
+    status: "Available soon",
+  },
+];
 
 const previousWorkItems = [
   ...projectData.map((project) => ({
@@ -125,6 +146,7 @@ function Home() {
   const [viewForClicked, setViewForClicked] = React.useState("github-site");
   const [tosText, setTosText] = useState("");
   const [tosTextBlog, setTosTextBlog] = useState("");
+  const [openCvModal, setOpenCvModal] = React.useState(false);
   const [visiblePreviousWorkCount, setVisiblePreviousWorkCount] =
     React.useState(4);
   const panelRefs = React.useRef<Record<PanelId, HTMLElement | null>>({
@@ -271,14 +293,14 @@ function Home() {
                     <p className="portfolio-panel-kicker">01 / About</p>
                     <div className="portfolio-profile-heading">
                       <h2>Shyam S. Suthar</h2>
-                      <a
-                        href="/ShyamSS-resume.pdf"
-                        target="_blank"
-                        rel="noreferrer"
+                      <button
+                        type="button"
+                        className="portfolio-cv-button"
                         aria-label="Open Shyam Suthar resume"
+                        onClick={() => setOpenCvModal(true)}
                       >
                         <img src={cv} width="34" className="mr-1" alt="" />
-                      </a>
+                      </button>
                     </div>
                     <p className="portfolio-role">Sen. Software Engineer (9+)</p>
                     <p>
@@ -452,6 +474,43 @@ function Home() {
               <span />
               <span />
             </div>
+
+            <Modal
+              open={openCvModal}
+              onClose={() => setOpenCvModal(false)}
+              size="sm"
+            >
+              <Modal.Header>
+                <Modal.Title>Choose CV</Modal.Title>
+              </Modal.Header>
+              <Modal.Body>
+                <div className="cv-option-list">
+                  {cvOptions.map((option) => (
+                    <a
+                      key={option.title}
+                      className={`cv-option-card ${
+                        option.status !== "Available" ? "cv-option-card-muted" : ""
+                      }`}
+                      href={option.href}
+                      target="_blank"
+                      rel="noreferrer"
+                      aria-disabled={option.status !== "Available"}
+                      onClick={(event) => {
+                        if (option.status !== "Available") {
+                          event.preventDefault();
+                        }
+                      }}
+                    >
+                      <div>
+                        <h3>{option.title}</h3>
+                        <p>{option.description}</p>
+                      </div>
+                      <span>{option.status}</span>
+                    </a>
+                  ))}
+                </div>
+              </Modal.Body>
+            </Modal>
 
             {/* <BorderedSection
                 text="Case Studies"
