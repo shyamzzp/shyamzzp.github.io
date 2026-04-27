@@ -82,11 +82,18 @@ const previousWorkItems = [
     title: project.title,
     summary: project.summary,
     status: project.status,
+    href:
+      project.links?.find((link) => /live|demo/i.test(link.label))?.href ??
+      project.links?.[0]?.href,
     type: "Project",
     details: [
       `Focus: ${project.sections[0]?.title ?? "Product implementation"}.`,
       `Stack: ${project.tags.slice(0, 4).join(", ")}.`,
     ],
+    features: [
+      ...project.description,
+      ...project.sections.flatMap((section) => section.items),
+    ].slice(0, 5),
   })),
   {
     id: "ai-roadmap",
@@ -94,10 +101,16 @@ const previousWorkItems = [
     summary:
       "A structured knowledge map for AI engineering concepts, tools, agent patterns, and practical learning paths.",
     status: "Published",
+    href: "/ai-roadmap/",
     type: "Case study",
     details: [
       "Mapped AI topics into practical learning sequences.",
       "Organized concepts, tools, and agent patterns for scanning.",
+    ],
+    features: [
+      "Topic branches for models, agents, vector search, and AI engineering roles.",
+      "Practical sequencing from fundamentals to implementation patterns.",
+      "Reference-style pages that support fast scanning and revision.",
     ],
   },
   {
@@ -106,10 +119,16 @@ const previousWorkItems = [
     summary:
       "A decision checklist for validating product ideas across problem quality, distribution, technical risk, and launch readiness.",
     status: "Published",
+    href: "/software_idea_checklist/",
     type: "Case study",
     details: [
       "Breaks idea validation into risk, market, build, and launch checks.",
       "Designed to expose weak assumptions before implementation starts.",
+    ],
+    features: [
+      "Question-led validation checklist.",
+      "Sections for market, distribution, build risk, launch, and operations.",
+      "Actionable prompts for turning vague ideas into testable decisions.",
     ],
   },
   {
@@ -118,10 +137,16 @@ const previousWorkItems = [
     summary:
       "A product pitch and architecture exploration for turning interview preparation into a focused learning workflow.",
     status: "Draft",
+    href: "/prep-arch-pitch/",
     type: "Case study",
     details: [
       "Explores the product positioning and user journey for prep workflows.",
       "Connects pitch, architecture, and roadmap thinking in one artifact.",
+    ],
+    features: [
+      "Problem framing for interview preparation workflows.",
+      "Product pitch sections with roadmap and business thinking.",
+      "Architecture-oriented narrative for how the product could scale.",
     ],
   },
   {
@@ -130,10 +155,16 @@ const previousWorkItems = [
     summary:
       "Visual website concepts for presenting studio work, project galleries, and service positioning with responsive layouts.",
     status: "Prototype",
+    href: "/nm.archstudio_03/",
     type: "Project",
     details: [
       "Tests responsive presentation patterns for architecture portfolios.",
       "Includes gallery, service, and project-detail layout concepts.",
+    ],
+    features: [
+      "Responsive gallery layouts.",
+      "Studio positioning and project storytelling sections.",
+      "Multiple visual directions for comparing presentation styles.",
     ],
   },
 ];
@@ -147,6 +178,9 @@ function Home() {
   const [tosText, setTosText] = useState("");
   const [tosTextBlog, setTosTextBlog] = useState("");
   const [openCvModal, setOpenCvModal] = React.useState(false);
+  const [expandedPreviousWorkIds, setExpandedPreviousWorkIds] = React.useState<
+    string[]
+  >([]);
   const [visiblePreviousWorkCount, setVisiblePreviousWorkCount] =
     React.useState(4);
   const panelRefs = React.useRef<Record<PanelId, HTMLElement | null>>({
@@ -257,6 +291,17 @@ function Home() {
       behavior: "smooth",
     });
   };
+
+  const togglePreviousWorkFeatures = (id: string) => {
+    setExpandedPreviousWorkIds((expandedIds) =>
+      expandedIds.includes(id)
+        ? expandedIds.filter((expandedId) => expandedId !== id)
+        : [...expandedIds, id]
+    );
+  };
+
+  const isPublicPreviousWork = (status: string) =>
+    ["Live", "Published"].includes(status);
 
   const setReadMeFileContext = (data: string) => {
     setValue(data);
@@ -417,23 +462,75 @@ function Home() {
                       .slice(0, visiblePreviousWorkCount)
                       .map((project) => (
                       <article key={project.id} className="project-preview-item">
-                        <div>
-                          <div className="project-preview-title-row">
-                            <h3>{project.title}</h3>
-                            <span className="project-preview-kind">
-                              {project.type}
-                            </span>
+                        <div className="project-preview-content">
+                          <div className="project-preview-main-row">
+                            <div className="project-preview-copy">
+                              <div className="project-preview-title-row">
+                                <h3>{project.title}</h3>
+                              </div>
+                              <p>{project.summary}</p>
+                              <ul className="project-preview-detail-list">
+                                {project.details.map((detail) => (
+                                  <li key={detail}>{detail}</li>
+                                ))}
+                              </ul>
+                            </div>
+                            <div className="project-preview-badges">
+                              {project.href && isPublicPreviousWork(project.status) ? (
+                                <a
+                                  className="project-preview-status project-preview-status-link project-preview-status-public"
+                                  href={project.href}
+                                  target="_blank"
+                                  rel="noreferrer"
+                                >
+                                  {project.status}
+                                </a>
+                              ) : (
+                                <span
+                                  className={`project-preview-status ${
+                                    isPublicPreviousWork(project.status)
+                                      ? "project-preview-status-public"
+                                      : ""
+                                  }`}
+                                >
+                                  {project.status}
+                                </span>
+                              )}
+                              <span className="project-preview-kind">
+                                {project.type}
+                              </span>
+                            </div>
                           </div>
-                          <p>{project.summary}</p>
-                          <ul className="project-preview-detail-list">
-                            {project.details.map((detail) => (
-                              <li key={detail}>{detail}</li>
-                            ))}
-                          </ul>
+                          {expandedPreviousWorkIds.includes(project.id) ? (
+                            <div className="project-preview-features">
+                              <p className="project-preview-features-title">
+                                Important features
+                              </p>
+                              <ul>
+                                {project.features.map((feature) => (
+                                  <li key={feature}>{feature}</li>
+                                ))}
+                              </ul>
+                            </div>
+                          ) : null}
                         </div>
-                        <span className="project-preview-status">
-                          {project.status}
-                        </span>
+                        <button
+                          type="button"
+                          className={`project-preview-toggle ${
+                            expandedPreviousWorkIds.includes(project.id)
+                              ? "project-preview-toggle-open"
+                              : ""
+                          }`}
+                          aria-label={
+                            expandedPreviousWorkIds.includes(project.id)
+                              ? `Hide features for ${project.title}`
+                              : `Show features for ${project.title}`
+                          }
+                          aria-expanded={expandedPreviousWorkIds.includes(
+                            project.id
+                          )}
+                          onClick={() => togglePreviousWorkFeatures(project.id)}
+                        />
                       </article>
                     ))}
                   </div>

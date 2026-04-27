@@ -234,14 +234,15 @@ hr {
   display: inline-flex;
   height: 1.08rem;
   justify-content: center;
-  padding: 0.08rem;
+  overflow: hidden;
+  padding: 0;
   width: 1.08rem;
   flex-shrink: 0;
 }
 
 .skill-icon-image {
-  width: 0.9rem;
-  height: 0.9rem;
+  width: 100%;
+  height: 100%;
   display: block;
   object-fit: contain;
 }
@@ -552,8 +553,25 @@ hr {
 .project-preview-item {
   align-items: flex-start;
   display: flex;
+  padding-bottom: 2.1rem;
+  position: relative;
+}
+
+.project-preview-content {
+  min-width: 0;
+  width: 100%;
+}
+
+.project-preview-main-row {
+  align-items: flex-start;
+  display: flex;
   gap: 0.75rem;
   justify-content: space-between;
+  width: 100%;
+}
+
+.project-preview-copy {
+  min-width: 0;
 }
 
 .project-preview-title-row {
@@ -571,11 +589,18 @@ hr {
 .project-preview-kind,
 .project-preview-status {
   border-radius: 6px;
-  flex-shrink: 0;
   font-size: 0.68rem;
   font-weight: 800;
   line-height: 1.2;
   padding: 0.18rem 0.38rem;
+}
+
+.project-preview-badges {
+  align-items: flex-end;
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  gap: 0.3rem;
 }
 
 .project-preview-kind {
@@ -596,9 +621,104 @@ hr {
   margin-top: 0.18rem;
 }
 
+.project-preview-features {
+  background: rgba(255, 255, 255, 0.58);
+  border: 1px solid rgba(37, 99, 235, 0.12);
+  border-radius: 6px;
+  margin-top: 0.65rem;
+  padding: 0.6rem;
+}
+
+.project-preview-features-title {
+  color: #1d4ed8 !important;
+  font-family: "Fira Code", monospace;
+  font-size: 0.66rem !important;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  line-height: 1.2 !important;
+  margin-bottom: 0.35rem !important;
+  text-transform: uppercase;
+}
+
+.project-preview-features ul {
+  color: rgba(31, 41, 55, 0.76);
+  font-size: 0.84rem;
+  line-height: 1.42;
+  list-style: disc;
+  margin: 0;
+  padding-left: 1rem;
+}
+
+.project-preview-features li + li {
+  margin-top: 0.2rem;
+}
+
 .project-preview-status {
+  align-items: center;
   background: #111827;
   color: #ffffff;
+  display: inline-flex;
+  gap: 0.3rem;
+  text-decoration: none;
+}
+
+.project-preview-status-link:hover {
+  color: #ffffff;
+  text-decoration: none;
+}
+
+.project-preview-status-public::before {
+  animation: status-pulse 1.5s ease-in-out infinite;
+  background: #22c55e;
+  border-radius: 50%;
+  box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.5);
+  content: "";
+  display: inline-block;
+  height: 0.42rem;
+  width: 0.42rem;
+}
+
+@keyframes status-pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.5);
+  }
+
+  70% {
+    box-shadow: 0 0 0 0.32rem rgba(34, 197, 94, 0);
+  }
+
+  100% {
+    box-shadow: 0 0 0 0 rgba(34, 197, 94, 0);
+  }
+}
+
+.project-preview-toggle {
+  align-items: center;
+  background: transparent;
+  border: 0;
+  bottom: 0.55rem;
+  cursor: pointer;
+  display: flex;
+  height: 0.9rem;
+  justify-content: center;
+  left: 50%;
+  padding: 0;
+  position: absolute;
+  transform: translateX(-50%);
+  width: 0.9rem;
+}
+
+.project-preview-toggle::before {
+  border-bottom: 1.5px solid #1d4ed8;
+  border-right: 1.5px solid #1d4ed8;
+  content: "";
+  height: 0.42rem;
+  transform: rotate(45deg);
+  width: 0.42rem;
+}
+
+.project-preview-toggle-open::before {
+  transform: rotate(225deg);
 }
 
 .portfolio-panel-action {
