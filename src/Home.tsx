@@ -62,6 +62,10 @@ const previousWorkItems = [
     summary: project.summary,
     status: project.status,
     type: "Project",
+    details: [
+      `Focus: ${project.sections[0]?.title ?? "Product implementation"}.`,
+      `Stack: ${project.tags.slice(0, 4).join(", ")}.`,
+    ],
   })),
   {
     id: "ai-roadmap",
@@ -70,6 +74,10 @@ const previousWorkItems = [
       "A structured knowledge map for AI engineering concepts, tools, agent patterns, and practical learning paths.",
     status: "Published",
     type: "Case study",
+    details: [
+      "Mapped AI topics into practical learning sequences.",
+      "Organized concepts, tools, and agent patterns for scanning.",
+    ],
   },
   {
     id: "software-idea-checklist",
@@ -78,6 +86,10 @@ const previousWorkItems = [
       "A decision checklist for validating product ideas across problem quality, distribution, technical risk, and launch readiness.",
     status: "Published",
     type: "Case study",
+    details: [
+      "Breaks idea validation into risk, market, build, and launch checks.",
+      "Designed to expose weak assumptions before implementation starts.",
+    ],
   },
   {
     id: "prep-arch-pitch",
@@ -86,6 +98,10 @@ const previousWorkItems = [
       "A product pitch and architecture exploration for turning interview preparation into a focused learning workflow.",
     status: "Draft",
     type: "Case study",
+    details: [
+      "Explores the product positioning and user journey for prep workflows.",
+      "Connects pitch, architecture, and roadmap thinking in one artifact.",
+    ],
   },
   {
     id: "architecture-studio",
@@ -94,6 +110,10 @@ const previousWorkItems = [
       "Visual website concepts for presenting studio work, project galleries, and service positioning with responsive layouts.",
     status: "Prototype",
     type: "Project",
+    details: [
+      "Tests responsive presentation patterns for architecture portfolios.",
+      "Includes gallery, service, and project-detail layout concepts.",
+    ],
   },
 ];
 
@@ -383,6 +403,11 @@ function Home() {
                             </span>
                           </div>
                           <p>{project.summary}</p>
+                          <ul className="project-preview-detail-list">
+                            {project.details.map((detail) => (
+                              <li key={detail}>{detail}</li>
+                            ))}
+                          </ul>
                         </div>
                         <span className="project-preview-status">
                           {project.status}
@@ -401,7 +426,7 @@ function Home() {
                         );
                       }}
                     >
-                      Load more projects
+                      Load more items
                     </button>
                   ) : null}
                 </div>

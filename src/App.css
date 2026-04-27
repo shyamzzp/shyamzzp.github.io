@@ -530,6 +530,19 @@ hr {
   color: #1d4ed8;
 }
 
+.project-preview-detail-list {
+  color: rgba(31, 41, 55, 0.74);
+  font-size: 0.84rem;
+  line-height: 1.42;
+  list-style: disc;
+  margin: 0.45rem 0 0;
+  padding-left: 1rem;
+}
+
+.project-preview-detail-list li + li {
+  margin-top: 0.18rem;
+}
+
 .project-preview-status {
   background: #111827;
   color: #ffffff;
