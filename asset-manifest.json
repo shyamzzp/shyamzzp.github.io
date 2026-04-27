@@ -1,8 +1,8 @@
 {
   "files": {
-    "main.css": "/static/css/main.ff35070a.css",
-    "main.js": "/static/js/main.bdc942f0.js",
-    "static/js/512.c7a202d9.chunk.js": "/static/js/512.c7a202d9.chunk.js",
+    "main.css": "/static/css/main.ec508690.css",
+    "main.js": "/static/js/main.4af0d53d.js",
+    "static/js/787.27502e5e.chunk.js": "/static/js/787.27502e5e.chunk.js",
     "static/media/skype.png": "/static/media/skype.ab4e958cf232a0d52b44.png",
     "static/media/cv.png": "/static/media/cv.02b00606e243f8945ade.png",
     "static/media/whatsapp.png": "/static/media/whatsapp.1dd8ca2765f1f177ab22.png",
@@ -14,12 +14,12 @@
     "static/media/agile-development.md": "/static/media/agile-development.4ce4456c57805cf3acf0.md",
     "static/media/github-site.md": "/static/media/github-site.4ce4456c57805cf3acf0.md",
     "static/media/not-available.md": "/static/media/not-available.730b22ad26a5448338a4.md",
-    "main.ff35070a.css.map": "/static/css/main.ff35070a.css.map",
-    "main.bdc942f0.js.map": "/static/js/main.bdc942f0.js.map",
-    "512.c7a202d9.chunk.js.map": "/static/js/512.c7a202d9.chunk.js.map"
+    "main.ec508690.css.map": "/static/css/main.ec508690.css.map",
+    "main.4af0d53d.js.map": "/static/js/main.4af0d53d.js.map",
+    "787.27502e5e.chunk.js.map": "/static/js/787.27502e5e.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.ff35070a.css",
-    "static/js/main.bdc942f0.js"
+    "static/css/main.ec508690.css",
+    "static/js/main.4af0d53d.js"
   ]
 }
