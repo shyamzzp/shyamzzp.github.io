@@ -7,7 +7,6 @@ import { getBlogReadMe, getGlossaryReadMe } from "./ReadMeFiles/Glossaries";
 import Blog from "./Views/Blog/Blog";
 import CaseStudy from "./Views/CaseStudy/CaseStudy";
 import Glossaries from "./Views/Glossaries/Glossaries";
-import Projects from "./Views/Projects/Projects";
 import { projectData } from "./Views/Projects/projectData";
 import "./bulma.min.css";
 import Skills from "./components/Skills/Skills";
@@ -56,8 +55,49 @@ const activeProblems = [
 const panelIds = ["about", "problems", "projects"] as const;
 type PanelId = (typeof panelIds)[number];
 
+const previousWorkItems = [
+  ...projectData.map((project) => ({
+    id: project.id,
+    title: project.title,
+    summary: project.summary,
+    status: project.status,
+    type: "Project",
+  })),
+  {
+    id: "ai-roadmap",
+    title: "AI Roadmap",
+    summary:
+      "A structured knowledge map for AI engineering concepts, tools, agent patterns, and practical learning paths.",
+    status: "Published",
+    type: "Case study",
+  },
+  {
+    id: "software-idea-checklist",
+    title: "Software Idea Checklist",
+    summary:
+      "A decision checklist for validating product ideas across problem quality, distribution, technical risk, and launch readiness.",
+    status: "Published",
+    type: "Case study",
+  },
+  {
+    id: "prep-arch-pitch",
+    title: "Prep Architecture Pitch",
+    summary:
+      "A product pitch and architecture exploration for turning interview preparation into a focused learning workflow.",
+    status: "Draft",
+    type: "Case study",
+  },
+  {
+    id: "architecture-studio",
+    title: "Architecture Studio Concepts",
+    summary:
+      "Visual website concepts for presenting studio work, project galleries, and service positioning with responsive layouts.",
+    status: "Prototype",
+    type: "Project",
+  },
+];
+
 function Home() {
-  const [openProjects, setModalOpenProjects] = React.useState(false);
   const [openBlogs, setOpenBlogs] = React.useState(false);
   const [openCaseStudies, setOpenCaseStudies] = React.useState(false);
   const [openGlossary, setOpenGlossary] = React.useState(false);
@@ -65,6 +105,8 @@ function Home() {
   const [viewForClicked, setViewForClicked] = React.useState("github-site");
   const [tosText, setTosText] = useState("");
   const [tosTextBlog, setTosTextBlog] = useState("");
+  const [visiblePreviousWorkCount, setVisiblePreviousWorkCount] =
+    React.useState(4);
   const panelRefs = React.useRef<Record<PanelId, HTMLElement | null>>({
     about: null,
     problems: null,
@@ -323,26 +365,39 @@ function Home() {
                   </div>
 
                   <div className="project-preview-list">
-                    {projectData.slice(0, 4).map((project) => (
+                    {previousWorkItems
+                      .slice(0, visiblePreviousWorkCount)
+                      .map((project) => (
                       <article key={project.id} className="project-preview-item">
                         <div>
-                          <h3>{project.title}</h3>
+                          <div className="project-preview-title-row">
+                            <h3>{project.title}</h3>
+                            <span className="project-preview-kind">
+                              {project.type}
+                            </span>
+                          </div>
                           <p>{project.summary}</p>
                         </div>
-                        <span>{project.status}</span>
+                        <span className="project-preview-status">
+                          {project.status}
+                        </span>
                       </article>
                     ))}
                   </div>
 
-                  <button
-                    type="button"
-                    className="portfolio-panel-action"
-                    onClick={() => {
-                      setModalOpenProjects(true);
-                    }}
-                  >
-                    Load more projects
-                  </button>
+                  {visiblePreviousWorkCount < previousWorkItems.length ? (
+                    <button
+                      type="button"
+                      className="portfolio-panel-action"
+                      onClick={() => {
+                        setVisiblePreviousWorkCount((count) =>
+                          Math.min(count + 4, previousWorkItems.length)
+                        );
+                      }}
+                    >
+                      Load more projects
+                    </button>
+                  ) : null}
                 </div>
                 {scrollablePanels.projects ? (
                   <button
@@ -389,21 +444,6 @@ function Home() {
                 isBorderedRadius
               /> */}
 
-            <>
-              <Drawer
-                size={"sm"}
-                backdrop={"static"}
-                open={openProjects}
-                onClose={() => setModalOpenProjects(false)}
-              >
-                <Drawer.Header>
-                  <Drawer.Title>Projects</Drawer.Title>
-                </Drawer.Header>
-                <Drawer.Body>
-                  <Projects />
-                </Drawer.Body>
-              </Drawer>
-            </>
             <>
               <Drawer
                 size={"full"}
