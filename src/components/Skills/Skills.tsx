@@ -94,7 +94,7 @@ const skillIcons: Record<string, { iconUrl: string; alt: string }> = {
     alt: "Flask icon",
   },
   NetSuite: {
-    iconUrl: "https://skillicons.dev/icons?i=oracle",
+    iconUrl: "https://www.google.com/s2/favicons?domain=netsuite.com&sz=64",
     alt: "NetSuite icon",
   },
   "Kony Visualizer": {
@@ -130,7 +130,7 @@ const skillIcons: Record<string, { iconUrl: string; alt: string }> = {
     alt: "Elasticsearch icon",
   },
   "Oracle Cloud": {
-    iconUrl: "https://skillicons.dev/icons?i=oracle",
+    iconUrl: "https://www.google.com/s2/favicons?domain=oracle.com&sz=64",
     alt: "Oracle Cloud icon",
   },
   "AWS (EC2/S3/Lambda)": {
@@ -170,7 +170,7 @@ const skillIcons: Record<string, { iconUrl: string; alt: string }> = {
     alt: "Perforce icon",
   },
   Jenkins: {
-    iconUrl: "https://cdn.simpleicons.org/jenkins/D24939",
+    iconUrl: "https://www.google.com/s2/favicons?domain=jenkins.io&sz=64",
     alt: "Jenkins icon",
   },
   "CI/CD": {
@@ -194,11 +194,11 @@ const skillIcons: Record<string, { iconUrl: string; alt: string }> = {
     alt: "Jasmine icon",
   },
   Karma: {
-    iconUrl: "https://skillicons.dev/icons?i=karma",
+    iconUrl: "https://www.google.com/s2/favicons?domain=karma-runner.github.io&sz=64",
     alt: "Karma icon",
   },
   Playwright: {
-    iconUrl: "https://skillicons.dev/icons?i=playwright",
+    iconUrl: "https://www.google.com/s2/favicons?domain=playwright.dev&sz=64",
     alt: "Playwright icon",
   },
   Nightwatch: {
