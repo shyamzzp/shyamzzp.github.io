@@ -83,6 +83,28 @@ hr {
   margin-bottom: 0;
 }
 
+.tag {
+  align-items: center;
+  display: inline-flex;
+  gap: 0.45rem;
+}
+
+.skill-icon-image-wrap {
+  align-items: center;
+  display: inline-flex;
+  justify-content: center;
+  width: 1.2rem;
+  height: 1.2rem;
+  flex-shrink: 0;
+}
+
+.skill-icon-image {
+  width: 1.2rem;
+  height: 1.2rem;
+  display: block;
+  object-fit: contain;
+}
+
 .hero.is-info .title {
   font-size: 3rem;
 }
@@ -530,13 +552,25 @@ hr {
   margin-bottom: 0.8rem !important;
 }
 
+.skills-group .tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  max-width: 100%;
+}
+
 .skills-group .tag {
+  align-items: flex-start;
+  flex: 0 1 auto;
   height: auto;
-  max-width: 12rem;
+  justify-content: flex-start;
+  line-height: 1.25;
+  margin-bottom: 0 !important;
   min-height: 2em;
+  padding: 0.55rem 0.75rem;
+  text-align: left;
   white-space: normal;
   word-break: break-word;
-  text-align: center;
 }
 
 .skills-group {

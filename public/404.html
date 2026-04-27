@@ -2,32 +2,29 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <title>Redirecting...</title>
+    <title>Redirecting…</title>
     <script type="text/javascript">
       var pathSegmentsToKeep = 0;
-      var locationData = window.location;
-      var redirectUrl =
-        locationData.protocol +
-        "//" +
-        locationData.hostname +
-        (locationData.port ? ":" + locationData.port : "") +
-        locationData.pathname
-          .split("/")
-          .slice(0, 1 + pathSegmentsToKeep)
-          .join("/") +
-        "/?/" +
-        locationData.pathname
-          .slice(1)
-          .split("/")
-          .slice(pathSegmentsToKeep)
-          .join("/")
-          .replace(/&/g, "~and~") +
-        (locationData.search
-          ? "&" + locationData.search.slice(1).replace(/&/g, "~and~")
-          : "") +
-        locationData.hash;
-
-      window.location.replace(redirectUrl);
+      var l = window.location;
+      l.replace(
+        l.protocol +
+          "//" +
+          l.hostname +
+          (l.port ? ":" + l.port : "") +
+          l.pathname
+            .split("/")
+            .slice(0, 1 + pathSegmentsToKeep)
+            .join("/") +
+          "/?/" +
+          l.pathname
+            .slice(1)
+            .split("/")
+            .slice(pathSegmentsToKeep)
+            .join("/")
+            .replace(/&/g, "~and~") +
+          (l.search ? "&" + l.search.slice(1).replace(/&/g, "~and~") : "") +
+          l.hash
+      );
     </script>
   </head>
   <body></body>
