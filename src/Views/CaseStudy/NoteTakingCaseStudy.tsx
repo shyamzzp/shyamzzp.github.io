@@ -44,6 +44,20 @@ const references = [
 ];
 
 export default function NoteTakingCaseStudy() {
+  React.useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        window.location.href = "/";
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, []);
+
   return (
     <main className="note-case-page">
       <section className="note-case-shell">
@@ -160,20 +174,20 @@ export default function NoteTakingCaseStudy() {
                 a working tool: recall, explain, correct, and repeat.
               </span>
             </span>
-          </section>
-
-          <section className="note-case-references">
-            <span className="note-case-section-title">References</span>
-            {references.map((reference) => (
-              <a
-                href={reference.href}
-                key={reference.href}
-                rel="noreferrer"
-                target="_blank"
-              >
-                {reference.label}
-              </a>
-            ))}
+            <span className="note-case-block">
+              <span className="note-case-section-title">References</span>
+              {references.map((reference) => (
+                <a
+                  className="note-case-reference-link"
+                  href={reference.href}
+                  key={reference.href}
+                  rel="noreferrer"
+                  target="_blank"
+                >
+                  {reference.label}
+                </a>
+              ))}
+            </span>
           </section>
         </section>
       </section>
