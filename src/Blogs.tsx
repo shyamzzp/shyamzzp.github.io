@@ -21,6 +21,11 @@ const blogLinks = [
     href: "/git-worktree-blog",
     type: "Blog",
   },
+  {
+    title: "Human 3.0 and the Creator Revolution",
+    href: "/human-3-creator-revolution-blog",
+    type: "Blog",
+  },
 ];
 
 function Blogs() {

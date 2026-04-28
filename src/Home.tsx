@@ -441,6 +441,30 @@ const previousWorkItems = [
     routeOnly: true,
   },
   {
+    id: "human-3-creator-revolution-blog",
+    title: "Human 3.0 and the Creator Revolution",
+    summary:
+      "A response blog on Daniel Miessler's Human 3.0 idea, AI-enabled creators, agency, builder leverage, and the shift from permission to output.",
+    status: "Published",
+    href: "/human-3-creator-revolution-blog",
+    type: "Blog",
+    details: [
+      "Frames Human 3.0 as a move from job-centered identity to creator-centered agency.",
+      "Connects activation, enablement, AI tooling, shipping, feedback loops, and creator leverage.",
+    ],
+    features: [
+      "Perspective on Human 1.0, Human 2.0, and Human 3.0.",
+      "Practical creator stack for problem discovery, AI-assisted execution, publishing, feedback, and systems.",
+      "Sections for engineers, creators, risks, roadmap, and practical takeaway.",
+    ],
+    problemsFaced: [
+      "Responding to the source concept without copying the original article.",
+      "Keeping the post practical for builders rather than purely philosophical.",
+      "Balancing creator optimism with risks around low-quality automation and weak originality.",
+    ],
+    routeOnly: true,
+  },
+  {
     id: "agile-development-blog",
     title: "Agile Development Notes",
     summary:
