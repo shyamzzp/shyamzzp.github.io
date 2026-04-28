@@ -27,10 +27,11 @@ This repository powers Shyam S. Suthar's GitHub Pages portfolio. The current imp
 - The Workflowy case study is route-only and opens `/workflowy-case-study`.
 - The Raycast case study is route-only and opens `/raycast-case-study`.
 - The Temp Mail Automation case study is route-only and opens `/temp-mail-case-study`.
+- The Wispr Flow case study is route-only and opens `/wispr-flow-case-study`.
 
 ### Case Study Pages
 
-- Current case-study routes: `/production-effect-case-study`, `/workflowy-case-study`, `/raycast-case-study`, and `/temp-mail-case-study`.
+- Current case-study routes: `/production-effect-case-study`, `/workflowy-case-study`, `/raycast-case-study`, `/temp-mail-case-study`, and `/wispr-flow-case-study`.
 - Case-study titles display uppercase through shared case-study styling.
 - Case studies are currently single flowing pages with normal vertical scrolling. The slider interaction was removed because it made the pages unnecessarily complex.
 - Pressing `Esc` on a case-study page navigates back to `/`.

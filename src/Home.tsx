@@ -197,6 +197,32 @@ const previousWorkItems = [
     routeOnly: true,
   },
   {
+    id: "wispr-flow-case-study",
+    title: "Wispr Flow",
+    summary:
+      "A voice workflow case study on AI dictation, speech cleanup, cross-app writing, personal vocabulary, and hands-free text entry.",
+    status: "Published",
+    href: "/wispr-flow-case-study",
+    type: "Case study",
+    details: [
+      "Studies how voice can become a first-class writing layer across apps and devices.",
+      "Breaks down dictation, refinement, personalization, accessibility, and cross-app insertion.",
+    ],
+    features: [
+      "Voice-first writing flow for messages, emails, notes, documents, and product work.",
+      "AI cleanup for filler words, punctuation, formatting, corrections, and tone changes.",
+      "Personal vocabulary support for names, acronyms, company terms, and technical language.",
+      "Cross-app behavior where dictated text follows the active cursor.",
+      "Accessibility value for hands-free writing and reduced dependency on sustained typing.",
+    ],
+    problemsFaced: [
+      "Balancing speed with trust when speech recognition, cleanup, or insertion is imperfect.",
+      "Handling microphone permissions, privacy expectations, app compatibility, and background behavior.",
+      "Designing voice correction so users can fix mistakes without falling back to manual editing.",
+    ],
+    routeOnly: true,
+  },
+  {
     id: "ai-roadmap",
     title: "AI Roadmap",
     summary:

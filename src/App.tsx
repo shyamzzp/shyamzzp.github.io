@@ -6,6 +6,7 @@ import Help from "./Help";
 import NoteTakingCaseStudy from "./Views/CaseStudy/NoteTakingCaseStudy";
 import RaycastCaseStudy from "./Views/CaseStudy/RaycastCaseStudy";
 import TempMailCaseStudy from "./Views/CaseStudy/TempMailCaseStudy";
+import WisprFlowCaseStudy from "./Views/CaseStudy/WisprFlowCaseStudy";
 import WorkflowyCaseStudy from "./Views/CaseStudy/WorkflowyCaseStudy";
 import Projects from "./Views/Projects/Projects";
 import Work from "./Work";
@@ -23,6 +24,7 @@ function App() {
         />
         <Route path="/raycast-case-study" element={<RaycastCaseStudy />} />
         <Route path="/temp-mail-case-study" element={<TempMailCaseStudy />} />
+        <Route path="/wispr-flow-case-study" element={<WisprFlowCaseStudy />} />
         <Route path="/workflowy-case-study" element={<WorkflowyCaseStudy />} />
         <Route path="/projects" element={<Projects />} />
         <Route path="/work" element={<Work />} />
