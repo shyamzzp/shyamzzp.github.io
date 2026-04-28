@@ -345,6 +345,30 @@ const previousWorkItems = [
     routeOnly: false,
   },
   {
+    id: "voice-automation-workflow-blog",
+    title: "Voice, Automation, and the Next Layer of Work",
+    summary:
+      "A sample blog post on voice workflows, command centers, automation, and compact product thinking across the portfolio.",
+    status: "Published",
+    href: "/voice-automation-workflow-blog",
+    type: "Blog",
+    details: [
+      "Connects Wispr Flow, Raycast, Workflowy, and temp mail automation into one product-thinking thread.",
+      "Frames the blog direction as practical notes on workflow, AI, developer tools, and implementation choices.",
+    ],
+    features: [
+      "Short editorial format using the same compact case-study reading style.",
+      "Examples around repeated workflow friction and automation value.",
+      "Clear direction for future posts without turning the page into a tutorial.",
+    ],
+    problemsFaced: [
+      "Keeping the sample specific to the portfolio instead of writing a generic productivity article.",
+      "Making the post concise while still showing the intended content direction.",
+      "Reusing existing case-study styling so the sample feels native to the site.",
+    ],
+    routeOnly: true,
+  },
+  {
     id: "agile-development-blog",
     title: "Agile Development Notes",
     summary:

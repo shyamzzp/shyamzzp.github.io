@@ -2,6 +2,11 @@ import "./App.css";
 
 const blogLinks = [
   {
+    title: "Voice, Automation, and the Next Layer of Work",
+    href: "/voice-automation-workflow-blog",
+    type: "Sample",
+  },
+  {
     title: "AI Landscape",
     href: "/ai",
     type: "HTML",

@@ -28,6 +28,7 @@ This repository powers Shyam S. Suthar's GitHub Pages portfolio. The current imp
 - The Raycast case study is route-only and opens `/raycast-case-study`.
 - The Temp Mail Automation case study is route-only and opens `/temp-mail-case-study`.
 - The Wispr Flow case study is route-only and opens `/wispr-flow-case-study`.
+- The sample blog post is route-only and opens `/voice-automation-workflow-blog`.
 
 ### Case Study Pages
 
@@ -40,6 +41,12 @@ This repository powers Shyam S. Suthar's GitHub Pages portfolio. The current imp
 - Sections are plain text, not cards or grid panels. Current sections include Core Idea, Problem, Base of the Problem, Sub-Problems, Practical Takeaway, Performance Implications, and References.
 - Highlights are intentionally subtle: no heavy bold treatment, reduced size, and light background so they mark important ideas without overpowering the surrounding text.
 - Each section includes an example to make the case study easier to understand.
+
+### Blog Pages
+
+- `/blogs` lists published and sample blog pages.
+- `/voice-automation-workflow-blog` is a sample blog post that shows the intended direction for portfolio writing: voice workflows, automation, command centers, AI/product thinking, and practical implementation notes.
+- Blog-style routes can reuse the compact case-study reading layout when the content is editorial rather than a card/grid index.
 
 ### Deployment
 

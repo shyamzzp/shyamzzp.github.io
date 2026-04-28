@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Blogs from "./Blogs";
 import Home from "./Home";
 import Help from "./Help";
+import VoiceWorkflowBlogPost from "./Views/Blog/VoiceWorkflowBlogPost";
 import NoteTakingCaseStudy from "./Views/CaseStudy/NoteTakingCaseStudy";
 import RaycastCaseStudy from "./Views/CaseStudy/RaycastCaseStudy";
 import TempMailCaseStudy from "./Views/CaseStudy/TempMailCaseStudy";
@@ -17,6 +18,10 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/blogs" element={<Blogs />} />
+        <Route
+          path="/voice-automation-workflow-blog"
+          element={<VoiceWorkflowBlogPost />}
+        />
         <Route path="/help" element={<Help />} />
         <Route
           path="/production-effect-case-study"
