@@ -53,10 +53,289 @@ const activeProblems = [
   },
 ];
 
-const panelIds = ["about", "problems", "projects"] as const;
+const panelIds = ["about", "problems", "projects", "active"] as const;
 type PanelId = (typeof panelIds)[number];
 const previousWorkTypes = ["Project", "Case study", "Blog"] as const;
 type PreviousWorkType = (typeof previousWorkTypes)[number];
+
+const activeWorkItems = [
+  {
+    title: "shyamzzp.github.io",
+    status: "Source",
+    stack: "HTML / React",
+    href: "https://github.com/shyamzzp/shyamzzp.github.io",
+    summary:
+      "Personal portfolio and publishing surface for projects, case studies, blogs, and technical notes.",
+    problem:
+      "Portfolio work can become scattered across demos, PDFs, repos, and unpublished experiments.",
+    goal:
+      "Keep one production site that makes current work, shipped work, and technical thinking easy to browse.",
+  },
+  {
+    title: "openclaw",
+    status: "Fork",
+    stack: "AI assistant",
+    href: "https://github.com/shyamzzp/openclaw",
+    summary:
+      "Personal AI assistant exploration focused on cross-platform command and workflow assistance.",
+    problem:
+      "AI assistants often stay trapped inside one app instead of helping across the user's actual operating system.",
+    goal:
+      "Study how an assistant can become a practical OS-level layer for repeated personal workflows.",
+  },
+  {
+    title: "cline-kanban",
+    status: "Fork",
+    stack: "TypeScript",
+    href: "https://github.com/shyamzzp/cline-kanban",
+    summary:
+      "Local web app pattern for running and tracking CLI coding agents in parallel.",
+    problem:
+      "Parallel agent work becomes hard to supervise when tasks, terminals, and outputs are disconnected.",
+    goal:
+      "Explore a board-style control surface for agent orchestration, progress tracking, and context switching.",
+  },
+  {
+    title: "Awesome-Design-Tools",
+    status: "Fork",
+    stack: "Design systems",
+    href: "https://github.com/shyamzzp/Awesome-Design-Tools",
+    summary:
+      "Curated design-tool reference for comparing tools, plugins, and visual workflow resources.",
+    problem:
+      "Design resources are easy to collect but hard to evaluate when choosing tools for real product work.",
+    goal:
+      "Maintain a practical reference list that helps connect design needs with the right tools.",
+  },
+  {
+    title: "pretext",
+    status: "Fork",
+    stack: "TypeScript",
+    href: "https://github.com/shyamzzp/pretext",
+    summary:
+      "TypeScript project exploration around structured text workflows and developer-facing interfaces.",
+    problem:
+      "Text-heavy workflows often lack enough structure to move from notes into repeatable execution.",
+    goal:
+      "Evaluate patterns for turning text context into cleaner inputs for tools, agents, or apps.",
+  },
+  {
+    title: "installr",
+    status: "Source",
+    stack: "TypeScript",
+    href: "https://github.com/shyamzzp/installr",
+    summary:
+      "Installer scripts marketplace for discovering and reusing setup scripts.",
+    problem:
+      "Project setup scripts are usually hidden in docs, copied from memory, or rewritten for each machine.",
+    goal:
+      "Create a reusable script marketplace that makes installation flows easier to find, run, and maintain.",
+  },
+  {
+    title: "agentation-testing",
+    status: "Source",
+    stack: "JavaScript",
+    href: "https://github.com/shyamzzp/agentation-testing",
+    summary:
+      "Experimentation space for testing agent-driven workflows and automation ideas.",
+    problem:
+      "Agent behavior is hard to trust without small, isolated environments for trying workflows safely.",
+    goal:
+      "Use lightweight tests and examples to understand where agent automation helps or breaks down.",
+  },
+  {
+    title: "ChatGenI",
+    status: "Source",
+    stack: "Go",
+    href: "https://github.com/shyamzzp/ChatGenI",
+    summary:
+      "WhatsApp-style chat JSON to Instagram-ready portrait MP4 generator.",
+    problem:
+      "Turning structured chat content into social video usually requires manual editing and layout work.",
+    goal:
+      "Generate polished vertical videos from chat JSON so narrative content can be produced faster.",
+  },
+  {
+    title: "kyoto-tts",
+    status: "Source",
+    stack: "Python",
+    href: "https://github.com/shyamzzp/kyoto-tts",
+    summary:
+      "Text-to-speech exploration for converting written content into generated audio.",
+    problem:
+      "Written notes and scripts are not always convenient to consume while working or learning.",
+    goal:
+      "Experiment with TTS pipelines that turn text assets into usable voice output.",
+  },
+  {
+    title: "kdeconnect-kde",
+    status: "Fork",
+    stack: "Device sync",
+    href: "https://github.com/shyamzzp/kdeconnect-kde",
+    summary:
+      "Multi-platform device communication project for connecting desktop and mobile workflows.",
+    problem:
+      "People switch between devices constantly, but notifications, files, and controls do not always move cleanly.",
+    goal:
+      "Study cross-device communication patterns that make personal computing feel more continuous.",
+  },
+  {
+    title: "typescript-interview-questions",
+    status: "Fork",
+    stack: "TypeScript",
+    href: "https://github.com/shyamzzp/typescript-interview-questions",
+    summary:
+      "TypeScript interview question and answer reference for technical preparation.",
+    problem:
+      "Interview preparation can become broad and repetitive without focused language-specific practice.",
+    goal:
+      "Keep a concentrated TypeScript reference for revision, examples, and interview readiness.",
+  },
+  {
+    title: "jira_clone",
+    status: "Fork",
+    stack: "React / Node",
+    href: "https://github.com/shyamzzp/jira_clone",
+    summary:
+      "Simplified Jira-style issue tracker with a React client and Node/TypeScript API.",
+    problem:
+      "Project tracking tools have many moving parts: boards, issues, filters, permissions, and reliable state.",
+    goal:
+      "Study the core product and architecture patterns behind issue tracking and team workflow software.",
+  },
+  {
+    title: "resp-omni-channel",
+    status: "Source",
+    stack: "GitHub Actions",
+    href: "https://github.com/shyamzzp/resp-omni-channel",
+    summary:
+      "Workflow automation for packaging screenshot assets across omni-channel outputs.",
+    problem:
+      "Manual screenshot collection and packaging creates repeated effort and inconsistent delivery assets.",
+    goal:
+      "Use GitHub Actions to automate screenshot zipping so review and handoff artifacts are easier to produce.",
+  },
+  {
+    title: "shadcn-ui-mail",
+    status: "Source",
+    stack: "TypeScript",
+    href: "https://github.com/shyamzzp/shadcn-ui-mail",
+    summary:
+      "Independent implementation of a mail interface example inspired by shadcn/ui patterns.",
+    problem:
+      "Dense operational interfaces need strong component structure to stay readable and fast to scan.",
+    goal:
+      "Explore how modern UI primitives can support a polished, reusable mail-style dashboard.",
+  },
+  {
+    title: "reactjs-pinterest-layout",
+    status: "Fork",
+    stack: "React",
+    href: "https://github.com/shyamzzp/reactjs-pinterest-layout",
+    summary:
+      "Pinterest-style masonry layout exploration for visual content grids.",
+    problem:
+      "Image-heavy feeds need responsive layouts that keep visual rhythm without wasting space.",
+    goal:
+      "Study masonry grid behavior and reusable React layout patterns for content discovery views.",
+  },
+  {
+    title: "mygate-cron",
+    status: "Source",
+    stack: "Automation",
+    href: "https://github.com/shyamzzp/mygate-cron",
+    summary:
+      "Cron-oriented automation project for repeated operational tasks.",
+    problem:
+      "Small recurring tasks are easy to forget when they depend on manual reminders or one-off scripts.",
+    goal:
+      "Use scheduled automation to make routine actions more reliable and less dependent on memory.",
+  },
+  {
+    title: "coding-logos",
+    status: "Source",
+    stack: "Assets",
+    href: "https://github.com/shyamzzp/coding-logos",
+    summary:
+      "Curated coding-related logos for use across technical projects and presentation surfaces.",
+    problem:
+      "Project visuals often need consistent technology marks, but assets are scattered and inconsistent.",
+    goal:
+      "Maintain a reusable logo collection that speeds up technical UI, docs, and portfolio composition.",
+  },
+  {
+    title: "nestjs-doc",
+    status: "Source",
+    stack: "Documentation",
+    href: "https://github.com/shyamzzp/nestjs-doc",
+    summary:
+      "Design and documentation exploration for NestJS learning material.",
+    problem:
+      "Framework documentation can be difficult to scan when learning concepts, patterns, and examples together.",
+    goal:
+      "Experiment with clearer documentation structure for NestJS topics and implementation guidance.",
+  },
+  {
+    title: "kite-clone",
+    status: "Source",
+    stack: "JavaScript",
+    href: "https://github.com/shyamzzp/kite-clone",
+    summary:
+      "Dashboard clone project inspired by trading and market-monitoring interfaces.",
+    problem:
+      "Financial dashboards need compact presentation of changing data without overwhelming the user.",
+    goal:
+      "Practice building dense dashboard UI patterns with clear hierarchy and actionable scanning.",
+  },
+  {
+    title: "interview",
+    status: "Source",
+    stack: "CSS / Docusaurus",
+    href: "https://github.com/shyamzzp/interview",
+    summary:
+      "Interview preparation site for coding, system design, and structured technical learning.",
+    problem:
+      "Interview notes become hard to revisit when they live across scattered docs and bookmarks.",
+    goal:
+      "Create a published learning system that keeps preparation material organized and reviewable.",
+  },
+  {
+    title: "shyamzzp",
+    status: "Source",
+    stack: "Profile",
+    href: "https://github.com/shyamzzp/shyamzzp",
+    summary:
+      "GitHub profile repository for public identity, profile content, and developer presentation.",
+    problem:
+      "A GitHub profile should communicate direction quickly, but it can go stale without intentional upkeep.",
+    goal:
+      "Keep a lightweight profile surface aligned with active work, interests, and current technical focus.",
+  },
+  {
+    title: "code-review-testing",
+    status: "Source",
+    stack: "Python",
+    href: "https://github.com/shyamzzp/code-review-testing",
+    summary:
+      "Python project space for testing review workflows and code-quality checks.",
+    problem:
+      "Code review practices need concrete examples to reveal quality issues, edge cases, and process gaps.",
+    goal:
+      "Use small Python samples to evaluate review behavior, feedback quality, and testing expectations.",
+  },
+  {
+    title: "splitwise",
+    status: "Source",
+    stack: "JavaScript",
+    href: "https://github.com/shyamzzp/splitwise",
+    summary:
+      "Expense-splitting app exploration for shared balances and settlement flows.",
+    problem:
+      "Shared expenses become confusing when people need to track who paid, who owes, and what is settled.",
+    goal:
+      "Model a simple expense-sharing workflow that makes balances and repayment paths easier to understand.",
+  },
+];
 
 const cvOptions = [
   {
@@ -514,6 +793,7 @@ function Home() {
     about: null,
     problems: null,
     projects: null,
+    active: null,
   });
   const [scrollablePanels, setScrollablePanels] = React.useState<
     Record<PanelId, boolean>
@@ -521,6 +801,7 @@ function Home() {
     about: false,
     problems: false,
     projects: false,
+    active: false,
   });
   const [panelAtBottom, setPanelAtBottom] = React.useState<
     Record<PanelId, boolean>
@@ -528,6 +809,7 @@ function Home() {
     about: false,
     problems: false,
     projects: false,
+    active: false,
   });
 
   useEffect(() => {
@@ -707,6 +989,13 @@ function Home() {
       <section className="hero is-info is-fullheight">
         <div className="hero-body" style={{ backgroundColor: "#f7f6ee" }}>
           <div className="container">
+            <nav className="portfolio-top-nav" aria-label="Portfolio sections">
+              <a href="#about">About</a>
+              <a href="#current-focus">Current Focus</a>
+              <a href="#previous-work">Previous Work</a>
+              <a href="#active-work">Active Work</a>
+            </nav>
+
             <div className="portfolio-swipe-cue" aria-hidden="true">
               <span>Swipe horizontally</span>
               <span className="portfolio-swipe-arrow">-&gt;</span>
@@ -717,6 +1006,7 @@ function Home() {
               aria-label="Portfolio overview sections"
             >
               <section
+                id="about"
                 className="portfolio-panel portfolio-panel-about"
               >
                 <div
@@ -767,6 +1057,7 @@ function Home() {
               </section>
 
               <section
+                id="current-focus"
                 className="portfolio-panel portfolio-panel-problems"
               >
                 <div
@@ -831,6 +1122,7 @@ function Home() {
               </section>
 
               <section
+                id="previous-work"
                 className="portfolio-panel portfolio-panel-projects"
               >
                 <div
@@ -999,9 +1291,84 @@ function Home() {
                   />
                 ) : null}
               </section>
+
+              <section
+                id="active-work"
+                className="portfolio-panel portfolio-panel-active"
+              >
+                <div
+                  className="portfolio-panel-scroll"
+                  ref={(element) => {
+                    panelRefs.current.active = element;
+                  }}
+                >
+                  <div className="portfolio-panel-header">
+                    <p className="portfolio-panel-kicker">04 / Active work</p>
+                    <h2>Active GitHub repositories</h2>
+                    <p>
+                      Every active public repository is mapped here with the
+                      problem space and goal behind the work.
+                    </p>
+                  </div>
+
+                  <div className="active-work-list">
+                    {activeWorkItems.map((item) => (
+                      <article key={item.title} className="active-work-item">
+                        <div className="active-work-heading">
+                          <div>
+                            <h3>{item.title}</h3>
+                            <p>{item.summary}</p>
+                          </div>
+                          <div className="active-work-badges">
+                            <span className="project-preview-status project-preview-status-public">
+                              Active
+                            </span>
+                            <span className="project-preview-kind">
+                              {item.status}
+                            </span>
+                          </div>
+                        </div>
+                        <div className="active-work-meta">
+                          <span>{item.stack}</span>
+                          <a href={item.href} target="_blank" rel="noreferrer">
+                            GitHub
+                          </a>
+                        </div>
+                        <div className="active-work-detail">
+                          <p className="problem-detail-label problem-detail-label-problem">
+                            Problem
+                          </p>
+                          <p>{item.problem}</p>
+                        </div>
+                        <div className="active-work-detail">
+                          <p className="problem-detail-label problem-detail-label-base">
+                            Goal
+                          </p>
+                          <p>{item.goal}</p>
+                        </div>
+                      </article>
+                    ))}
+                  </div>
+                </div>
+                {scrollablePanels.active ? (
+                  <button
+                    type="button"
+                    className={`portfolio-scroll-hint ${
+                      panelAtBottom.active ? "portfolio-scroll-hint-up" : ""
+                    }`}
+                    aria-label={
+                      panelAtBottom.active
+                        ? "Scroll active work column to top"
+                        : "Scroll active work column down"
+                    }
+                    onClick={() => handleScrollIndicatorClick("active")}
+                  />
+                ) : null}
+              </section>
             </div>
 
             <div className="portfolio-swipe-dots" aria-hidden="true">
+              <span />
               <span />
               <span />
               <span />
