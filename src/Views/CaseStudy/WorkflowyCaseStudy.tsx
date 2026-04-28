@@ -21,6 +21,14 @@ const references = [
     label: "Workflowy usage guide: notes, tasks, projects, and knowledge work.",
     href: "https://workflowy.com/help/how-people-use-workflowy",
   },
+  {
+    label: "Workflowy pricing: Basic, Pro, annual billing, education, and nonprofit discounts.",
+    href: "https://workflowy.com/pricing",
+  },
+  {
+    label: "Workflowy subscription help: Pro limits, uploads, sharing, backups, and support.",
+    href: "https://workflowy.com/help/subscription",
+  },
 ];
 
 export default function WorkflowyCaseStudy() {
@@ -163,6 +171,41 @@ export default function WorkflowyCaseStudy() {
                 Example: the same outline can support a personal inbox, weekly
                 plan, product backlog, research notes, and team handoff without
                 requiring separate products.
+              </span>
+            </span>
+
+            <span className="note-case-block">
+              <span className="note-case-section-title">Revenue Plans</span>
+              Workflowy's revenue model fits a freemium productivity SaaS. The
+              free Basic plan keeps the product easy to adopt, while usage
+              limits create a natural upgrade moment once the outline becomes a
+              serious personal operating system.
+              <span className="note-case-example">
+                Example: a casual user can start with lightweight notes and
+                task lists for free, but a daily user who captures meetings,
+                projects, research, and planning inside Workflowy will hit the
+                value point where unlimited nodes and uploads justify Pro.
+              </span>
+              The Pro plan monetizes depth of usage rather than feature
+              complexity. This matches the product philosophy: all users can
+              understand the same simple outline model, and paying users remove
+              practical constraints around scale, files, sharing, backups, and
+              support.
+              <span className="note-case-example">
+                Example: a consultant using Workflowy for client notes,
+                proposals, project plans, and reusable checklists benefits more
+                from unlimited structure than from a separate advanced feature
+                bundle.
+              </span>
+              Team revenue can come from multi-seat Pro adoption, private
+              collaboration, shared project outlines, admin handling, and bulk
+              billing. Education and nonprofit discounts also support long-term
+              adoption by bringing students, teachers, administrators, and
+              mission-driven teams into the workflow early.
+              <span className="note-case-example">
+                Example: a small team can use one shared outline for goals,
+                meeting notes, decisions, tasks, and handoffs, then expand paid
+                seats as the outline becomes part of daily operations.
               </span>
             </span>
 

@@ -139,6 +139,7 @@ const previousWorkItems = [
     features: [
       "Problem, base problem, and sub-problem breakdown.",
       "Practical examples for capture, retrieval, and project planning.",
+      "Revenue model discussion across Basic, Pro, team, education, and nonprofit paths.",
       "References to Workflowy's official product positioning and basics.",
     ],
     problemsFaced: [
