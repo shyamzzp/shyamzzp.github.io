@@ -214,6 +214,7 @@ const previousWorkItems = [
       "Personal vocabulary support for names, acronyms, company terms, and technical language.",
       "Cross-app behavior where dictated text follows the active cursor.",
       "Accessibility value for hands-free writing and reduced dependency on sustained typing.",
+      "Revenue model discussion across freemium, Pro, team, and Enterprise plans.",
     ],
     problemsFaced: [
       "Balancing speed with trust when speech recognition, cleanup, or insertion is imperfect.",

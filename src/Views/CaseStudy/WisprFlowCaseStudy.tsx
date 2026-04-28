@@ -18,6 +18,10 @@ const references = [
     href: "https://wisprflow.ai/features",
   },
   {
+    label: "Wispr Flow pricing: Basic, Pro, Enterprise, trials, and team plans.",
+    href: "https://wisprflow.ai/pricing",
+  },
+  {
     label: "Wispr Flow docs: what Flow is and how dictation works.",
     href: "https://docs.wisprflow.ai/articles/2772472373-what-is-flow",
   },
@@ -204,6 +208,37 @@ export default function WisprFlowCaseStudy() {
                 private term, or needs heavy cleanup, the speed advantage
                 disappears.
               </span>
+            </span>
+
+            <span className="note-case-block">
+              <span className="note-case-section-title">Revenue Plans</span>
+              Wispr Flow's revenue model is strongest as a freemium SaaS
+              funnel. The free Basic plan gives users enough weekly words to
+              build the habit, while the Pro plan monetizes heavy daily usage
+              with unlimited words, command mode, early features, prioritized
+              support, and team collaboration.
+              <span className="note-case-example">
+                Example: an individual user may start with free dictation for
+                occasional messages, then upgrade when Flow becomes a daily
+                writing layer for email, Slack, documentation, planning, and
+                mobile capture.
+              </span>
+              For teams, revenue can expand through per-seat subscriptions,
+              shared dictionaries, snippets, centralized billing, admin
+              controls, usage dashboards, and collaboration features. The
+              Enterprise plan adds custom pricing for organizations that need
+              dedicated support, SSO/SAML, compliance, enforced privacy mode,
+              advanced dashboards, and bulk discounts.
+              <span className="note-case-example">
+                Example: a sales, support, product, or engineering team could
+                standardize Flow across members so common terms, snippets, and
+                voice workflows reduce repeated typing across the whole team.
+              </span>
+              Other revenue opportunities include student, educator, and
+              nonprofit discounts that seed long-term adoption; annual plans
+              that improve retention and cash flow; expansion from individual
+              Pro users into team workspaces; and enterprise upgrades when
+              privacy, security, and compliance become buying requirements.
             </span>
 
             <span className="note-case-block">
