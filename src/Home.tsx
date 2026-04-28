@@ -249,6 +249,30 @@ const previousWorkItems = [
     routeOnly: false,
   },
   {
+    id: "ai-landscape-blog",
+    title: "AI Landscape for Practical Builders",
+    summary:
+      "A blog post mapping the practical AI stack across models, context, retrieval, tools, agents, evaluation, and product fit.",
+    status: "Published",
+    href: "/ai-landscape-blog",
+    type: "Blog",
+    details: [
+      "Explains the AI landscape as system layers instead of disconnected tools.",
+      "Covers model behavior, context design, retrieval, tool calling, agents, and evaluation.",
+    ],
+    features: [
+      "Deep discussion of model, context, retrieval, and tool layers.",
+      "Agent and evaluation sections focused on production reliability.",
+      "Product-fit guidance for choosing useful AI use cases.",
+    ],
+    problemsFaced: [
+      "Keeping the AI overview practical instead of becoming abstract theory.",
+      "Covering the main AI system layers without turning the blog into a glossary.",
+      "Making the article useful for builders who need implementation direction.",
+    ],
+    routeOnly: true,
+  },
+  {
     id: "software-idea-checklist",
     title: "Software Idea Checklist",
     summary:
@@ -365,6 +389,30 @@ const previousWorkItems = [
       "Keeping the sample specific to the portfolio instead of writing a generic productivity article.",
       "Making the post concise while still showing the intended content direction.",
       "Reusing existing case-study styling so the sample feels native to the site.",
+    ],
+    routeOnly: true,
+  },
+  {
+    id: "ai-roadmap-blog",
+    title: "AI Roadmap for Software Engineers",
+    summary:
+      "A blog post outlining a practical learning path from model basics to retrieval, tools, agents, evaluation, and portfolio projects.",
+    status: "Published",
+    href: "/ai-roadmap-blog",
+    type: "Blog",
+    details: [
+      "Moves from software engineering fundamentals into AI product engineering.",
+      "Sequences learning across models, prompting, retrieval, tools, agents, and operations.",
+    ],
+    features: [
+      "Phase-by-phase roadmap for AI engineering skills.",
+      "Guidance on RAG, tool calling, agent design, evaluation, and deployment.",
+      "Portfolio direction for projects that show real implementation tradeoffs.",
+    ],
+    problemsFaced: [
+      "Avoiding a vague roadmap by connecting each phase to buildable skills.",
+      "Balancing learning sequence with practical production concerns.",
+      "Showing how software engineers can enter AI without pretending to be researchers first.",
     ],
     routeOnly: true,
   },

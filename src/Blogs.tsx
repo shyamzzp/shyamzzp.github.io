@@ -4,17 +4,17 @@ const blogLinks = [
   {
     title: "Voice, Automation, and the Next Layer of Work",
     href: "/voice-automation-workflow-blog",
-    type: "Sample",
+    type: "Blog",
   },
   {
     title: "AI Landscape",
-    href: "/ai",
-    type: "HTML",
+    href: "/ai-landscape-blog",
+    type: "Blog",
   },
   {
     title: "AI Roadmap",
-    href: "/ai-roadmap",
-    type: "HTML",
+    href: "/ai-roadmap-blog",
+    type: "Blog",
   },
 ];
 
@@ -26,8 +26,8 @@ function Blogs() {
           <p className="help-eyebrow">Blogs</p>
           <h1 className="help-title">Published blog pages</h1>
           <p className="help-copy">
-            Direct links to the long-form pages currently published on the
-            site.
+            Long-form notes using the same compact reading style as the case
+            studies.
           </p>
         </div>
         <div className="help-grid">

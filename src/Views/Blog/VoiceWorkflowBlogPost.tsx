@@ -1,113 +1,106 @@
-import React from "react";
-import "../CaseStudy/NoteTakingCaseStudy.css";
+import BlogArticleLayout from "./BlogArticleLayout";
 
-const publicationMeta = [
+const meta = [
   { label: "Author", value: "Shyam S. Suthar" },
   { label: "Published", value: "April 28, 2026" },
   { label: "Category", value: "Product thinking" },
-  { label: "Reading Time", value: "4 min read" },
+  { label: "Reading Time", value: "7 min read" },
 ];
 
 export default function VoiceWorkflowBlogPost() {
-  React.useEffect(() => {
-    const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Escape") {
-        window.location.href = "/";
-      }
-    };
-
-    window.addEventListener("keydown", handleKeyDown);
-
-    return () => {
-      window.removeEventListener("keydown", handleKeyDown);
-    };
-  }, []);
-
   return (
-    <main className="note-case-page">
-      <section className="note-case-shell">
-        <a className="note-case-back" href="/">
-          <svg viewBox="0 0 24 24" aria-hidden="true">
-            <path d="M15 6 9 12l6 6" />
-          </svg>
-          Back to profile
-        </a>
-
-        <header className="note-case-header">
-          <p className="note-case-kicker">Sample blog</p>
-          <h1>Voice, Automation, and the Next Layer of Work</h1>
-          <p>
-            A short sample post on the direction behind the portfolio: building
-            tools that reduce friction, capture intent faster, and make daily
-            workflows feel lighter.
-          </p>
-          <dl className="note-case-meta">
-            {publicationMeta.map((item) => (
-              <div key={item.label}>
-                <dt>{item.label}</dt>
-                <dd>{item.value}</dd>
-              </div>
-            ))}
-          </dl>
-        </header>
-
-        <section className="note-case-content">
-          <section className="note-case-narrative">
-            <span className="note-case-block">
-              <span className="note-case-section-title">Why This Matters</span>
-              Most productivity problems are not caused by missing software.
-              They come from small moments of friction: typing the same thing
-              again, switching tools, looking for context, waiting for a
-              verification email, or turning a rough idea into structured work.
-              The strongest products remove those moments without making the
-              user manage a heavier system.
-            </span>
-
-            <span className="note-case-block">
-              <span className="note-case-section-title">The Pattern</span>
-              Across the case studies, the same idea keeps appearing:{" "}
+    <BlogArticleLayout
+      kicker="Blog"
+      title="Voice, Automation, and the Next Layer of Work"
+      description="A deeper note on why the next useful layer of software is not another dashboard, but a tighter way to capture intent and move work forward."
+      meta={meta}
+      sections={[
+        {
+          title: "Thesis",
+          body: (
+            <>
+              The best productivity tools do not ask the user to manage more
+              software. They reduce the gap between an intention and a finished
+              action.{" "}
               <mark className="note-case-mark">
-                the best workflow tools stay close to the user's current intent
+                The next layer of work is intent capture plus execution
               </mark>
-              . Raycast keeps commands near the keyboard. Wispr Flow keeps
-              writing near speech. Workflowy keeps structure near the thought.
-              Temp mail automation keeps verification near the test flow.
-            </span>
-
-            <span className="note-case-block">
-              <span className="note-case-section-title">What I Look For</span>
-              I like products where the first version is simple, but the system
-              can grow. A voice tool can begin as dictation, then become
-              correction, summarization, personal vocabulary, and cross-app
-              writing. A command launcher can begin as app search, then become
-              scripts, shortcuts, snippets, and custom automation.
-              <span className="note-case-example">
-                Example: a small shortcut that saves five seconds is not just a
-                shortcut if it becomes part of a repeated daily workflow.
-              </span>
-            </span>
-
-            <span className="note-case-block">
-              <span className="note-case-section-title">Product Principle</span>
-              The product should be compact on the surface and capable under
-              the hood. Users should not need to understand every feature before
-              getting value. The interface should make the first action obvious,
-              and the deeper layers should appear when the user's workflow
-              actually needs them.
-            </span>
-
-            <span className="note-case-block">
-              <span className="note-case-section-title">Where This Is Going</span>
-              This blog direction can become a place for short notes on product
-              systems, AI workflows, developer tooling, automation patterns,
-              case-study breakdowns, and practical engineering choices. The
-              goal is not to publish generic tutorials; it is to document how
-              useful software becomes sharper when product, workflow, and
-              implementation are thought about together.
-            </span>
-          </section>
-        </section>
-      </section>
-    </main>
+              : speak the idea, launch the command, structure the note, verify
+              the inbox, or generate the next step without leaving the current
+              context.
+            </>
+          ),
+        },
+        {
+          title: "The Friction",
+          body: (
+            <>
+              Most daily work leaks time through tiny repeated actions: typing
+              the same updates, switching apps, finding the right page,
+              reformatting raw notes, waiting for test emails, copying text
+              across tools, or opening a browser just to trigger a known action.
+              None of these actions feel large alone, but together they make
+              the workday feel heavier than the work itself.
+            </>
+          ),
+        },
+        {
+          title: "The Pattern",
+          body: (
+            <>
+              The products I keep studying follow one pattern. Raycast keeps
+              actions near the keyboard. Wispr Flow keeps writing near speech.
+              Workflowy keeps structure near thought. Temp mail automation
+              keeps inbox verification near the test flow.{" "}
+              <mark className="note-case-mark">
+                Each tool becomes valuable because it stays close to the user's
+                current state
+              </mark>
+              instead of forcing a separate workflow ceremony.
+            </>
+          ),
+        },
+        {
+          title: "Product Shape",
+          body: (
+            <>
+              A strong workflow product should be compact at first contact and
+              capable after trust is built. The first action should be obvious:
+              speak, search, capture, paste, run, or verify. The advanced layer
+              can then add custom commands, personal vocabulary, snippets,
+              shared dictionaries, templates, shortcuts, integrations, and
+              automation rules.
+            </>
+          ),
+        },
+        {
+          title: "Engineering Implication",
+          body: (
+            <>
+              The engineering challenge is reliability at the boundary between
+              tools. Voice tools need low-latency transcription and safe text
+              insertion. Command tools need predictable permissions and script
+              execution. Automation tools need retries, rate limits, timeouts,
+              auditability, and clear failure states. The UI can stay simple
+              only when the system underneath handles edge cases carefully.
+            </>
+          ),
+        },
+        {
+          title: "Where This Blog Goes",
+          body: (
+            <>
+              This blog direction should document practical thinking around AI
+              workflows, developer tools, automation systems, productivity
+              primitives, revenue models, accessibility, and implementation
+              tradeoffs. The goal is not generic tutorials. The goal is to show
+              how useful software gets sharper when product thinking,
+              workflow design, and engineering constraints are discussed
+              together.
+            </>
+          ),
+        },
+      ]}
+    />
   );
 }
