@@ -16,6 +16,11 @@ const blogLinks = [
     href: "/ai-roadmap-blog",
     type: "Blog",
   },
+  {
+    title: "Git Worktree for Day-to-Day Engineering",
+    href: "/git-worktree-blog",
+    type: "Blog",
+  },
 ];
 
 function Blogs() {

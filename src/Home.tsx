@@ -417,6 +417,30 @@ const previousWorkItems = [
     routeOnly: true,
   },
   {
+    id: "git-worktree-blog",
+    title: "Git Worktree for Day-to-Day Engineering",
+    summary:
+      "A practical blog post on using git worktree for parallel branches, AI-assisted engineering, hotfixes, reviews, and clean context switching.",
+    status: "Published",
+    href: "/git-worktree-blog",
+    type: "Blog",
+    details: [
+      "Explains how worktrees let one repository support multiple local working directories.",
+      "Shows day-to-day usage for feature work, reviews, hotfixes, and AI experiments.",
+    ],
+    features: [
+      "Command snippets for adding, listing, reviewing, and removing worktrees.",
+      "AI engineering workflow guidance for isolated agent experiments.",
+      "Practical rules for naming, cleanup, branch isolation, and avoiding mistakes.",
+    ],
+    problemsFaced: [
+      "Explaining worktrees simply without making the post feel like raw Git documentation.",
+      "Balancing practical snippets with workflow guidance for daily engineering.",
+      "Showing how AI engineers can use worktrees without creating branch confusion.",
+    ],
+    routeOnly: true,
+  },
+  {
     id: "agile-development-blog",
     title: "Agile Development Notes",
     summary:

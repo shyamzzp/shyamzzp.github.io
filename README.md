@@ -45,10 +45,11 @@ This repository powers Shyam S. Suthar's GitHub Pages portfolio. The current imp
 ### Blog Pages
 
 - `/blogs` lists published and sample blog pages.
-- Current blog routes: `/voice-automation-workflow-blog`, `/ai-landscape-blog`, and `/ai-roadmap-blog`.
+- Current blog routes: `/voice-automation-workflow-blog`, `/ai-landscape-blog`, `/ai-roadmap-blog`, and `/git-worktree-blog`.
 - `/voice-automation-workflow-blog` shows the intended direction for portfolio writing: voice workflows, automation, command centers, AI/product thinking, and practical implementation notes.
 - `/ai-landscape-blog` maps the practical AI stack across models, context, retrieval, tools, agents, evaluation, and product fit.
 - `/ai-roadmap-blog` gives a learning path for software engineers moving into AI product engineering.
+- `/git-worktree-blog` explains day-to-day `git worktree` usage for parallel branches, reviews, hotfixes, and AI-assisted engineering.
 - Blog-style routes can reuse the compact case-study reading layout when the content is editorial rather than a card/grid index.
 
 ### Deployment

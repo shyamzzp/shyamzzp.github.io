@@ -5,6 +5,7 @@ import Home from "./Home";
 import Help from "./Help";
 import AiLandscapeBlogPost from "./Views/Blog/AiLandscapeBlogPost";
 import AiRoadmapBlogPost from "./Views/Blog/AiRoadmapBlogPost";
+import GitWorktreeBlogPost from "./Views/Blog/GitWorktreeBlogPost";
 import VoiceWorkflowBlogPost from "./Views/Blog/VoiceWorkflowBlogPost";
 import NoteTakingCaseStudy from "./Views/CaseStudy/NoteTakingCaseStudy";
 import RaycastCaseStudy from "./Views/CaseStudy/RaycastCaseStudy";
@@ -22,6 +23,7 @@ function App() {
         <Route path="/blogs" element={<Blogs />} />
         <Route path="/ai-landscape-blog" element={<AiLandscapeBlogPost />} />
         <Route path="/ai-roadmap-blog" element={<AiRoadmapBlogPost />} />
+        <Route path="/git-worktree-blog" element={<GitWorktreeBlogPost />} />
         <Route
           path="/voice-automation-workflow-blog"
           element={<VoiceWorkflowBlogPost />}
