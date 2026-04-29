@@ -991,9 +991,9 @@ function Home() {
           <div className="container">
             <nav className="portfolio-top-nav" aria-label="Portfolio sections">
               <a href="#about">About</a>
-              <a href="#current-focus">Current Focus</a>
               <a href="#previous-work">Previous Work</a>
               <a href="#active-work">Active Work</a>
+              <a href="#current-focus">Current Focus</a>
             </nav>
 
             <div className="portfolio-swipe-cue" aria-hidden="true">
@@ -1067,7 +1067,7 @@ function Home() {
                   }}
                 >
                   <div className="portfolio-panel-header">
-                    <p className="portfolio-panel-kicker">02 / Current focus</p>
+                    <p className="portfolio-panel-kicker">04 / Current focus</p>
                     <h2>Problems I am working on</h2>
                     <p>
                       I like problems where product clarity, engineering depth,
@@ -1132,7 +1132,7 @@ function Home() {
                   }}
                 >
                   <div className="portfolio-panel-header">
-                    <p className="portfolio-panel-kicker">03 / Previous work</p>
+                    <p className="portfolio-panel-kicker">02 / Previous work</p>
                     <h2>Projects | Case studies | Blogs</h2>
                     <p>
                       A snapshot of products, prototypes, and technical systems I
@@ -1303,7 +1303,7 @@ function Home() {
                   }}
                 >
                   <div className="portfolio-panel-header">
-                    <p className="portfolio-panel-kicker">04 / Active work</p>
+                    <p className="portfolio-panel-kicker">03 / Active work</p>
                     <h2>Active GitHub repositories</h2>
                     <p>
                       Every active public repository is mapped here with the
