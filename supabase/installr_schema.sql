@@ -31,13 +31,19 @@ create table if not exists public.installr_catalog_items (
   verify text not null,
   rollback text not null,
   sort_order integer not null default 0,
+  review boolean not null default true,
+  reviewed_at timestamptz,
+  review_notes text,
   created_at timestamptz not null default now(),
   updated_at timestamptz not null default now()
 );
 
 alter table public.installr_catalog_items
   add column if not exists command_style text,
-  add column if not exists complexity text;
+  add column if not exists complexity text,
+  add column if not exists review boolean not null default true,
+  add column if not exists reviewed_at timestamptz,
+  add column if not exists review_notes text;
 
 alter table public.installr_categories enable row level security;
 alter table public.installr_catalog_items enable row level security;
@@ -52,7 +58,7 @@ drop policy if exists installr_catalog_items_public_read on public.installr_cata
 create policy installr_catalog_items_public_read
 on public.installr_catalog_items
 for select
-using (true);
+using (review = true);
 
 insert into public.installr_categories (slug, name, description, sort_order) values
   ('developer-tools', 'Developer Tools', 'Command line utilities for repo work, GitHub workflows, and fast local search.', 10),
