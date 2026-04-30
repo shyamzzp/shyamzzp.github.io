@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vox OS - Context Aware Orchestrator</title>
+<link rel="icon" href="/voxos/favicon.ico">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; }
+  :root {
+    --bg: #050806;
+    --shell: #080d0a;
+    --panel: #0c130f;
+    --panel-2: #111a14;
+    --text: #f2fbf6;
+    --muted: rgba(242, 251, 246, 0.62);
+    --dim: rgba(242, 251, 246, 0.38);
+    --line: rgba(200, 255, 226, 0.12);
+    --line-2: rgba(93, 202, 165, 0.38);
+    --accent: #5dcaa5;
+    --accent-strong: #7ef0c5;
+    --accent-soft: rgba(93, 202, 165, 0.13);
+  }
+  html, body { min-height: 100%; }
+  body {
+    margin: 0;
+    background:
+      radial-gradient(circle at 22% 18%, rgba(93, 202, 165, 0.18), transparent 34%),
+      radial-gradient(circle at 72% 0%, rgba(93, 202, 165, 0.1), transparent 32%),
+      linear-gradient(135deg, #030503, #071009 48%, #020302);
+    color: var(--text);
+    font-family: Inter, system-ui, sans-serif;
+    overflow-x: hidden;
+  }
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(93, 202, 165, 0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(93, 202, 165, 0.04) 1px, transparent 1px);
+    background-size: 36px 36px;
+    pointer-events: none;
+  }
+  button { font: inherit; }
+  .page { min-height: 100vh; padding: 22px; position: relative; }
+  .app-shell {
+    border: 1px solid var(--line);
+    border-radius: 28px;
+    box-shadow: 0 40px 120px rgba(0,0,0,.58), inset 0 1px 0 rgba(255,255,255,.06);
+    display: grid;
+    grid-template-columns: 420px minmax(0, 1fr);
+    margin: 0 auto;
+    max-width: 1280px;
+    min-height: calc(100vh - 44px);
+    overflow: hidden;
+    background: rgba(5, 8, 6, 0.86);
+  }
+  .device-side {
+    align-items: center;
+    background: linear-gradient(180deg, rgba(15, 25, 18, .95), rgba(3,5,3,.98));
+    border-right: 1px solid var(--line);
+    display: flex;
+    justify-content: center;
+    padding: 30px;
+  }
+  .phone {
+    background: linear-gradient(160deg, #1e2821, #050805 48%, #121b15);
+    border: 1px solid rgba(255,255,255,.16);
+    border-radius: 46px;
+    box-shadow: 0 28px 80px rgba(0,0,0,.66), 0 0 0 8px rgba(255,255,255,.035);
+    padding: 13px;
+    width: min(100%, 360px);
+  }
+  .screen {
+    background:
+      radial-gradient(circle at 50% 6%, rgba(93,202,165,.14), transparent 32%),
+      #050806;
+    border: 1px solid rgba(255,255,255,.08);
+    border-radius: 34px;
+    min-height: 720px;
+    overflow: hidden;
+    position: relative;
+  }
+  .notch { background: rgba(255,255,255,.18); border-radius: 999px; height: 5px; left: 50%; position: absolute; top: 14px; transform: translateX(-50%); width: 78px; }
+  .mobile-content { display: flex; flex-direction: column; min-height: 720px; padding: 38px 18px 18px; }
+  .mobile-top { align-items: center; display: flex; justify-content: space-between; margin-bottom: 22px; }
+  .logo {
+    align-items: center;
+    background: var(--accent-soft);
+    border: 1px solid var(--line-2);
+    border-radius: 13px;
+    color: var(--accent-strong);
+    display: inline-flex;
+    font: 800 17px JetBrains Mono, monospace;
+    height: 40px;
+    justify-content: center;
+    width: 40px;
+  }
+  .state-pill {
+    align-items: center;
+    border: 1px solid var(--line-2);
+    border-radius: 999px;
+    color: var(--accent);
+    display: inline-flex;
+    font: 700 10px JetBrains Mono, monospace;
+    gap: 7px;
+    letter-spacing: .08em;
+    padding: 7px 9px;
+    text-transform: uppercase;
+  }
+  .state-pill::before { background: var(--accent); border-radius: 50%; box-shadow: 0 0 16px var(--accent); content: ""; height: 6px; width: 6px; }
+  .mobile-title { font-size: 34px; font-weight: 800; letter-spacing: -.045em; line-height: .95; margin: 0 0 8px; }
+  .mobile-copy { color: var(--muted); font-size: 13px; line-height: 1.45; margin: 0 0 22px; }
+  .command-card {
+    background: linear-gradient(180deg, rgba(93,202,165,.16), rgba(93,202,165,.045));
+    border: 1px solid var(--line-2);
+    border-radius: 24px;
+    padding: 18px;
+  }
+  .label { color: var(--dim); font: 700 10px JetBrains Mono, monospace; letter-spacing: .12em; text-transform: uppercase; }
+  .command { font-size: 20px; font-weight: 750; letter-spacing: -.02em; line-height: 1.14; margin: 12px 0 16px; }
+  .wave { align-items: center; display: flex; gap: 4px; height: 38px; }
+  .wave span { animation: wave 1.1s ease-in-out infinite; background: var(--accent); border-radius: 3px; width: 4px; }
+  .wave span:nth-child(1){height:22%;animation-delay:0s}.wave span:nth-child(2){height:58%;animation-delay:.08s}.wave span:nth-child(3){height:92%;animation-delay:.16s}.wave span:nth-child(4){height:74%;animation-delay:.24s}.wave span:nth-child(5){height:100%;animation-delay:.32s}.wave span:nth-child(6){height:48%;animation-delay:.4s}.wave span:nth-child(7){height:78%;animation-delay:.48s}.wave span:nth-child(8){height:34%;animation-delay:.56s}
+  @keyframes wave { 0%,100% { opacity:.35; transform:scaleY(.45); } 50% { opacity:1; transform:scaleY(1); } }
+  .mobile-panel { margin-top: 18px; }
+  .mini-stack { display: grid; gap: 8px; margin-top: 10px; }
+  .mini-row { align-items: center; background: rgba(255,255,255,.035); border: 1px solid var(--line); border-radius: 15px; display: flex; gap: 10px; padding: 11px; }
+  .mini-dot { background: var(--accent); border-radius: 50%; box-shadow: 0 0 12px var(--accent); flex: 0 0 auto; height: 8px; width: 8px; }
+  .mini-row strong { display: block; font-size: 12px; margin-bottom: 2px; }
+  .mini-row span { color: var(--muted); display: block; font-size: 10px; line-height: 1.3; }
+  .phone-actions { margin-top: auto; padding-top: 18px; }
+  .primary-action { background: var(--accent); border: 0; border-radius: 16px; color: #031008; cursor: pointer; font: 800 11px JetBrains Mono, monospace; letter-spacing: .12em; padding: 15px; text-transform: uppercase; width: 100%; }
+  .content-side { display: flex; flex-direction: column; min-width: 0; padding: 30px; }
+  .hero { border-bottom: 1px solid var(--line); padding-bottom: 24px; }
+  .eyebrow { color: var(--accent); font: 800 11px JetBrains Mono, monospace; letter-spacing: .14em; margin-bottom: 14px; text-transform: uppercase; }
+  h1 { font-size: clamp(42px, 5vw, 76px); letter-spacing: -.055em; line-height: .9; margin: 0; max-width: 760px; }
+  .lede { color: var(--muted); font-size: 16px; line-height: 1.55; margin: 18px 0 0; max-width: 720px; }
+  .tabs { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 18px; }
+  .tab {
+    background: rgba(255,255,255,.035);
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    color: var(--muted);
+    cursor: pointer;
+    font: 700 11px JetBrains Mono, monospace;
+    letter-spacing: .06em;
+    padding: 9px 12px;
+    text-transform: uppercase;
+  }
+  .tab.active { background: var(--accent); border-color: var(--accent); color: #031008; }
+  .workflow {
+    display: grid;
+    gap: 14px;
+    grid-template-columns: 1fr 1fr;
+    margin-top: 18px;
+  }
+  .panel { background: var(--panel); border: 1px solid var(--line); border-radius: 20px; padding: 16px; }
+  .panel.wide { grid-column: 1 / -1; }
+  .panel-head { align-items: center; display: flex; justify-content: space-between; gap: 12px; margin-bottom: 12px; }
+  .panel-title { color: var(--dim); font: 800 10px JetBrains Mono, monospace; letter-spacing: .12em; text-transform: uppercase; }
+  .pill { border: 1px solid var(--line-2); border-radius: 999px; color: var(--accent); font: 700 10px JetBrains Mono, monospace; padding: 5px 8px; white-space: nowrap; }
+  .stack { display: grid; gap: 9px; }
+  .item { background: rgba(255,255,255,.032); border: 1px solid rgba(255,255,255,.06); border-radius: 14px; padding: 12px; }
+  .item strong { display: block; font-size: 14px; margin-bottom: 4px; }
+  .item span { color: var(--muted); display: block; font-size: 12px; line-height: 1.42; }
+  .flow { display: grid; gap: 10px; grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .step { background: var(--panel-2); border: 1px solid var(--line); border-radius: 15px; min-height: 122px; padding: 13px; }
+  .step b { color: var(--accent); display: block; font: 800 10px JetBrains Mono, monospace; margin-bottom: 9px; }
+  .step strong { display: block; font-size: 14px; margin-bottom: 6px; }
+  .step span { color: var(--muted); font-size: 12px; line-height: 1.35; }
+  .metrics { display: grid; gap: 10px; grid-template-columns: repeat(3, 1fr); }
+  .metric { background: var(--accent-soft); border: 1px solid var(--line-2); border-radius: 15px; padding: 14px; }
+  .metric strong { color: var(--accent); display: block; font-size: 28px; line-height: 1; }
+  .metric span { color: var(--muted); display: block; font-size: 11px; margin-top: 7px; }
+  @media (max-width: 1000px) {
+    .page { padding: 14px; }
+    .app-shell { grid-template-columns: 1fr; }
+    .device-side { border-bottom: 1px solid var(--line); border-right: 0; }
+  }
+  @media (max-width: 680px) {
+    .device-side, .content-side { padding: 18px; }
+    .workflow, .flow, .metrics { grid-template-columns: 1fr; }
+    h1 { font-size: 42px; }
+  }
+</style>
+</head>
+<body>
+<main class="page">
+  <section class="app-shell">
+    <aside class="device-side">
+      <div class="phone">
+        <div class="screen">
+          <div class="notch"></div>
+          <div class="mobile-content">
+            <div class="mobile-top">
+              <div class="logo">V</div>
+              <div class="state-pill" id="phone-state">online</div>
+            </div>
+            <h2 class="mobile-title">Vox OS</h2>
+            <p class="mobile-copy">A context-aware voice operating layer for turning intent into safe multi-step workflows.</p>
+            <section class="command-card">
+              <div class="label">Active workflow</div>
+              <div class="command" id="phone-command">“Prepare my client follow-up and schedule it after standup.”</div>
+              <div class="wave" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+            </section>
+            <section class="mobile-panel">
+              <div class="label">Live context</div>
+              <div class="mini-stack" id="phone-context"></div>
+            </section>
+            <div class="phone-actions">
+              <button class="primary-action" id="approve-button" type="button">Approve plan</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <section class="content-side">
+      <header class="hero">
+        <div class="eyebrow">Context aware orchestrator</div>
+        <h1>Vox OS coordinates voice, context, tools, and approval.</h1>
+        <p class="lede">This static demo showcases the main Vox OS application experience: a mobile control surface paired with an orchestration board. The original yellow/orange accent from the reference is replaced with the Vox OS green system color.</p>
+        <nav class="tabs" aria-label="Workflow selector">
+          <button class="tab active" type="button" data-workflow="client">Client follow-up</button>
+          <button class="tab" type="button" data-workflow="meeting">Meeting brief</button>
+          <button class="tab" type="button" data-workflow="personal">Personal admin</button>
+          <button class="tab" type="button" data-workflow="recovery">Safety recovery</button>
+        </nav>
+      </header>
+
+      <section class="workflow">
+        <article class="panel">
+          <div class="panel-head"><div class="panel-title">Detected context</div><div class="pill" id="signal-count">5 signals</div></div>
+          <div class="stack" id="context-list"></div>
+        </article>
+        <article class="panel">
+          <div class="panel-head"><div class="panel-title">Tool routing</div><div class="pill">governed</div></div>
+          <div class="stack" id="tool-list"></div>
+        </article>
+        <article class="panel wide">
+          <div class="panel-head"><div class="panel-title">Workflow plan</div><div class="pill" id="workflow-mode">preview mode</div></div>
+          <div class="flow" id="plan-list"></div>
+        </article>
+        <article class="panel">
+          <div class="panel-head"><div class="panel-title">Runtime health</div><div class="pill">live</div></div>
+          <div class="metrics" id="metrics-list"></div>
+        </article>
+        <article class="panel">
+          <div class="panel-head"><div class="panel-title">Vox OS response</div><div class="pill" id="response-state">ready</div></div>
+          <div class="item"><strong id="response-title"></strong><span id="response-copy"></span></div>
+        </article>
+      </section>
+    </section>
+  </section>
+</main>
+
+<script>
+  const workflows = {
+    client: {
+      state: "online",
+      command: "“Prepare my client follow-up and schedule it after standup.”",
+      signals: ["Calendar window", "Client memory", "Open commitment"],
+      context: [
+        ["Calendar window", "Standup ends at 10:30. Deep-work block starts at 11:00."],
+        ["Relationship memory", "Client prefers short updates with decisions and blockers first."],
+        ["Open task", "Proposal follow-up was promised yesterday evening."]
+      ],
+      tools: [
+        ["Mail", "Draft only. Send requires explicit voice confirmation."],
+        ["Calendar", "Find the least disruptive review slot."],
+        ["Notes", "Extract decisions, blockers, and open questions."]
+      ],
+      plan: [
+        ["01", "Retrieve", "Pull client notes, last thread, and open commitments."],
+        ["02", "Compose", "Draft concise follow-up in the user's preferred tone."],
+        ["03", "Schedule", "Place review after standup without breaking focus time."],
+        ["04", "Confirm", "Read summary aloud before any external action happens."]
+      ],
+      metrics: [["94%", "intent confidence"], ["4", "tools selected"], ["0", "unsafe actions"]],
+      response: ["I found the notes and drafted the follow-up.", "It is scheduled for review at 10:35. I will not send it until you approve."]
+    },
+    meeting: {
+      state: "briefing",
+      command: "“Brief me before the design review and surface the risky decisions.”",
+      signals: ["Agenda", "Recent docs", "Decision log"],
+      context: [
+        ["Agenda", "Design review starts in 18 minutes with product and engineering."],
+        ["Recent docs", "Two specs changed since the last review."],
+        ["Decision log", "Pricing flow and onboarding copy still need alignment."]
+      ],
+      tools: [
+        ["Calendar", "Read meeting scope, attendees, and timing."],
+        ["Docs", "Summarize changed sections and unresolved comments."],
+        ["Tasks", "Pin follow-up actions for after the review."]
+      ],
+      plan: [
+        ["01", "Scan", "Collect agenda, docs, and unresolved comments."],
+        ["02", "Rank", "Prioritize risks by impact and reversibility."],
+        ["03", "Brief", "Create a two-minute spoken summary."],
+        ["04", "Track", "Prepare post-meeting follow-up tasks."]
+      ],
+      metrics: [["91%", "brief confidence"], ["3", "sources merged"], ["2", "risks found"]],
+      response: ["Your design review brief is ready.", "The highest-risk decision is onboarding copy because it affects activation and support load."]
+    },
+    personal: {
+      state: "planning",
+      command: "“Clear my personal admin tonight without touching my focus block.”",
+      signals: ["Energy pattern", "Errands", "Focus rules"],
+      context: [
+        ["Energy pattern", "Short admin tasks perform better after dinner."],
+        ["Errands", "Two pending bills and one renewal need attention."],
+        ["Focus rules", "No scheduling inside the 8:00-10:00 writing block."]
+      ],
+      tools: [
+        ["Tasks", "Group admin tasks into a short queue."],
+        ["Reminders", "Add deadline-sensitive nudges only."],
+        ["Calendar", "Protect the writing block from new tasks."]
+      ],
+      plan: [
+        ["01", "Collect", "Find personal admin items with due dates."],
+        ["02", "Group", "Batch similar actions into a 25-minute block."],
+        ["03", "Protect", "Avoid existing focus and rest windows."],
+        ["04", "Prompt", "Notify only when the admin block begins."]
+      ],
+      metrics: [["25m", "planned block"], ["3", "tasks grouped"], ["0", "focus conflicts"]],
+      response: ["Your admin block is ready for 7:20 PM.", "I grouped the bills and renewal, and kept the writing block untouched."]
+    },
+    recovery: {
+      state: "guarded",
+      command: "“Undo the last automation and show what changed.”",
+      signals: ["Action log", "Rollback data", "Permissions"],
+      context: [
+        ["Action log", "Last workflow created a draft, reminder, and calendar hold."],
+        ["Rollback data", "All generated objects have reversible metadata."],
+        ["Permissions", "External sends were blocked pending approval."]
+      ],
+      tools: [
+        ["Audit log", "Show every object created or modified."],
+        ["Rollback", "Remove draft artifacts and restore schedule state."],
+        ["Confirmation", "Require approval before deleting user-visible items."]
+      ],
+      plan: [
+        ["01", "Inspect", "List every changed object from the last workflow."],
+        ["02", "Preview", "Explain what will be removed or restored."],
+        ["03", "Rollback", "Undo only the approved generated changes."],
+        ["04", "Report", "Confirm the final state and remaining artifacts."]
+      ],
+      metrics: [["100%", "rollback coverage"], ["3", "objects traced"], ["0", "external sends"]],
+      response: ["Rollback preview is ready.", "No external actions happened. I can remove the generated draft, reminder, and calendar hold."]
+    }
+  };
+
+  const els = {
+    phoneState: document.getElementById("phone-state"),
+    phoneCommand: document.getElementById("phone-command"),
+    phoneContext: document.getElementById("phone-context"),
+    contextList: document.getElementById("context-list"),
+    toolList: document.getElementById("tool-list"),
+    planList: document.getElementById("plan-list"),
+    metricsList: document.getElementById("metrics-list"),
+    signalCount: document.getElementById("signal-count"),
+    responseTitle: document.getElementById("response-title"),
+    responseCopy: document.getElementById("response-copy"),
+    responseState: document.getElementById("response-state"),
+    approveButton: document.getElementById("approve-button")
+  };
+
+  function item([title, copy]) {
+    return `<div class="item"><strong>${title}</strong><span>${copy}</span></div>`;
+  }
+
+  function setWorkflow(key) {
+    const data = workflows[key];
+    document.querySelectorAll(".tab").forEach(tab => tab.classList.toggle("active", tab.dataset.workflow === key));
+    els.phoneState.textContent = data.state;
+    els.phoneCommand.textContent = data.command;
+    els.signalCount.textContent = `${data.context.length + data.tools.length - 1} signals`;
+    els.phoneContext.innerHTML = data.signals.map(signal => `<div class="mini-row"><div class="mini-dot"></div><div><strong>${signal}</strong><span>Available for orchestration.</span></div></div>`).join("");
+    els.contextList.innerHTML = data.context.map(item).join("");
+    els.toolList.innerHTML = data.tools.map(item).join("");
+    els.planList.innerHTML = data.plan.map(([num, title, copy]) => `<div class="step"><b>${num}</b><strong>${title}</strong><span>${copy}</span></div>`).join("");
+    els.metricsList.innerHTML = data.metrics.map(([value, label]) => `<div class="metric"><strong>${value}</strong><span>${label}</span></div>`).join("");
+    els.responseTitle.textContent = `“${data.response[0]}”`;
+    els.responseCopy.textContent = data.response[1];
+    els.responseState.textContent = "ready";
+    els.approveButton.textContent = "Approve plan";
+  }
+
+  document.querySelectorAll(".tab").forEach(tab => {
+    tab.addEventListener("click", () => setWorkflow(tab.dataset.workflow));
+  });
+
+  els.approveButton.addEventListener("click", () => {
+    els.responseState.textContent = "approved";
+    els.approveButton.textContent = "Plan approved";
+  });
+
+  setWorkflow("client");
+</script>
+</body>
+</html>

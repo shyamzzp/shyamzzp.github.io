@@ -10,8 +10,8 @@ export const publishedFiles = [
   { title: "Notes", href: "/notes", type: "HTML" },
   { title: "Prep-Arch Pitch", href: "/prep-arch-pitch", type: "HTML" },
   {
-    title: "Voxos Brand Identity",
-    href: "/voxos_brand_identity",
+    title: "Vox OS App Demo",
+    href: "/voxos",
     type: "HTML",
   },
   { title: "NM Archstudio 01", href: "/nm.archstudio_01", type: "HTML" },
