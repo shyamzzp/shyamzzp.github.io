@@ -344,7 +344,7 @@ const previousWorkItems = [
     summary:
       "A focused single-page experience for tracking emotional discipline, commitments, and personal progress with a stark mobile-first interface.",
     status: "Live",
-    href: "/unbroken.html",
+    href: "/unbroken/",
     type: "Project",
     details: [
       "Focus: Personal accountability and progress tracking.",
