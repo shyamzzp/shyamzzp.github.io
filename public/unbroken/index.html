@@ -428,6 +428,158 @@
   .start-btn:disabled { opacity: 0.25; cursor: not-allowed; }
   .start-btn:not(:disabled):active { opacity: 0.85; }
 
+  /* ─── DASHBOARD SCREEN ─── */
+  #screen-dashboard {
+    background: var(--bg);
+  }
+
+  .dashboard-header {
+    border-bottom: 1px solid var(--border);
+    padding: 58px 28px 24px;
+  }
+
+  .dashboard-topline,
+  .active-topline {
+    align-items: flex-start;
+    display: flex;
+    gap: 16px;
+    justify-content: space-between;
+  }
+
+  .dashboard-body {
+    flex: 1;
+    overflow-y: auto;
+    padding: 24px 28px 28px;
+    scrollbar-width: none;
+  }
+
+  .dashboard-body::-webkit-scrollbar { display: none; }
+
+  .habit-list {
+    display: grid;
+    gap: 8px;
+  }
+
+  .habit-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    cursor: pointer;
+    padding: 16px;
+    text-align: left;
+    width: 100%;
+  }
+
+  .habit-card:active { background: var(--surface2); }
+
+  .habit-card-row {
+    align-items: flex-start;
+    display: flex;
+    gap: 12px;
+    justify-content: space-between;
+  }
+
+  .habit-card-title {
+    color: var(--text);
+    font-size: 15px;
+    line-height: 1.35;
+  }
+
+  .habit-card-meta {
+    color: var(--muted);
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 2px;
+    margin-top: 8px;
+    text-transform: uppercase;
+  }
+
+  .habit-card-status {
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    color: var(--muted);
+    flex: 0 0 auto;
+    font-family: 'Space Mono', monospace;
+    font-size: 8px;
+    letter-spacing: 1.5px;
+    padding: 5px 8px;
+    text-transform: uppercase;
+  }
+
+  .habit-card-status.ready {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  .habit-card-status.done {
+    border-color: var(--green);
+    color: var(--green);
+  }
+
+  .habit-card-status.checked {
+    border-color: var(--green);
+    color: var(--green);
+  }
+
+  .habit-card-status.broken {
+    border-color: var(--danger);
+    color: var(--danger);
+  }
+
+  .habit-progress {
+    background: var(--border);
+    border-radius: 999px;
+    height: 4px;
+    margin-top: 14px;
+    overflow: hidden;
+  }
+
+  .habit-progress-bar {
+    background: var(--accent);
+    height: 100%;
+    transition: width 0.2s;
+  }
+
+  .habit-card.done .habit-progress-bar {
+    background: var(--green);
+  }
+
+  .add-habit-btn,
+  .back-btn,
+  .mobile-about-btn,
+  .about-close-btn {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    color: var(--text);
+    cursor: pointer;
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 2px;
+    padding: 10px 12px;
+    text-transform: uppercase;
+  }
+
+  .add-habit-btn:active,
+  .back-btn:active,
+  .mobile-about-btn:active,
+  .about-close-btn:active {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  .mobile-about-btn,
+  .about-close-btn {
+    display: none;
+  }
+
+  .dashboard-actions {
+    align-items: flex-end;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
   /* ─── ACTIVE SCREEN ─── */
   #screen-active {
     padding: 0;
@@ -436,9 +588,6 @@
 
   .active-header {
     padding: 52px 28px 20px;
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
   }
 
   .active-habit-name {
@@ -463,6 +612,13 @@
     text-transform: uppercase;
   }
   .abandon-btn:active { color: var(--danger); }
+
+  .active-actions {
+    align-items: flex-end;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
 
   .day-hero {
     flex: 1;
@@ -787,31 +943,60 @@
 
   @media (max-width: 520px) {
     body {
-      padding: 12px;
+      padding: 0;
     }
 
     .demo-stage {
-      gap: 36px;
-      padding-bottom: 28px;
+      display: block;
+      min-height: 100vh;
+      min-height: 100dvh;
+      padding: 0;
     }
 
     .phone-frame {
-      border-radius: 42px;
-      height: min(740px, calc(100dvh - 72px));
-      padding: 10px;
-      width: min(360px, calc(100vw - 24px));
+      border: 0;
+      border-radius: 0;
+      box-shadow: none;
+      height: 100vh;
+      height: 100dvh;
+      max-height: none;
+      padding: 0;
+      width: 100vw;
+    }
+
+    .phone-frame::before,
+    .phone-frame::after,
+    .phone-speaker {
+      display: none;
     }
 
     .phone-screen {
-      border-radius: 34px;
-    }
-
-    .phone-speaker {
-      top: 10px;
+      border: 0;
+      border-radius: 0;
     }
 
     .app-intro {
-      max-width: calc(100vw - 24px);
+      background: var(--bg);
+      display: none;
+      inset: 0;
+      max-width: none;
+      overflow-y: auto;
+      padding: 28px;
+      position: fixed;
+      z-index: 60;
+    }
+
+    body.show-about .app-intro {
+      display: block;
+    }
+
+    .mobile-about-btn,
+    .about-close-btn {
+      display: inline-flex;
+    }
+
+    .about-close-btn {
+      margin-bottom: 26px;
     }
 
     .intro-eyebrow {
@@ -846,12 +1031,23 @@
 
   @media (max-width: 380px) {
     .phone-frame {
-      height: min(700px, calc(100dvh - 64px));
-      width: calc(100vw - 24px);
+      height: 100vh;
+      height: 100dvh;
+      width: 100vw;
     }
 
     .setup-header {
       padding: 54px 24px 28px;
+    }
+
+    .dashboard-header,
+    .active-header {
+      padding-left: 24px;
+      padding-right: 24px;
+    }
+
+    .dashboard-body {
+      padding: 22px 24px 24px;
     }
 
     .setup-body {
@@ -871,11 +1067,39 @@
 <div class="phone-speaker" aria-hidden="true"></div>
 <div class="phone-screen">
 
+<!-- ═══ DASHBOARD SCREEN ═══ -->
+<div id="screen-dashboard" class="screen">
+  <div class="dashboard-header">
+    <div class="dashboard-topline">
+      <div>
+        <div class="logo">UNBROKEN</div>
+        <div class="logo-sub">Multiple habits &nbsp;·&nbsp; No skips</div>
+      </div>
+      <div class="dashboard-actions">
+        <button class="add-habit-btn" id="add-habit-btn">Add</button>
+        <button class="mobile-about-btn js-about-btn">About</button>
+      </div>
+    </div>
+  </div>
+  <div class="dashboard-body">
+    <div class="section-label">Tracked habits</div>
+    <div class="habit-list" id="habit-list"></div>
+  </div>
+</div>
+
 <!-- ═══ SETUP SCREEN ═══ -->
 <div id="screen-setup" class="screen">
   <div class="setup-header">
-    <div class="logo">UNBROKEN</div>
-    <div class="logo-sub">One habit &nbsp;·&nbsp; No skips</div>
+    <div class="dashboard-topline">
+      <div>
+        <div class="logo">UNBROKEN</div>
+        <div class="logo-sub">Add habit &nbsp;·&nbsp; No skips</div>
+      </div>
+      <div class="dashboard-actions">
+        <button class="back-btn" id="setup-back-btn">Back</button>
+        <button class="mobile-about-btn js-about-btn">About</button>
+      </div>
+    </div>
   </div>
   <div class="setup-body">
     <div class="section-label">Choose your habit</div>
@@ -933,8 +1157,13 @@
 <!-- ═══ ACTIVE SCREEN ═══ -->
 <div id="screen-active" class="screen">
   <div class="active-header">
-    <div class="active-habit-name" id="active-habit-name">—</div>
-    <button class="abandon-btn" id="abandon-btn">Abandon</button>
+    <div class="active-topline">
+      <div class="active-habit-name" id="active-habit-name">—</div>
+      <div class="active-actions">
+        <button class="back-btn" id="active-back-btn">List</button>
+        <button class="abandon-btn" id="abandon-btn">Abandon</button>
+      </div>
+    </div>
   </div>
   <div class="day-hero">
     <div class="day-fraction">
@@ -958,6 +1187,7 @@
   <div class="broken-days-label">days completed</div>
   <div class="broken-msg">You missed a day. The rule was the rule, and you knew it going in. Start over.</div>
   <button class="restart-btn" id="restart-btn">Start Over</button>
+  <button class="back-btn" id="broken-back-btn">Habit List</button>
 </div>
 
 <!-- ═══ COMPLETE SCREEN ═══ -->
@@ -970,16 +1200,18 @@
   <div class="complete-days-label">days. not one missed.</div>
   <div class="complete-msg">You showed up every single day. That's it. That's the whole thing.</div>
   <button class="new-habit-btn" id="new-habit-btn">Pick a New Habit</button>
+  <button class="back-btn" id="complete-back-btn">Habit List</button>
 </div>
 
 </div>
 </div>
 <aside class="app-intro" aria-label="About Unbroken">
+  <button class="about-close-btn" id="about-close-btn">Close</button>
   <div class="intro-eyebrow">Habit discipline app</div>
   <h1 class="intro-title">Unbroken</h1>
   <p class="intro-copy">
-    A stripped-down commitment tracker for one habit at a time. Pick the rule,
-    choose the number of days, and check in every day. Miss once and the chain
+    A stripped-down commitment tracker for one or more habits. Pick each rule,
+    choose the number of days, and check in every day. Miss once and that chain
     breaks.
   </p>
 
@@ -987,8 +1219,8 @@
     <div class="intro-section-title">About</div>
     <p>
       Unbroken is built around deliberate constraint. No dashboards, no social
-      feed, no soft streak language. The product keeps attention on the one
-      action that matters today.
+      feed, no soft streak language. The product keeps attention on the actions
+      that matter today.
     </p>
   </section>
 
@@ -997,7 +1229,7 @@
     <div class="intro-steps">
       <div class="intro-step">
         <span class="intro-step-number">01</span>
-        <span class="intro-step-text">Choose one habit or write your own rule.</span>
+        <span class="intro-step-text">Choose a habit or write your own rule.</span>
       </div>
       <div class="intro-step">
         <span class="intro-step-number">02</span>
@@ -1005,7 +1237,7 @@
       </div>
       <div class="intro-step">
         <span class="intro-step-number">03</span>
-        <span class="intro-step-text">Check in daily and keep the chain intact.</span>
+        <span class="intro-step-text">Track each active habit from the list.</span>
       </div>
     </div>
   </section>
@@ -1014,8 +1246,8 @@
     <div class="intro-section-title">Demo scope</div>
     <div class="intro-metrics">
       <div class="intro-metric">
-        <strong>1</strong>
-        <span>Habit</span>
+        <strong>∞</strong>
+        <span>Habits</span>
       </div>
       <div class="intro-metric">
         <strong>3</strong>
@@ -1032,6 +1264,9 @@
 
 <script>
   const STORAGE_KEY = 'unbroken_v1';
+  let selectedHabit = null;
+  let selectedDuration = 14;
+  let activeHabitId = null;
 
   function today() {
     const d = new Date();
@@ -1043,17 +1278,81 @@
     return Math.round((db - da) / 86400000);
   }
 
-  function loadState() {
-    try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || null; }
-    catch(e) { return null; }
+  function escapeHtml(value) {
+    return String(value)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#039;');
   }
 
-  function saveState(s) {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(s));
+  function createHabit(habit, duration) {
+    return {
+      id: `${Date.now()}-${Math.random().toString(16).slice(2)}`,
+      habit,
+      duration,
+      startDate: today(),
+      checkins: [],
+      complete: false
+    };
   }
 
-  function clearState() {
-    localStorage.removeItem(STORAGE_KEY);
+  function normalizeStore(raw) {
+    if (!raw) return { habits: [] };
+    if (Array.isArray(raw.habits)) {
+      return {
+        habits: raw.habits.map(habit => ({
+          ...habit,
+          id: habit.id || `${Date.now()}-${Math.random().toString(16).slice(2)}`,
+          checkins: Array.isArray(habit.checkins) ? habit.checkins : [],
+          complete: Boolean(habit.complete)
+        }))
+      };
+    }
+
+    if (raw.habit && raw.duration && raw.startDate) {
+      return {
+        habits: [{
+          id: raw.id || `${Date.now()}-legacy`,
+          habit: raw.habit,
+          duration: raw.duration,
+          startDate: raw.startDate,
+          checkins: Array.isArray(raw.checkins) ? raw.checkins : [],
+          complete: Boolean(raw.complete)
+        }]
+      };
+    }
+
+    return { habits: [] };
+  }
+
+  function loadStore() {
+    try { return normalizeStore(JSON.parse(localStorage.getItem(STORAGE_KEY))); }
+    catch(e) { return { habits: [] }; }
+  }
+
+  function saveStore(store) {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(normalizeStore(store)));
+  }
+
+  function updateHabit(updatedHabit) {
+    const store = loadStore();
+    store.habits = store.habits.map(habit =>
+      habit.id === updatedHabit.id ? updatedHabit : habit
+    );
+    saveStore(store);
+  }
+
+  function removeHabit(id) {
+    const store = loadStore();
+    store.habits = store.habits.filter(habit => habit.id !== id);
+    saveStore(store);
+    if (activeHabitId === id) activeHabitId = null;
+  }
+
+  function getHabit(id) {
+    return loadStore().habits.find(habit => habit.id === id) || null;
   }
 
   function showScreen(id) {
@@ -1079,11 +1378,85 @@
     return daysBetween(state.startDate, t) + 1;
   }
 
+  function getHabitStatus(habit) {
+    if (habit.complete) return 'done';
+    if (checkForBreak(habit)) return 'broken';
+    if (habit.checkins.includes(today())) return 'checked';
+    return 'ready';
+  }
+
+  function renderDashboard() {
+    activeHabitId = null;
+    const store = loadStore();
+    const list = document.getElementById('habit-list');
+    list.innerHTML = '';
+
+    if (store.habits.length === 0) {
+      showSetup();
+      return;
+    }
+
+    store.habits.forEach(habit => {
+      const status = getHabitStatus(habit);
+      const dayNum = Math.min(getDayNumber(habit), habit.duration);
+      const progress = Math.min(100, Math.round((habit.checkins.length / habit.duration) * 100));
+      const card = document.createElement('button');
+      card.type = 'button';
+      card.className = `habit-card ${status}`;
+      card.innerHTML = `
+        <div class="habit-card-row">
+          <div>
+            <div class="habit-card-title">${escapeHtml(habit.habit)}</div>
+            <div class="habit-card-meta">${habit.checkins.length}/${habit.duration} done · day ${dayNum}</div>
+          </div>
+          <span class="habit-card-status ${status}">${status}</span>
+        </div>
+        <div class="habit-progress">
+          <div class="habit-progress-bar" style="width: ${progress}%"></div>
+        </div>
+      `;
+      card.addEventListener('click', () => openHabit(habit.id));
+      list.appendChild(card);
+    });
+
+    showScreen('dashboard');
+  }
+
+  function showSetup() {
+    resetSetupForm();
+    showScreen('setup');
+  }
+
+  function openHabit(id) {
+    const habit = getHabit(id);
+    if (!habit) {
+      renderDashboard();
+      return;
+    }
+
+    activeHabitId = id;
+
+    if (habit.complete) {
+      document.getElementById('complete-habit-name').textContent = habit.habit.toUpperCase();
+      document.getElementById('complete-days').textContent = habit.checkins.length;
+      showScreen('complete');
+      return;
+    }
+
+    if (checkForBreak(habit)) {
+      document.getElementById('broken-habit-name').textContent = habit.habit.toUpperCase();
+      document.getElementById('broken-days').textContent = habit.checkins.length;
+      showScreen('broken');
+      return;
+    }
+
+    renderActive(habit);
+  }
+
   function renderActive(state) {
     const t = today();
     const dayNum = Math.min(getDayNumber(state), state.duration);
     const checkedToday = state.checkins.includes(t);
-    const doneCount = state.checkins.length;
 
     document.getElementById('active-habit-name').textContent = state.habit.toUpperCase();
     document.getElementById('day-current').textContent = dayNum;
@@ -1122,38 +1495,27 @@
   }
 
   function init() {
-    const state = loadState();
-
-    if (!state) {
-      showScreen('setup');
-      return;
-    }
-
-    if (state.complete) {
-      document.getElementById('complete-habit-name').textContent = state.habit.toUpperCase();
-      document.getElementById('complete-days').textContent = state.checkins.length;
-      showScreen('complete');
-      return;
-    }
-
-    if (checkForBreak(state)) {
-      document.getElementById('broken-habit-name').textContent = state.habit.toUpperCase();
-      document.getElementById('broken-days').textContent = state.checkins.length;
-      showScreen('broken');
-      return;
-    }
-
-    renderActive(state);
+    saveStore(loadStore());
+    renderDashboard();
   }
 
   // ── Setup interactions ──
-  let selectedHabit = null;
-  let selectedDuration = 14;
-
   function updateStartBtn() {
     const custom = document.getElementById('custom-habit-input').value.trim();
     const habitReady = selectedHabit !== null || custom.length > 0;
     document.getElementById('start-btn').disabled = !habitReady;
+  }
+
+  function resetSetupForm() {
+    selectedHabit = null;
+    selectedDuration = 14;
+    document.querySelectorAll('.habit-option').forEach(o => o.classList.remove('selected'));
+    document.querySelectorAll('.duration-btn').forEach(b => b.classList.remove('selected'));
+    document.querySelector('.duration-btn[data-days="14"]').classList.add('selected');
+    customInput.value = '';
+    document.getElementById('custom-row').classList.remove('selected');
+    document.getElementById('custom-dot').style.background = '';
+    document.getElementById('start-btn').disabled = true;
   }
 
   document.querySelectorAll('.habit-option').forEach(opt => {
@@ -1193,20 +1555,17 @@
     const customVal = customInput.value.trim();
     const habit = customVal || selectedHabit;
     if (!habit) return;
-    const state = {
-      habit,
-      duration: selectedDuration,
-      startDate: today(),
-      checkins: [],
-      complete: false
-    };
-    saveState(state);
-    renderActive(state);
+    const store = loadStore();
+    const newHabit = createHabit(habit, selectedDuration);
+    store.habits.push(newHabit);
+    saveStore(store);
+    resetSetupForm();
+    openHabit(newHabit.id);
   });
 
   // ── Check-in ──
   document.getElementById('checkin-btn').addEventListener('click', () => {
-    const state = loadState();
+    const state = getHabit(activeHabitId);
     if (!state || state.complete) return;
     const t = today();
     if (state.checkins.includes(t)) return;
@@ -1219,7 +1578,7 @@
 
     if (state.checkins.length >= state.duration) {
       state.complete = true;
-      saveState(state);
+      updateHabit(state);
       setTimeout(() => {
         document.getElementById('complete-habit-name').textContent = state.habit.toUpperCase();
         document.getElementById('complete-days').textContent = state.checkins.length;
@@ -1228,52 +1587,49 @@
       return;
     }
 
-    saveState(state);
+    updateHabit(state);
     renderActive(state);
   });
 
   // ── Abandon ──
   document.getElementById('abandon-btn').addEventListener('click', () => {
     if (confirm('Abandon this challenge? Your progress will be lost.')) {
-      clearState();
-      selectedHabit = null;
-      selectedDuration = 14;
-      document.querySelectorAll('.habit-option').forEach(o => o.classList.remove('selected'));
-      document.querySelectorAll('.duration-btn').forEach(b => b.classList.remove('selected'));
-      document.querySelector('.duration-btn[data-days="14"]').classList.add('selected');
-      customInput.value = '';
-      document.getElementById('custom-row').classList.remove('selected');
-      document.getElementById('start-btn').disabled = true;
-      showScreen('setup');
+      removeHabit(activeHabitId);
+      renderDashboard();
     }
   });
 
   // ── Restart after break ──
   document.getElementById('restart-btn').addEventListener('click', () => {
-    clearState();
-    selectedHabit = null;
-    selectedDuration = 14;
-    document.querySelectorAll('.habit-option').forEach(o => o.classList.remove('selected'));
-    document.querySelectorAll('.duration-btn').forEach(b => b.classList.remove('selected'));
-    document.querySelector('.duration-btn[data-days="14"]').classList.add('selected');
-    customInput.value = '';
-    document.getElementById('custom-row').classList.remove('selected');
-    document.getElementById('start-btn').disabled = true;
-    showScreen('setup');
+    const habit = getHabit(activeHabitId);
+    if (!habit) {
+      showSetup();
+      return;
+    }
+    const restartedHabit = {
+      ...habit,
+      startDate: today(),
+      checkins: [],
+      complete: false
+    };
+    updateHabit(restartedHabit);
+    renderActive(restartedHabit);
   });
 
   // ── New habit after complete ──
-  document.getElementById('new-habit-btn').addEventListener('click', () => {
-    clearState();
-    selectedHabit = null;
-    selectedDuration = 14;
-    document.querySelectorAll('.habit-option').forEach(o => o.classList.remove('selected'));
-    document.querySelectorAll('.duration-btn').forEach(b => b.classList.remove('selected'));
-    document.querySelector('.duration-btn[data-days="14"]').classList.add('selected');
-    customInput.value = '';
-    document.getElementById('custom-row').classList.remove('selected');
-    document.getElementById('start-btn').disabled = true;
-    showScreen('setup');
+  document.getElementById('new-habit-btn').addEventListener('click', showSetup);
+  document.getElementById('add-habit-btn').addEventListener('click', showSetup);
+  document.getElementById('setup-back-btn').addEventListener('click', renderDashboard);
+  document.getElementById('active-back-btn').addEventListener('click', renderDashboard);
+  document.getElementById('broken-back-btn').addEventListener('click', renderDashboard);
+  document.getElementById('complete-back-btn').addEventListener('click', renderDashboard);
+  document.querySelectorAll('.js-about-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.body.classList.add('show-about');
+    });
+  });
+  document.getElementById('about-close-btn').addEventListener('click', () => {
+    document.body.classList.remove('show-about');
   });
 
   init();
