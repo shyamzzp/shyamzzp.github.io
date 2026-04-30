@@ -914,6 +914,9 @@
     gap: 0.65rem;
     grid-template-columns: 1fr auto;
     padding: 1.1rem 1.25rem;
+    position: sticky;
+    top: 1rem;
+    z-index: 20;
   }
 
   .dashboard-hero .eyebrow {
@@ -943,9 +946,8 @@
 
   .filters {
     background: var(--panel);
-    border: 1px solid var(--soft);
-    border-radius: 0;
-    border-width: 0 0 1px;
+    border: 1px solid #bdb49d;
+    border-radius: 12px;
     gap: 0;
     grid-template-columns: minmax(240px, 1.4fr) repeat(3, minmax(128px, 0.6fr));
     margin: 1.1rem 0 0;
@@ -971,11 +973,18 @@
   .field input,
   .field select {
     background: #ffffff;
-    border: 1px solid var(--soft);
+    border: 1.5px solid #b7ad93;
     border-radius: 7px;
     color: var(--ink);
     font-size: 0.82rem;
     height: 2.1rem;
+  }
+
+  .field input:focus,
+  .field select:focus {
+    border-color: #111111;
+    box-shadow: 0 0 0 2px rgba(246, 196, 69, 0.35);
+    outline: 0;
   }
 
   .summary {
@@ -1049,10 +1058,11 @@
     border-right: 1px solid var(--soft);
     border-bottom: 1px solid var(--soft);
     box-shadow: none;
-    display: grid;
-    gap: 0.62rem;
-    min-height: 13.5rem;
-    padding: 0.9rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.52rem;
+    min-height: 12.8rem;
+    padding: 0.72rem;
   }
 
   .script-card:nth-child(3n) {
@@ -1066,35 +1076,22 @@
   .item-head {
     align-items: flex-start;
     display: grid;
-    gap: 0.6rem;
-    grid-template-columns: auto auto minmax(0, 1fr) auto;
-  }
-
-  .checkmark {
-    align-items: center;
-    background: var(--yellow);
-    border: 1px solid #c99509;
-    border-radius: 4px;
-    color: #111111;
-    display: inline-flex;
-    font-size: 0.72rem;
-    font-weight: 800;
-    height: 1.05rem;
-    justify-content: center;
-    margin-top: 0.13rem;
-    width: 1.05rem;
+    gap: 0.44rem;
+    grid-template-columns: auto minmax(0, 1fr);
   }
 
   .tool-icon {
     align-items: center;
     background: var(--soft-2);
     border: 1px solid var(--soft);
-    border-radius: 8px;
+    border-radius: 6px;
     color: var(--ink);
     display: inline-flex;
-    height: 2rem;
+    font-family: var(--mono);
+    font-size: 0.64rem;
+    height: 1.45rem;
     justify-content: center;
-    width: 2rem;
+    width: 1.45rem;
   }
 
   .script-card h3 {
@@ -1106,30 +1103,15 @@
     margin: 0;
   }
 
+  .script-description {
+    width: 100%;
+  }
+
   .script-card p {
     color: var(--muted);
     font-size: 0.76rem;
     line-height: 1.42;
     margin: 0;
-  }
-
-  .badge {
-    align-self: start;
-    border-radius: 999px;
-    font-family: var(--mono);
-    font-size: 0.55rem;
-    padding: 0.2rem 0.42rem;
-    text-transform: uppercase;
-  }
-
-  .badge.verified {
-    background: var(--green-bg);
-    color: #111111;
-  }
-
-  .badge.stale {
-    background: var(--orange-bg);
-    color: var(--orange);
   }
 
   .command-line {
@@ -1153,8 +1135,12 @@
     margin: 0;
     min-width: 0;
     overflow: auto;
-    padding: 0.58rem 0.62rem;
+    padding: 0.42rem 0.5rem;
     white-space: pre;
+  }
+
+  .script-card > .command-line {
+    margin-top: auto;
   }
 
   .copy-command {
@@ -1175,11 +1161,17 @@
     width: 1rem;
   }
 
+  .copy-command.is-copied {
+    background: #111111;
+    color: var(--yellow);
+  }
+
   .meta-row {
-    color: var(--muted);
+    color: #8a5a00;
     display: flex;
     flex-wrap: wrap;
-    font-size: 0.68rem;
+    font-family: var(--mono);
+    font-size: 0.64rem;
     gap: 0.35rem 0.7rem;
   }
 
@@ -1217,6 +1209,7 @@
 
   .feedback {
     color: #806100;
+    display: none;
     font-family: var(--mono);
     font-size: 0.66rem;
     min-height: 0.8rem;
@@ -1224,6 +1217,11 @@
 
   .info-panel h2 {
     color: var(--ink);
+  }
+
+  .info-panel {
+    align-self: start;
+    padding-top: 0.1rem;
   }
 
   .info-section {
@@ -1279,6 +1277,10 @@
 
     .dashboard {
       padding: calc(0.8rem + env(safe-area-inset-top)) 0.65rem calc(1rem + env(safe-area-inset-bottom));
+    }
+
+    .dashboard-hero {
+      top: calc(0.65rem + env(safe-area-inset-top));
     }
 
     .dashboard-hero,
@@ -1538,6 +1540,10 @@
       <rect x="9" y="9" width="13" height="13" rx="2"></rect>
       <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
     </svg>`;
+  const checkIcon = `
+    <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+      <path d="m20 6-11 11-5-5"></path>
+    </svg>`;
   const categoryNotes = {
     "Developer Tools": "Command line utilities for repo work, GitHub workflows, and fast local search.",
     Python: "Python environment and package-management installers with verify and rollback notes.",
@@ -1587,25 +1593,22 @@
             ${categoryScripts.map(({ script, index }) => `
               <article class="script-card" data-index="${index}" data-category="${escapeHtml(script.category)}" data-platform="${escapeHtml(script.platform.join(" "))}" data-trust="${escapeHtml(script.trust)}">
                 <div class="item-head">
-                  <span class="checkmark" aria-hidden="true">${script.trust === "verified" ? "&#10003;" : "!"}</span>
                   <span class="tool-icon" aria-hidden="true">&gt;_</span>
                   <div>
                     <h3>${escapeHtml(script.name)}</h3>
-                    <p>${escapeHtml(script.description)}</p>
                   </div>
-                  <span class="badge ${escapeHtml(script.trust)}">${escapeHtml(script.trust)}</span>
                 </div>
-                ${commandBlock(script.command, index, "command", `Copy ${script.name} install command`)}
-                <div class="meta-row">
-                  <span>Source: ${escapeHtml(script.source)}</span>
-                  <span>Reviewed: ${escapeHtml(script.reviewed)}</span>
-                </div>
+                <p class="script-description">${escapeHtml(script.description)}</p>
                 <details class="playbook">
                   <summary>Install playbook</summary>
                   <ul>${script.prerequisites.map((item) => `<li>${escapeHtml(item)}</li>`).join("")}</ul>
                   <div class="mini-command">${commandBlock(script.verify, index, "verify", `Copy ${script.name} verify command`)}</div>
                   <div class="mini-command">${commandBlock(script.rollback, index, "rollback", `Copy ${script.name} rollback command`)}</div>
                 </details>
+                ${commandBlock(script.command, index, "command", `Copy ${script.name} install command`)}
+                <div class="meta-row">
+                  <span>Source: ${escapeHtml(script.source)}</span>
+                </div>
                 <div class="feedback" aria-live="polite"></div>
               </article>
             `).join("")}
@@ -1644,9 +1647,22 @@
     summaryText.textContent = `Showing ${visible} of ${scripts.length} commands`;
   }
 
-  async function copyText(value, card, message) {
+  function showCopied(button) {
+    button.classList.add("is-copied");
+    button.innerHTML = checkIcon;
+    window.clearTimeout(Number(button.dataset.resetTimer || 0));
+    const resetTimer = window.setTimeout(() => {
+      button.classList.remove("is-copied");
+      button.innerHTML = copyIcon;
+      delete button.dataset.resetTimer;
+    }, 1300);
+    button.dataset.resetTimer = String(resetTimer);
+  }
+
+  async function copyText(value, card, button, message) {
     try {
       await navigator.clipboard.writeText(value);
+      showCopied(button);
       card.querySelector(".feedback").textContent = message;
     } catch {
       card.querySelector(".feedback").textContent = "Clipboard unavailable. Copy the command manually.";
@@ -1668,17 +1684,17 @@
 
     if (target.dataset.copyCommand) {
       const script = scripts[Number(target.dataset.copyCommand)];
-      copyText(script.command, card, "Install command copied.");
+      copyText(script.command, card, target, "Install command copied.");
     }
 
     if (target.dataset.copyVerify) {
       const script = scripts[Number(target.dataset.copyVerify)];
-      copyText(script.verify, card, "Verify command copied.");
+      copyText(script.verify, card, target, "Verify command copied.");
     }
 
     if (target.dataset.copyRollback) {
       const script = scripts[Number(target.dataset.copyRollback)];
-      copyText(script.rollback, card, "Rollback command copied.");
+      copyText(script.rollback, card, target, "Rollback command copied.");
     }
   });
 
