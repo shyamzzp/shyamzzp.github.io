@@ -27,6 +27,7 @@
     "start": "react-scripts start",
     "dev": "react-scripts start",
     "build": "react-scripts build",
+    "installr:daemon": "node scripts/installr-catalog-daemon.mjs",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },

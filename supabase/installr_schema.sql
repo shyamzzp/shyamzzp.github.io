@@ -20,6 +20,8 @@ create table if not exists public.installr_catalog_items (
   language text,
   framework text,
   package_manager text,
+  command_style text,
+  complexity text,
   platforms text[] not null default '{}',
   trust text not null default 'verified',
   source text not null,
@@ -32,6 +34,10 @@ create table if not exists public.installr_catalog_items (
   created_at timestamptz not null default now(),
   updated_at timestamptz not null default now()
 );
+
+alter table public.installr_catalog_items
+  add column if not exists command_style text,
+  add column if not exists complexity text;
 
 alter table public.installr_categories enable row level security;
 alter table public.installr_catalog_items enable row level security;
