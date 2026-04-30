@@ -1129,6 +1129,23 @@
     margin: 0;
   }
 
+  .stack-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.32rem;
+  }
+
+  .stack-pill {
+    background: var(--soft-2);
+    border: 1px solid var(--soft);
+    border-radius: 999px;
+    color: #5f4300;
+    font-family: var(--mono);
+    font-size: 0.58rem;
+    font-weight: 700;
+    padding: 0.18rem 0.42rem;
+  }
+
   .command-line {
     align-items: stretch;
     background: #111111;
@@ -1226,6 +1243,22 @@
     font-size: 0.65rem;
     font-weight: 700;
     text-transform: uppercase;
+  }
+
+  .playbook-label {
+    color: #8a5a00;
+    font-family: var(--mono);
+    font-size: 0.6rem;
+    font-weight: 700;
+    margin: 0.55rem 0 0.28rem;
+    text-transform: uppercase;
+  }
+
+  .step-label {
+    color: var(--muted);
+    font-family: var(--mono);
+    font-size: 0.62rem;
+    margin: 0.48rem 0 0.2rem;
   }
 
   .playbook ul {
@@ -1401,6 +1434,8 @@
             <option>JavaScript Runtime</option>
             <option>Containers</option>
             <option>Databases</option>
+            <option>Infrastructure</option>
+            <option>Systems Languages</option>
           </select>
         </div>
         <div class="field">
@@ -1459,7 +1494,7 @@
 </main>
 
 <script>
-  const scripts = [
+  let scripts = [
     {
       name: "Paperclip",
       category: "Developer Tools",
@@ -1580,6 +1615,11 @@
   const platform = document.getElementById("platform");
   const trust = document.getElementById("trust");
   const summaryText = document.getElementById("summary-text");
+  const catalogSource = {
+    url: "https://lpehkeyhpwxljdylbhkc.supabase.co",
+    anonKey: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxwZWhrZXlocHd4bGpkeWxiaGtjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzUzODQzMzksImV4cCI6MjA5MDk2MDMzOX0.K6ermN8UetbOpX_uieI3R5sne_8Yh_-llGZIdx9-8Qo",
+    table: "installr_catalog_items"
+  };
   const copyIcon = `
     <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
       <rect x="9" y="9" width="13" height="13" rx="2"></rect>
@@ -1599,7 +1639,9 @@
     Python: "Python environment and package-management installers with verify and rollback notes.",
     "JavaScript Runtime": "Runtime setup for modern JavaScript tooling and package execution.",
     Containers: "Container platform commands for local development infrastructure.",
-    Databases: "Database installers for persistent local application state."
+    Databases: "Database installers and managed backend tooling for local and hosted state.",
+    Infrastructure: "Infrastructure-as-code and cloud project bootstrap commands.",
+    "Systems Languages": "Compiled-language toolchains for backend services and CLI utilities."
   };
 
   function escapeHtml(value) {
@@ -1611,14 +1653,90 @@
       .replace(/'/g, "&#039;");
   }
 
-  function commandBlock(value, index, type, label) {
+  function commandBlock(value, index, type, label, stepIndex = "") {
     return `
       <div class="command-line">
         <pre class="command"><code>${escapeHtml(value)}</code></pre>
-        <button class="copy-command" type="button" data-copy-${type}="${index}" aria-label="${label}">
+        <button class="copy-command" type="button" data-copy-${type}="${index}" ${stepIndex !== "" ? `data-step-index="${stepIndex}"` : ""} aria-label="${label}">
           ${copyIcon}
         </button>
       </div>
+    `;
+  }
+
+  function listFromMaybeJson(value) {
+    if (Array.isArray(value)) return value;
+    if (!value) return [];
+    try {
+      const parsed = JSON.parse(value);
+      return Array.isArray(parsed) ? parsed : [];
+    } catch {
+      return [];
+    }
+  }
+
+  function normalizeDbScript(item) {
+    return {
+      name: item.name,
+      category: item.category,
+      command: item.command,
+      description: item.description,
+      platform: item.platforms || [],
+      trust: item.trust || "verified",
+      source: item.source,
+      reviewed: item.updated_at ? item.updated_at.slice(0, 10) : "",
+      maintainer: "Installr Supabase Catalog",
+      prerequisites: listFromMaybeJson(item.prerequisites),
+      verify: item.verify,
+      rollback: item.rollback,
+      ecosystem: item.ecosystem,
+      language: item.language,
+      framework: item.framework,
+      packageManager: item.package_manager,
+      commandSteps: listFromMaybeJson(item.command_steps)
+    };
+  }
+
+  async function fetchCatalog() {
+    const endpoint = `${catalogSource.url}/rest/v1/${catalogSource.table}?select=*&order=sort_order.asc`;
+    const response = await fetch(endpoint, {
+      headers: {
+        apikey: catalogSource.anonKey,
+        Authorization: `Bearer ${catalogSource.anonKey}`
+      }
+    });
+    if (!response.ok) throw new Error(`Catalog fetch failed: ${response.status}`);
+    const items = await response.json();
+    if (Array.isArray(items) && items.length > 0) {
+      scripts = items.map(normalizeDbScript);
+    }
+  }
+
+  function syncCategoryFilter() {
+    const selected = category.value;
+    const categories = [...new Set(scripts.map((script) => script.category))];
+    category.innerHTML = [
+      '<option value="all">All</option>',
+      ...categories.map((name) => `<option>${escapeHtml(name)}</option>`)
+    ].join("");
+    category.value = categories.includes(selected) ? selected : "all";
+  }
+
+  function stackPills(script) {
+    return [script.ecosystem, script.language, script.framework, script.packageManager]
+      .filter(Boolean)
+      .map((item) => `<span class="stack-pill">${escapeHtml(item)}</span>`)
+      .join("");
+  }
+
+  function commandSteps(script, index) {
+    if (!script.commandSteps || script.commandSteps.length === 0) return "";
+    return `
+      <p class="playbook-label">Install sequence</p>
+      ${script.commandSteps.map((step, stepIndex) => `
+        <p class="step-label">${escapeHtml(step.label || `Step ${stepIndex + 1}`)}</p>
+        ${commandBlock(step.command || "", index, "step", `Copy ${script.name} step ${stepIndex + 1}`, stepIndex)}
+      `).join("")}
     `;
   }
 
@@ -1669,10 +1787,15 @@
                   </div>
                 </div>
                 <p class="script-description">${escapeHtml(script.description)}</p>
+                <div class="stack-row">${stackPills(script)}</div>
                 <details class="playbook">
                   <summary>Install playbook</summary>
+                  ${commandSteps(script, index)}
+                  <p class="playbook-label">Prerequisites</p>
                   <ul>${script.prerequisites.map((item) => `<li>${escapeHtml(item)}</li>`).join("")}</ul>
+                  <p class="playbook-label">Verify</p>
                   <div class="mini-command">${commandBlock(script.verify, index, "verify", `Copy ${script.name} verify command`)}</div>
+                  <p class="playbook-label">Rollback</p>
                   <div class="mini-command">${commandBlock(script.rollback, index, "rollback", `Copy ${script.name} rollback command`)}</div>
                 </details>
                 ${commandBlock(script.command, index, "command", `Copy ${script.name} install command`)}
@@ -1697,7 +1820,7 @@
 
     document.querySelectorAll(".script-card").forEach((card) => {
       const script = scripts[Number(card.dataset.index)];
-      const searchable = `${script.name} ${script.category} ${script.command} ${script.description}`.toLowerCase();
+      const searchable = `${script.name} ${script.category} ${script.command} ${script.description} ${script.ecosystem || ""} ${script.language || ""} ${script.framework || ""}`.toLowerCase();
       const matchesQuery = query.length === 0 || searchable.includes(query);
       const matchesCategory = selectedCategory === "all" || script.category === selectedCategory;
       const matchesPlatform = selectedPlatform === "all" || script.platform.includes(selectedPlatform);
@@ -1739,8 +1862,19 @@
     }
   }
 
-  renderCards();
-  applyFilters();
+  async function initCatalog() {
+    syncCategoryFilter();
+    renderCards();
+    applyFilters();
+    try {
+      await fetchCatalog();
+      syncCategoryFilter();
+      renderCards();
+      applyFilters();
+    } catch (error) {
+      console.warn(error);
+    }
+  }
 
   [search, category, platform, trust].forEach((control) => {
     control.addEventListener("input", applyFilters);
@@ -1766,7 +1900,15 @@
       const script = scripts[Number(target.dataset.copyRollback)];
       copyText(script.rollback, card, target, "Rollback command copied.");
     }
+
+    if (target.dataset.copyStep) {
+      const script = scripts[Number(target.dataset.copyStep)];
+      const step = script.commandSteps?.[Number(target.dataset.stepIndex)];
+      if (step?.command) copyText(step.command, card, target, "Install step copied.");
+    }
   });
+
+  initCatalog();
 
   document.querySelector(".mobile-about").addEventListener("click", () => {
     document.body.classList.add("show-info");
