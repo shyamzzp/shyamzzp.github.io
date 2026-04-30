@@ -892,10 +892,12 @@
   }
 
   .app-frame {
+    align-self: stretch;
     background: transparent;
     border: 0;
     border-radius: 0;
     box-shadow: none;
+    height: 100%;
     min-height: 0;
   }
 
@@ -908,7 +910,7 @@
     display: flex;
     flex-direction: column;
     height: 100%;
-    min-height: auto;
+    min-height: 0;
     padding: 0;
   }
 
@@ -1289,10 +1291,18 @@
   @media (max-width: 720px) {
     .demo-shell {
       display: block;
+      height: 100vh;
+      min-height: 0;
       padding: 0;
     }
 
+    .app-frame {
+      height: 100%;
+    }
+
     .dashboard {
+      height: 100%;
+      min-height: 0;
       padding: calc(0.8rem + env(safe-area-inset-top)) 0.65rem calc(1rem + env(safe-area-inset-bottom));
     }
 
