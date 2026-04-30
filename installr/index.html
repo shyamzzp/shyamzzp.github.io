@@ -1693,6 +1693,8 @@
       language: item.language,
       framework: item.framework,
       packageManager: item.package_manager,
+      commandStyle: item.command_style,
+      complexity: item.complexity,
       commandSteps: listFromMaybeJson(item.command_steps)
     };
   }
@@ -1723,7 +1725,7 @@
   }
 
   function stackPills(script) {
-    return [script.ecosystem, script.language, script.framework, script.packageManager]
+    return [script.ecosystem, script.language, script.framework, script.packageManager, script.commandStyle, script.complexity]
       .filter(Boolean)
       .map((item) => `<span class="stack-pill">${escapeHtml(item)}</span>`)
       .join("");
