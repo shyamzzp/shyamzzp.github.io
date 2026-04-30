@@ -1,0 +1,10 @@
+name: InstallrApp
+options:
+  bundleIdPrefix: com.example
+settings:
+  IPHONEOS_DEPLOYMENT_TARGET: '17.0'
+targets:
+  InstallrApp:
+    type: application
+    platform: iOS
+    sources: [InstallrApp]
