@@ -337,24 +337,31 @@ const activeWorkItems = [
   },
 ];
 
-const cvOptions = [
-  {
-    title: "Professional CV",
-    description:
-      "Focused on full-time senior software engineering work, product teams, delivery ownership, and production systems.",
-    href: "/ShyamSS-resume.pdf",
-    status: "Available",
-  },
-  {
-    title: "Personal CV",
-    description:
-      "A broader profile for personal projects, experiments, open-source work, prototypes, and technologies I explore outside full-time roles.",
-    href: "/ShyamSS-resume.pdf",
-    status: "Available",
-  },
-];
-
 const previousWorkItems = [
+  {
+    id: "unbroken",
+    title: "Unbroken",
+    summary:
+      "A focused single-page experience for tracking emotional discipline, commitments, and personal progress with a stark mobile-first interface.",
+    status: "Live",
+    href: "/unbroken.html",
+    type: "Project",
+    details: [
+      "Focus: Personal accountability and progress tracking.",
+      "Stack: HTML, CSS, JavaScript.",
+    ],
+    features: [
+      "Mobile-first setup and tracking screens.",
+      "High-contrast visual system with progress-oriented interaction states.",
+      "Single-file build that can be published directly as a static project.",
+    ],
+    problemsFaced: [
+      "Keeping the experience sharp and useful without adding heavy app structure.",
+      "Designing a compact interface that still feels intentional on mobile.",
+      "Packaging the project as a deployable static artifact.",
+    ],
+    routeOnly: false,
+  },
   ...projectData.map((project) => ({
     id: project.id,
     title: project.title,
@@ -778,7 +785,6 @@ function Home() {
   const [viewForClicked, setViewForClicked] = React.useState("github-site");
   const [tosText, setTosText] = useState("");
   const [tosTextBlog, setTosTextBlog] = useState("");
-  const [openCvModal, setOpenCvModal] = React.useState(false);
   const [activePreviousWorkId, setActivePreviousWorkId] = React.useState<
     string | null
   >(null);
@@ -1019,14 +1025,15 @@ function Home() {
                     <p className="portfolio-panel-kicker">01 / About</p>
                     <div className="portfolio-profile-heading">
                       <h2>Shyam S. Suthar</h2>
-                      <button
-                        type="button"
+                      <a
                         className="portfolio-cv-button"
                         aria-label="Open Shyam Suthar resume"
-                        onClick={() => setOpenCvModal(true)}
+                        href="/ShyamSS-resume.pdf"
+                        target="_blank"
+                        rel="noreferrer"
                       >
                         <img src={cv} width="34" className="mr-1" alt="" />
-                      </button>
+                      </a>
                     </div>
                     <p className="portfolio-role">
                       Senior AI Engineer | Full-Stack | Cloud & ERP Systems
@@ -1376,43 +1383,6 @@ function Home() {
               <span />
               <span />
             </div>
-
-            <Modal
-              open={openCvModal}
-              onClose={() => setOpenCvModal(false)}
-              size="sm"
-            >
-              <Modal.Header>
-                <Modal.Title>Choose CV</Modal.Title>
-              </Modal.Header>
-              <Modal.Body>
-                <div className="cv-option-list">
-                  {cvOptions.map((option) => (
-                    <a
-                      key={option.title}
-                      className={`cv-option-card ${
-                        option.status !== "Available" ? "cv-option-card-muted" : ""
-                      }`}
-                      href={option.href}
-                      target="_blank"
-                      rel="noreferrer"
-                      aria-disabled={option.status !== "Available"}
-                      onClick={(event) => {
-                        if (option.status !== "Available") {
-                          event.preventDefault();
-                        }
-                      }}
-                    >
-                      <div>
-                        <h3>{option.title}</h3>
-                        <p>{option.description}</p>
-                      </div>
-                      <span>{option.status}</span>
-                    </a>
-                  ))}
-                </div>
-              </Modal.Body>
-            </Modal>
 
             <Modal
               open={Boolean(activePreviousWork)}

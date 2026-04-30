@@ -395,9 +395,11 @@ hr {
 }
 
 .portfolio-cv-button {
+  align-items: center;
   background: transparent;
   border: 0;
   cursor: pointer;
+  display: inline-flex;
   padding: 0;
 }
 
