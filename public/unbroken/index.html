@@ -44,7 +44,7 @@
   .demo-stage {
     align-items: center;
     display: grid;
-    gap: 56px;
+    gap: 84px;
     grid-template-columns: minmax(300px, 390px) minmax(300px, 460px);
     justify-content: center;
     min-height: calc(100vh - 56px);
@@ -769,7 +769,7 @@
     }
 
     .demo-stage {
-      gap: 36px;
+      gap: 52px;
       grid-template-columns: minmax(0, 1fr);
       min-height: auto;
       padding: 12px 0 40px;
@@ -791,15 +791,15 @@
     }
 
     .demo-stage {
-      gap: 28px;
+      gap: 36px;
       padding-bottom: 28px;
     }
 
     .phone-frame {
       border-radius: 42px;
-      height: calc(100dvh - 24px);
+      height: min(740px, calc(100dvh - 72px));
       padding: 10px;
-      width: calc(100vw - 24px);
+      width: min(360px, calc(100vw - 24px));
     }
 
     .phone-screen {
@@ -814,9 +814,16 @@
       max-width: calc(100vw - 24px);
     }
 
+    .intro-eyebrow {
+      font-size: 10px;
+      letter-spacing: 3px;
+      margin-bottom: 14px;
+    }
+
     .intro-title {
       font-size: 58px;
       letter-spacing: 4px;
+      margin-bottom: 18px;
     }
 
     .intro-copy {
@@ -824,8 +831,35 @@
       margin-bottom: 22px;
     }
 
+    .intro-section {
+      padding: 18px 0;
+    }
+
+    .intro-step {
+      padding: 14px;
+    }
+
     .intro-metrics {
       grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 380px) {
+    .phone-frame {
+      height: min(700px, calc(100dvh - 64px));
+      width: calc(100vw - 24px);
+    }
+
+    .setup-header {
+      padding: 54px 24px 28px;
+    }
+
+    .setup-body {
+      padding: 24px;
+    }
+
+    .intro-title {
+      font-size: 50px;
     }
   }
 </style>
