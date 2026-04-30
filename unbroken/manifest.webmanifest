@@ -1,9 +1,9 @@
 {
-  "name": "Unbroken2.0",
-  "short_name": "Unbroken2.0",
+  "name": "Unbroken",
+  "short_name": "Unbroken",
   "description": "A strict habit commitment tracker for one or more daily chains.",
-  "start_url": "/unbroken2.0/",
-  "scope": "/unbroken2.0/",
+  "start_url": "/unbroken/",
+  "scope": "/unbroken/",
   "display": "standalone",
   "display_override": ["standalone", "fullscreen"],
   "background_color": "#0a0a0a",
@@ -11,7 +11,7 @@
   "orientation": "portrait",
   "icons": [
     {
-      "src": "/unbroken2.0/icon.svg",
+      "src": "/unbroken/icon.svg",
       "sizes": "any",
       "type": "image/svg+xml",
       "purpose": "any maskable"
