@@ -6,7 +6,7 @@
 <meta name="theme-color" content="#090909">
 <title>Installr Demo</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { box-sizing: border-box; }
 
@@ -31,7 +31,7 @@
       radial-gradient(circle at 82% 0%, rgba(14, 165, 233, 0.24), transparent 34rem),
       linear-gradient(180deg, #f8fafc, var(--bg));
     color: var(--ink);
-    font-family: Inter, system-ui, sans-serif;
+    font-family: "IBM Plex Sans", Inter, system-ui, sans-serif;
     margin: 0;
     min-height: 100vh;
   }
@@ -107,6 +107,13 @@
     letter-spacing: -0.04em;
     line-height: 0.98;
     margin: 0;
+  }
+
+  h1,
+  .info-panel h2,
+  .metric strong,
+  .script-card h2 {
+    font-family: "Space Grotesk", "IBM Plex Sans", sans-serif;
   }
 
   .dashboard-hero p {
@@ -608,6 +615,245 @@
   @media (min-width: 721px) {
     .info-close {
       display: none;
+    }
+  }
+
+  /* Compact product-system pass */
+  .demo-shell {
+    gap: 2rem;
+    grid-template-columns: minmax(0, 1fr) 340px;
+    max-width: 1240px;
+    padding: 2rem;
+  }
+
+  .app-frame {
+    border-radius: 12px;
+  }
+
+  .frame-bar {
+    height: 1.85rem;
+    padding: 0 0.8rem;
+  }
+
+  .frame-dot {
+    height: 0.42rem;
+    width: 0.42rem;
+  }
+
+  .dashboard {
+    min-height: 690px;
+    padding: 0.85rem;
+  }
+
+  .dashboard-hero {
+    border-radius: 10px;
+    padding: 0.95rem;
+  }
+
+  .eyebrow {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 0.62rem;
+    letter-spacing: 0.1em;
+    margin-bottom: 0.38rem;
+  }
+
+  h1 {
+    font-size: clamp(1.65rem, 3vw, 2.35rem);
+    letter-spacing: -0.035em;
+  }
+
+  .dashboard-hero p {
+    font-size: 0.9rem;
+    line-height: 1.45;
+    margin-top: 0.55rem;
+  }
+
+  .metric-row {
+    display: none;
+  }
+
+  .filters {
+    border-radius: 10px;
+    gap: 0.55rem;
+    grid-template-columns: 1.4fr repeat(3, minmax(100px, 0.6fr));
+    margin-top: 0.65rem;
+    padding: 0.65rem;
+  }
+
+  .field {
+    gap: 0.25rem;
+  }
+
+  .field label {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .field input,
+  .field select {
+    border-radius: 6px;
+    font-size: 0.82rem;
+    height: 2.05rem;
+    padding: 0 0.55rem;
+  }
+
+  .summary {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 0.72rem;
+    margin: 0.7rem 0 0.55rem;
+  }
+
+  .script-grid {
+    gap: 0.55rem;
+  }
+
+  .script-card {
+    border-radius: 10px;
+    box-shadow: none;
+    gap: 0.55rem;
+    padding: 0.72rem;
+  }
+
+  .card-category {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 0.58rem;
+    margin-bottom: 0.18rem;
+  }
+
+  .script-card h2 {
+    font-size: 0.98rem;
+  }
+
+  .script-card p {
+    font-size: 0.78rem;
+    line-height: 1.38;
+  }
+
+  .badge {
+    border-radius: 6px;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 0.58rem;
+    padding: 0.18rem 0.4rem;
+  }
+
+  .command {
+    border-radius: 7px;
+    font-size: 0.68rem;
+    padding: 0.55rem;
+  }
+
+  .trust-box {
+    border-radius: 7px;
+    gap: 0.22rem;
+    padding: 0.5rem;
+  }
+
+  .trust-label {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 0.58rem;
+  }
+
+  .card-actions {
+    gap: 0.35rem;
+  }
+
+  .card-actions button,
+  .playbook-toggle {
+    border-radius: 6px;
+    font-size: 0.72rem;
+    min-height: 1.85rem;
+    padding: 0.38rem 0.52rem;
+  }
+
+  .playbook {
+    border-radius: 7px;
+    padding: 0.55rem;
+  }
+
+  .playbook ul {
+    font-size: 0.76rem;
+    line-height: 1.35;
+  }
+
+  .feedback {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 0.68rem;
+    min-height: 0.95rem;
+  }
+
+  .info-panel {
+    max-width: 340px;
+  }
+
+  .info-panel h2 {
+    font-size: clamp(2.2rem, 5vw, 3.6rem);
+    margin-bottom: 0.8rem;
+  }
+
+  .info-panel > p {
+    font-size: 0.94rem;
+    line-height: 1.55;
+    margin-bottom: 1.1rem;
+  }
+
+  .info-section {
+    padding: 0.9rem 0;
+  }
+
+  .info-section h3 {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 0.66rem;
+  }
+
+  .info-section p,
+  .info-section li {
+    font-size: 0.86rem;
+    line-height: 1.48;
+  }
+
+  @media (max-width: 1040px) {
+    .demo-shell {
+      grid-template-columns: 1fr;
+      padding: 1rem;
+    }
+
+    .info-panel {
+      max-width: 720px;
+    }
+  }
+
+  @media (max-width: 720px) {
+    .demo-shell {
+      padding: 0;
+    }
+
+    .dashboard {
+      min-height: 100vh;
+      padding: calc(0.75rem + env(safe-area-inset-top)) 0.65rem calc(0.9rem + env(safe-area-inset-bottom));
+    }
+
+    .dashboard-hero,
+    .filters,
+    .script-card {
+      border-radius: 8px;
+    }
+
+    .filters,
+    .script-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .script-card {
+      padding: 0.68rem;
+    }
+
+    .mobile-about {
+      border-radius: 6px;
+      font-size: 0.72rem;
+      min-height: 1.85rem;
+      padding: 0.38rem 0.52rem;
     }
   }
 </style>
