@@ -1,0 +1,807 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#0f172a">
+<title>Installr Demo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; }
+
+  :root {
+    --bg: #f7f9fc;
+    --panel: #ffffff;
+    --ink: #0f172a;
+    --muted: #475569;
+    --soft: #e2e8f0;
+    --soft-2: #f1f5f9;
+    --blue: #0369a1;
+    --teal: #0f766e;
+    --green: #166534;
+    --green-bg: #dcfce7;
+    --orange: #9a3412;
+    --orange-bg: #ffedd5;
+    --shadow: 0 24px 70px rgba(15, 23, 42, 0.14);
+  }
+
+  body {
+    background:
+      radial-gradient(circle at 82% 0%, rgba(14, 165, 233, 0.24), transparent 34rem),
+      linear-gradient(180deg, #f8fafc, var(--bg));
+    color: var(--ink);
+    font-family: Inter, system-ui, sans-serif;
+    margin: 0;
+    min-height: 100vh;
+  }
+
+  button, input, select {
+    font: inherit;
+  }
+
+  .demo-shell {
+    display: grid;
+    gap: 3rem;
+    grid-template-columns: minmax(0, 1.25fr) minmax(280px, 0.75fr);
+    margin: 0 auto;
+    max-width: 1360px;
+    min-height: 100vh;
+    padding: 3rem;
+  }
+
+  .app-frame {
+    align-self: center;
+    background: #0f172a;
+    border: 1px solid rgba(15, 23, 42, 0.18);
+    border-radius: 22px;
+    box-shadow: var(--shadow);
+    overflow: hidden;
+  }
+
+  .frame-bar {
+    align-items: center;
+    background: #111827;
+    display: flex;
+    gap: 0.45rem;
+    height: 2.4rem;
+    padding: 0 1rem;
+  }
+
+  .frame-dot {
+    border-radius: 999px;
+    height: 0.62rem;
+    width: 0.62rem;
+  }
+
+  .frame-dot:nth-child(1) { background: #f87171; }
+  .frame-dot:nth-child(2) { background: #fbbf24; }
+  .frame-dot:nth-child(3) { background: #34d399; }
+
+  .dashboard {
+    background: var(--bg);
+    min-height: 760px;
+    padding: 1.2rem;
+  }
+
+  .dashboard-hero {
+    background:
+      linear-gradient(135deg, rgba(255,255,255,0.96), rgba(240, 249, 255, 0.92)),
+      radial-gradient(circle at top right, rgba(20, 184, 166, 0.2), transparent 22rem);
+    border: 1px solid var(--soft);
+    border-radius: 18px;
+    padding: 1.35rem;
+  }
+
+  .eyebrow {
+    color: var(--blue);
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    margin: 0 0 0.55rem;
+    text-transform: uppercase;
+  }
+
+  h1 {
+    font-size: clamp(1.9rem, 4vw, 3rem);
+    letter-spacing: -0.04em;
+    line-height: 0.98;
+    margin: 0;
+  }
+
+  .dashboard-hero p {
+    color: var(--muted);
+    line-height: 1.6;
+    margin: 0.8rem 0 0;
+    max-width: 56rem;
+  }
+
+  .metric-row {
+    display: grid;
+    gap: 0.7rem;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    margin-top: 1rem;
+  }
+
+  .metric {
+    background: var(--panel);
+    border: 1px solid var(--soft);
+    border-radius: 14px;
+    padding: 0.85rem;
+  }
+
+  .metric strong {
+    display: block;
+    font-size: 1.7rem;
+    line-height: 1;
+  }
+
+  .metric span {
+    color: var(--muted);
+    display: block;
+    font-size: 0.78rem;
+    font-weight: 700;
+    margin-top: 0.35rem;
+  }
+
+  .filters {
+    background: var(--panel);
+    border: 1px solid var(--soft);
+    border-radius: 18px;
+    display: grid;
+    gap: 0.75rem;
+    grid-template-columns: 1.5fr repeat(3, minmax(120px, 0.7fr));
+    margin-top: 1rem;
+    padding: 1rem;
+  }
+
+  .field {
+    display: grid;
+    gap: 0.38rem;
+  }
+
+  .field label {
+    color: var(--muted);
+    font-size: 0.75rem;
+    font-weight: 800;
+  }
+
+  .field input,
+  .field select {
+    background: #f8fafc;
+    border: 1px solid #cbd5e1;
+    border-radius: 10px;
+    color: var(--ink);
+    height: 2.55rem;
+    padding: 0 0.75rem;
+    width: 100%;
+  }
+
+  .summary {
+    align-items: center;
+    color: var(--muted);
+    display: flex;
+    font-size: 0.88rem;
+    font-weight: 700;
+    justify-content: space-between;
+    margin: 1rem 0 0.75rem;
+  }
+
+  .script-grid {
+    display: grid;
+    gap: 0.9rem;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .script-card {
+    background: var(--panel);
+    border: 1px solid var(--soft);
+    border-radius: 18px;
+    box-shadow: 0 2px 14px rgba(15, 23, 42, 0.06);
+    display: grid;
+    gap: 0.85rem;
+    padding: 1rem;
+  }
+
+  .script-card.is-hidden {
+    display: none;
+  }
+
+  .card-top {
+    align-items: flex-start;
+    display: flex;
+    gap: 0.75rem;
+    justify-content: space-between;
+  }
+
+  .card-category {
+    color: var(--blue);
+    font-size: 0.68rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    margin: 0 0 0.25rem;
+    text-transform: uppercase;
+  }
+
+  .script-card h2 {
+    font-size: 1.1rem;
+    line-height: 1.2;
+    margin: 0;
+  }
+
+  .script-card p {
+    color: var(--muted);
+    font-size: 0.88rem;
+    line-height: 1.5;
+    margin: 0;
+  }
+
+  .badge {
+    border-radius: 999px;
+    flex: 0 0 auto;
+    font-size: 0.72rem;
+    font-weight: 800;
+    padding: 0.28rem 0.62rem;
+  }
+
+  .badge.verified {
+    background: var(--green-bg);
+    color: var(--green);
+  }
+
+  .badge.stale {
+    background: var(--orange-bg);
+    color: var(--orange);
+  }
+
+  .command {
+    background: #0f172a;
+    border-radius: 12px;
+    color: #dbeafe;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 0.78rem;
+    line-height: 1.5;
+    margin: 0;
+    overflow: auto;
+    padding: 0.8rem;
+  }
+
+  .trust-box {
+    background: var(--soft-2);
+    border: 1px solid var(--soft);
+    border-radius: 12px;
+    display: grid;
+    gap: 0.35rem;
+    padding: 0.72rem;
+  }
+
+  .trust-label {
+    color: var(--muted);
+    font-size: 0.68rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .card-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .card-actions button,
+  .playbook-toggle {
+    background: #0f766e;
+    border: 0;
+    border-radius: 10px;
+    color: #ffffff;
+    cursor: pointer;
+    font-size: 0.82rem;
+    font-weight: 800;
+    min-height: 2.25rem;
+    padding: 0.55rem 0.72rem;
+  }
+
+  .card-actions button.secondary,
+  .playbook-toggle {
+    background: #e0f2fe;
+    color: #075985;
+  }
+
+  .playbook {
+    background: #f8fafc;
+    border: 1px solid #cbd5e1;
+    border-radius: 12px;
+    display: none;
+    padding: 0.75rem;
+  }
+
+  .script-card.is-open .playbook {
+    display: block;
+  }
+
+  .playbook ul {
+    color: var(--muted);
+    font-size: 0.84rem;
+    line-height: 1.5;
+    margin: 0.4rem 0 0;
+    padding-left: 1rem;
+  }
+
+  .feedback {
+    color: var(--teal);
+    font-size: 0.82rem;
+    font-weight: 800;
+    min-height: 1.2rem;
+  }
+
+  .info-panel {
+    align-self: center;
+    max-width: 460px;
+  }
+
+  .info-panel h2 {
+    font-size: clamp(2.4rem, 6vw, 4.6rem);
+    letter-spacing: -0.06em;
+    line-height: 0.9;
+    margin: 0 0 1rem;
+  }
+
+  .info-panel > p {
+    color: var(--muted);
+    font-size: 1.05rem;
+    line-height: 1.75;
+    margin: 0 0 1.75rem;
+  }
+
+  .info-section {
+    border-top: 1px solid #cbd5e1;
+    padding: 1.15rem 0;
+  }
+
+  .info-section h3 {
+    color: var(--blue);
+    font-size: 0.78rem;
+    letter-spacing: 0.08em;
+    margin: 0 0 0.55rem;
+    text-transform: uppercase;
+  }
+
+  .info-section p,
+  .info-section li {
+    color: var(--muted);
+    line-height: 1.65;
+  }
+
+  .info-section p,
+  .info-section ul {
+    margin: 0;
+  }
+
+  .info-section ul {
+    padding-left: 1.15rem;
+  }
+
+  .mobile-about {
+    display: none;
+  }
+
+  @media (max-width: 1040px) {
+    .demo-shell {
+      grid-template-columns: 1fr;
+      padding: 1.5rem;
+    }
+
+    .info-panel {
+      max-width: 760px;
+    }
+  }
+
+  @media (max-width: 720px) {
+    .demo-shell {
+      display: block;
+      padding: 0;
+    }
+
+    .app-frame {
+      border: 0;
+      border-radius: 0;
+      box-shadow: none;
+      min-height: 100vh;
+    }
+
+    .frame-bar,
+    .info-panel {
+      display: none;
+    }
+
+    .dashboard {
+      min-height: 100vh;
+      padding: calc(1rem + env(safe-area-inset-top)) 0.85rem calc(1.2rem + env(safe-area-inset-bottom));
+    }
+
+    .dashboard-hero,
+    .filters,
+    .script-card {
+      border-radius: 14px;
+    }
+
+    .dashboard-hero {
+      padding: 1rem;
+    }
+
+    .dashboard-hero p {
+      font-size: 0.92rem;
+    }
+
+    .metric-row,
+    .filters,
+    .script-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .mobile-about {
+      display: inline-flex;
+      background: #e0f2fe;
+      border: 0;
+      border-radius: 10px;
+      color: #075985;
+      font-size: 0.82rem;
+      font-weight: 800;
+      min-height: 2.25rem;
+      padding: 0.55rem 0.72rem;
+    }
+
+    body.show-info .info-panel {
+      background: var(--bg);
+      display: block;
+      inset: 0;
+      max-width: none;
+      overflow-y: auto;
+      padding: calc(4.6rem + env(safe-area-inset-top)) 1.2rem calc(1.5rem + env(safe-area-inset-bottom));
+      position: fixed;
+      z-index: 40;
+    }
+
+    .info-close {
+      background: #e0f2fe;
+      border: 0;
+      border-radius: 10px;
+      color: #075985;
+      display: none;
+      font-weight: 800;
+      min-height: 2.25rem;
+      padding: 0.55rem 0.72rem;
+      position: fixed;
+      right: calc(1rem + env(safe-area-inset-right));
+      top: calc(1rem + env(safe-area-inset-top));
+      z-index: 50;
+    }
+
+    body.show-info .info-close {
+      display: inline-flex;
+    }
+  }
+</style>
+</head>
+<body>
+<main class="demo-shell">
+  <section class="app-frame" aria-label="Installr marketplace demo">
+    <div class="frame-bar" aria-hidden="true">
+      <span class="frame-dot"></span>
+      <span class="frame-dot"></span>
+      <span class="frame-dot"></span>
+    </div>
+    <div class="dashboard">
+      <section class="dashboard-hero">
+        <p class="eyebrow">Installer marketplace</p>
+        <h1>Installr Script Marketplace</h1>
+        <p>Browse governed setup commands, inspect provenance, copy safely, and keep installer metadata release-ready.</p>
+        <div class="metric-row">
+          <div class="metric"><strong id="metric-total">8</strong><span>Catalog commands</span></div>
+          <div class="metric"><strong id="metric-verified">7</strong><span>Verified scripts</span></div>
+          <div class="metric"><strong>5</strong><span>Categories</span></div>
+        </div>
+      </section>
+
+      <section class="filters" aria-label="Script filters">
+        <div class="field">
+          <label for="search">Search commands</label>
+          <input id="search" type="search" placeholder="Search by tool, command, or category">
+        </div>
+        <div class="field">
+          <label for="category">Category</label>
+          <select id="category">
+            <option value="all">All</option>
+            <option>Developer Tools</option>
+            <option>Python</option>
+            <option>JavaScript Runtime</option>
+            <option>Containers</option>
+            <option>Databases</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="platform">Platform</label>
+          <select id="platform">
+            <option value="all">All</option>
+            <option>macOS</option>
+            <option>Linux</option>
+            <option>Windows</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="trust">Trust state</label>
+          <select id="trust">
+            <option value="all">All</option>
+            <option value="verified">Verified</option>
+            <option value="stale">Stale</option>
+          </select>
+        </div>
+      </section>
+
+      <div class="summary">
+        <span id="summary-text">Showing 8 of 8 commands</span>
+        <button class="mobile-about" type="button">About</button>
+      </div>
+
+      <section class="script-grid" id="script-grid" aria-label="Installer scripts"></section>
+    </div>
+  </section>
+
+  <aside class="info-panel" aria-label="About Installr">
+    <button class="info-close" type="button">Close</button>
+    <p class="eyebrow">About the project</p>
+    <h2>Installr</h2>
+    <p>Installr is a governed installer-script marketplace. The product makes setup commands easier to discover, safer to copy, and easier to keep current through metadata validation and release guardrails.</p>
+
+    <section class="info-section">
+      <h3>Problem</h3>
+      <p>Setup commands usually live in scattered READMEs, old notes, and copied shell snippets. Teams need command provenance, prerequisites, verification steps, rollback guidance, and stale-status visibility before running anything locally.</p>
+    </section>
+
+    <section class="info-section">
+      <h3>What the demo shows</h3>
+      <ul>
+        <li>Search and filters for category, platform, and trust state.</li>
+        <li>Installer cards with command, provenance, maintainer, and freshness.</li>
+        <li>Copy affordances plus install playbooks for verify and rollback steps.</li>
+      </ul>
+    </section>
+
+    <section class="info-section">
+      <h3>Production shape</h3>
+      <p>The live project uses React, TypeScript, Vite, catalog metadata validation, preflight command guardrails, URL-state tests, catalog verification artifacts, and release-readiness checks.</p>
+    </section>
+  </aside>
+</main>
+
+<script>
+  const scripts = [
+    {
+      name: "Paperclip",
+      category: "Developer Tools",
+      command: "npx paperclipai onboard --yes",
+      description: "Bootstrap and onboard a local Paperclip workspace with defaults.",
+      platform: ["macOS", "Linux", "Windows"],
+      trust: "verified",
+      source: "npmjs.com/package/paperclipai",
+      reviewed: "2026-04-05",
+      maintainer: "Installr Catalog Team",
+      prerequisites: ["Node.js 18+ available in PATH.", "Writable project directory."],
+      verify: "paperclipai --version",
+      rollback: "npm uninstall -g paperclipai"
+    },
+    {
+      name: "GitHub CLI",
+      category: "Developer Tools",
+      command: "brew install gh",
+      description: "Install GitHub CLI for pull requests, issues, and release automation.",
+      platform: ["macOS", "Linux", "Windows"],
+      trust: "verified",
+      source: "cli.github.com",
+      reviewed: "2026-04-05",
+      maintainer: "Installr Catalog Team",
+      prerequisites: ["Homebrew installed.", "Git available for repository workflows."],
+      verify: "gh --version",
+      rollback: "brew uninstall gh"
+    },
+    {
+      name: "ripgrep",
+      category: "Developer Tools",
+      command: "brew install ripgrep",
+      description: "Install ripgrep for fast code and text search in large repositories.",
+      platform: ["macOS", "Linux", "Windows"],
+      trust: "verified",
+      source: "github.com/BurntSushi/ripgrep",
+      reviewed: "2026-04-05",
+      maintainer: "Installr Catalog Team",
+      prerequisites: ["Package manager available.", "Terminal session with install permissions."],
+      verify: "rg --version",
+      rollback: "brew uninstall ripgrep"
+    },
+    {
+      name: "uv",
+      category: "Python",
+      command: "curl -LsSf https://astral.sh/uv/install.sh | sh",
+      description: "Install uv for ultra-fast Python project and environment management.",
+      platform: ["macOS", "Linux", "Windows"],
+      trust: "verified",
+      source: "docs.astral.sh/uv",
+      reviewed: "2026-04-05",
+      maintainer: "Installr Catalog Team",
+      prerequisites: ["curl available.", "Shell profile can update PATH."],
+      verify: "uv --version",
+      rollback: "rm -rf \"$HOME/.local/bin/uv\" \"$HOME/.local/share/uv\""
+    },
+    {
+      name: "Poetry",
+      category: "Python",
+      command: "curl -sSL https://install.python-poetry.org | python3 -",
+      description: "Install Poetry for Python dependency management and lockfiles.",
+      platform: ["macOS", "Linux", "Windows"],
+      trust: "stale",
+      source: "python-poetry.org/docs",
+      reviewed: "2025-12-12",
+      maintainer: "Installr Catalog Team",
+      prerequisites: ["Python 3.9+ available.", "curl available."],
+      verify: "poetry --version",
+      rollback: "curl -sSL https://install.python-poetry.org | python3 - --uninstall"
+    },
+    {
+      name: "Bun",
+      category: "JavaScript Runtime",
+      command: "curl -fsSL https://bun.sh/install | bash",
+      description: "Install Bun runtime and package manager for fast JS tooling.",
+      platform: ["macOS", "Linux", "Windows"],
+      trust: "verified",
+      source: "bun.sh/docs/installation",
+      reviewed: "2026-04-05",
+      maintainer: "Installr Catalog Team",
+      prerequisites: ["curl installed.", "Shell profile can export BUN_INSTALL."],
+      verify: "bun --version",
+      rollback: "rm -rf \"$HOME/.bun\""
+    },
+    {
+      name: "Docker Engine",
+      category: "Containers",
+      command: "curl -fsSL https://get.docker.com | sh",
+      description: "Install Docker Engine and CLI for containerized local development.",
+      platform: ["Linux"],
+      trust: "verified",
+      source: "docs.docker.com/engine/install",
+      reviewed: "2026-04-05",
+      maintainer: "Installr Catalog Team",
+      prerequisites: ["Linux host with sudo access.", "curl available."],
+      verify: "docker --version",
+      rollback: "sudo apt-get remove --purge -y docker-ce docker-ce-cli containerd.io"
+    },
+    {
+      name: "PostgreSQL",
+      category: "Databases",
+      command: "brew install postgresql@16 && brew services start postgresql@16",
+      description: "Install PostgreSQL with background service support for local development.",
+      platform: ["macOS", "Linux", "Windows"],
+      trust: "verified",
+      source: "postgresql.org/download",
+      reviewed: "2026-04-05",
+      maintainer: "Installr Catalog Team",
+      prerequisites: ["Homebrew available.", "Disk space for local database data."],
+      verify: "psql --version",
+      rollback: "brew services stop postgresql@16 && brew uninstall postgresql@16"
+    }
+  ];
+
+  const grid = document.getElementById("script-grid");
+  const search = document.getElementById("search");
+  const category = document.getElementById("category");
+  const platform = document.getElementById("platform");
+  const trust = document.getElementById("trust");
+  const summaryText = document.getElementById("summary-text");
+
+  function renderCards() {
+    grid.innerHTML = scripts.map((script, index) => `
+      <article class="script-card" data-index="${index}" data-category="${script.category}" data-platform="${script.platform.join(" ")}" data-trust="${script.trust}">
+        <div class="card-top">
+          <div>
+            <p class="card-category">${script.category}</p>
+            <h2>${script.name}</h2>
+          </div>
+          <span class="badge ${script.trust}">${script.trust}</span>
+        </div>
+        <p>${script.description}</p>
+        <pre class="command"><code>${script.command}</code></pre>
+        <section class="trust-box">
+          <span class="trust-label">Provenance</span>
+          <p>Source: ${script.source}</p>
+          <p>Reviewed: <strong>${script.reviewed}</strong> · Owner: <strong>${script.maintainer}</strong></p>
+        </section>
+        <div class="card-actions">
+          <button type="button" data-copy="${index}">Copy command</button>
+          <button type="button" class="secondary" data-copy-verify="${index}">Copy verify</button>
+        </div>
+        <button class="playbook-toggle" type="button" data-toggle="${index}">Show install playbook</button>
+        <section class="playbook">
+          <p class="trust-label">Prerequisites</p>
+          <ul>${script.prerequisites.map((item) => `<li>${item}</li>`).join("")}</ul>
+          <p class="trust-label">Verify install</p>
+          <pre class="command"><code>${script.verify}</code></pre>
+          <p class="trust-label">Rollback</p>
+          <pre class="command"><code>${script.rollback}</code></pre>
+        </section>
+        <div class="feedback" aria-live="polite"></div>
+      </article>
+    `).join("");
+  }
+
+  function applyFilters() {
+    const query = search.value.trim().toLowerCase();
+    const selectedCategory = category.value;
+    const selectedPlatform = platform.value;
+    const selectedTrust = trust.value;
+    let visible = 0;
+
+    document.querySelectorAll(".script-card").forEach((card) => {
+      const script = scripts[Number(card.dataset.index)];
+      const searchable = `${script.name} ${script.category} ${script.command} ${script.description}`.toLowerCase();
+      const matchesQuery = query.length === 0 || searchable.includes(query);
+      const matchesCategory = selectedCategory === "all" || script.category === selectedCategory;
+      const matchesPlatform = selectedPlatform === "all" || script.platform.includes(selectedPlatform);
+      const matchesTrust = selectedTrust === "all" || script.trust === selectedTrust;
+      const shouldShow = matchesQuery && matchesCategory && matchesPlatform && matchesTrust;
+      card.classList.toggle("is-hidden", !shouldShow);
+      if (shouldShow) visible += 1;
+    });
+
+    summaryText.textContent = `Showing ${visible} of ${scripts.length} commands`;
+  }
+
+  async function copyText(value, card, message) {
+    try {
+      await navigator.clipboard.writeText(value);
+      card.querySelector(".feedback").textContent = message;
+    } catch {
+      card.querySelector(".feedback").textContent = "Clipboard unavailable. Copy the command manually.";
+    }
+  }
+
+  renderCards();
+  applyFilters();
+
+  [search, category, platform, trust].forEach((control) => {
+    control.addEventListener("input", applyFilters);
+  });
+
+  grid.addEventListener("click", (event) => {
+    const target = event.target;
+    if (!(target instanceof HTMLElement)) return;
+    const card = target.closest(".script-card");
+    if (!card) return;
+
+    if (target.dataset.copy) {
+      const script = scripts[Number(target.dataset.copy)];
+      copyText(script.command, card, "Install command copied.");
+    }
+
+    if (target.dataset.copyVerify) {
+      const script = scripts[Number(target.dataset.copyVerify)];
+      copyText(script.verify, card, "Verify command copied.");
+    }
+
+    if (target.dataset.toggle) {
+      card.classList.toggle("is-open");
+      target.textContent = card.classList.contains("is-open")
+        ? "Hide install playbook"
+        : "Show install playbook";
+    }
+  });
+
+  document.querySelector(".mobile-about").addEventListener("click", () => {
+    document.body.classList.add("show-info");
+  });
+
+  document.querySelector(".info-close").addEventListener("click", () => {
+    document.body.classList.remove("show-info");
+  });
+</script>
+</body>
+</html>

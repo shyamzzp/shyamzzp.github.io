@@ -339,6 +339,31 @@ const activeWorkItems = [
 
 const previousWorkItems = [
   {
+    id: "installr-demo",
+    title: "Installr Script Marketplace",
+    summary:
+      "A governed installer-script marketplace demo for browsing, filtering, copying, verifying, and rolling back local setup commands.",
+    status: "Live",
+    href: "/installr/",
+    type: "Project",
+    details: [
+      "Focus: Safe command discovery and governed setup workflows.",
+      "Stack: React, TypeScript, Vite, Vitest, catalog validation.",
+    ],
+    features: [
+      "Search and filters for category, platform, and verification state.",
+      "Command cards with provenance, maintainer, reviewed date, and trust status.",
+      "Install playbooks with prerequisites, verify commands, and rollback guidance.",
+      "Release-readiness guardrails for metadata validation, catalog verification, and performance checks.",
+    ],
+    problemsFaced: [
+      "Installer commands are often copied from stale docs without enough provenance.",
+      "A useful catalog needs safety metadata, not just shell snippets.",
+      "Filtering and URL-state behavior need to stay deterministic as the catalog grows.",
+    ],
+    routeOnly: false,
+  },
+  {
     id: "unbroken",
     title: "Unbroken",
     summary:
