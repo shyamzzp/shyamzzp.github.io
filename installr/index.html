@@ -1084,6 +1084,10 @@
     border-right: 0;
   }
 
+  .script-card.is-wide {
+    grid-column: span 2;
+  }
+
   .script-card.is-hidden {
     display: none;
   }
@@ -1330,6 +1334,7 @@
       grid-template-columns: 1fr 1fr;
     }
 
+    .script-card.is-wide,
     .script-card:nth-child(3n) {
       border-right: 1px solid var(--soft);
     }
@@ -1388,9 +1393,11 @@
     }
 
     .script-card,
+    .script-card.is-wide,
     .script-card:nth-child(2n),
     .script-card:nth-child(3n) {
       border-right: 0;
+      grid-column: auto;
       min-height: auto;
     }
 
@@ -1700,7 +1707,7 @@
   }
 
   async function fetchCatalog() {
-    const endpoint = `${catalogSource.url}/rest/v1/${catalogSource.table}?select=*&order=sort_order.asc`;
+    const endpoint = `${catalogSource.url}/rest/v1/${catalogSource.table}?select=*&review=eq.true&order=sort_order.asc`;
     const response = await fetch(endpoint, {
       headers: {
         apikey: catalogSource.anonKey,
@@ -1742,6 +1749,12 @@
     `;
   }
 
+  function isWideScript(script) {
+    const command = script.command || "";
+    const longestLine = command.split("\n").reduce((length, line) => Math.max(length, line.length), 0);
+    return command.length > 110 || longestLine > 72 || command.includes("\n") || (script.commandSteps?.length || 0) > 2;
+  }
+
   function sourceUrl(value) {
     const source = String(value).trim();
     if (!source || /\s/.test(source)) return "";
@@ -1781,7 +1794,7 @@
           </header>
           <div class="command-list">
             ${categoryScripts.map(({ script, index }) => `
-              <article class="script-card" data-index="${index}" data-category="${escapeHtml(script.category)}" data-platform="${escapeHtml(script.platform.join(" "))}" data-trust="${escapeHtml(script.trust)}">
+              <article class="script-card ${isWideScript(script) ? "is-wide" : ""}" data-index="${index}" data-category="${escapeHtml(script.category)}" data-platform="${escapeHtml(script.platform.join(" "))}" data-trust="${escapeHtml(script.trust)}">
                 <div class="item-head">
                   <span class="tool-icon" aria-hidden="true">&gt;_</span>
                   <div>
