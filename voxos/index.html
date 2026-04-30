@@ -1,65 +1,22 @@
-
-
 <!doctype html>
-<!-- Created in Figma Make -->
 <html lang="en">
   <head>
-    <meta charset="utf-8" />
-    <noscript>
-      <style>
-        #container {
-          display: none;
-        }
-      </style>
-    </noscript>
-
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="color-scheme" content="light dark" />
-    <link rel="preload" href="/voxos/_runtimes/sites-runtime.110f0032eb2b2e94ce78470d4f394e7f7e5b5684a78a171d9ae3c4e96662fc26.js" as="script" crossorigin />
-    <link rel="preload" href="/voxos/_components/v2/e403f65d8529e757b97f19e91560bd93756310ff.js" as="script" crossorigin />
-    <link rel="preload" href="/voxos/_json/e6c9c2e3-8933-4667-93f9-09be7d0542e2/_index.json" as="fetch" />
-        <style id="reset-css"> @layer figreset,figoverridable,reset,theme,base,figutils,components,utilities;@layer figoverridable{:root{font-synthesis:none}}@layer figutils{:root{--banner-height:48px;--banner-height-v2:40px;--full-height-with-banner:calc(100dvh - var(--banner-height))}@media (max-width:600px){.banner-v2-container{left:0 !important;right:0 !important;margin:0 auto !important}}.wrapper-with-banner .min-h-screen{min-height:var(--full-height-with-banner)}.wrapper-with-banner .h-screen{height:var(--full-height-with-banner)}}</style><style id="font-faces-7wxbmn"> @font-face{font-family:"Inter:Semi Bold";font-style:normal;src:url("https://context-aware-orchestrator.figma.site/_woff/v2/Inter_1/Inter_1-english.woff2");font-display:block;unicode-range:U+0000-00A0,U+00A2-00A9,U+00AC-00AE,U+00B0-00B7,U+00B9-00BA,U+00BC-00BE,U+00D7,U+00F7,U+2000-206F,U+2074,U+20AC,U+2122,U+2190-21BB,U+2212,U+2215,U+F8FF,U+FEFF,U+FFFD}@font-face{font-family:"Inter:Semi Bold";font-style:normal;src:url("https://context-aware-orchestrator.figma.site/_woff/v2/Inter_1/Inter_1-rest-latin.woff2");font-display:block;unicode-range:U+00A1,U+00AA-00AB,U+00AF,U+00B8,U+00BB,U+00BF-00D6,U+00D8-00F6,U+00F8-00FF,U+0131,U+0152-0153,U+02B0-02FF}@font-face{font-family:"Inter:Semi Bold";font-style:normal;src:url("https://context-aware-orchestrator.figma.site/_woff/v2/Inter_1/Inter_1-latin-extended-a.woff2");font-display:block;unicode-range:U+0100-0130,U+0132-0151,U+0154-017F}@font-face{font-family:"Inter:Semi Bold";font-style:normal;src:url("https://context-aware-orchestrator.figma.site/_woff/v2/Inter_1/Inter_1-latin-extended-b.woff2");font-display:block;unicode-range:U+0180-024F}@font-face{font-family:"Inter:Semi Bold";font-style:normal;src:url("https://context-aware-orchestrator.figma.site/_woff/v2/Inter_1/Inter_1-latin-extended-additional.woff2");font-display:block;unicode-range:U+1E00-1EFF}@font-face{font-family:"Inter:Semi Bold";font-style:normal;src:url("https://context-aware-orchestrator.figma.site/_woff/v2/Inter_1/Inter_1-rest.woff2");font-display:block;unicode-range:U+0250-02AF,U+0300-1DFF,U+1F00-1FFF,U+2070-2073,U+2075-20AB,U+20AD-2121,U+2123-218F,U+21BC-2211,U+2213-2214,U+2216-F8FE,U+F900-FEFE,U+FF00-FFFC,U+FFFE-FFFF}@font-face{font-family:"Inter";font-style:Regular;src:url("https://context-aware-orchestrator.figma.site/_woff/v2/Inter_1/Inter_1-english.woff2");font-display:block;unicode-range:U+0000-00A0,U+00A2-00A9,U+00AC-00AE,U+00B0-00B7,U+00B9-00BA,U+00BC-00BE,U+00D7,U+00F7,U+2000-206F,U+2074,U+20AC,U+2122,U+2190-21BB,U+2212,U+2215,U+F8FF,U+FEFF,U+FFFD}@font-face{font-family:"Inter";font-style:Regular;src:url("https://context-aware-orchestrator.figma.site/_woff/v2/Inter_1/Inter_1-rest-latin.woff2");font-display:block;unicode-range:U+00A1,U+00AA-00AB,U+00AF,U+00B8,U+00BB,U+00BF-00D6,U+00D8-00F6,U+00F8-00FF,U+0131,U+0152-0153,U+02B0-02FF}@font-face{font-family:"Inter";font-style:Regular;src:url("https://context-aware-orchestrator.figma.site/_woff/v2/Inter_1/Inter_1-latin-extended-a.woff2");font-display:block;unicode-range:U+0100-0130,U+0132-0151,U+0154-017F}@font-face{font-family:"Inter";font-style:Regular;src:url("https://context-aware-orchestrator.figma.site/_woff/v2/Inter_1/Inter_1-latin-extended-b.woff2");font-display:block;unicode-range:U+0180-024F}@font-face{font-family:"Inter";font-style:Regular;src:url("https://context-aware-orchestrator.figma.site/_woff/v2/Inter_1/Inter_1-latin-extended-additional.woff2");font-display:block;unicode-range:U+1E00-1EFF}@font-face{font-family:"Inter";font-style:Regular;src:url("https://context-aware-orchestrator.figma.site/_woff/v2/Inter_1/Inter_1-rest.woff2");font-display:block;unicode-range:U+0250-02AF,U+0300-1DFF,U+1F00-1FFF,U+2070-2073,U+2075-20AB,U+20AD-2121,U+2123-218F,U+21BC-2211,U+2213-2214,U+2216-F8FE,U+F900-FEFE,U+FF00-FFFC,U+FFFE-FFFF}@font-face{font-family:"Menlo:Bold";font-style:normal;src:url("https://context-aware-orchestrator.figma.site/_user_fonts/v1/2d763b52299516ed1f473ffe241680ced0623ed5");font-display:block}@font-face{font-family:"Menlo";font-style:Regular;src:url("https://context-aware-orchestrator.figma.site/_user_fonts/v1/b6fa762b9be6a2aa32935b37f10ce7cba27b8c88");font-display:block;font-weight:400}@font-face{font-family:"Inter:Medium";font-style:normal;src:url("https://context-aware-orchestrator.figma.site/_woff/v2/Inter_1/Inter_1-english.woff2");font-display:block;unicode-range:U+0000-00A0,U+00A2-00A9,U+00AC-00AE,U+00B0-00B7,U+00B9-00BA,U+00BC-00BE,U+00D7,U+00F7,U+2000-206F,U+2074,U+20AC,U+2122,U+2190-21BB,U+2212,U+2215,U+F8FF,U+FEFF,U+FFFD}@font-face{font-family:"Inter:Medium";font-style:normal;src:url("https://context-aware-orchestrator.figma.site/_woff/v2/Inter_1/Inter_1-rest-latin.woff2");font-display:block;unicode-range:U+00A1,U+00AA-00AB,U+00AF,U+00B8,U+00BB,U+00BF-00D6,U+00D8-00F6,U+00F8-00FF,U+0131,U+0152-0153,U+02B0-02FF}@font-face{font-family:"Inter:Medium";font-style:normal;src:url("https://context-aware-orchestrator.figma.site/_woff/v2/Inter_1/Inter_1-latin-extended-a.woff2");font-display:block;unicode-range:U+0100-0130,U+0132-0151,U+0154-017F}@font-face{font-family:"Inter:Medium";font-style:normal;src:url("https://context-aware-orchestrator.figma.site/_woff/v2/Inter_1/Inter_1-latin-extended-b.woff2");font-display:block;unicode-range:U+0180-024F}@font-face{font-family:"Inter:Medium";font-style:normal;src:url("https://context-aware-orchestrator.figma.site/_woff/v2/Inter_1/Inter_1-latin-extended-additional.woff2");font-display:block;unicode-range:U+1E00-1EFF}@font-face{font-family:"Inter:Medium";font-style:normal;src:url("https://context-aware-orchestrator.figma.site/_woff/v2/Inter_1/Inter_1-rest.woff2");font-display:block;unicode-range:U+0250-02AF,U+0300-1DFF,U+1F00-1FFF,U+2070-2073,U+2075-20AB,U+20AD-2121,U+2123-218F,U+21BC-2211,U+2213-2214,U+2216-F8FE,U+F900-FEFE,U+FF00-FFFC,U+FFFE-FFFF}@font-face{font-family:"Inter:Light";font-style:normal;src:url("https://context-aware-orchestrator.figma.site/_woff/v2/Inter_1/Inter_1-english.woff2");font-display:block;unicode-range:U+0000-00A0,U+00A2-00A9,U+00AC-00AE,U+00B0-00B7,U+00B9-00BA,U+00BC-00BE,U+00D7,U+00F7,U+2000-206F,U+2074,U+20AC,U+2122,U+2190-21BB,U+2212,U+2215,U+F8FF,U+FEFF,U+FFFD}@font-face{font-family:"Inter:Light";font-style:normal;src:url("https://context-aware-orchestrator.figma.site/_woff/v2/Inter_1/Inter_1-rest-latin.woff2");font-display:block;unicode-range:U+00A1,U+00AA-00AB,U+00AF,U+00B8,U+00BB,U+00BF-00D6,U+00D8-00F6,U+00F8-00FF,U+0131,U+0152-0153,U+02B0-02FF}@font-face{font-family:"Inter:Light";font-style:normal;src:url("https://context-aware-orchestrator.figma.site/_woff/v2/Inter_1/Inter_1-latin-extended-a.woff2");font-display:block;unicode-range:U+0100-0130,U+0132-0151,U+0154-017F}@font-face{font-family:"Inter:Light";font-style:normal;src:url("https://context-aware-orchestrator.figma.site/_woff/v2/Inter_1/Inter_1-latin-extended-b.woff2");font-display:block;unicode-range:U+0180-024F}@font-face{font-family:"Inter:Light";font-style:normal;src:url("https://context-aware-orchestrator.figma.site/_woff/v2/Inter_1/Inter_1-latin-extended-additional.woff2");font-display:block;unicode-range:U+1E00-1EFF}@font-face{font-family:"Inter:Light";font-style:normal;src:url("https://context-aware-orchestrator.figma.site/_woff/v2/Inter_1/Inter_1-rest.woff2");font-display:block;unicode-range:U+0250-02AF,U+0300-1DFF,U+1F00-1FFF,U+2070-2073,U+2075-20AB,U+20AD-2121,U+2123-218F,U+21BC-2211,U+2213-2214,U+2216-F8FE,U+F900-FEFE,U+FF00-FFFC,U+FFFE-FFFF}@font-face{font-family:"Inter:Regular";font-style:normal;src:url("https://context-aware-orchestrator.figma.site/_woff/v2/Inter_1/Inter_1-english.woff2");font-display:block;unicode-range:U+0000-00A0,U+00A2-00A9,U+00AC-00AE,U+00B0-00B7,U+00B9-00BA,U+00BC-00BE,U+00D7,U+00F7,U+2000-206F,U+2074,U+20AC,U+2122,U+2190-21BB,U+2212,U+2215,U+F8FF,U+FEFF,U+FFFD}@font-face{font-family:"Inter:Regular";font-style:normal;src:url("https://context-aware-orchestrator.figma.site/_woff/v2/Inter_1/Inter_1-rest-latin.woff2");font-display:block;unicode-range:U+00A1,U+00AA-00AB,U+00AF,U+00B8,U+00BB,U+00BF-00D6,U+00D8-00F6,U+00F8-00FF,U+0131,U+0152-0153,U+02B0-02FF}@font-face{font-family:"Inter:Regular";font-style:normal;src:url("https://context-aware-orchestrator.figma.site/_woff/v2/Inter_1/Inter_1-latin-extended-a.woff2");font-display:block;unicode-range:U+0100-0130,U+0132-0151,U+0154-017F}@font-face{font-family:"Inter:Regular";font-style:normal;src:url("https://context-aware-orchestrator.figma.site/_woff/v2/Inter_1/Inter_1-latin-extended-b.woff2");font-display:block;unicode-range:U+0180-024F}@font-face{font-family:"Inter:Regular";font-style:normal;src:url("https://context-aware-orchestrator.figma.site/_woff/v2/Inter_1/Inter_1-latin-extended-additional.woff2");font-display:block;unicode-range:U+1E00-1EFF}@font-face{font-family:"Inter:Regular";font-style:normal;src:url("https://context-aware-orchestrator.figma.site/_woff/v2/Inter_1/Inter_1-rest.woff2");font-display:block;unicode-range:U+0250-02AF,U+0300-1DFF,U+1F00-1FFF,U+2070-2073,U+2075-20AB,U+20AD-2121,U+2123-218F,U+21BC-2211,U+2213-2214,U+2216-F8FE,U+F900-FEFE,U+FF00-FFFC,U+FFFE-FFFF}@font-face{font-family:"Menlo:Regular";font-style:normal;src:url("https://context-aware-orchestrator.figma.site/_user_fonts/v1/b6fa762b9be6a2aa32935b37f10ce7cba27b8c88");font-display:block}</style><style id="body-background-color">body:has([data-breakpoint-id="node-0_4"]) { background-color: #fff }</style><style id="ssr-css">#container .css-uwf2km {position: relative; flex: 1 0 0; display: block;}#container .css-exq74d {min-width: 1px; min-height: 1px; width: 100%; height: 100dvh;}#container .css-j9f0op {width: 100%; height: 100%;}</style><script>window.__serverRenderedCSSClassNames = {"css-uwf2km":"{\"position\":\"relative\",\"flex\":\"1 0 0\",\"display\":\"block\"}","css-exq74d":"{\"minWidth\":1,\"minHeight\":1,\"width\":\"100%\",\"height\":\"100dvh\"}","css-j9f0op":"{\"width\":\"100%\",\"height\":\"100%\"}"}</script><meta id="meta-x9zlec" name="description" content="VoxOS orchestrates your day through touch, voice, and gaze."><meta id="meta-pvq3wi" name="title" content="VoxOS Orchestrator"><meta id="meta-rlk5zj" name="robots" content="index,follow"><meta id="meta-1ab1uk" name="twitter:card" content="summary_large_image"><meta id="meta-fnr44y" name="twitter:url" content="https://shyamzzp.github.io/voxos/"><meta id="meta-8gd7z9" name="twitter:title" content="VoxOS Orchestrator"><meta id="meta-nwstp" name="twitter:description" content="VoxOS orchestrates your day through touch, voice, and gaze."><meta id="meta-k0f0zr" name="twitter:image" content="https://context-aware-orchestrator.figma.site/_assets/v11/b8aceae1cc2dd777eea0635478857ccd5d37c06c.png"><meta id="meta-mfwab7" name="twitter:image:alt" content="VoxOS Orchestrator"><meta id="meta-y65oo0" property="og:title" content="VoxOS Orchestrator"><meta id="meta-yrc9la" property="og:description" content="VoxOS orchestrates your day through touch, voice, and gaze."><meta id="meta-zfz6ci" property="og:type" content="website"><meta id="meta-oncyjb" property="og:url" content="https://shyamzzp.github.io/voxos/"><meta id="meta-t1paac" property="og:image" content="https://context-aware-orchestrator.figma.site/_assets/v11/b8aceae1cc2dd777eea0635478857ccd5d37c06c.png"><meta id="meta-mts0eq" property="og:image:alt" content="VoxOS Orchestrator"><meta id="meta-1imkr9" property="og:site_name" content="VoxOS Orchestrator"><title id="title-glzy19">VoxOS Orchestrator</title>
-    <link rel="stylesheet" href="/voxos/_components/v2/e403f65d8529e757b97f19e91560bd93756310ff.css">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#0c0a09" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="voxOS" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="description" content="Context-aware voice and gaze assistant interface." />
+    <link rel="manifest" href="/voxos/manifest.webmanifest" />
+    <link rel="icon" href="/voxos/assets/favicon.png" />
+    <link rel="apple-touch-icon" href="/voxos/assets/icon.png" />
+    <title>voxOS</title>
+    <script type="module" crossorigin src="/voxos/assets/index-DgIRrhva.js"></script>
+    <link rel="stylesheet" crossorigin href="/voxos/assets/index-CeOLLi3V.css">
   </head>
   <body>
-    
-    
-    <script data-template-id="country-code">window.__cf_country = "IN"</script>
-    <script type="module">
-      import {SitesRuntime} from '/voxos/_runtimes/sites-runtime.110f0032eb2b2e94ce78470d4f394e7f7e5b5684a78a171d9ae3c4e96662fc26.js';
-      const sitesRuntime = new SitesRuntime({
-        container: document.getElementById('container'),
-        env: 'published',
-        bundleId: 'e6c9c2e3-8933-4667-93f9-09be7d0542e2',
-        
-        loadComponentsOverNetwork: true,
-        assetsVersion: 'v11',
-        fontsVersion: 'v1',
-        videosVersion: 'v1',
-        codeComponentsVersion: 'v2',
-        withBaseStyles: false,
-        reportingDomain: "https://www.figma.com",
-        bundleCreationDate: '2026-03-03 21:21:11 UTC',
-        isFigmake: true,
-        enableMetaTags: true,
-      });
-    </script>
-    
-    <div id="container"><div class="tailwind css-uwf2km css-exq74d"></div></div>
-    
-
-     <noscript data-nosnippet>
-      <main style="height: 100vh; width: 100vw; background-color: white; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center;">
-        <h1 style="font-size: 24px; padding: 8px; color: black">
-        This site requires JavaScript
-        </h1>
-        <p style="font-size: 16px; padding: 8px; color: #00000080">To view this website, enable JavaScript in your browser settings and reload the page.</p>
-        <form style="margin-top: 12px;" action="">
-          <button type="submit" style="font-size: 14px; color: black; border: 1px solid #0000001a; border-radius: 5px; width: 256px; height: 32px;">
-          Reload page
-          </button>
-        </form>
-      </main>
-    </noscript>
+    <div id="root"></div>
   </body>
 </html>

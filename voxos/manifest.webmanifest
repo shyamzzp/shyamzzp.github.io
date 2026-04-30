@@ -1,0 +1,25 @@
+{
+  "name": "voxOS",
+  "short_name": "voxOS",
+  "description": "Context-aware voice and gaze assistant interface.",
+  "start_url": "/voxos/",
+  "scope": "/voxos/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0c0a09",
+  "theme_color": "#0c0a09",
+  "icons": [
+    {
+      "src": "/voxos/assets/icon.png",
+      "sizes": "1024x1024",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/voxos/assets/splash-icon.png",
+      "sizes": "1024x1024",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}
