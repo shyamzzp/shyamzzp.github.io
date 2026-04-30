@@ -1527,6 +1527,16 @@ hr {
   color: #ffffff !important;
 }
 
+.is-ai-systems {
+  background-color: #2563eb !important;
+  color: #ffffff !important;
+}
+
+.is-enterprise {
+  background-color: #6d5d9f !important;
+  color: #ffffff !important;
+}
+
 ::-webkit-scrollbar-thumb {
   background: #aaa;
   border-radius: 6px;

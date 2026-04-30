@@ -1028,11 +1028,14 @@ function Home() {
                         <img src={cv} width="34" className="mr-1" alt="" />
                       </button>
                     </div>
-                    <p className="portfolio-role">Sen. Software Engineer (9+)</p>
+                    <p className="portfolio-role">
+                      Senior AI Engineer | Full-Stack | Cloud & ERP Systems
+                    </p>
                     <p>
-                      Senior software engineer building full-stack products,
-                      internal tools, technical content, and systems with strong
-                      frontend and backend ownership.
+                      Senior engineer building Copilot agents, Power Automate
+                      workflows, full-stack systems, cloud infrastructure, and
+                      ERP integrations across AI, frontend, backend, and
+                      enterprise automation work.
                     </p>
                     <div className="portfolio-profile-links">
                       <SocialMedia />
