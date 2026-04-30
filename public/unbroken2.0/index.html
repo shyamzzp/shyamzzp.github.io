@@ -7,11 +7,11 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="Unbroken">
-<title>Unbroken</title>
-<link rel="manifest" href="/unbroken/manifest.webmanifest">
-<link rel="icon" href="/unbroken/icon.svg" type="image/svg+xml">
-<link rel="apple-touch-icon" href="/unbroken/icon.svg">
+<meta name="apple-mobile-web-app-title" content="Unbroken2.0">
+<title>Unbroken2.0</title>
+<link rel="manifest" href="/unbroken2.0/manifest.webmanifest">
+<link rel="icon" href="/unbroken2.0/icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/unbroken2.0/icon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:wght@400;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
@@ -282,7 +282,7 @@
   .setup-body {
     flex: 1;
     overflow-y: auto;
-    padding: 28px;
+    padding: 28px 28px 104px;
     scrollbar-width: none;
   }
 
@@ -308,7 +308,7 @@
     display: flex;
     align-items: center;
     gap: 14px;
-    padding: 16px 18px;
+    padding: 12px 12px 12px 18px;
     background: var(--surface);
     border: 1px solid transparent;
     cursor: pointer;
@@ -339,6 +339,36 @@
     font-weight: 400;
     color: var(--text);
     flex: 1;
+  }
+
+  .habit-delete-btn {
+    align-items: center;
+    background: transparent;
+    border: none;
+    border-radius: 4px;
+    color: #ef6f61;
+    cursor: pointer;
+    display: inline-flex;
+    height: 28px;
+    justify-content: center;
+    padding: 0;
+    width: 28px;
+  }
+  .habit-delete-btn:hover,
+  .habit-delete-btn:focus-visible {
+    color: #ff8a7d;
+    outline: none;
+  }
+  .habit-delete-btn svg {
+    height: 14px;
+    pointer-events: none;
+    stroke-width: 1.8;
+    width: 14px;
+  }
+  .habit-delete-btn path {
+    stroke: currentColor;
+    stroke-linecap: round;
+    stroke-linejoin: round;
   }
 
   .habit-custom-row {
@@ -378,7 +408,7 @@
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 8px;
-    margin-bottom: 40px;
+    margin-bottom: 0;
   }
 
   .duration-btn {
@@ -416,6 +446,16 @@
     margin-top: 4px;
   }
 
+  .setup-action-bar {
+    background: linear-gradient(180deg, rgba(10, 10, 10, 0), var(--bg) 28%);
+    bottom: 0;
+    left: 0;
+    padding: 28px;
+    position: absolute;
+    right: 0;
+    z-index: 4;
+  }
+
   .start-btn {
     width: 100%;
     padding: 18px;
@@ -429,7 +469,6 @@
     border-radius: 4px;
     cursor: pointer;
     transition: opacity 0.15s;
-    margin-bottom: 12px;
   }
   .start-btn:disabled { opacity: 0.25; cursor: not-allowed; }
   .start-btn:not(:disabled):active { opacity: 0.85; }
@@ -1082,7 +1121,7 @@
 </head>
 <body>
 
-<main class="demo-stage" aria-label="Unbroken mobile demo">
+<main class="demo-stage" aria-label="Unbroken2.0 mobile demo">
 <div class="phone-frame">
 <div class="phone-speaker" aria-hidden="true"></div>
 <div class="phone-screen">
@@ -1092,7 +1131,7 @@
   <div class="dashboard-header">
     <div class="dashboard-topline">
       <div>
-        <div class="logo">UNBROKEN</div>
+        <div class="logo">UNBROKEN2.0</div>
         <div class="logo-sub">Multiple habits &nbsp;·&nbsp; No skips</div>
       </div>
       <div class="dashboard-actions">
@@ -1112,7 +1151,7 @@
   <div class="setup-header">
     <div class="dashboard-topline">
       <div>
-        <div class="logo">UNBROKEN</div>
+        <div class="logo">UNBROKEN2.0</div>
         <div class="logo-sub">Add habit &nbsp;·&nbsp; No skips</div>
       </div>
       <div class="dashboard-actions">
@@ -1123,32 +1162,7 @@
   </div>
   <div class="setup-body">
     <div class="section-label">Choose your habit</div>
-    <div class="habit-catalog" id="habit-catalog">
-      <div class="habit-option" data-habit="10 push-ups">
-        <div class="habit-dot"></div>
-        <span class="habit-name">10 push-ups</span>
-      </div>
-      <div class="habit-option" data-habit="30 squats">
-        <div class="habit-dot"></div>
-        <span class="habit-name">30 squats</span>
-      </div>
-      <div class="habit-option" data-habit="Read 10 pages">
-        <div class="habit-dot"></div>
-        <span class="habit-name">Read 10 pages</span>
-      </div>
-      <div class="habit-option" data-habit="10-min meditation">
-        <div class="habit-dot"></div>
-        <span class="habit-name">10-min meditation</span>
-      </div>
-      <div class="habit-option" data-habit="No social media">
-        <div class="habit-dot"></div>
-        <span class="habit-name">No social media</span>
-      </div>
-      <div class="habit-option" data-habit="Cold shower">
-        <div class="habit-dot"></div>
-        <span class="habit-name">Cold shower</span>
-      </div>
-    </div>
+    <div class="habit-catalog" id="habit-catalog"></div>
     <div class="habit-custom-row" id="custom-row">
       <div class="habit-dot" id="custom-dot"></div>
       <input type="text" id="custom-habit-input" placeholder="Write your own habit…" maxlength="40" autocomplete="off" autocorrect="off" spellcheck="false">
@@ -1170,7 +1184,9 @@
       </div>
     </div>
 
-    <button class="start-btn" id="start-btn" disabled>Commit</button>
+    <div class="setup-action-bar">
+      <button class="start-btn" id="start-btn" disabled>Commit</button>
+    </div>
   </div>
 </div>
 
@@ -1213,7 +1229,7 @@
 <!-- ═══ COMPLETE SCREEN ═══ -->
 <div id="screen-complete" class="screen">
   <div class="complete-title">DONE.</div>
-  <div class="complete-title-2">Unbroken.</div>
+  <div class="complete-title-2">Unbroken2.0.</div>
   <div class="complete-rule"></div>
   <div class="complete-habit" id="complete-habit-name">—</div>
   <div class="complete-days" id="complete-days">0</div>
@@ -1225,10 +1241,10 @@
 
 </div>
 </div>
-<aside class="app-intro" aria-label="About Unbroken">
+<aside class="app-intro" aria-label="About Unbroken2.0">
   <button class="about-close-btn" id="about-close-btn">Close</button>
   <div class="intro-eyebrow">Habit discipline app</div>
-  <h1 class="intro-title">Unbroken</h1>
+  <h1 class="intro-title">Unbroken2.0</h1>
   <p class="intro-copy">
     A stripped-down commitment tracker for one or more habits. Pick each rule,
     choose the number of days, and check in every day. Miss once and that chain
@@ -1238,7 +1254,7 @@
   <section class="intro-section">
     <div class="intro-section-title">About</div>
     <p>
-      Unbroken is built around deliberate constraint. No dashboards, no social
+      Unbroken2.0 is built around deliberate constraint. No dashboards, no social
       feed, no soft streak language. The product keeps attention on the actions
       that matter today.
     </p>
@@ -1283,7 +1299,16 @@
 </main>
 
 <script>
-  const STORAGE_KEY = 'unbroken_v1';
+  const STORAGE_KEY = 'unbroken2_0_v1';
+  const CATALOG_KEY = 'unbroken2_0_catalog_v1';
+  const DEFAULT_CATALOG = [
+    '10 push-ups',
+    '30 squats',
+    'Read 10 pages',
+    '10-min meditation',
+    'No social media',
+    'Cold shower'
+  ];
   let selectedHabit = null;
   let selectedDuration = 14;
   let activeHabitId = null;
@@ -1356,6 +1381,33 @@
     localStorage.setItem(STORAGE_KEY, JSON.stringify(normalizeStore(store)));
   }
 
+  function normalizeCatalog(items) {
+    const source = Array.isArray(items) ? items : DEFAULT_CATALOG;
+    return [...new Set(source.map(item => String(item).trim()).filter(Boolean))];
+  }
+
+  function loadCatalog() {
+    const raw = localStorage.getItem(CATALOG_KEY);
+    if (!raw) return DEFAULT_CATALOG;
+    try { return normalizeCatalog(JSON.parse(raw)); }
+    catch(e) { return DEFAULT_CATALOG; }
+  }
+
+  function saveCatalog(items) {
+    localStorage.setItem(CATALOG_KEY, JSON.stringify(normalizeCatalog(items)));
+  }
+
+  function addCatalogItem(value) {
+    const habit = String(value).trim();
+    if (!habit) return;
+    const catalog = loadCatalog();
+    if (!catalog.some(item => item.toLowerCase() === habit.toLowerCase())) {
+      catalog.push(habit);
+      saveCatalog(catalog);
+      renderCatalog();
+    }
+  }
+
   function updateHabit(updatedHabit) {
     const store = loadStore();
     store.habits = store.habits.map(habit =>
@@ -1412,7 +1464,7 @@
     list.innerHTML = '';
 
     if (store.habits.length === 0) {
-      showSetup();
+      showSetup(false);
       return;
     }
 
@@ -1442,8 +1494,10 @@
     showScreen('dashboard');
   }
 
-  function showSetup() {
+  function showSetup(canGoBack = true) {
     resetSetupForm();
+    document.getElementById('setup-back-btn').hidden = !canGoBack;
+    renderCatalog();
     showScreen('setup');
   }
 
@@ -1549,17 +1603,52 @@
     document.getElementById('start-btn').disabled = true;
   }
 
-  document.querySelectorAll('.habit-option').forEach(opt => {
-    opt.addEventListener('click', () => {
-      document.querySelectorAll('.habit-option').forEach(o => o.classList.remove('selected'));
-      document.getElementById('custom-row').classList.remove('selected');
-      document.getElementById('custom-dot').style.background = '';
-      document.getElementById('custom-habit-input').value = '';
-      opt.classList.add('selected');
-      selectedHabit = opt.dataset.habit;
-      updateStartBtn();
+  function selectCatalogHabit(option) {
+    document.querySelectorAll('.habit-option').forEach(o => o.classList.remove('selected'));
+    document.getElementById('custom-row').classList.remove('selected');
+    document.getElementById('custom-dot').style.background = '';
+    document.getElementById('custom-habit-input').value = '';
+    option.classList.add('selected');
+    selectedHabit = option.dataset.habit;
+    updateStartBtn();
+  }
+
+  function renderCatalog() {
+    const catalog = loadCatalog();
+    const catalogEl = document.getElementById('habit-catalog');
+    catalogEl.innerHTML = '';
+
+    catalog.forEach(habit => {
+      const option = document.createElement('div');
+      option.className = 'habit-option';
+      option.dataset.habit = habit;
+      option.innerHTML = `
+        <div class="habit-dot"></div>
+        <span class="habit-name">${escapeHtml(habit)}</span>
+        <button class="habit-delete-btn" type="button" aria-label="Remove ${escapeHtml(habit)}">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M3 6h18"></path>
+            <path d="M8 6V4h8v2"></path>
+            <path d="M9 10v7"></path>
+            <path d="M15 10v7"></path>
+            <path d="M6 6l1 15h10l1-15"></path>
+          </svg>
+        </button>
+      `;
+      option.addEventListener('click', () => selectCatalogHabit(option));
+      option.querySelector('.habit-delete-btn').addEventListener('click', event => {
+        event.stopPropagation();
+        const nextCatalog = loadCatalog().filter(item => item !== habit);
+        saveCatalog(nextCatalog);
+        if (selectedHabit === habit) {
+          selectedHabit = null;
+          updateStartBtn();
+        }
+        renderCatalog();
+      });
+      catalogEl.appendChild(option);
     });
-  });
+  }
 
   const customInput = document.getElementById('custom-habit-input');
   customInput.addEventListener('focus', () => {
@@ -1586,6 +1675,7 @@
     const customVal = customInput.value.trim();
     const habit = customVal || selectedHabit;
     if (!habit) return;
+    if (customVal) addCatalogItem(customVal);
     const store = loadStore();
     const newHabit = createHabit(habit, selectedDuration);
     store.habits.push(newHabit);

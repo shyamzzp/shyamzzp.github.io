@@ -364,12 +364,12 @@ const previousWorkItems = [
     routeOnly: false,
   },
   {
-    id: "unbroken",
-    title: "Unbroken",
+    id: "unbroken2.0",
+    title: "Unbroken2.0",
     summary:
       "A focused single-page experience for tracking emotional discipline, commitments, and personal progress with a stark mobile-first interface.",
     status: "Live",
-    href: "/unbroken/",
+    href: "/unbroken2.0/",
     type: "Project",
     details: [
       "Focus: Personal accountability and progress tracking.",
