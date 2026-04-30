@@ -343,14 +343,14 @@ const cvOptions = [
     description:
       "Focused on full-time senior software engineering work, product teams, delivery ownership, and production systems.",
     href: "/ShyamSS-resume.pdf",
-    status: "Full-time",
+    status: "Available",
   },
   {
     title: "Personal CV",
     description:
       "A broader profile for personal projects, experiments, open-source work, prototypes, and technologies I explore outside full-time roles.",
     href: "/ShyamSS-resume.pdf",
-    status: "Experiments",
+    status: "Available",
   },
 ];
 
