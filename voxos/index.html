@@ -1,596 +1,65 @@
-<!DOCTYPE html>
+
+
+<!doctype html>
+<!-- Created in Figma Make -->
 <html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>VoxOS Orchestrator</title>
-<link rel="icon" href="/voxos/favicon.ico">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
-<style>
-  *, *::before, *::after { box-sizing: border-box; }
-  :root {
-    --bg: #060806;
-    --ink: #f6fbf7;
-    --muted: rgba(246, 251, 247, .64);
-    --quiet: rgba(246, 251, 247, .42);
-    --panel: rgba(13, 18, 14, .82);
-    --panel-2: rgba(19, 28, 21, .92);
-    --line: rgba(205, 255, 226, .13);
-    --line-hot: rgba(93, 202, 165, .48);
-    --green: #5dcaa5;
-    --green-2: #8df5cd;
-    --green-soft: rgba(93, 202, 165, .13);
-    --black: #030503;
-  }
-  html, body { min-height: 100%; }
-  body {
-    margin: 0;
-    background:
-      radial-gradient(circle at 18% 10%, rgba(93, 202, 165, .22), transparent 30%),
-      radial-gradient(circle at 84% 18%, rgba(93, 202, 165, .1), transparent 28%),
-      linear-gradient(135deg, #030503, #08110b 54%, #020302);
-    color: var(--ink);
-    font-family: Inter, system-ui, sans-serif;
-    overflow-x: hidden;
-  }
-  body::before {
-    content: "";
-    position: fixed;
-    inset: 0;
-    background-image:
-      linear-gradient(rgba(93, 202, 165, .045) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(93, 202, 165, .045) 1px, transparent 1px);
-    background-size: 36px 36px;
-    pointer-events: none;
-  }
-  button { font: inherit; }
-  .page {
-    isolation: isolate;
-    min-height: 100vh;
-    padding: 22px;
-    position: relative;
-  }
-  .shell {
-    background: rgba(5, 8, 6, .78);
-    border: 1px solid var(--line);
-    border-radius: 30px;
-    box-shadow: 0 42px 140px rgba(0,0,0,.62), inset 0 1px 0 rgba(255,255,255,.07);
-    display: grid;
-    grid-template-columns: minmax(330px, 430px) minmax(0, 1fr);
-    margin: 0 auto;
-    max-width: 1280px;
-    min-height: calc(100vh - 44px);
-    overflow: hidden;
-  }
-  .left {
-    align-items: center;
-    background: linear-gradient(180deg, rgba(17, 29, 20, .96), rgba(3, 5, 3, .98));
-    border-right: 1px solid var(--line);
-    display: flex;
-    justify-content: center;
-    padding: 32px;
-  }
-  .phone {
-    background: linear-gradient(160deg, #1d271f, #050805 48%, #101a13);
-    border: 1px solid rgba(255,255,255,.16);
-    border-radius: 46px;
-    box-shadow: 0 30px 90px rgba(0,0,0,.68), 0 0 0 8px rgba(255,255,255,.035);
-    padding: 13px;
-    width: min(100%, 360px);
-  }
-  .screen {
-    background:
-      radial-gradient(circle at 50% 5%, rgba(93,202,165,.15), transparent 30%),
-      #050806;
-    border: 1px solid rgba(255,255,255,.08);
-    border-radius: 34px;
-    min-height: 720px;
-    overflow: hidden;
-    position: relative;
-  }
-  .notch {
-    background: rgba(255,255,255,.18);
-    border-radius: 999px;
-    height: 5px;
-    left: 50%;
-    position: absolute;
-    top: 14px;
-    transform: translateX(-50%);
-    width: 78px;
-    z-index: 3;
-  }
-  .mobile {
-    display: flex;
-    flex-direction: column;
-    min-height: 720px;
-    padding: 38px 18px 18px;
-  }
-  .mobile-top {
-    align-items: center;
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 22px;
-  }
-  .logo {
-    align-items: center;
-    background: var(--green-soft);
-    border: 1px solid var(--line-hot);
-    border-radius: 13px;
-    color: var(--green-2);
-    display: inline-flex;
-    font: 800 17px JetBrains Mono, monospace;
-    height: 40px;
-    justify-content: center;
-    width: 40px;
-  }
-  .pill {
-    align-items: center;
-    border: 1px solid var(--line-hot);
-    border-radius: 999px;
-    color: var(--green);
-    display: inline-flex;
-    font: 700 10px JetBrains Mono, monospace;
-    gap: 7px;
-    letter-spacing: .08em;
-    padding: 7px 9px;
-    text-transform: uppercase;
-    white-space: nowrap;
-  }
-  .pill::before {
-    background: var(--green);
-    border-radius: 50%;
-    box-shadow: 0 0 16px var(--green);
-    content: "";
-    height: 6px;
-    width: 6px;
-  }
-  .mobile h2 {
-    font-size: 34px;
-    font-weight: 900;
-    letter-spacing: -.055em;
-    line-height: .95;
-    margin: 0 0 8px;
-  }
-  .mobile-copy {
-    color: var(--muted);
-    font-size: 13px;
-    line-height: 1.45;
-    margin: 0 0 22px;
-  }
-  .command-card {
-    background: linear-gradient(180deg, rgba(93,202,165,.16), rgba(93,202,165,.045));
-    border: 1px solid var(--line-hot);
-    border-radius: 24px;
-    padding: 18px;
-  }
-  .label {
-    color: var(--quiet);
-    font: 700 10px JetBrains Mono, monospace;
-    letter-spacing: .12em;
-    text-transform: uppercase;
-  }
-  .command {
-    font-size: 20px;
-    font-weight: 760;
-    letter-spacing: -.025em;
-    line-height: 1.14;
-    margin: 12px 0 16px;
-  }
-  .wave { align-items: center; display: flex; gap: 4px; height: 38px; }
-  .wave span {
-    animation: wave 1.1s ease-in-out infinite;
-    background: var(--green);
-    border-radius: 3px;
-    width: 4px;
-  }
-  .wave span:nth-child(1){height:22%;animation-delay:0s}.wave span:nth-child(2){height:58%;animation-delay:.08s}.wave span:nth-child(3){height:92%;animation-delay:.16s}.wave span:nth-child(4){height:74%;animation-delay:.24s}.wave span:nth-child(5){height:100%;animation-delay:.32s}.wave span:nth-child(6){height:48%;animation-delay:.4s}.wave span:nth-child(7){height:78%;animation-delay:.48s}.wave span:nth-child(8){height:34%;animation-delay:.56s}
-  @keyframes wave { 0%,100% { opacity:.35; transform:scaleY(.45); } 50% { opacity:1; transform:scaleY(1); } }
-  .phone-section { margin-top: 18px; }
-  .mini-list { display: grid; gap: 8px; margin-top: 10px; }
-  .mini-row {
-    align-items: center;
-    background: rgba(255,255,255,.035);
-    border: 1px solid var(--line);
-    border-radius: 15px;
-    display: flex;
-    gap: 10px;
-    padding: 11px;
-  }
-  .mini-dot {
-    background: var(--green);
-    border-radius: 50%;
-    box-shadow: 0 0 12px var(--green);
-    flex: 0 0 auto;
-    height: 8px;
-    width: 8px;
-  }
-  .mini-row strong { display: block; font-size: 12px; margin-bottom: 2px; }
-  .mini-row span { color: var(--muted); display: block; font-size: 10px; line-height: 1.3; }
-  .action {
-    background: var(--green);
-    border: 0;
-    border-radius: 16px;
-    color: #031008;
-    cursor: pointer;
-    font: 800 11px JetBrains Mono, monospace;
-    letter-spacing: .12em;
-    margin-top: auto;
-    padding: 15px;
-    text-transform: uppercase;
-    width: 100%;
-  }
-  .right {
-    display: flex;
-    flex-direction: column;
-    gap: 18px;
-    min-width: 0;
-    padding: 32px;
-  }
-  .hero {
-    border-bottom: 1px solid var(--line);
-    padding-bottom: 24px;
-  }
-  .eyebrow {
-    color: var(--green);
-    font: 800 11px JetBrains Mono, monospace;
-    letter-spacing: .14em;
-    margin-bottom: 14px;
-    text-transform: uppercase;
-  }
-  h1 {
-    font-size: clamp(48px, 6vw, 92px);
-    font-weight: 900;
-    letter-spacing: -.07em;
-    line-height: .84;
-    margin: 0;
-    max-width: 760px;
-  }
-  h1 span { color: var(--green); display: block; }
-  .lede {
-    color: var(--muted);
-    font-size: 16px;
-    line-height: 1.55;
-    margin: 18px 0 0;
-    max-width: 740px;
-  }
-  .mode-tabs {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    margin-top: 18px;
-  }
-  .tab {
-    background: rgba(255,255,255,.035);
-    border: 1px solid var(--line);
-    border-radius: 999px;
-    color: var(--muted);
-    cursor: pointer;
-    font: 700 11px JetBrains Mono, monospace;
-    letter-spacing: .06em;
-    padding: 9px 12px;
-    text-transform: uppercase;
-  }
-  .tab.active {
-    background: var(--green);
-    border-color: var(--green);
-    color: #031008;
-  }
-  .grid {
-    display: grid;
-    gap: 14px;
-    grid-template-columns: 1fr 1fr;
-  }
-  .card {
-    background: var(--panel);
-    border: 1px solid var(--line);
-    border-radius: 20px;
-    padding: 16px;
-  }
-  .card.wide { grid-column: 1 / -1; }
-  .card-head {
-    align-items: center;
-    display: flex;
-    gap: 12px;
-    justify-content: space-between;
-    margin-bottom: 12px;
-  }
-  .card-title {
-    color: var(--quiet);
-    font: 800 10px JetBrains Mono, monospace;
-    letter-spacing: .12em;
-    text-transform: uppercase;
-  }
-  .tag {
-    border: 1px solid var(--line-hot);
-    border-radius: 999px;
-    color: var(--green);
-    font: 700 10px JetBrains Mono, monospace;
-    padding: 5px 8px;
-    white-space: nowrap;
-  }
-  .stack { display: grid; gap: 9px; }
-  .item {
-    background: rgba(255,255,255,.032);
-    border: 1px solid rgba(255,255,255,.06);
-    border-radius: 14px;
-    padding: 12px;
-  }
-  .item strong { display: block; font-size: 14px; margin-bottom: 4px; }
-  .item span { color: var(--muted); display: block; font-size: 12px; line-height: 1.42; }
-  .channels { display: grid; gap: 10px; grid-template-columns: repeat(3, 1fr); }
-  .channel {
-    background: var(--panel-2);
-    border: 1px solid var(--line);
-    border-radius: 16px;
-    padding: 14px;
-  }
-  .channel b {
-    color: var(--green);
-    display: block;
-    font: 800 11px JetBrains Mono, monospace;
-    margin-bottom: 8px;
-    text-transform: uppercase;
-  }
-  .channel strong { display: block; font-size: 15px; margin-bottom: 6px; }
-  .channel span { color: var(--muted); font-size: 12px; line-height: 1.35; }
-  .features {
-    display: grid;
-    gap: 10px;
-    grid-template-columns: repeat(3, 1fr);
-  }
-  .feature {
-    background: var(--panel-2);
-    border: 1px solid var(--line);
-    border-radius: 16px;
-    min-height: 118px;
-    padding: 14px;
-  }
-  .feature strong { display: block; font-size: 14px; margin-bottom: 7px; }
-  .feature span { color: var(--muted); font-size: 12px; line-height: 1.35; }
-  .metrics { display: grid; gap: 10px; grid-template-columns: repeat(3, 1fr); }
-  .metric {
-    background: var(--green-soft);
-    border: 1px solid var(--line-hot);
-    border-radius: 15px;
-    padding: 14px;
-  }
-  .metric strong { color: var(--green); display: block; font-size: 28px; line-height: 1; }
-  .metric span { color: var(--muted); display: block; font-size: 11px; margin-top: 7px; }
-  @media (max-width: 1050px) {
-    .page { padding: 14px; }
-    .shell { grid-template-columns: 1fr; }
-    .left { border-bottom: 1px solid var(--line); border-right: 0; }
-  }
-  @media (max-width: 680px) {
-    .left, .right { padding: 18px; }
-    .grid, .channels, .features, .metrics { grid-template-columns: 1fr; }
-    h1 { font-size: 46px; }
-  }
-</style>
-</head>
-<body>
-<main class="page">
-  <section class="shell">
-    <aside class="left">
-      <div class="phone">
-        <div class="screen">
-          <div class="notch"></div>
-          <div class="mobile">
-            <div class="mobile-top">
-              <div class="logo">V</div>
-              <div class="pill" id="phone-state">orchestrating</div>
-            </div>
-            <h2 id="phone-title">Good Morning</h2>
-            <p class="mobile-copy" id="phone-copy">VoxOS is arranging commute, agenda, messages, and music into one glanceable interface.</p>
-            <section class="command-card">
-              <div class="label">Voice command</div>
-              <div class="command" id="phone-command">“Hey VoxOS, show today’s agenda.”</div>
-              <div class="wave" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
-            </section>
-            <section class="phone-section">
-              <div class="label" id="phone-section-label">Your day</div>
-              <div class="mini-list" id="phone-list"></div>
-            </section>
-            <button class="action" id="phone-action" type="button">Trigger voice mode</button>
-          </div>
-        </div>
-      </div>
-    </aside>
+  <head>
+    <meta charset="utf-8" />
+    <noscript>
+      <style>
+        #container {
+          display: none;
+        }
+      </style>
+    </noscript>
 
-    <section class="right">
-      <header class="hero">
-        <div class="eyebrow">VoxOS application</div>
-        <h1>VoxOS <span>Orchestrator</span></h1>
-        <p class="lede">An AI assistant that fuses location, calendar, weather, messages, route context, voice, and gaze into one glanceable interface. This page follows the published context-aware orchestrator layout and replaces the original orange system color with VoxOS green.</p>
-        <div class="mode-tabs" aria-label="Workflow selector">
-          <button class="tab active" type="button" data-mode="landing">Overview</button>
-          <button class="tab" type="button" data-mode="dashboard">Dashboard</button>
-          <button class="tab" type="button" data-mode="voice">Voice</button>
-          <button class="tab" type="button" data-mode="gaze">Gaze</button>
-          <button class="tab" type="button" data-mode="driving">Driving</button>
-        </div>
-      </header>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="light dark" />
+    <link rel="preload" href="/voxos/_runtimes/sites-runtime.110f0032eb2b2e94ce78470d4f394e7f7e5b5684a78a171d9ae3c4e96662fc26.js" as="script" crossorigin />
+    <link rel="preload" href="/voxos/_components/v2/e403f65d8529e757b97f19e91560bd93756310ff.js" as="script" crossorigin />
+    <link rel="preload" href="/voxos/_json/e6c9c2e3-8933-4667-93f9-09be7d0542e2/_index.json" as="fetch" />
+        <style id="reset-css"> @layer figreset,figoverridable,reset,theme,base,figutils,components,utilities;@layer figoverridable{:root{font-synthesis:none}}@layer figutils{:root{--banner-height:48px;--banner-height-v2:40px;--full-height-with-banner:calc(100dvh - var(--banner-height))}@media (max-width:600px){.banner-v2-container{left:0 !important;right:0 !important;margin:0 auto !important}}.wrapper-with-banner .min-h-screen{min-height:var(--full-height-with-banner)}.wrapper-with-banner .h-screen{height:var(--full-height-with-banner)}}</style><style id="font-faces-7wxbmn"> @font-face{font-family:"Inter:Semi Bold";font-style:normal;src:url("https://context-aware-orchestrator.figma.site/_woff/v2/Inter_1/Inter_1-english.woff2");font-display:block;unicode-range:U+0000-00A0,U+00A2-00A9,U+00AC-00AE,U+00B0-00B7,U+00B9-00BA,U+00BC-00BE,U+00D7,U+00F7,U+2000-206F,U+2074,U+20AC,U+2122,U+2190-21BB,U+2212,U+2215,U+F8FF,U+FEFF,U+FFFD}@font-face{font-family:"Inter:Semi Bold";font-style:normal;src:url("https://context-aware-orchestrator.figma.site/_woff/v2/Inter_1/Inter_1-rest-latin.woff2");font-display:block;unicode-range:U+00A1,U+00AA-00AB,U+00AF,U+00B8,U+00BB,U+00BF-00D6,U+00D8-00F6,U+00F8-00FF,U+0131,U+0152-0153,U+02B0-02FF}@font-face{font-family:"Inter:Semi Bold";font-style:normal;src:url("https://context-aware-orchestrator.figma.site/_woff/v2/Inter_1/Inter_1-latin-extended-a.woff2");font-display:block;unicode-range:U+0100-0130,U+0132-0151,U+0154-017F}@font-face{font-family:"Inter:Semi Bold";font-style:normal;src:url("https://context-aware-orchestrator.figma.site/_woff/v2/Inter_1/Inter_1-latin-extended-b.woff2");font-display:block;unicode-range:U+0180-024F}@font-face{font-family:"Inter:Semi Bold";font-style:normal;src:url("https://context-aware-orchestrator.figma.site/_woff/v2/Inter_1/Inter_1-latin-extended-additional.woff2");font-display:block;unicode-range:U+1E00-1EFF}@font-face{font-family:"Inter:Semi Bold";font-style:normal;src:url("https://context-aware-orchestrator.figma.site/_woff/v2/Inter_1/Inter_1-rest.woff2");font-display:block;unicode-range:U+0250-02AF,U+0300-1DFF,U+1F00-1FFF,U+2070-2073,U+2075-20AB,U+20AD-2121,U+2123-218F,U+21BC-2211,U+2213-2214,U+2216-F8FE,U+F900-FEFE,U+FF00-FFFC,U+FFFE-FFFF}@font-face{font-family:"Inter";font-style:Regular;src:url("https://context-aware-orchestrator.figma.site/_woff/v2/Inter_1/Inter_1-english.woff2");font-display:block;unicode-range:U+0000-00A0,U+00A2-00A9,U+00AC-00AE,U+00B0-00B7,U+00B9-00BA,U+00BC-00BE,U+00D7,U+00F7,U+2000-206F,U+2074,U+20AC,U+2122,U+2190-21BB,U+2212,U+2215,U+F8FF,U+FEFF,U+FFFD}@font-face{font-family:"Inter";font-style:Regular;src:url("https://context-aware-orchestrator.figma.site/_woff/v2/Inter_1/Inter_1-rest-latin.woff2");font-display:block;unicode-range:U+00A1,U+00AA-00AB,U+00AF,U+00B8,U+00BB,U+00BF-00D6,U+00D8-00F6,U+00F8-00FF,U+0131,U+0152-0153,U+02B0-02FF}@font-face{font-family:"Inter";font-style:Regular;src:url("https://context-aware-orchestrator.figma.site/_woff/v2/Inter_1/Inter_1-latin-extended-a.woff2");font-display:block;unicode-range:U+0100-0130,U+0132-0151,U+0154-017F}@font-face{font-family:"Inter";font-style:Regular;src:url("https://context-aware-orchestrator.figma.site/_woff/v2/Inter_1/Inter_1-latin-extended-b.woff2");font-display:block;unicode-range:U+0180-024F}@font-face{font-family:"Inter";font-style:Regular;src:url("https://context-aware-orchestrator.figma.site/_woff/v2/Inter_1/Inter_1-latin-extended-additional.woff2");font-display:block;unicode-range:U+1E00-1EFF}@font-face{font-family:"Inter";font-style:Regular;src:url("https://context-aware-orchestrator.figma.site/_woff/v2/Inter_1/Inter_1-rest.woff2");font-display:block;unicode-range:U+0250-02AF,U+0300-1DFF,U+1F00-1FFF,U+2070-2073,U+2075-20AB,U+20AD-2121,U+2123-218F,U+21BC-2211,U+2213-2214,U+2216-F8FE,U+F900-FEFE,U+FF00-FFFC,U+FFFE-FFFF}@font-face{font-family:"Menlo:Bold";font-style:normal;src:url("https://context-aware-orchestrator.figma.site/_user_fonts/v1/2d763b52299516ed1f473ffe241680ced0623ed5");font-display:block}@font-face{font-family:"Menlo";font-style:Regular;src:url("https://context-aware-orchestrator.figma.site/_user_fonts/v1/b6fa762b9be6a2aa32935b37f10ce7cba27b8c88");font-display:block;font-weight:400}@font-face{font-family:"Inter:Medium";font-style:normal;src:url("https://context-aware-orchestrator.figma.site/_woff/v2/Inter_1/Inter_1-english.woff2");font-display:block;unicode-range:U+0000-00A0,U+00A2-00A9,U+00AC-00AE,U+00B0-00B7,U+00B9-00BA,U+00BC-00BE,U+00D7,U+00F7,U+2000-206F,U+2074,U+20AC,U+2122,U+2190-21BB,U+2212,U+2215,U+F8FF,U+FEFF,U+FFFD}@font-face{font-family:"Inter:Medium";font-style:normal;src:url("https://context-aware-orchestrator.figma.site/_woff/v2/Inter_1/Inter_1-rest-latin.woff2");font-display:block;unicode-range:U+00A1,U+00AA-00AB,U+00AF,U+00B8,U+00BB,U+00BF-00D6,U+00D8-00F6,U+00F8-00FF,U+0131,U+0152-0153,U+02B0-02FF}@font-face{font-family:"Inter:Medium";font-style:normal;src:url("https://context-aware-orchestrator.figma.site/_woff/v2/Inter_1/Inter_1-latin-extended-a.woff2");font-display:block;unicode-range:U+0100-0130,U+0132-0151,U+0154-017F}@font-face{font-family:"Inter:Medium";font-style:normal;src:url("https://context-aware-orchestrator.figma.site/_woff/v2/Inter_1/Inter_1-latin-extended-b.woff2");font-display:block;unicode-range:U+0180-024F}@font-face{font-family:"Inter:Medium";font-style:normal;src:url("https://context-aware-orchestrator.figma.site/_woff/v2/Inter_1/Inter_1-latin-extended-additional.woff2");font-display:block;unicode-range:U+1E00-1EFF}@font-face{font-family:"Inter:Medium";font-style:normal;src:url("https://context-aware-orchestrator.figma.site/_woff/v2/Inter_1/Inter_1-rest.woff2");font-display:block;unicode-range:U+0250-02AF,U+0300-1DFF,U+1F00-1FFF,U+2070-2073,U+2075-20AB,U+20AD-2121,U+2123-218F,U+21BC-2211,U+2213-2214,U+2216-F8FE,U+F900-FEFE,U+FF00-FFFC,U+FFFE-FFFF}@font-face{font-family:"Inter:Light";font-style:normal;src:url("https://context-aware-orchestrator.figma.site/_woff/v2/Inter_1/Inter_1-english.woff2");font-display:block;unicode-range:U+0000-00A0,U+00A2-00A9,U+00AC-00AE,U+00B0-00B7,U+00B9-00BA,U+00BC-00BE,U+00D7,U+00F7,U+2000-206F,U+2074,U+20AC,U+2122,U+2190-21BB,U+2212,U+2215,U+F8FF,U+FEFF,U+FFFD}@font-face{font-family:"Inter:Light";font-style:normal;src:url("https://context-aware-orchestrator.figma.site/_woff/v2/Inter_1/Inter_1-rest-latin.woff2");font-display:block;unicode-range:U+00A1,U+00AA-00AB,U+00AF,U+00B8,U+00BB,U+00BF-00D6,U+00D8-00F6,U+00F8-00FF,U+0131,U+0152-0153,U+02B0-02FF}@font-face{font-family:"Inter:Light";font-style:normal;src:url("https://context-aware-orchestrator.figma.site/_woff/v2/Inter_1/Inter_1-latin-extended-a.woff2");font-display:block;unicode-range:U+0100-0130,U+0132-0151,U+0154-017F}@font-face{font-family:"Inter:Light";font-style:normal;src:url("https://context-aware-orchestrator.figma.site/_woff/v2/Inter_1/Inter_1-latin-extended-b.woff2");font-display:block;unicode-range:U+0180-024F}@font-face{font-family:"Inter:Light";font-style:normal;src:url("https://context-aware-orchestrator.figma.site/_woff/v2/Inter_1/Inter_1-latin-extended-additional.woff2");font-display:block;unicode-range:U+1E00-1EFF}@font-face{font-family:"Inter:Light";font-style:normal;src:url("https://context-aware-orchestrator.figma.site/_woff/v2/Inter_1/Inter_1-rest.woff2");font-display:block;unicode-range:U+0250-02AF,U+0300-1DFF,U+1F00-1FFF,U+2070-2073,U+2075-20AB,U+20AD-2121,U+2123-218F,U+21BC-2211,U+2213-2214,U+2216-F8FE,U+F900-FEFE,U+FF00-FFFC,U+FFFE-FFFF}@font-face{font-family:"Inter:Regular";font-style:normal;src:url("https://context-aware-orchestrator.figma.site/_woff/v2/Inter_1/Inter_1-english.woff2");font-display:block;unicode-range:U+0000-00A0,U+00A2-00A9,U+00AC-00AE,U+00B0-00B7,U+00B9-00BA,U+00BC-00BE,U+00D7,U+00F7,U+2000-206F,U+2074,U+20AC,U+2122,U+2190-21BB,U+2212,U+2215,U+F8FF,U+FEFF,U+FFFD}@font-face{font-family:"Inter:Regular";font-style:normal;src:url("https://context-aware-orchestrator.figma.site/_woff/v2/Inter_1/Inter_1-rest-latin.woff2");font-display:block;unicode-range:U+00A1,U+00AA-00AB,U+00AF,U+00B8,U+00BB,U+00BF-00D6,U+00D8-00F6,U+00F8-00FF,U+0131,U+0152-0153,U+02B0-02FF}@font-face{font-family:"Inter:Regular";font-style:normal;src:url("https://context-aware-orchestrator.figma.site/_woff/v2/Inter_1/Inter_1-latin-extended-a.woff2");font-display:block;unicode-range:U+0100-0130,U+0132-0151,U+0154-017F}@font-face{font-family:"Inter:Regular";font-style:normal;src:url("https://context-aware-orchestrator.figma.site/_woff/v2/Inter_1/Inter_1-latin-extended-b.woff2");font-display:block;unicode-range:U+0180-024F}@font-face{font-family:"Inter:Regular";font-style:normal;src:url("https://context-aware-orchestrator.figma.site/_woff/v2/Inter_1/Inter_1-latin-extended-additional.woff2");font-display:block;unicode-range:U+1E00-1EFF}@font-face{font-family:"Inter:Regular";font-style:normal;src:url("https://context-aware-orchestrator.figma.site/_woff/v2/Inter_1/Inter_1-rest.woff2");font-display:block;unicode-range:U+0250-02AF,U+0300-1DFF,U+1F00-1FFF,U+2070-2073,U+2075-20AB,U+20AD-2121,U+2123-218F,U+21BC-2211,U+2213-2214,U+2216-F8FE,U+F900-FEFE,U+FF00-FFFC,U+FFFE-FFFF}@font-face{font-family:"Menlo:Regular";font-style:normal;src:url("https://context-aware-orchestrator.figma.site/_user_fonts/v1/b6fa762b9be6a2aa32935b37f10ce7cba27b8c88");font-display:block}</style><style id="body-background-color">body:has([data-breakpoint-id="node-0_4"]) { background-color: #fff }</style><style id="ssr-css">#container .css-uwf2km {position: relative; flex: 1 0 0; display: block;}#container .css-exq74d {min-width: 1px; min-height: 1px; width: 100%; height: 100dvh;}#container .css-j9f0op {width: 100%; height: 100%;}</style><script>window.__serverRenderedCSSClassNames = {"css-uwf2km":"{\"position\":\"relative\",\"flex\":\"1 0 0\",\"display\":\"block\"}","css-exq74d":"{\"minWidth\":1,\"minHeight\":1,\"width\":\"100%\",\"height\":\"100dvh\"}","css-j9f0op":"{\"width\":\"100%\",\"height\":\"100%\"}"}</script><meta id="meta-x9zlec" name="description" content="VoxOS orchestrates your day through touch, voice, and gaze."><meta id="meta-pvq3wi" name="title" content="VoxOS Orchestrator"><meta id="meta-rlk5zj" name="robots" content="index,follow"><meta id="meta-1ab1uk" name="twitter:card" content="summary_large_image"><meta id="meta-fnr44y" name="twitter:url" content="https://shyamzzp.github.io/voxos/"><meta id="meta-8gd7z9" name="twitter:title" content="VoxOS Orchestrator"><meta id="meta-nwstp" name="twitter:description" content="VoxOS orchestrates your day through touch, voice, and gaze."><meta id="meta-k0f0zr" name="twitter:image" content="https://context-aware-orchestrator.figma.site/_assets/v11/b8aceae1cc2dd777eea0635478857ccd5d37c06c.png"><meta id="meta-mfwab7" name="twitter:image:alt" content="VoxOS Orchestrator"><meta id="meta-y65oo0" property="og:title" content="VoxOS Orchestrator"><meta id="meta-yrc9la" property="og:description" content="VoxOS orchestrates your day through touch, voice, and gaze."><meta id="meta-zfz6ci" property="og:type" content="website"><meta id="meta-oncyjb" property="og:url" content="https://shyamzzp.github.io/voxos/"><meta id="meta-t1paac" property="og:image" content="https://context-aware-orchestrator.figma.site/_assets/v11/b8aceae1cc2dd777eea0635478857ccd5d37c06c.png"><meta id="meta-mts0eq" property="og:image:alt" content="VoxOS Orchestrator"><meta id="meta-1imkr9" property="og:site_name" content="VoxOS Orchestrator"><title id="title-glzy19">VoxOS Orchestrator</title>
+    <link rel="stylesheet" href="/voxos/_components/v2/e403f65d8529e757b97f19e91560bd93756310ff.css">
+  </head>
+  <body>
+    
+    
+    <script data-template-id="country-code">window.__cf_country = "IN"</script>
+    <script type="module">
+      import {SitesRuntime} from '/voxos/_runtimes/sites-runtime.110f0032eb2b2e94ce78470d4f394e7f7e5b5684a78a171d9ae3c4e96662fc26.js';
+      const sitesRuntime = new SitesRuntime({
+        container: document.getElementById('container'),
+        env: 'published',
+        bundleId: 'e6c9c2e3-8933-4667-93f9-09be7d0542e2',
+        
+        loadComponentsOverNetwork: true,
+        assetsVersion: 'v11',
+        fontsVersion: 'v1',
+        videosVersion: 'v1',
+        codeComponentsVersion: 'v2',
+        withBaseStyles: false,
+        reportingDomain: "https://www.figma.com",
+        bundleCreationDate: '2026-03-03 21:21:11 UTC',
+        isFigmake: true,
+        enableMetaTags: true,
+      });
+    </script>
+    
+    <div id="container"><div class="tailwind css-uwf2km css-exq74d"></div></div>
+    
 
-      <section class="grid">
-        <article class="card wide">
-          <div class="card-head"><div class="card-title">Input channels</div><div class="tag">touch · voice · gaze</div></div>
-          <div class="channels" id="channels"></div>
-        </article>
-        <article class="card wide">
-          <div class="card-head"><div class="card-title">Feature highlights</div><div class="tag" id="feature-mode">overview</div></div>
-          <div class="features" id="features"></div>
-        </article>
-        <article class="card">
-          <div class="card-head"><div class="card-title">Quality & a11y</div><div class="tag">WCAG</div></div>
-          <div class="stack" id="quality"></div>
-        </article>
-        <article class="card">
-          <div class="card-head"><div class="card-title">Shortcuts</div><div class="tag">fast path</div></div>
-          <div class="stack" id="shortcuts"></div>
-        </article>
-        <article class="card wide">
-          <div class="card-head"><div class="card-title">Runtime status</div><div class="tag">live</div></div>
-          <div class="metrics" id="metrics"></div>
-        </article>
-      </section>
-    </section>
-  </section>
-</main>
-
-<script>
-  const baseChannels = [
-    ["01", "Touch", "Haptic cards, gestures, accordions, 44px targets, and keyboard-safe focus states."],
-    ["02", "Voice", "“Hey VoxOS” wake word, speech recognition, available command list, and command feedback."],
-    ["03", "Gaze", "Camera-based face tracking, calibration, dwell activation, and hands-free card selection."]
-  ];
-  const quality = [
-    ["WCAG AA color contrast", "Green-on-black accents preserve readable states across cards and controls."],
-    ["44x44 px touch targets", "Primary controls keep mobile-safe tap areas."],
-    ["Screen reader optimized", "Mode overlays, command states, and dashboard sections remain explainable."],
-    ["Keyboard & focus management", "Tabs and active workflows are reachable without pointer input."]
-  ];
-  const shortcuts = [
-    ["Voice mode", "Press the primary action or say “Hey VoxOS”."],
-    ["Close overlay", "Esc returns from voice or gaze overlays."],
-    ["Driving mode", "Switch to gaze + voice when touch becomes unsafe."]
-  ];
-  const modes = {
-    landing: {
-      label: "overview",
-      title: "VoxOS Orchestrator",
-      state: "ready",
-      copy: "Touch, gaze, or speak — VoxOS adapts to the moment.",
-      command: "“Hey VoxOS, what matters now?”",
-      phoneLabel: "Three ways to interact",
-      list: [
-        ["Touch", "Haptic cards and accordion UI."],
-        ["Voice", "Wake word with command recognition."],
-        ["Gaze", "Dwell activation for hands-free use."]
-      ],
-      features: [
-        ["Live Routing", "Turn-by-turn context, traffic assessment, and dynamic departure nudges."],
-        ["Context Engine", "Fuses geolocation, time-of-day, weather, and calendar to surface what matters now."],
-        ["Wake Word", "“Hey VoxOS” with fuzzy matching and guarded voice handoff."]
-      ],
-      metrics: [["3", "input channels"], ["290+", "i18n keys"], ["AA", "contrast target"]]
-    },
-    dashboard: {
-      label: "dashboard",
-      title: "Good Morning",
-      state: "orchestrating",
-      copy: "VoxOS is arranging commute, agenda, messages, and music into one glanceable interface.",
-      command: "“Hey VoxOS, show today’s agenda.”",
-      phoneLabel: "Your day",
-      list: [
-        ["Commute", "Leave by 8:42 for current traffic."],
-        ["Schedule", "3 events remain today."],
-        ["Messages", "2 new conversations need attention."]
-      ],
-      features: [
-        ["Today's agenda", "Calendar cards explain upcoming events, current blocks, and follow-up windows."],
-        ["Commute", "Destination, ETA, traffic, and route status stay visible at a glance."],
-        ["Reasoning", "The timeline explains why VoxOS recommends a departure or focus action."]
-      ],
-      metrics: [["3", "events"], ["18m", "commute"], ["2", "new messages"]]
-    },
-    voice: {
-      label: "voice mode",
-      title: "How can I help?",
-      state: "listening",
-      copy: "Voice mode can set destinations, enter driving mode, show schedule, commute, messages, music, and route details.",
-      command: "“Hey VoxOS, enter driving mode.”",
-      phoneLabel: "Available commands",
-      list: [
-        ["Set destination", "Navigate to any address."],
-        ["View agenda", "Show today’s schedule."],
-        ["Show route", "Read route details aloud."]
-      ],
-      features: [
-        ["Command recognized", "Voice feedback confirms understood actions before mode changes."],
-        ["Mic handoff", "Voice state pauses, resumes, or warns when browser support is missing."],
-        ["Accessible fallback", "Screen reader warning keeps touch and gaze available when voice conflicts."]
-      ],
-      metrics: [["6", "commands"], ["1", "wake phrase"], ["0", "unsafe sends"]]
-    },
-    gaze: {
-      label: "gaze tracking",
-      title: "Gaze + Voice",
-      state: "calibrating",
-      copy: "Look at each green dot as it appears. Keep your head still — calibration takes about 10 seconds.",
-      command: "“Hey VoxOS, recalibrate gaze.”",
-      phoneLabel: "VBI status",
-      list: [
-        ["Face", "Detected and tracking."],
-        ["Calibration", "5 points for accurate gaze."],
-        ["Dwell", "Look at cards to activate."]
-      ],
-      features: [
-        ["Gaze Detection", "Face-mesh style tracking maps where the user looks."],
-        ["Dwell activation", "Cards can be selected hands-free after sustained focus."],
-        ["Debug controls", "Hide/show gaze debug, recalibrate, and stop camera from the interface."]
-      ],
-      metrics: [["5", "points"], ["10s", "calibration"], ["1", "face lock"]]
-    },
-    driving: {
-      label: "driving mode",
-      title: "Driving Mode",
-      state: "hands-free",
-      copy: "When touch becomes unsafe, VoxOS switches to gaze + voice so your hands stay on the wheel.",
-      command: "“Hey VoxOS, navigate to the office.”",
-      phoneLabel: "Road context",
-      list: [
-        ["Next event", "Design review at 9:30."],
-        ["Destination", "Office route is active."],
-        ["Weather", "Clear conditions for commute."]
-      ],
-      features: [
-        ["Hands-free driving", "Voice command and gaze activation replace touch-heavy interactions."],
-        ["Route guidance", "Destination, ETA, start street, next turn, and traffic remain visible."],
-        ["Safe transitions", "Touch mode can be restored when driving mode exits."]
-      ],
-      metrics: [["22m", "ETA"], ["9:30", "next event"], ["0", "touch required"]]
-    }
-  };
-  const el = {
-    phoneTitle: document.getElementById("phone-title"),
-    phoneState: document.getElementById("phone-state"),
-    phoneCopy: document.getElementById("phone-copy"),
-    phoneCommand: document.getElementById("phone-command"),
-    phoneLabel: document.getElementById("phone-section-label"),
-    phoneList: document.getElementById("phone-list"),
-    channels: document.getElementById("channels"),
-    features: document.getElementById("features"),
-    quality: document.getElementById("quality"),
-    shortcuts: document.getElementById("shortcuts"),
-    metrics: document.getElementById("metrics"),
-    featureMode: document.getElementById("feature-mode"),
-    action: document.getElementById("phone-action")
-  };
-  function mini(items) {
-    return items.map(([a,b]) => `<div class="mini-row"><div class="mini-dot"></div><div><strong>${a}</strong><span>${b}</span></div></div>`).join("");
-  }
-  function item(items) {
-    return items.map(([a,b]) => `<div class="item"><strong>${a}</strong><span>${b}</span></div>`).join("");
-  }
-  function setMode(key) {
-    const mode = modes[key];
-    document.querySelectorAll(".tab").forEach(tab => tab.classList.toggle("active", tab.dataset.mode === key));
-    el.phoneTitle.textContent = mode.title;
-    el.phoneState.textContent = mode.state;
-    el.phoneCopy.textContent = mode.copy;
-    el.phoneCommand.textContent = mode.command;
-    el.phoneLabel.textContent = mode.phoneLabel;
-    el.phoneList.innerHTML = mini(mode.list);
-    el.features.innerHTML = mode.features.map(([a,b]) => `<div class="feature"><strong>${a}</strong><span>${b}</span></div>`).join("");
-    el.metrics.innerHTML = mode.metrics.map(([a,b]) => `<div class="metric"><strong>${a}</strong><span>${b}</span></div>`).join("");
-    el.featureMode.textContent = mode.label;
-    el.action.textContent = key === "voice" ? "Listening" : key === "gaze" ? "Begin calibration" : key === "driving" ? "Exit driving" : "Trigger voice mode";
-  }
-  el.channels.innerHTML = baseChannels.map(([n,a,b]) => `<div class="channel"><b>${n}</b><strong>${a}</strong><span>${b}</span></div>`).join("");
-  el.quality.innerHTML = item(quality);
-  el.shortcuts.innerHTML = item(shortcuts);
-  document.querySelectorAll(".tab").forEach(tab => tab.addEventListener("click", () => setMode(tab.dataset.mode)));
-  setMode("landing");
-</script>
-</body>
+     <noscript data-nosnippet>
+      <main style="height: 100vh; width: 100vw; background-color: white; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center;">
+        <h1 style="font-size: 24px; padding: 8px; color: black">
+        This site requires JavaScript
+        </h1>
+        <p style="font-size: 16px; padding: 8px; color: #00000080">To view this website, enable JavaScript in your browser settings and reload the page.</p>
+        <form style="margin-top: 12px;" action="">
+          <button type="submit" style="font-size: 14px; color: black; border: 1px solid #0000001a; border-radius: 5px; width: 256px; height: 32px;">
+          Reload page
+          </button>
+        </form>
+      </main>
+    </noscript>
+  </body>
 </html>
