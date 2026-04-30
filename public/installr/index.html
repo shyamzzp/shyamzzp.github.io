@@ -1182,6 +1182,7 @@
   }
 
   .meta-row {
+    align-items: center;
     color: #8a5a00;
     display: flex;
     flex-wrap: wrap;
@@ -1192,6 +1193,23 @@
 
   .meta-row span {
     overflow-wrap: anywhere;
+  }
+
+  .source-link {
+    align-items: center;
+    border: 1px solid var(--soft);
+    border-radius: 5px;
+    color: #111111;
+    display: inline-flex;
+    height: 1.15rem;
+    justify-content: center;
+    text-decoration: none;
+    width: 1.15rem;
+  }
+
+  .source-link svg {
+    height: 0.72rem;
+    width: 0.72rem;
   }
 
   .playbook {
@@ -1571,6 +1589,11 @@
     <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
       <path d="m20 6-11 11-5-5"></path>
     </svg>`;
+  const redirectIcon = `
+    <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M7 17 17 7"></path>
+      <path d="M7 7h10v10"></path>
+    </svg>`;
   const categoryNotes = {
     "Developer Tools": "Command line utilities for repo work, GitHub workflows, and fast local search.",
     Python: "Python environment and package-management installers with verify and rollback notes.",
@@ -1596,6 +1619,26 @@
           ${copyIcon}
         </button>
       </div>
+    `;
+  }
+
+  function sourceUrl(value) {
+    const source = String(value).trim();
+    if (!source || /\s/.test(source)) return "";
+    const candidate = /^https?:\/\//i.test(source) ? source : `https://${source}`;
+    try {
+      const url = new URL(candidate);
+      return url.hostname.includes(".") ? url.href : "";
+    } catch {
+      return "";
+    }
+  }
+
+  function sourceBlock(source) {
+    const url = sourceUrl(source);
+    return `
+      <span>Source: ${escapeHtml(source)}</span>
+      ${url ? `<a class="source-link" href="${escapeHtml(url)}" target="_blank" rel="noopener noreferrer" aria-label="Open ${escapeHtml(source)}">${redirectIcon}</a>` : ""}
     `;
   }
 
@@ -1634,7 +1677,7 @@
                 </details>
                 ${commandBlock(script.command, index, "command", `Copy ${script.name} install command`)}
                 <div class="meta-row">
-                  <span>Source: ${escapeHtml(script.source)}</span>
+                  ${sourceBlock(script.source)}
                 </div>
                 <div class="feedback" aria-live="polite"></div>
               </article>
