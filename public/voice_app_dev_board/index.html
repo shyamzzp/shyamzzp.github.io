@@ -26,7 +26,7 @@ body { margin: 0; }
 .stat-label { font-size: 11px; color: var(--color-text-secondary); margin-bottom: 4px; }
 .stat-val { font-size: 20px; font-weight: 500; color: var(--color-text-primary); }
 
-.columns { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 10px; align-items: start; }
+.columns { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 10px; align-items: start; }
 
 .col-header {
   display: flex; align-items: center; justify-content: space-between;
@@ -89,10 +89,10 @@ body { margin: 0; }
 </div>
 
 <div class="stats-row">
-  <div class="stat-card"><div class="stat-label">Total tasks</div><div class="stat-val" id="s-total">20</div></div>
-  <div class="stat-card"><div class="stat-label">Phase 1 tasks</div><div class="stat-val" id="s-p1" style="color:#1D9E75">8</div></div>
+  <div class="stat-card"><div class="stat-label">Total tasks</div><div class="stat-val" id="s-total">17</div></div>
+  <div class="stat-card"><div class="stat-label">Phase 1 tasks</div><div class="stat-val" id="s-p1" style="color:#1D9E75">9</div></div>
   <div class="stat-card"><div class="stat-label">Est. weeks (P1)</div><div class="stat-val" id="s-weeks">6</div></div>
-  <div class="stat-card"><div class="stat-label">Blockers</div><div class="stat-val" id="s-blockers" style="color:#A32D2D">3</div></div>
+  <div class="stat-card"><div class="stat-label">Blockers</div><div class="stat-val" id="s-blockers" style="color:#A32D2D">1</div></div>
 </div>
 
 <div class="columns" id="board">
@@ -114,14 +114,6 @@ body { margin: 0; }
   </div>
 
   <div>
-    <div class="col-header" style="--col-color:#BA7517; --col-color-lt:#FAEEDA">
-      <span class="col-title">In progress</span>
-      <span class="col-count" id="cnt-progress">4</span>
-    </div>
-    <div id="col-progress"></div>
-  </div>
-
-  <div>
     <div class="col-header" style="--col-color:#1D9E75; --col-color-lt:#E1F5EE">
       <span class="col-title">Done</span>
       <span class="col-count" id="cnt-done">3</span>
@@ -136,10 +128,6 @@ body { margin: 0; }
 const PHASE_COLORS = { p1: '#1D9E75', p2: '#534AB7', p3: '#BA7517' };
 
 const tasks = [
-  { id:1,  col:'progress', phase:'p1', name:'Android project setup', priority:'critical', days:'2d', dep:'', detail:'Init React Native / Kotlin project, configure build tools, add Picovoice SDK dependencies' },
-  { id:2,  col:'progress', phase:'p1', name:'Picovoice access key', priority:'critical', days:'1d', dep:'', detail:'Register at console.picovoice.ai, generate AccessKey, store securely in env config' },
-  { id:3,  col:'progress', phase:'p1', name:'Microphone permission flow', priority:'critical', days:'2d', dep:'', detail:'Android runtime permission request, handle deny/grant states, foreground service setup' },
-  { id:4,  col:'progress', phase:'p1', name:'Push-to-talk prototype', priority:'high', days:'3d', dep:'Needs #3', detail:'Basic UI button that starts/stops mic recording — validates audio pipeline before wake word' },
   { id:5,  col:'next',     phase:'p1', name:'Porcupine integration', priority:'critical', days:'3d', dep:'Needs #1 #2', detail:'Embed Porcupine SDK, train custom wake word ("Hey [AppName]"), configure sensitivity 0.5' },
   { id:6,  col:'next',     phase:'p1', name:'Cobra VAD integration', priority:'high', days:'2d', dep:'Needs #5', detail:'Detect when user stops speaking, configure silence threshold, trigger Rhino on speech end' },
   { id:7,  col:'next',     phase:'p1', name:'Rhino speech-to-intent', priority:'high', days:'4d', dep:'Needs #6', detail:'Define context (commands: call, text, alarm, open app), test structured intent parsing' },
@@ -169,13 +157,13 @@ function priorityBadge(p) {
 }
 
 function renderBoard(filter) {
-  const cols = { backlog:[], next:[], progress:[], done:[] };
+  const cols = { backlog:[], next:[], done:[] };
   tasks.forEach(t => {
     if (filter !== 'all' && t.phase !== filter) return;
     cols[t.col].push(t);
   });
 
-  ['backlog','next','progress','done'].forEach(col => {
+  ['backlog','next','done'].forEach(col => {
     const el = document.getElementById('col-' + col);
     el.innerHTML = cols[col].map(t => `
       <div class="task-card" onclick="sendPrompt('Tell me more about the task: ${t.name}')">
