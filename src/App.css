@@ -244,7 +244,7 @@ hr {
   height: 111.111vh;
   height: 111.111dvh;
   overflow: hidden;
-  padding: 0.75rem 1.5rem;
+  padding: 0.75rem 2.5rem;
 }
 
 .hero.is-info .container {
@@ -1033,7 +1033,7 @@ hr {
 
 @media screen and (max-width: 768px) {
   .hero.is-info .hero-body {
-    padding: 0.75rem 1.5rem;
+    padding: 0.75rem 2.5rem;
   }
 
   .hero.is-info .container {
@@ -1042,11 +1042,11 @@ hr {
 
   .portfolio-top-nav {
     justify-content: flex-start;
-    margin-left: -1.5rem;
-    margin-right: -1.5rem;
+    margin-left: -2.5rem;
+    margin-right: -2.5rem;
     margin-bottom: 0.5rem;
     overflow-x: auto;
-    padding: 0.35rem 1.5rem;
+    padding: 0.35rem 2.5rem;
     scrollbar-width: none;
   }
 
@@ -1062,13 +1062,13 @@ hr {
     display: flex;
     flex: 1;
     gap: 0.85rem;
-    margin-left: -1.5rem;
-    margin-right: -1.5rem;
+    margin-left: -2.5rem;
+    margin-right: -2.5rem;
     min-height: 0;
     overflow-x: auto;
     overflow-y: hidden;
-    padding: 0.25rem 1.5rem 0.75rem;
-    scroll-padding-left: 1.5rem;
+    padding: 0.25rem 2.5rem 0.75rem;
+    scroll-padding-left: 2.5rem;
     scroll-snap-type: x mandatory;
     -webkit-overflow-scrolling: touch;
   }
@@ -1078,7 +1078,7 @@ hr {
   }
 
   .portfolio-panel {
-    flex: 0 0 calc(100vw - 3rem);
+    flex: 0 0 calc(100vw - 5rem);
     height: 100%;
     min-height: 0;
     padding: 0;
