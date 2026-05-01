@@ -173,26 +173,32 @@
 }
 
 .note-case-page-case-study .note-case-block {
-  break-inside: avoid;
+  break-inside: auto;
   display: block;
   margin: 0 0 1.05rem;
+  orphans: 3;
   text-align: justify;
   text-wrap: pretty;
+  widows: 3;
 }
 
 .note-case-page-case-study .note-case-section-title {
   border-bottom: 2px solid rgba(17, 24, 39, 0.86);
   border-top: 1px solid rgba(17, 24, 39, 0.34);
+  break-after: avoid;
   color: #111827 !important;
   font-family: Georgia, "Times New Roman", Times, serif;
   font-size: 0.88rem !important;
   margin-bottom: 0.38rem;
+  page-break-after: avoid;
   padding: 0.32rem 0 0.22rem;
   text-align: left;
   text-transform: uppercase;
+  -webkit-column-break-after: avoid;
 }
 
 .note-case-page-case-study .note-case-block:first-child {
+  break-inside: avoid;
   column-span: all;
   border-bottom: 3px double rgba(17, 24, 39, 0.62);
   border-top: 1px solid rgba(17, 24, 39, 0.34);
@@ -215,6 +221,7 @@
 }
 
 .note-case-page-case-study .note-case-example {
+  break-inside: avoid;
   border-left: 3px solid rgba(17, 24, 39, 0.72);
   color: rgba(17, 24, 39, 0.68);
   font-family: Georgia, "Times New Roman", Times, serif;
@@ -224,6 +231,8 @@
   margin-top: 0.52rem;
   padding-left: 0.6rem;
   text-align: left;
+  page-break-inside: avoid;
+  -webkit-column-break-inside: avoid;
 }
 
 .note-case-page-case-study .note-case-mark {
