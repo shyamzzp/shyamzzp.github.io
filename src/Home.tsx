@@ -14,46 +14,7 @@ import Skills from "./components/Skills/Skills";
 import SocialMedia from "./components/SocialMedia/SocialMedia";
 import cv from "./img/cv.png";
 
-const activeProblems = [
-  {
-    title: "AI learning systems",
-    problem:
-      "People collect AI links, notes, and tools faster than they can turn them into a usable learning path.",
-    basis:
-      "The problem starts with fragmented sources, fast-moving model changes, and unclear sequencing between fundamentals, tools, and production patterns.",
-    subProblems: [
-      "Separating durable concepts from hype.",
-      "Mapping topics into beginner, intermediate, and advanced tracks.",
-      "Keeping examples current without rewriting the whole knowledge base.",
-    ],
-  },
-  {
-    title: "Developer productivity",
-    problem:
-      "Engineering notes, docs, and implementation context often live in too many places to be useful during real work.",
-    basis:
-      "The base issue is retrieval and maintenance: developers need context quickly, but most knowledge systems are optimized for storage, not action.",
-    subProblems: [
-      "Making docs scannable under time pressure.",
-      "Connecting decisions, code examples, and follow-up tasks.",
-      "Reducing repeated explanations across projects and teams.",
-    ],
-  },
-  {
-    title: "Offline-first product flows",
-    problem:
-      "Important workflows break when connectivity is weak, especially payments, field operations, and approval flows.",
-    basis:
-      "The base of the problem is trust: users need clear status, conflict handling, and recovery when the network disappears.",
-    subProblems: [
-      "Designing reliable pending and retry states.",
-      "Reconciling local actions with server truth later.",
-      "Preventing duplicate actions, fraud, and unclear user feedback.",
-    ],
-  },
-];
-
-const panelIds = ["about", "problems", "projects", "active"] as const;
+const panelIds = ["about", "projects", "active"] as const;
 type PanelId = (typeof panelIds)[number];
 const previousWorkTypes = ["Project", "Case study", "Blog"] as const;
 type PreviousWorkType = (typeof previousWorkTypes)[number];
@@ -822,7 +783,6 @@ function Home() {
     React.useState(4);
   const panelRefs = React.useRef<Record<PanelId, HTMLElement | null>>({
     about: null,
-    problems: null,
     projects: null,
     active: null,
   });
@@ -830,7 +790,6 @@ function Home() {
     Record<PanelId, boolean>
   >({
     about: false,
-    problems: false,
     projects: false,
     active: false,
   });
@@ -838,7 +797,6 @@ function Home() {
     Record<PanelId, boolean>
   >({
     about: false,
-    problems: false,
     projects: false,
     active: false,
   });
@@ -1024,7 +982,6 @@ function Home() {
               <a href="#about">About</a>
               <a href="#previous-work">Previous Work</a>
               <a href="#active-work">Active Work</a>
-              <a href="#current-focus">Current Focus</a>
             </nav>
 
             <div className="portfolio-swipe-cue" aria-hidden="true">
@@ -1087,71 +1044,6 @@ function Home() {
                         : "Scroll about column down"
                     }
                     onClick={() => handleScrollIndicatorClick("about")}
-                  />
-                ) : null}
-              </section>
-
-              <section
-                id="current-focus"
-                className="portfolio-panel portfolio-panel-problems"
-              >
-                <div
-                  className="portfolio-panel-scroll"
-                  ref={(element) => {
-                    panelRefs.current.problems = element;
-                  }}
-                >
-                  <div className="portfolio-panel-header">
-                    <p className="portfolio-panel-kicker">04 / Current focus</p>
-                    <h2>Problems I am working on</h2>
-                    <p>
-                      I like problems where product clarity, engineering depth,
-                      and useful interfaces all matter.
-                    </p>
-                  </div>
-
-                  <div className="problem-list">
-                    {activeProblems.map((problem) => (
-                      <article key={problem.title} className="problem-item">
-                        <h3>{problem.title}</h3>
-                        <div className="problem-detail">
-                          <p className="problem-detail-label problem-detail-label-problem">
-                            Problem
-                          </p>
-                          <p>{problem.problem}</p>
-                        </div>
-                        <div className="problem-detail">
-                          <p className="problem-detail-label problem-detail-label-base">
-                            Base
-                          </p>
-                          <p>{problem.basis}</p>
-                        </div>
-                        <div className="problem-detail">
-                          <p className="problem-detail-label problem-detail-label-sub">
-                            Sub-problems
-                          </p>
-                          <ul>
-                            {problem.subProblems.map((subProblem) => (
-                              <li key={subProblem}>{subProblem}</li>
-                            ))}
-                          </ul>
-                        </div>
-                      </article>
-                    ))}
-                  </div>
-                </div>
-                {scrollablePanels.problems ? (
-                  <button
-                    type="button"
-                    className={`portfolio-scroll-hint ${
-                      panelAtBottom.problems ? "portfolio-scroll-hint-up" : ""
-                    }`}
-                    aria-label={
-                      panelAtBottom.problems
-                        ? "Scroll problems column to top"
-                        : "Scroll problems column down"
-                    }
-                    onClick={() => handleScrollIndicatorClick("problems")}
                   />
                 ) : null}
               </section>
@@ -1403,7 +1295,6 @@ function Home() {
             </div>
 
             <div className="portfolio-swipe-dots" aria-hidden="true">
-              <span />
               <span />
               <span />
               <span />

@@ -296,7 +296,7 @@ hr {
   display: grid;
   flex: 1;
   gap: 0.65rem;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   min-height: 0;
   overflow: hidden;
 }
@@ -328,10 +328,6 @@ hr {
 
 .portfolio-panel-active {
   order: 3;
-}
-
-.portfolio-panel-problems {
-  order: 4;
 }
 
 .portfolio-panel-scroll {
@@ -1097,7 +1093,7 @@ hr {
 @media screen and (min-width: 769px) and (max-width: 1240px) {
   .portfolio-panel-track {
     grid-auto-flow: column;
-    grid-template-columns: repeat(4, minmax(340px, 1fr));
+    grid-template-columns: repeat(3, minmax(340px, 1fr));
     overflow-x: auto;
     overflow-y: hidden;
     scrollbar-width: none;
