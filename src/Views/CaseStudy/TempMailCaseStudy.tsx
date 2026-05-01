@@ -51,7 +51,7 @@ export default function TempMailCaseStudy() {
   }, []);
 
   return (
-    <main className="note-case-page">
+    <main className="note-case-page note-case-page-case-study">
       <section className="note-case-shell">
         <a className="note-case-back" href="/">
           <svg viewBox="0 0 24 24" aria-hidden="true">

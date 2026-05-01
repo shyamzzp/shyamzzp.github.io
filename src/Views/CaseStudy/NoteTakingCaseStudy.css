@@ -149,6 +149,102 @@
   margin-top: 0.7rem;
 }
 
+.note-case-page-case-study .note-case-shell {
+  max-width: 1240px;
+}
+
+.note-case-page-case-study .note-case-content {
+  border-top: 3px double rgba(17, 24, 39, 0.72);
+  margin-top: 0.9rem;
+  padding-top: 0.85rem;
+}
+
+.note-case-page-case-study .note-case-narrative {
+  column-count: 3;
+  column-gap: 1.65rem;
+  column-rule: 1px solid rgba(17, 24, 39, 0.18);
+  color: rgba(17, 24, 39, 0.9);
+  display: block;
+  font-family: Georgia, "Times New Roman", Times, serif;
+  font-size: 0.96rem;
+  hyphens: auto;
+  letter-spacing: 0;
+  line-height: 1.58;
+}
+
+.note-case-page-case-study .note-case-block {
+  break-inside: avoid;
+  display: block;
+  margin: 0 0 1.05rem;
+  text-align: justify;
+  text-wrap: pretty;
+}
+
+.note-case-page-case-study .note-case-section-title {
+  border-bottom: 2px solid rgba(17, 24, 39, 0.86);
+  border-top: 1px solid rgba(17, 24, 39, 0.34);
+  color: #111827 !important;
+  font-family: Georgia, "Times New Roman", Times, serif;
+  font-size: 0.88rem !important;
+  margin-bottom: 0.38rem;
+  padding: 0.32rem 0 0.22rem;
+  text-align: left;
+  text-transform: uppercase;
+}
+
+.note-case-page-case-study .note-case-block:first-child {
+  column-span: all;
+  border-bottom: 3px double rgba(17, 24, 39, 0.62);
+  border-top: 1px solid rgba(17, 24, 39, 0.34);
+  font-size: 1.08rem;
+  line-height: 1.62;
+  margin-bottom: 1.15rem;
+  padding: 0.85rem 0 0.95rem;
+}
+
+.note-case-page-case-study .note-case-block:first-child .note-case-section-title {
+  border: 0;
+  float: left;
+  font-family: "Google Sans Display", Arial, Helvetica, sans-serif;
+  font-size: 2.25rem !important;
+  font-weight: 900;
+  line-height: 0.9 !important;
+  margin: 0.05rem 0.85rem 0.2rem 0;
+  max-width: 9.2rem;
+  padding: 0;
+}
+
+.note-case-page-case-study .note-case-example {
+  border-left: 3px solid rgba(17, 24, 39, 0.72);
+  color: rgba(17, 24, 39, 0.68);
+  font-family: Georgia, "Times New Roman", Times, serif;
+  font-size: 0.84rem;
+  font-style: italic;
+  line-height: 1.5;
+  margin-top: 0.52rem;
+  padding-left: 0.6rem;
+  text-align: left;
+}
+
+.note-case-page-case-study .note-case-mark {
+  background: transparent;
+  border-bottom: 1px solid rgba(17, 24, 39, 0.42);
+  border-radius: 0;
+  color: #111827;
+  font-weight: 700;
+  padding: 0;
+}
+
+.note-case-page-case-study .note-case-reference-link {
+  break-inside: avoid;
+  border-top: 1px solid rgba(17, 24, 39, 0.16);
+  color: rgba(17, 24, 39, 0.78);
+  font-family: Georgia, "Times New Roman", Times, serif;
+  margin-top: 0.42rem;
+  padding-top: 0.36rem;
+  text-align: left;
+}
+
 .note-case-mark {
   background: rgba(251, 191, 36, 0.18);
   border-radius: 3px;
@@ -189,4 +285,33 @@
   font-family: "Fira Code", monospace;
   font-size: 0.88em;
   padding: 0.04rem 0.2rem;
+}
+
+@media screen and (max-width: 980px) {
+  .note-case-page-case-study .note-case-narrative {
+    column-count: 2;
+  }
+}
+
+@media screen and (max-width: 640px) {
+  .note-case-page-case-study .note-case-shell {
+    padding-left: 0.85rem;
+    padding-right: 0.85rem;
+  }
+
+  .note-case-page-case-study .note-case-narrative {
+    column-count: 1;
+  }
+
+  .note-case-page-case-study .note-case-block {
+    text-align: left;
+  }
+
+  .note-case-page-case-study .note-case-block:first-child .note-case-section-title {
+    float: none;
+    font-size: 1rem !important;
+    line-height: 1.2 !important;
+    margin: 0 0 0.45rem;
+    max-width: none;
+  }
 }

@@ -922,6 +922,18 @@ function Home() {
   const filteredPreviousWorkItems = previousWorkItems.filter(
     (item) => item.type === previousWorkType
   );
+  const previousWorkCounts = previousWorkTypes.reduce((counts, type) => {
+    counts[type] = previousWorkItems.filter((item) => item.type === type).length;
+    return counts;
+  }, {} as Record<PreviousWorkType, number>);
+  const activeRepositoryCounts = activeWorkItems.reduce(
+    (counts, item) => {
+      counts.total += 1;
+      counts[item.status as "Source" | "Fork"] += 1;
+      return counts;
+    },
+    { total: 0, Source: 0, Fork: 0 }
+  );
 
   useEffect(() => {
     setVisiblePreviousWorkCount(4);
@@ -1066,6 +1078,17 @@ function Home() {
                       have shipped or explored.
                     </p>
                     <div
+                      className="portfolio-count-strip"
+                      aria-label="Previous work counts"
+                    >
+                      {previousWorkTypes.map((type) => (
+                        <span key={type}>
+                          {type === "Case study" ? "Case studies" : `${type}s`}:{" "}
+                          {previousWorkCounts[type]}
+                        </span>
+                      ))}
+                    </div>
+                    <div
                       className="previous-work-filter"
                       aria-label="Filter previous work"
                     >
@@ -1080,7 +1103,8 @@ function Home() {
                           }`}
                           onClick={() => setPreviousWorkType(type)}
                         >
-                          {type === "Case study" ? "Case studies" : `${type}s`}
+                          {type === "Case study" ? "Case studies" : `${type}s`}{" "}
+                          <span>{previousWorkCounts[type]}</span>
                         </button>
                       ))}
                     </div>
@@ -1236,6 +1260,14 @@ function Home() {
                       Every active public repository is mapped here with the
                       problem space and goal behind the work.
                     </p>
+                    <div
+                      className="portfolio-count-strip"
+                      aria-label="Active GitHub repository counts"
+                    >
+                      <span>{activeRepositoryCounts.total} active repositories</span>
+                      <span>{activeRepositoryCounts.Source} source</span>
+                      <span>{activeRepositoryCounts.Fork} forks</span>
+                    </div>
                   </div>
 
                   <div className="active-work-list">
