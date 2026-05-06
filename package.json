@@ -22,7 +22,7 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "predeploy": "npm run build",
+    "predeploy": "pnpm run build",
     "deploy": "gh-pages -d build",
     "start": "react-scripts start",
     "dev": "react-scripts start",
@@ -53,6 +53,7 @@
   "devDependencies": {
     "@supabase/supabase-js": "^2.26.0",
     "dotenv": "^16.3.1",
+    "eslint-config-react-app": "^7.0.1",
     "gh-pages": "^5.0.0",
     "jotai": "^2.11.0",
     "lucide": "^0.316.0",
@@ -60,5 +61,15 @@
     "react-markdown": "^8.0.7",
     "rsuite": "^5.35.1",
     "tailwindcss": "^3.3.2"
+  },
+  "packageManager": "pnpm@10.33.4",
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "bufferutil",
+      "core-js",
+      "core-js-pure",
+      "es5-ext",
+      "utf-8-validate"
+    ]
   }
 }
