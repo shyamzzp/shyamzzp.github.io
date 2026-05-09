@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-label="VOXos">
+  <rect width="128" height="128" fill="#171512"/>
+  <rect width="28" height="28" fill="#276749"/>
+  <rect x="100" width="28" height="28" fill="#276749"/>
+  <rect y="100" width="28" height="28" fill="#276749"/>
+  <text x="28" y="72" fill="#fff2c8" font-family="system-ui, -apple-system, sans-serif" font-size="34" font-weight="300">Vox</text>
+  <text x="80" y="78" fill="#7fd09d" font-family="system-ui, -apple-system, sans-serif" font-size="23" font-weight="300">OS</text>
+</svg>
