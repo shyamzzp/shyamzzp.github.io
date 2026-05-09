@@ -19,6 +19,11 @@ export const publishedFiles = [
     href: "/voxos_info",
     type: "HTML",
   },
+  {
+    title: "Vox OS Docs",
+    href: "/voxos-docs",
+    type: "HTML",
+  },
   { title: "NM Archstudio 01", href: "/nm.archstudio_01", type: "HTML" },
   { title: "NM Archstudio 02", href: "/nm.archstudio_02", type: "HTML" },
   { title: "NM Archstudio 03", href: "/nm.archstudio_03", type: "HTML" },

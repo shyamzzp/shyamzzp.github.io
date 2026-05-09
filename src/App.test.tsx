@@ -2,8 +2,14 @@ import React from 'react';
 import { render, screen } from '@testing-library/react';
 import App from './App';
 
-test('renders learn react link', () => {
+jest.mock('react-markdown', () => {
+  return function ReactMarkdownMock({ children }: { children: React.ReactNode }) {
+    return <>{children}</>;
+  };
+});
+
+test('renders the portfolio shell', () => {
   render(<App />);
-  const linkElement = screen.getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
+  const linkElement = screen.getByText(/shyam s\. suthar/i);
+  expect(linkElement).toBeTruthy();
 });
