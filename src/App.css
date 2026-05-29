@@ -331,6 +331,11 @@ hr {
   order: 3;
 }
 
+.portfolio-panel-resume {
+  grid-column: span 2;
+  order: 2;
+}
+
 .portfolio-panel-scroll {
   height: 100%;
   overscroll-behavior: contain;
@@ -457,6 +462,65 @@ hr {
   font-size: 0.68rem;
   font-weight: 800;
   padding: 0.2rem 0.42rem;
+}
+
+.resume-preview-scroll {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  overflow: hidden;
+  padding-bottom: 1.15rem;
+}
+
+.resume-preview-header {
+  align-items: flex-start;
+  display: flex;
+  flex-shrink: 0;
+  gap: 1rem;
+  justify-content: space-between;
+  margin-bottom: 0;
+}
+
+.resume-preview-header h2 {
+  margin-bottom: 0.45rem;
+}
+
+.resume-preview-open {
+  background: #2563eb;
+  border-radius: 6px;
+  color: #ffffff;
+  flex-shrink: 0;
+  font-size: 0.78rem;
+  font-weight: 800;
+  line-height: 1;
+  padding: 0.56rem 0.72rem;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.resume-preview-open:hover,
+.resume-preview-open:focus {
+  background: #1d4ed8;
+  color: #ffffff;
+  outline: none;
+  text-decoration: none;
+}
+
+.resume-preview-frame-shell {
+  background: #ffffff;
+  border: 1px solid rgba(17, 24, 39, 0.12);
+  border-radius: 8px;
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.resume-preview-frame {
+  background: #ffffff;
+  border: 0;
+  display: block;
+  height: 100%;
+  width: 100%;
 }
 
 .portfolio-panel-kicker {
@@ -1118,6 +1182,15 @@ hr {
     min-height: 0;
     padding: 0;
     scroll-snap-align: start;
+  }
+
+  .portfolio-panel-resume {
+    grid-column: auto;
+  }
+
+  .resume-preview-header {
+    flex-direction: column;
+    gap: 0.65rem;
   }
 
   .portfolio-swipe-dots {
