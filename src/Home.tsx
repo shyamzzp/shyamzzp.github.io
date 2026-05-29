@@ -220,28 +220,10 @@ function Home() {
                     panelRefs.current.resume = element;
                   }}
                 >
-                  <div className="portfolio-panel-header resume-preview-header">
-                    <div>
-                      <p className="portfolio-panel-kicker">02 / Resume</p>
-                      <h2>Resume preview</h2>
-                      <p>
-                        Current PDF resume displayed in the space previously
-                        used by the second and third columns.
-                      </p>
-                    </div>
-                    <a
-                      className="resume-preview-open"
-                      href="/ShyamSS-resume.pdf"
-                      target="_blank"
-                      rel="noreferrer"
-                    >
-                      Open PDF
-                    </a>
-                  </div>
                   <div className="resume-preview-frame-shell">
                     <iframe
                       className="resume-preview-frame"
-                      src="/ShyamSS-resume.pdf#toolbar=0&navpanes=0&scrollbar=1"
+                      src="/ShyamSS-resume.pdf#view=FitH&toolbar=0&navpanes=0&scrollbar=1"
                       title="Shyam Suthar resume preview"
                     />
                   </div>
