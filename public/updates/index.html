@@ -3,7 +3,10 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Updates Board</title>
+  <title>Updates Pad</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=IBM+Plex+Mono:wght@400;500&family=JetBrains+Mono:wght@400;500&family=Share+Tech+Mono&family=VT323&display=swap" rel="stylesheet">
   <style>
     :root {
       color-scheme: dark;
@@ -17,21 +20,21 @@
       --accent-2: #f4c15d;
       --danger: #ff7f7f;
       --term-bg: #0a0c0a;
-      --term-green: #3ee07f;
       --radius: 10px;
       font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     }
 
     * { box-sizing: border-box; }
 
+    html, body { height: 100%; }
+
     body {
       margin: 0;
-      min-height: 100vh;
-      background:
-        radial-gradient(1100px 500px at 85% -10%, rgba(110, 215, 183, 0.08), transparent 60%),
-        radial-gradient(900px 420px at 5% 110%, rgba(244, 193, 93, 0.06), transparent 60%),
-        var(--bg);
+      background: var(--bg);
       color: var(--text);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
     }
 
     header {
@@ -39,52 +42,43 @@
       align-items: center;
       justify-content: space-between;
       gap: 16px;
-      padding: 18px 24px;
+      padding: 14px 22px;
       border-bottom: 1px solid var(--line);
-      backdrop-filter: blur(6px);
-      position: sticky;
-      top: 0;
-      z-index: 50;
-      background: rgba(13, 15, 18, 0.85);
+      background: rgba(13, 15, 18, 0.9);
+      z-index: 200;
+      flex: 0 0 auto;
     }
 
-    header h1 {
-      margin: 0;
-      font-size: 18px;
-      letter-spacing: 0.4px;
-    }
-
+    header h1 { margin: 0; font-size: 17px; letter-spacing: 0.4px; }
     header h1 span { color: var(--accent); }
 
     .header-actions { display: flex; gap: 8px; flex-wrap: wrap; }
 
-    button {
+    button, select {
       font: inherit;
       color: var(--text);
       background: var(--panel-2);
       border: 1px solid var(--line);
       border-radius: 8px;
-      padding: 7px 12px;
+      padding: 6px 11px;
       cursor: pointer;
-      transition: border-color 0.15s, background 0.15s, transform 0.1s;
+      transition: border-color 0.15s, transform 0.1s;
     }
 
-    button:hover { border-color: var(--accent); }
+    button:hover, select:hover { border-color: var(--accent); }
     button:active { transform: scale(0.97); }
     button.danger:hover { border-color: var(--danger); color: var(--danger); }
 
-    main {
-      display: grid;
-      grid-template-columns: 230px 1fr;
-      gap: 0;
-      min-height: calc(100vh - 63px);
-    }
+    .workspace { display: flex; flex: 1 1 auto; min-height: 0; }
 
     /* ---------- palette ---------- */
     aside {
+      flex: 0 0 215px;
       border-right: 1px solid var(--line);
-      padding: 18px 14px;
+      padding: 16px 13px;
       background: var(--panel);
+      overflow-y: auto;
+      z-index: 150;
     }
 
     aside h2 {
@@ -108,17 +102,15 @@
 
     .palette-item:hover { border-color: var(--accent); transform: translateY(-1px); }
     .palette-item:active { cursor: grabbing; }
-
     .palette-item .pi-title { font-size: 13px; font-weight: 600; margin-bottom: 3px; }
     .palette-item .pi-desc { font-size: 11px; color: var(--muted); line-height: 1.4; }
-
-    .palette-item.term .pi-title { color: var(--term-green); font-family: "SF Mono", ui-monospace, Menlo, monospace; }
+    .palette-item.term .pi-title { color: #3ee07f; font-family: "JetBrains Mono", ui-monospace, Menlo, monospace; }
 
     aside .hint {
-      margin-top: 18px;
+      margin-top: 16px;
       font-size: 11px;
       color: var(--muted);
-      line-height: 1.6;
+      line-height: 1.65;
       border-top: 1px solid var(--line);
       padding-top: 12px;
     }
@@ -132,61 +124,76 @@
       font-family: ui-monospace, Menlo, monospace;
     }
 
-    /* ---------- canvas ---------- */
-    #canvas {
-      padding: 24px;
-      display: flex;
-      flex-direction: column;
-      gap: 14px;
-      align-content: start;
+    /* ---------- pad (freeform canvas) ---------- */
+    #viewport {
+      flex: 1 1 auto;
+      overflow: auto;
+      position: relative;
     }
 
-    #canvas.drag-over {
-      outline: 2px dashed var(--accent);
-      outline-offset: -10px;
-      border-radius: var(--radius);
+    #pad {
+      position: relative;
+      width: 3200px;
+      height: 2400px;
+      background-image: radial-gradient(circle, rgba(154, 163, 173, 0.18) 1px, transparent 1px);
+      background-size: 24px 24px;
     }
+
+    #pad.drag-over { outline: 2px dashed var(--accent); outline-offset: -8px; }
 
     #empty-state {
+      position: absolute;
+      top: 120px;
+      left: 50%;
+      transform: translateX(-50%);
       border: 1px dashed var(--line);
       border-radius: var(--radius);
-      padding: 60px 20px;
+      padding: 44px 56px;
       text-align: center;
       color: var(--muted);
       font-size: 14px;
       line-height: 1.7;
+      pointer-events: none;
+      white-space: nowrap;
     }
 
-    /* ---------- cards ---------- */
+    /* ---------- boxes ---------- */
     .card {
+      position: absolute;
       border: 1px solid var(--line);
       border-radius: var(--radius);
       background: var(--panel);
-      overflow: hidden;
-      transition: border-color 0.15s, opacity 0.15s, box-shadow 0.15s;
+      display: flex;
+      flex-direction: column;
+      min-width: 220px;
+      min-height: 140px;
+      box-shadow: 0 8px 28px rgba(0, 0, 0, 0.45);
+      transition: border-color 0.15s, box-shadow 0.15s;
     }
 
-    .card.dragging { opacity: 0.4; }
-    .card.drop-before { box-shadow: 0 -3px 0 0 var(--accent); }
-    .card.drop-after { box-shadow: 0 3px 0 0 var(--accent); }
+    .card.moving { opacity: 0.92; cursor: grabbing; box-shadow: 0 16px 44px rgba(0, 0, 0, 0.6); }
+    .card:focus-within { border-color: rgba(110, 215, 183, 0.5); }
 
     .card-head {
       display: flex;
       align-items: center;
-      gap: 8px;
-      padding: 8px 10px;
+      gap: 7px;
+      padding: 7px 9px;
       background: var(--panel-2);
       border-bottom: 1px solid var(--line);
-    }
-
-    .drag-handle {
+      border-radius: var(--radius) var(--radius) 0 0;
       cursor: grab;
-      color: var(--muted);
-      font-size: 14px;
-      padding: 0 4px;
       user-select: none;
+      flex: 0 0 auto;
     }
-    .drag-handle:active { cursor: grabbing; }
+    .card-head:active { cursor: grabbing; }
+
+    .term-dots { display: none; gap: 5px; align-items: center; }
+    .card.terminal .term-dots { display: inline-flex; }
+    .term-dots i { width: 10px; height: 10px; border-radius: 50%; }
+    .term-dots i:nth-child(1) { background: #ff5f56; }
+    .term-dots i:nth-child(2) { background: #ffbd2e; }
+    .term-dots i:nth-child(3) { background: #27c93f; }
 
     .card-title {
       flex: 1;
@@ -195,18 +202,19 @@
       border-radius: 6px;
       color: var(--text);
       font: inherit;
-      font-size: 13px;
+      font-size: 12.5px;
       font-weight: 600;
-      padding: 3px 6px;
+      padding: 2px 6px;
       min-width: 0;
+      cursor: text;
     }
     .card-title:hover { border-color: var(--line); }
     .card-title:focus { outline: none; border-color: var(--accent); background: var(--bg); }
 
-    .card-tools { display: flex; gap: 4px; }
+    .card-tools { display: flex; gap: 3px; }
 
     .tool-btn {
-      padding: 4px 8px;
+      padding: 3px 7px;
       font-size: 11px;
       border-radius: 6px;
       background: transparent;
@@ -217,17 +225,30 @@
     .tool-btn.on { color: var(--accent); border-color: var(--accent); background: rgba(110, 215, 183, 0.08); }
     .tool-btn.del:hover { color: var(--danger); border-color: var(--danger); }
 
-    .card-body { position: relative; }
+    .card-body { position: relative; flex: 1 1 auto; display: flex; flex-direction: column; min-height: 0; }
+
+    .term-prompt {
+      display: none;
+      gap: 8px;
+      padding: 8px 14px 0;
+      font-size: 0.9em;
+      opacity: 0.75;
+      user-select: none;
+      flex: 0 0 auto;
+    }
+    .card.terminal .term-prompt { display: flex; }
 
     .editor {
-      min-height: 90px;
-      padding: 14px 16px;
-      font-size: 14px;
-      line-height: 1.65;
+      flex: 1 1 auto;
+      min-height: 0;
+      padding: 12px 14px;
+      line-height: 1.6;
       outline: none;
       white-space: pre-wrap;
       word-break: break-word;
+      overflow-y: auto;
       transition: filter 0.25s;
+      border-radius: 0 0 var(--radius) var(--radius);
     }
 
     .editor:empty::before {
@@ -252,50 +273,121 @@
       color: var(--muted);
       pointer-events: none;
       opacity: 0.9;
+      font-family: Inter, system-ui, sans-serif;
     }
     .card.blurred .card-body:focus-within::after { display: none; }
 
-    /* terminal option */
-    .card.terminal { border-color: #1f3b2a; }
-    .card.terminal .card-head { background: #101510; border-bottom-color: #1f3b2a; }
+    /* terminal option — color comes from --tc set inline per card */
+    .card.terminal { border-color: color-mix(in srgb, var(--tc, #3ee07f) 30%, var(--line)); }
+    .card.terminal .card-head {
+      background: #101510;
+      border-bottom-color: color-mix(in srgb, var(--tc, #3ee07f) 25%, var(--line));
+    }
+    .card.terminal .card-body { background: var(--term-bg); border-radius: 0 0 var(--radius) var(--radius); }
+    .card.terminal .term-prompt,
     .card.terminal .editor {
-      background: var(--term-bg);
-      color: var(--term-green);
-      font-family: "SF Mono", ui-monospace, Menlo, Consolas, monospace;
-      font-size: 13px;
-      text-shadow: 0 0 6px rgba(62, 224, 127, 0.35);
+      color: var(--tc, #3ee07f);
+      text-shadow: 0 0 6px color-mix(in srgb, var(--tc, #3ee07f) 40%, transparent);
     }
-    .card.terminal .editor::selection { background: rgba(62, 224, 127, 0.25); }
-    .card.terminal .term-prompt {
-      display: flex;
-      gap: 8px;
-      padding: 8px 16px 0;
-      background: var(--term-bg);
-      font-family: "SF Mono", ui-monospace, Menlo, monospace;
-      font-size: 12px;
-      color: var(--term-green);
-      opacity: 0.8;
-      user-select: none;
-    }
-    .term-dots { display: none; gap: 6px; align-items: center; margin-right: 4px; }
-    .card.terminal .term-dots { display: inline-flex; }
-    .term-dots i { width: 10px; height: 10px; border-radius: 50%; }
-    .term-dots i:nth-child(1) { background: #ff5f56; }
-    .term-dots i:nth-child(2) { background: #ffbd2e; }
-    .term-dots i:nth-child(3) { background: #27c93f; }
+    .card.terminal .editor { background: transparent; caret-color: var(--tc, #3ee07f); }
+    .card.terminal .editor::selection { background: color-mix(in srgb, var(--tc, #3ee07f) 28%, transparent); }
+    .card.terminal .editor:empty::before { color: color-mix(in srgb, var(--tc, #3ee07f) 45%, transparent); }
 
-    .term-prompt { display: none; }
+    /* scanlines for extra CRT feel */
+    .card.terminal .card-body::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background: repeating-linear-gradient(0deg, rgba(255,255,255,0.022) 0 1px, transparent 1px 3px);
+      border-radius: 0 0 var(--radius) var(--radius);
+    }
+
+    /* ---------- style (Aa) popover ---------- */
+    .style-pop {
+      position: absolute;
+      top: 38px;
+      right: 6px;
+      z-index: 30;
+      background: var(--panel-2);
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 12px;
+      width: 218px;
+      box-shadow: 0 12px 36px rgba(0, 0, 0, 0.55);
+      display: none;
+      font-family: Inter, system-ui, sans-serif;
+      cursor: default;
+    }
+    .style-pop.open { display: block; }
+
+    .style-pop label {
+      display: block;
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 1.1px;
+      color: var(--muted);
+      margin: 10px 0 5px;
+    }
+    .style-pop label:first-child { margin-top: 0; }
+
+    .style-pop select {
+      width: 100%;
+      padding: 6px 8px;
+      font-size: 13px;
+      background: var(--bg);
+    }
+
+    .size-row { display: flex; align-items: center; gap: 8px; }
+    .size-row button { padding: 3px 10px; font-size: 14px; line-height: 1; background: var(--bg); }
+    .size-row .size-val { font-size: 13px; min-width: 44px; text-align: center; color: var(--text); }
+
+    .swatches { display: flex; gap: 7px; }
+    .swatch {
+      width: 24px; height: 24px;
+      border-radius: 50%;
+      border: 2px solid transparent;
+      cursor: pointer;
+      padding: 0;
+      background-clip: padding-box;
+    }
+    .swatch.sel { border-color: var(--text); }
+
+    /* ---------- resize handle ---------- */
+    .resize-handle {
+      position: absolute;
+      right: 0; bottom: 0;
+      width: 18px; height: 18px;
+      cursor: nwse-resize;
+      z-index: 10;
+    }
+    .resize-handle::after {
+      content: "";
+      position: absolute;
+      right: 4px; bottom: 4px;
+      width: 8px; height: 8px;
+      border-right: 2px solid var(--muted);
+      border-bottom: 2px solid var(--muted);
+      border-radius: 1px;
+      opacity: 0.7;
+    }
 
     .card-foot {
+      flex: 0 0 auto;
       display: flex;
       justify-content: space-between;
-      padding: 6px 12px;
-      font-size: 10.5px;
+      gap: 8px;
+      padding: 4px 22px 5px 12px;
+      font-size: 10px;
       color: var(--muted);
       border-top: 1px solid var(--line);
       background: var(--panel);
+      border-radius: 0 0 var(--radius) var(--radius);
+      font-family: Inter, system-ui, sans-serif;
+      white-space: nowrap;
+      overflow: hidden;
     }
-    .card.terminal .card-foot { background: #0c100c; border-top-color: #1f3b2a; }
+    .card.terminal .card-foot { background: #0c100c; border-top-color: color-mix(in srgb, var(--tc, #3ee07f) 20%, var(--line)); }
 
     .toast {
       position: fixed;
@@ -310,19 +402,21 @@
       opacity: 0;
       pointer-events: none;
       transition: opacity 0.2s, transform 0.2s;
-      z-index: 100;
+      z-index: 300;
     }
     .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 
     @media (max-width: 720px) {
-      main { grid-template-columns: 1fr; }
-      aside { border-right: none; border-bottom: 1px solid var(--line); }
+      .workspace { flex-direction: column; }
+      aside { flex: 0 0 auto; border-right: none; border-bottom: 1px solid var(--line); display: flex; gap: 10px; overflow-x: auto; }
+      aside h2, aside .hint { display: none; }
+      .palette-item { margin-bottom: 0; min-width: 150px; }
     }
   </style>
 </head>
 <body>
   <header>
-    <h1>updates<span>.board</span></h1>
+    <h1>updates<span>.pad</span></h1>
     <div class="header-actions">
       <button id="btn-add-text">+ Text</button>
       <button id="btn-add-term">+ Terminal</button>
@@ -332,30 +426,33 @@
     </div>
   </header>
 
-  <main>
+  <div class="workspace">
     <aside>
       <h2>Components</h2>
       <div class="palette-item" draggable="true" data-type="text">
         <div class="pi-title">📝 Text Editor</div>
-        <div class="pi-desc">Editable rich text block. Toggle blur to hide sensitive notes.</div>
+        <div class="pi-desc">Free-floating note. Pick any font &amp; size, toggle blur to hide it.</div>
       </div>
       <div class="palette-item term" draggable="true" data-type="terminal">
         <div class="pi-title">$ Terminal</div>
-        <div class="pi-desc">Monospace block with CRT glow and mac-style traffic lights.</div>
+        <div class="pi-desc">CRT terminal with scanlines, retro mono fonts &amp; phosphor color themes.</div>
       </div>
       <div class="hint">
-        Drag a component onto the canvas, or click the <kbd>+</kbd> buttons above.<br><br>
-        Drag the <kbd>⋮⋮</kbd> handle to reorder cards. Everything autosaves to your browser.
+        Drag a component anywhere on the pad — it drops where you point.<br><br>
+        Drag a box by its title bar to move it. Drag the corner <kbd>◢</kbd> to resize.<br><br>
+        <kbd>Aa</kbd> opens font, size &amp; color options. Everything autosaves to your browser.
       </div>
     </aside>
 
-    <section id="canvas">
-      <div id="empty-state">
-        Nothing here yet.<br>
-        Drag a component from the left panel — or click <strong>+ Text</strong> / <strong>+ Terminal</strong> above.
+    <div id="viewport">
+      <div id="pad">
+        <div id="empty-state">
+          Blank pad.<br>
+          Drag a component from the left — or click <strong>+ Text</strong> / <strong>+ Terminal</strong> above.
+        </div>
       </div>
-    </section>
-  </main>
+    </div>
+  </div>
 
   <div class="toast" id="toast"></div>
   <input type="file" id="file-input" accept="application/json" hidden>
@@ -364,64 +461,129 @@
     (function () {
       'use strict';
 
-      var STORE_KEY = 'updates-board-v1';
-      var canvas = document.getElementById('canvas');
+      var STORE_KEY = 'updates-pad-v2';
+      var LEGACY_KEY = 'updates-board-v1';
+
+      var pad = document.getElementById('pad');
+      var viewport = document.getElementById('viewport');
       var emptyState = document.getElementById('empty-state');
       var toastEl = document.getElementById('toast');
       var fileInput = document.getElementById('file-input');
       var toastTimer = null;
 
+      var FONTS = [
+        { id: 'inter',     label: 'Inter (sans)',     stack: 'Inter, ui-sans-serif, system-ui, sans-serif',        mono: false },
+        { id: 'serif',     label: 'Georgia (serif)',  stack: 'Georgia, "Times New Roman", serif',                  mono: false },
+        { id: 'menlo',     label: 'Menlo / SF Mono',  stack: '"SF Mono", Menlo, ui-monospace, Consolas, monospace', mono: true },
+        { id: 'jetbrains', label: 'JetBrains Mono',   stack: '"JetBrains Mono", ui-monospace, Menlo, monospace',   mono: true },
+        { id: 'fira',      label: 'Fira Code',        stack: '"Fira Code", ui-monospace, Menlo, monospace',        mono: true },
+        { id: 'plex',      label: 'IBM Plex Mono',    stack: '"IBM Plex Mono", ui-monospace, Menlo, monospace',    mono: true },
+        { id: 'sharetech', label: 'Share Tech Mono',  stack: '"Share Tech Mono", ui-monospace, Menlo, monospace',  mono: true },
+        { id: 'vt323',     label: 'VT323 (retro CRT)', stack: '"VT323", ui-monospace, Menlo, monospace',           mono: true }
+      ];
+
+      var TERM_COLORS = [
+        { id: 'green', label: 'Phosphor green', hex: '#3ee07f' },
+        { id: 'amber', label: 'Amber',          hex: '#ffb000' },
+        { id: 'cyan',  label: 'Cyan',           hex: '#4dd8e6' },
+        { id: 'white', label: 'Paper white',    hex: '#e8e8e8' }
+      ];
+
+      var FONT_MIN = 10, FONT_MAX = 34;
+
+      function fontById(id) {
+        return FONTS.find(function (f) { return f.id === id; }) || FONTS[0];
+      }
+      function termColorById(id) {
+        return TERM_COLORS.find(function (c) { return c.id === id; }) || TERM_COLORS[0];
+      }
+
       /* ---------------- state (CRUD core) ---------------- */
 
       var cards = load();
+      var maxZ = cards.reduce(function (m, c) { return Math.max(m, c.z || 1); }, 1);
+
+      function defaultFontFor(type) { return type === 'terminal' ? 'vt323' : 'inter'; }
+      function defaultSizeFor(type, fontId) { return fontId === 'vt323' ? 20 : (type === 'terminal' ? 14 : 14); }
+
+      function normalize(c, i) {
+        var type = c.type === 'terminal' ? 'terminal' : 'text';
+        var font = c.font && fontById(c.font).id === c.font ? c.font : defaultFontFor(type);
+        return {
+          id: c.id || uid(),
+          type: type,
+          title: String(c.title || (type === 'terminal' ? 'terminal' : 'untitled note')),
+          content: String(c.content || ''),
+          blur: !!c.blur,
+          font: font,
+          fontSize: clamp(parseInt(c.fontSize, 10) || defaultSizeFor(type, font), FONT_MIN, FONT_MAX),
+          termColor: c.termColor && termColorById(c.termColor).id === c.termColor ? c.termColor : 'green',
+          x: isFinite(c.x) ? c.x : 60 + (i % 5) * 60,
+          y: isFinite(c.y) ? c.y : 40 + i * 70,
+          w: clamp(isFinite(c.w) ? c.w : 380, 220, 1600),
+          h: clamp(isFinite(c.h) ? c.h : 240, 140, 1200),
+          z: isFinite(c.z) ? c.z : i + 1,
+          createdAt: c.createdAt || nowIso(),
+          updatedAt: c.updatedAt || nowIso()
+        };
+      }
 
       function load() {
         try {
           var raw = localStorage.getItem(STORE_KEY);
-          var parsed = raw ? JSON.parse(raw) : [];
-          return Array.isArray(parsed) ? parsed : [];
+          if (!raw) {
+            // migrate v1 list-layout boards into freeform positions
+            var legacy = localStorage.getItem(LEGACY_KEY);
+            if (legacy) {
+              var old = JSON.parse(legacy);
+              if (Array.isArray(old) && old.length) {
+                var migrated = old.map(normalize);
+                localStorage.setItem(STORE_KEY, JSON.stringify(migrated));
+                return migrated;
+              }
+            }
+            return [];
+          }
+          var parsed = JSON.parse(raw);
+          return Array.isArray(parsed) ? parsed.map(normalize) : [];
         } catch (e) { return []; }
       }
 
-      function save() {
-        localStorage.setItem(STORE_KEY, JSON.stringify(cards));
-      }
+      function save() { localStorage.setItem(STORE_KEY, JSON.stringify(cards)); }
 
       function uid() {
         return 'c_' + Date.now().toString(36) + '_' + Math.random().toString(36).slice(2, 8);
       }
 
       function nowIso() { return new Date().toISOString(); }
+      function clamp(v, lo, hi) { return Math.min(hi, Math.max(lo, v)); }
 
       // CREATE
-      function createCard(type, index) {
-        var card = {
-          id: uid(),
-          type: type === 'terminal' ? 'terminal' : 'text',
-          title: type === 'terminal' ? 'terminal' : 'untitled note',
-          content: '',
-          blur: false,
-          createdAt: nowIso(),
-          updatedAt: nowIso()
-        };
-        if (typeof index === 'number' && index >= 0 && index <= cards.length) {
-          cards.splice(index, 0, card);
-        } else {
-          cards.push(card);
-        }
+      function createCard(type, x, y) {
+        var n = cards.length;
+        var font = defaultFontFor(type);
+        var card = normalize({
+          type: type,
+          font: font,
+          fontSize: defaultSizeFor(type, font),
+          x: isFinite(x) ? Math.max(0, x) : 80 + (n % 6) * 48,
+          y: isFinite(y) ? Math.max(0, y) : 60 + (n % 6) * 48,
+          z: ++maxZ
+        }, n);
+        cards.push(card);
         save();
         render();
         focusEditor(card.id);
-        toast(card.type === 'terminal' ? 'Terminal added' : 'Text block added');
+        toast(type === 'terminal' ? 'Terminal added' : 'Text box added');
         return card;
       }
 
       // UPDATE
-      function updateCard(id, patch) {
+      function updateCard(id, patch, opts) {
         var card = findCard(id);
         if (!card) return;
         Object.keys(patch).forEach(function (k) { card[k] = patch[k]; });
-        card.updatedAt = nowIso();
+        if (!opts || !opts.silentTimestamp) card.updatedAt = nowIso();
         save();
       }
 
@@ -438,57 +600,65 @@
       function duplicateCard(id) {
         var src = findCard(id);
         if (!src) return;
-        var idx = cards.findIndex(function (c) { return c.id === id; });
         var copy = JSON.parse(JSON.stringify(src));
         copy.id = uid();
         copy.title = src.title + ' (copy)';
+        copy.x = src.x + 28;
+        copy.y = src.y + 28;
+        copy.z = ++maxZ;
         copy.createdAt = nowIso();
         copy.updatedAt = nowIso();
-        cards.splice(idx + 1, 0, copy);
+        cards.push(copy);
         save();
         render();
         toast('Duplicated');
-      }
-
-      function moveCard(id, toIndex) {
-        var fromIndex = cards.findIndex(function (c) { return c.id === id; });
-        if (fromIndex === -1) return;
-        var item = cards.splice(fromIndex, 1)[0];
-        if (fromIndex < toIndex) toIndex -= 1;
-        cards.splice(toIndex, 0, item);
-        save();
-        render();
       }
 
       function findCard(id) {
         return cards.find(function (c) { return c.id === id; });
       }
 
+      function bringToFront(id) {
+        var c = findCard(id);
+        if (!c || c.z === maxZ) return;
+        c.z = ++maxZ;
+        var el = pad.querySelector('.card[data-id="' + id + '"]');
+        if (el) el.style.zIndex = c.z;
+        save();
+      }
+
       /* ---------------- rendering ---------------- */
 
       function render() {
-        canvas.querySelectorAll('.card').forEach(function (el) { el.remove(); });
+        pad.querySelectorAll('.card').forEach(function (el) { el.remove(); });
         emptyState.style.display = cards.length ? 'none' : 'block';
-        cards.forEach(function (card) {
-          canvas.appendChild(buildCardEl(card));
-        });
+        cards.forEach(function (card) { pad.appendChild(buildCardEl(card)); });
+      }
+
+      function applyStyles(card, el, editor, prompt) {
+        var f = fontById(card.font);
+        el.style.left = card.x + 'px';
+        el.style.top = card.y + 'px';
+        el.style.width = card.w + 'px';
+        el.style.height = card.h + 'px';
+        el.style.zIndex = card.z;
+        el.style.setProperty('--tc', termColorById(card.termColor).hex);
+        editor.style.fontFamily = f.stack;
+        editor.style.fontSize = card.fontSize + 'px';
+        prompt.style.fontFamily = f.stack;
+        el.classList.toggle('terminal', card.type === 'terminal');
+        el.classList.toggle('blurred', card.blur);
+        editor.dataset.placeholder = card.type === 'terminal' ? 'type a command or log output…' : 'start typing…';
       }
 
       function buildCardEl(card) {
         var el = document.createElement('div');
-        el.className = 'card' +
-          (card.type === 'terminal' ? ' terminal' : '') +
-          (card.blur ? ' blurred' : '');
+        el.className = 'card';
         el.dataset.id = card.id;
 
+        /* ---- head ---- */
         var head = document.createElement('div');
         head.className = 'card-head';
-
-        var handle = document.createElement('span');
-        handle.className = 'drag-handle';
-        handle.title = 'Drag to reorder';
-        handle.textContent = '⋮⋮';
-        handle.draggable = true;
 
         var dots = document.createElement('span');
         dots.className = 'term-dots';
@@ -507,46 +677,113 @@
         var tools = document.createElement('div');
         tools.className = 'card-tools';
 
+        var styleBtn = toolBtn('Aa', false, function (e) {
+          e.stopPropagation();
+          closeAllPops(pop);
+          pop.classList.toggle('open');
+        });
+        styleBtn.title = 'Font, size & color';
+
         var blurBtn = toolBtn('Blur', card.blur, function () {
           updateCard(card.id, { blur: !findCard(card.id).blur });
-          render();
+          rerenderCard();
         });
         blurBtn.title = 'Toggle blur (hide content until focused)';
 
         var termBtn = toolBtn('Term', card.type === 'terminal', function () {
           var c = findCard(card.id);
-          updateCard(card.id, { type: c.type === 'terminal' ? 'text' : 'terminal' });
-          render();
+          var toTerm = c.type !== 'terminal';
+          var patch = { type: toTerm ? 'terminal' : 'text' };
+          // switching into terminal mode? pick a terminal font automatically
+          if (toTerm && !fontById(c.font).mono) {
+            patch.font = 'vt323';
+            patch.fontSize = defaultSizeFor('terminal', 'vt323');
+          }
+          updateCard(card.id, patch);
+          rerenderCard();
         });
         termBtn.title = 'Toggle terminal styling';
 
         var dupBtn = toolBtn('Copy', false, function () { duplicateCard(card.id); });
-        dupBtn.title = 'Duplicate card';
+        dupBtn.title = 'Duplicate box';
 
         var delBtn = toolBtn('✕', false, function () {
-          if (confirm('Delete "' + card.title + '"?')) deleteCard(card.id);
+          if (confirm('Delete "' + findCard(card.id).title + '"?')) deleteCard(card.id);
         });
         delBtn.classList.add('del');
-        delBtn.title = 'Delete card';
+        delBtn.title = 'Delete box';
 
-        tools.append(blurBtn, termBtn, dupBtn, delBtn);
-        head.append(handle, dots, title, tools);
+        tools.append(styleBtn, blurBtn, termBtn, dupBtn, delBtn);
+        head.append(dots, title, tools);
 
+        /* ---- style popover ---- */
+        var pop = document.createElement('div');
+        pop.className = 'style-pop';
+        pop.addEventListener('pointerdown', function (e) { e.stopPropagation(); });
+
+        var fontLabel = document.createElement('label');
+        fontLabel.textContent = 'Font';
+        var fontSel = document.createElement('select');
+        FONTS.forEach(function (f) {
+          var o = document.createElement('option');
+          o.value = f.id;
+          o.textContent = f.label + (f.mono ? '  ·  mono' : '');
+          o.style.fontFamily = f.stack;
+          fontSel.appendChild(o);
+        });
+        fontSel.value = card.font;
+        fontSel.addEventListener('change', function () {
+          updateCard(card.id, { font: fontSel.value });
+          syncStyles();
+        });
+
+        var sizeLabel = document.createElement('label');
+        sizeLabel.textContent = 'Font size';
+        var sizeRow = document.createElement('div');
+        sizeRow.className = 'size-row';
+        var minus = document.createElement('button'); minus.textContent = '−';
+        var sizeVal = document.createElement('span'); sizeVal.className = 'size-val';
+        var plus = document.createElement('button'); plus.textContent = '+';
+        function setSize(delta) {
+          var c = findCard(card.id);
+          updateCard(card.id, { fontSize: clamp(c.fontSize + delta, FONT_MIN, FONT_MAX) });
+          syncStyles();
+        }
+        minus.addEventListener('click', function () { setSize(-1); });
+        plus.addEventListener('click', function () { setSize(1); });
+        sizeRow.append(minus, sizeVal, plus);
+
+        var colorLabel = document.createElement('label');
+        colorLabel.textContent = 'Terminal color';
+        var swatches = document.createElement('div');
+        swatches.className = 'swatches';
+        TERM_COLORS.forEach(function (tc) {
+          var s = document.createElement('button');
+          s.className = 'swatch';
+          s.style.background = tc.hex;
+          s.title = tc.label;
+          s.dataset.color = tc.id;
+          s.addEventListener('click', function () {
+            updateCard(card.id, { termColor: tc.id });
+            syncStyles();
+          });
+          swatches.appendChild(s);
+        });
+
+        pop.append(fontLabel, fontSel, sizeLabel, sizeRow, colorLabel, swatches);
+
+        /* ---- body ---- */
         var body = document.createElement('div');
         body.className = 'card-body';
 
         var prompt = document.createElement('div');
         prompt.className = 'term-prompt';
         prompt.textContent = 'shyam@updates ~ %';
-        if (card.type === 'terminal') prompt.style.display = 'flex';
 
         var editor = document.createElement('div');
         editor.className = 'editor';
         editor.contentEditable = 'true';
         editor.spellcheck = false;
-        editor.dataset.placeholder = card.type === 'terminal'
-          ? 'type a command or log output…'
-          : 'start typing…';
         editor.innerText = card.content;
 
         var saveDebounce = null;
@@ -565,53 +802,100 @@
 
         body.append(prompt, editor);
 
+        /* ---- foot + resize ---- */
         var foot = document.createElement('div');
         foot.className = 'card-foot';
         function refreshFoot() {
           var c = findCard(card.id);
           if (!c) return;
           foot.innerHTML =
-            '<span>' + c.type + (c.blur ? ' · blurred' : '') + '</span>' +
-            '<span>updated ' + new Date(c.updatedAt).toLocaleString() + ' UTC' +
-            (c.content ? ' · ' + c.content.length + ' chars' : '') + '</span>';
+            '<span>' + c.type + ' · ' + fontById(c.font).label.split(' (')[0] + ' ' + c.fontSize + 'px' + (c.blur ? ' · blurred' : '') + '</span>' +
+            '<span>' + (c.content ? c.content.length + ' chars' : 'empty') + '</span>';
         }
-        refreshFoot();
 
-        el.append(head, body, foot);
+        var resize = document.createElement('div');
+        resize.className = 'resize-handle';
+        resize.title = 'Drag to resize';
 
-        /* reorder drag */
-        handle.addEventListener('dragstart', function (e) {
-          e.dataTransfer.setData('text/card-id', card.id);
-          e.dataTransfer.effectAllowed = 'move';
-          el.classList.add('dragging');
-        });
-        handle.addEventListener('dragend', function () {
-          el.classList.remove('dragging');
-          clearDropMarkers();
-        });
+        el.append(head, pop, body, foot, resize);
 
-        el.addEventListener('dragover', function (e) {
-          if (!dragHasType(e, 'text/card-id') && !dragHasType(e, 'text/palette-type')) return;
+        function syncStyles() {
+          var c = findCard(card.id);
+          if (!c) return;
+          applyStyles(c, el, editor, prompt);
+          blurBtn.classList.toggle('on', c.blur);
+          termBtn.classList.toggle('on', c.type === 'terminal');
+          fontSel.value = c.font;
+          sizeVal.textContent = c.fontSize + 'px';
+          pop.querySelectorAll('.swatch').forEach(function (s) {
+            s.classList.toggle('sel', s.dataset.color === c.termColor);
+          });
+          refreshFoot();
+        }
+        function rerenderCard() { syncStyles(); }
+        syncStyles();
+
+        /* ---- move (pointer drag on head) ---- */
+        head.addEventListener('pointerdown', function (e) {
+          if (e.target.closest('button, input, select, .style-pop')) return;
           e.preventDefault();
-          var before = isBeforeHalf(e, el);
-          el.classList.toggle('drop-before', before);
-          el.classList.toggle('drop-after', !before);
+          bringToFront(card.id);
+          var c = findCard(card.id);
+          var startX = e.clientX, startY = e.clientY;
+          var origX = c.x, origY = c.y;
+          el.classList.add('moving');
+          try { head.setPointerCapture(e.pointerId); } catch (err) {}
+
+          function onMove(ev) {
+            var nx = Math.max(0, origX + (ev.clientX - startX));
+            var ny = Math.max(0, origY + (ev.clientY - startY));
+            el.style.left = nx + 'px';
+            el.style.top = ny + 'px';
+          }
+          function onUp(ev) {
+            head.removeEventListener('pointermove', onMove);
+            head.removeEventListener('pointerup', onUp);
+            head.removeEventListener('pointercancel', onUp);
+            el.classList.remove('moving');
+            var nx = Math.max(0, origX + (ev.clientX - startX));
+            var ny = Math.max(0, origY + (ev.clientY - startY));
+            updateCard(card.id, { x: nx, y: ny }, { silentTimestamp: true });
+          }
+          head.addEventListener('pointermove', onMove);
+          head.addEventListener('pointerup', onUp);
+          head.addEventListener('pointercancel', onUp);
         });
-        el.addEventListener('dragleave', function () {
-          el.classList.remove('drop-before', 'drop-after');
-        });
-        el.addEventListener('drop', function (e) {
+
+        /* ---- resize (pointer drag on corner) ---- */
+        resize.addEventListener('pointerdown', function (e) {
           e.preventDefault();
           e.stopPropagation();
-          var before = isBeforeHalf(e, el);
-          var idx = cards.findIndex(function (c) { return c.id === card.id; });
-          var target = before ? idx : idx + 1;
-          var movedId = e.dataTransfer.getData('text/card-id');
-          var palType = e.dataTransfer.getData('text/palette-type');
-          clearDropMarkers();
-          if (movedId) moveCard(movedId, target);
-          else if (palType) createCard(palType, target);
+          bringToFront(card.id);
+          var c = findCard(card.id);
+          var startX = e.clientX, startY = e.clientY;
+          var origW = c.w, origH = c.h;
+          try { resize.setPointerCapture(e.pointerId); } catch (err) {}
+
+          function onMove(ev) {
+            var nw = clamp(origW + (ev.clientX - startX), 220, 1600);
+            var nh = clamp(origH + (ev.clientY - startY), 140, 1200);
+            el.style.width = nw + 'px';
+            el.style.height = nh + 'px';
+          }
+          function onUp(ev) {
+            resize.removeEventListener('pointermove', onMove);
+            resize.removeEventListener('pointerup', onUp);
+            resize.removeEventListener('pointercancel', onUp);
+            var nw = clamp(origW + (ev.clientX - startX), 220, 1600);
+            var nh = clamp(origH + (ev.clientY - startY), 140, 1200);
+            updateCard(card.id, { w: nw, h: nh }, { silentTimestamp: true });
+          }
+          resize.addEventListener('pointermove', onMove);
+          resize.addEventListener('pointerup', onUp);
+          resize.addEventListener('pointercancel', onUp);
         });
+
+        el.addEventListener('pointerdown', function () { bringToFront(card.id); });
 
         return el;
       }
@@ -624,23 +908,18 @@
         return b;
       }
 
-      function isBeforeHalf(e, el) {
-        var rect = el.getBoundingClientRect();
-        return (e.clientY - rect.top) < rect.height / 2;
-      }
-
-      function clearDropMarkers() {
-        canvas.querySelectorAll('.drop-before, .drop-after').forEach(function (n) {
-          n.classList.remove('drop-before', 'drop-after');
+      function closeAllPops(except) {
+        pad.querySelectorAll('.style-pop.open').forEach(function (p) {
+          if (p !== except) p.classList.remove('open');
         });
       }
 
-      function dragHasType(e, type) {
-        return Array.prototype.indexOf.call(e.dataTransfer.types, type) !== -1;
-      }
+      document.addEventListener('pointerdown', function (e) {
+        if (!e.target.closest('.style-pop') && !e.target.closest('.tool-btn')) closeAllPops();
+      });
 
       function focusEditor(id) {
-        var el = canvas.querySelector('.card[data-id="' + id + '"] .editor');
+        var el = pad.querySelector('.card[data-id="' + id + '"] .editor');
         if (el) el.focus();
       }
 
@@ -651,7 +930,7 @@
         toastTimer = setTimeout(function () { toastEl.classList.remove('show'); }, 1600);
       }
 
-      /* ---------------- palette drag ---------------- */
+      /* ---------------- palette drag → drop on pad ---------------- */
 
       document.querySelectorAll('.palette-item').forEach(function (item) {
         item.addEventListener('dragstart', function (e) {
@@ -659,49 +938,53 @@
           e.dataTransfer.effectAllowed = 'copy';
         });
         item.addEventListener('click', function () {
-          createCard(item.dataset.type);
+          // place near current scroll position so it's visible
+          var x = viewport.scrollLeft + 120 + (cards.length % 5) * 44;
+          var y = viewport.scrollTop + 80 + (cards.length % 5) * 44;
+          createCard(item.dataset.type, x, y);
         });
       });
 
-      canvas.addEventListener('dragover', function (e) {
-        if (!dragHasType(e, 'text/card-id') && !dragHasType(e, 'text/palette-type')) return;
+      pad.addEventListener('dragover', function (e) {
+        if (Array.prototype.indexOf.call(e.dataTransfer.types, 'text/palette-type') === -1) return;
         e.preventDefault();
-        canvas.classList.add('drag-over');
+        pad.classList.add('drag-over');
       });
-      canvas.addEventListener('dragleave', function (e) {
-        if (e.target === canvas) canvas.classList.remove('drag-over');
+      pad.addEventListener('dragleave', function (e) {
+        if (e.target === pad) pad.classList.remove('drag-over');
       });
-      canvas.addEventListener('drop', function (e) {
+      pad.addEventListener('drop', function (e) {
         e.preventDefault();
-        canvas.classList.remove('drag-over');
-        clearDropMarkers();
+        pad.classList.remove('drag-over');
         var palType = e.dataTransfer.getData('text/palette-type');
-        var movedId = e.dataTransfer.getData('text/card-id');
-        if (palType) createCard(palType);          // drop on empty area → append
-        else if (movedId) moveCard(movedId, cards.length);
-      });
-      canvas.addEventListener('dragend', function () {
-        canvas.classList.remove('drag-over');
-        clearDropMarkers();
+        if (!palType) return;
+        var rect = pad.getBoundingClientRect();
+        var x = Math.max(0, e.clientX - rect.left - 140);
+        var y = Math.max(0, e.clientY - rect.top - 16);
+        createCard(palType, x, y);
       });
 
       /* ---------------- header actions ---------------- */
 
       document.getElementById('btn-add-text').addEventListener('click', function () {
-        createCard('text');
+        var x = viewport.scrollLeft + 120 + (cards.length % 5) * 44;
+        var y = viewport.scrollTop + 80 + (cards.length % 5) * 44;
+        createCard('text', x, y);
       });
       document.getElementById('btn-add-term').addEventListener('click', function () {
-        createCard('terminal');
+        var x = viewport.scrollLeft + 120 + (cards.length % 5) * 44;
+        var y = viewport.scrollTop + 80 + (cards.length % 5) * 44;
+        createCard('terminal', x, y);
       });
 
       document.getElementById('btn-export').addEventListener('click', function () {
         var blob = new Blob([JSON.stringify(cards, null, 2)], { type: 'application/json' });
         var a = document.createElement('a');
         a.href = URL.createObjectURL(blob);
-        a.download = 'updates-board.json';
+        a.download = 'updates-pad.json';
         a.click();
         URL.revokeObjectURL(a.href);
-        toast('Exported ' + cards.length + ' card(s)');
+        toast('Exported ' + cards.length + ' box(es)');
       });
 
       document.getElementById('btn-import').addEventListener('click', function () {
@@ -715,20 +998,15 @@
           try {
             var data = JSON.parse(reader.result);
             if (!Array.isArray(data)) throw new Error('not an array');
-            data.forEach(function (c) {
-              cards.push({
-                id: uid(),
-                type: c.type === 'terminal' ? 'terminal' : 'text',
-                title: String(c.title || 'imported'),
-                content: String(c.content || ''),
-                blur: !!c.blur,
-                createdAt: c.createdAt || nowIso(),
-                updatedAt: nowIso()
-              });
+            data.forEach(function (c, i) {
+              var n = normalize(c, cards.length + i);
+              n.id = uid();
+              n.z = ++maxZ;
+              cards.push(n);
             });
             save();
             render();
-            toast('Imported ' + data.length + ' card(s)');
+            toast('Imported ' + data.length + ' box(es)');
           } catch (err) {
             toast('Import failed: invalid JSON');
           }
@@ -739,11 +1017,11 @@
 
       document.getElementById('btn-clear').addEventListener('click', function () {
         if (!cards.length) return;
-        if (!confirm('Delete all ' + cards.length + ' card(s)? This cannot be undone.')) return;
+        if (!confirm('Delete all ' + cards.length + ' box(es)? This cannot be undone.')) return;
         cards = [];
         save();
         render();
-        toast('Board cleared');
+        toast('Pad cleared');
       });
 
       render();
