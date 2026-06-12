@@ -168,8 +168,8 @@
       background: var(--panel);
       display: flex;
       flex-direction: column;
-      min-width: 220px;
-      min-height: 140px;
+      min-width: 180px;
+      min-height: 120px;
       box-shadow: 0 8px 28px rgba(0, 0, 0, 0.45);
       transition: border-color 0.15s, box-shadow 0.15s;
     }
@@ -181,7 +181,7 @@
       display: flex;
       align-items: center;
       gap: 7px;
-      padding: 7px 9px;
+      padding: 4px 8px;
       background: var(--panel-2);
       border-bottom: 1px solid var(--line);
       border-radius: var(--radius) var(--radius) 0 0;
@@ -191,8 +191,7 @@
     }
     .card-head:active { cursor: grabbing; }
 
-    .term-dots { display: none; gap: 5px; align-items: center; }
-    .card.terminal .term-dots { display: inline-flex; }
+    .term-dots { display: inline-flex; gap: 5px; align-items: center; }
     .term-dots i { width: 10px; height: 10px; border-radius: 50%; }
     .term-dots i:nth-child(1) { background: #ff5f56; }
     .term-dots i:nth-child(2) { background: #ffbd2e; }
@@ -214,10 +213,8 @@
     .card-title:hover { border-color: var(--line); }
     .card-title:focus { outline: none; border-color: var(--accent); background: var(--bg); }
 
-    .card-tools { display: flex; gap: 3px; }
-
     .tool-btn {
-      padding: 3px 7px;
+      padding: 2px 8px;
       font-size: var(--fs-base);
       border-radius: 6px;
       background: transparent;
@@ -225,8 +222,6 @@
       color: var(--muted);
     }
     .tool-btn:hover { border-color: var(--line); color: var(--text); }
-    .tool-btn.on { color: var(--accent); border-color: var(--accent); background: rgba(110, 215, 183, 0.08); }
-    .tool-btn.del:hover { color: var(--danger); border-color: var(--danger); }
 
     .card-body { position: relative; flex: 1 1 auto; display: flex; flex-direction: column; min-height: 0; }
 
@@ -324,6 +319,36 @@
     }
     .style-pop.open { display: block; }
 
+    .menu-row {
+      display: flex;
+      width: 100%;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      background: transparent;
+      border: 1px solid transparent;
+      border-radius: 6px;
+      padding: 5px 8px;
+      margin: 0 0 2px;
+      font-size: var(--fs-base);
+      color: var(--text);
+      text-align: left;
+      cursor: pointer;
+    }
+    .menu-row:hover { background: var(--bg); border-color: var(--line); }
+    .menu-row .state { color: var(--muted); font-size: var(--fs-small); }
+    .menu-row.on .state { color: var(--accent); }
+    .menu-row.danger:hover { color: var(--danger); border-color: var(--danger); }
+
+    .menu-meta {
+      margin-top: 10px;
+      padding-top: 8px;
+      border-top: 1px solid var(--line);
+      font-size: var(--fs-small);
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
     .style-pop label {
       display: block;
       font-size: var(--fs-small);
@@ -331,8 +356,10 @@
       letter-spacing: 1.1px;
       color: var(--muted);
       margin: 10px 0 5px;
+      border-top: 1px solid var(--line);
+      padding-top: 10px;
     }
-    .style-pop label:first-child { margin-top: 0; }
+    .style-pop label ~ label { border-top: none; padding-top: 0; }
 
     .style-pop select {
       width: 100%;
@@ -356,6 +383,20 @@
     .swatch.sel { border-color: var(--text); }
 
     /* ---------- resize handle ---------- */
+    /* folded page corner — document look (text boxes only) */
+    .card-body .fold {
+      position: absolute;
+      top: 0; right: 0;
+      width: 16px; height: 16px;
+      background: linear-gradient(225deg, var(--bg) 50%, var(--panel-2) 50%);
+      border-left: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      border-radius: 0 0 0 5px;
+      pointer-events: none;
+      z-index: 5;
+    }
+    .card.terminal .fold { display: none; }
+
     .resize-handle {
       position: absolute;
       right: 0; bottom: 0;
@@ -373,23 +414,6 @@
       border-radius: 1px;
       opacity: 0.7;
     }
-
-    .card-foot {
-      flex: 0 0 auto;
-      display: flex;
-      justify-content: space-between;
-      gap: 8px;
-      padding: 4px 22px 5px 12px;
-      font-size: var(--fs-small);
-      color: var(--muted);
-      border-top: 1px solid var(--line);
-      background: var(--panel);
-      border-radius: 0 0 var(--radius) var(--radius);
-      font-family: Inter, system-ui, sans-serif;
-      white-space: nowrap;
-      overflow: hidden;
-    }
-    .card.terminal .card-foot { background: #0c100c; border-top-color: color-mix(in srgb, var(--tc, #3ee07f) 20%, var(--line)); }
 
     .toast {
       position: fixed;
@@ -442,7 +466,7 @@
       <div class="hint">
         Drag a component anywhere on the pad — it drops where you point.<br><br>
         Drag a box by its title bar to move it. Drag the corner <kbd>◢</kbd> to resize.<br><br>
-        <kbd>Aa</kbd> opens font, size &amp; color options. Everything autosaves to your browser.
+        <kbd>☰</kbd> on a document opens blur, terminal &amp; font options. Everything autosaves to your browser.
       </div>
     </aside>
 
@@ -522,8 +546,8 @@
           termColor: c.termColor && termColorById(c.termColor).id === c.termColor ? c.termColor : 'green',
           x: isFinite(c.x) ? c.x : 60 + (i % 5) * 60,
           y: isFinite(c.y) ? c.y : 40 + i * 70,
-          w: clamp(isFinite(c.w) ? c.w : 380, 220, 1600),
-          h: clamp(isFinite(c.h) ? c.h : 240, 140, 1200),
+          w: clamp(isFinite(c.w) ? c.w : 280, 180, 1600),
+          h: clamp(isFinite(c.h) ? c.h : 330, 120, 1200),
           z: isFinite(c.z) ? c.z : i + 1,
           createdAt: c.createdAt || nowIso(),
           updatedAt: c.updatedAt || nowIso()
@@ -686,23 +710,37 @@
           refreshFoot();
         });
 
-        var tools = document.createElement('div');
-        tools.className = 'card-tools';
-
-        var styleBtn = toolBtn('Aa', false, function (e) {
+        var burger = toolBtn('☰', false, function (e) {
           e.stopPropagation();
           closeAllPops(pop);
           pop.classList.toggle('open');
         });
-        styleBtn.title = 'Font, size & color';
+        burger.title = 'Options (blur, terminal, font…)';
 
-        var blurBtn = toolBtn('Blur', card.blur, function () {
+        head.append(dots, title, burger);
+
+        /* ---- style popover ---- */
+        var pop = document.createElement('div');
+        pop.className = 'style-pop';
+        pop.addEventListener('pointerdown', function (e) { e.stopPropagation(); });
+
+        function menuRow(label, onClick) {
+          var b = document.createElement('button');
+          b.className = 'menu-row';
+          var l = document.createElement('span');
+          l.textContent = label;
+          var st = document.createElement('span');
+          st.className = 'state';
+          b.append(l, st);
+          b.addEventListener('click', onClick);
+          return b;
+        }
+
+        var blurRow = menuRow('Blur content', function () {
           updateCard(card.id, { blur: !findCard(card.id).blur });
           rerenderCard();
         });
-        blurBtn.title = 'Toggle blur (hide content until focused)';
-
-        var termBtn = toolBtn('Term', card.type === 'terminal', function () {
+        var termRow = menuRow('Terminal style', function () {
           var c = findCard(card.id);
           var toTerm = c.type !== 'terminal';
           var patch = { type: toTerm ? 'terminal' : 'text' };
@@ -714,24 +752,11 @@
           updateCard(card.id, patch);
           rerenderCard();
         });
-        termBtn.title = 'Toggle terminal styling';
-
-        var dupBtn = toolBtn('Copy', false, function () { duplicateCard(card.id); });
-        dupBtn.title = 'Duplicate box';
-
-        var delBtn = toolBtn('✕', false, function () {
+        var dupRow = menuRow('Duplicate', function () { duplicateCard(card.id); });
+        var delRow = menuRow('Delete…', function () {
           if (confirm('Delete "' + findCard(card.id).title + '"?')) deleteCard(card.id);
         });
-        delBtn.classList.add('del');
-        delBtn.title = 'Delete box';
-
-        tools.append(styleBtn, blurBtn, termBtn, dupBtn, delBtn);
-        head.append(dots, title, tools);
-
-        /* ---- style popover ---- */
-        var pop = document.createElement('div');
-        pop.className = 'style-pop';
-        pop.addEventListener('pointerdown', function (e) { e.stopPropagation(); });
+        delRow.classList.add('danger');
 
         var fontLabel = document.createElement('label');
         fontLabel.textContent = 'Font';
@@ -782,7 +807,10 @@
           swatches.appendChild(s);
         });
 
-        pop.append(fontLabel, fontSel, sizeLabel, sizeRow, colorLabel, swatches);
+        var meta = document.createElement('div');
+        meta.className = 'menu-meta';
+
+        pop.append(blurRow, termRow, dupRow, delRow, fontLabel, fontSel, sizeLabel, sizeRow, colorLabel, swatches, meta);
 
         /* ---- body ---- */
         var body = document.createElement('div');
@@ -812,31 +840,32 @@
           refreshFoot();
         });
 
-        body.append(prompt, editor);
+        var fold = document.createElement('div');
+        fold.className = 'fold';
+        body.append(prompt, editor, fold);
 
-        /* ---- foot + resize ---- */
-        var foot = document.createElement('div');
-        foot.className = 'card-foot';
+        /* ---- resize ---- */
         function refreshFoot() {
           var c = findCard(card.id);
           if (!c) return;
-          foot.innerHTML =
-            '<span>' + c.type + ' · ' + fontById(c.font).label.split(' (')[0] + ' ' + c.fontSize + 'px' + (c.blur ? ' · blurred' : '') + '</span>' +
-            '<span>' + (c.content ? c.content.length + ' chars' : 'empty') + '</span>';
+          meta.textContent = c.type + ' · ' + fontById(c.font).label.split(' (')[0] + ' ' +
+            c.fontSize + 'px · ' + (c.content ? c.content.length + ' chars' : 'empty');
         }
 
         var resize = document.createElement('div');
         resize.className = 'resize-handle';
         resize.title = 'Drag to resize';
 
-        el.append(head, pop, body, foot, resize);
+        el.append(head, pop, body, resize);
 
         function syncStyles() {
           var c = findCard(card.id);
           if (!c) return;
           applyStyles(c, el, editor, prompt);
-          blurBtn.classList.toggle('on', c.blur);
-          termBtn.classList.toggle('on', c.type === 'terminal');
+          blurRow.classList.toggle('on', c.blur);
+          blurRow.querySelector('.state').textContent = c.blur ? 'on' : 'off';
+          termRow.classList.toggle('on', c.type === 'terminal');
+          termRow.querySelector('.state').textContent = c.type === 'terminal' ? 'on' : 'off';
           fontSel.value = c.font;
           sizeVal.textContent = c.fontSize + 'px';
           pop.querySelectorAll('.swatch').forEach(function (s) {
@@ -889,8 +918,8 @@
           try { resize.setPointerCapture(e.pointerId); } catch (err) {}
 
           function onMove(ev) {
-            var nw = clamp(origW + (ev.clientX - startX), 220, 1600);
-            var nh = clamp(origH + (ev.clientY - startY), 140, 1200);
+            var nw = clamp(origW + (ev.clientX - startX), 180, 1600);
+            var nh = clamp(origH + (ev.clientY - startY), 120, 1200);
             el.style.width = nw + 'px';
             el.style.height = nh + 'px';
           }
@@ -898,8 +927,8 @@
             resize.removeEventListener('pointermove', onMove);
             resize.removeEventListener('pointerup', onUp);
             resize.removeEventListener('pointercancel', onUp);
-            var nw = clamp(origW + (ev.clientX - startX), 220, 1600);
-            var nh = clamp(origH + (ev.clientY - startY), 140, 1200);
+            var nw = clamp(origW + (ev.clientX - startX), 180, 1600);
+            var nh = clamp(origH + (ev.clientY - startY), 120, 1200);
             updateCard(card.id, { w: nw, h: nh }, { silentTimestamp: true });
           }
           resize.addEventListener('pointermove', onMove);
