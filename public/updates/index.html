@@ -504,7 +504,7 @@
       var maxZ = cards.reduce(function (m, c) { return Math.max(m, c.z || 1); }, 1);
 
       function defaultFontFor(type) { return type === 'terminal' ? 'vt323' : 'inter'; }
-      function defaultSizeFor(type, fontId) { return fontId === 'vt323' ? 20 : (type === 'terminal' ? 14 : 14); }
+      function defaultSizeFor(type, fontId) { return fontId === 'vt323' ? 17 : (type === 'terminal' ? 12 : 13); }
 
       function normalize(c, i) {
         var type = c.type === 'terminal' ? 'terminal' : 'text';
@@ -545,7 +545,17 @@
             return [];
           }
           var parsed = JSON.parse(raw);
-          return Array.isArray(parsed) ? parsed.map(normalize) : [];
+          var list = Array.isArray(parsed) ? parsed.map(normalize) : [];
+          // one-time shrink of boxes still on the old default sizes (vt323 20px, others 14px)
+          if (list.length && !localStorage.getItem('updates-pad-fontfix-1')) {
+            list.forEach(function (c) {
+              if (c.font === 'vt323' && c.fontSize === 20) c.fontSize = 17;
+              else if (c.fontSize === 14) c.fontSize = defaultSizeFor(c.type, c.font);
+            });
+            localStorage.setItem(STORE_KEY, JSON.stringify(list));
+          }
+          localStorage.setItem('updates-pad-fontfix-1', '1');
+          return list;
         } catch (e) { return []; }
       }
 
