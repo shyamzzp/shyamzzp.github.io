@@ -21,6 +21,8 @@
       --danger: #ff7f7f;
       --term-bg: #0a0c0a;
       --radius: 10px;
+      --fs-base: 13px;   /* all UI text: buttons, palette, hints, titles */
+      --fs-small: 11px;  /* uppercase section labels, kbd, meta footers */
       font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     }
 
@@ -49,13 +51,14 @@
       flex: 0 0 auto;
     }
 
-    header h1 { margin: 0; font-size: 17px; letter-spacing: 0.4px; }
+    header h1 { margin: 0; font-size: 15px; letter-spacing: 0.4px; }
     header h1 span { color: var(--accent); }
 
     .header-actions { display: flex; gap: 8px; flex-wrap: wrap; }
 
     button, select {
       font: inherit;
+      font-size: var(--fs-base);
       color: var(--text);
       background: var(--panel-2);
       border: 1px solid var(--line);
@@ -83,7 +86,7 @@
 
     aside h2 {
       margin: 0 0 12px;
-      font-size: 11px;
+      font-size: var(--fs-small);
       text-transform: uppercase;
       letter-spacing: 1.4px;
       color: var(--muted);
@@ -102,13 +105,13 @@
 
     .palette-item:hover { border-color: var(--accent); transform: translateY(-1px); }
     .palette-item:active { cursor: grabbing; }
-    .palette-item .pi-title { font-size: 13px; font-weight: 600; margin-bottom: 3px; }
-    .palette-item .pi-desc { font-size: 11px; color: var(--muted); line-height: 1.4; }
+    .palette-item .pi-title { font-size: var(--fs-base); font-weight: 600; margin-bottom: 3px; }
+    .palette-item .pi-desc { font-size: var(--fs-base); color: var(--muted); line-height: 1.45; }
     .palette-item.term .pi-title { color: #3ee07f; font-family: "JetBrains Mono", ui-monospace, Menlo, monospace; }
 
     aside .hint {
       margin-top: 16px;
-      font-size: 11px;
+      font-size: var(--fs-base);
       color: var(--muted);
       line-height: 1.65;
       border-top: 1px solid var(--line);
@@ -120,7 +123,7 @@
       border: 1px solid var(--line);
       border-radius: 4px;
       padding: 1px 5px;
-      font-size: 10px;
+      font-size: var(--fs-small);
       font-family: ui-monospace, Menlo, monospace;
     }
 
@@ -151,7 +154,7 @@
       padding: 44px 56px;
       text-align: center;
       color: var(--muted);
-      font-size: 14px;
+      font-size: var(--fs-base);
       line-height: 1.7;
       pointer-events: none;
       white-space: nowrap;
@@ -202,7 +205,7 @@
       border-radius: 6px;
       color: var(--text);
       font: inherit;
-      font-size: 12.5px;
+      font-size: var(--fs-base);
       font-weight: 600;
       padding: 2px 6px;
       min-width: 0;
@@ -215,7 +218,7 @@
 
     .tool-btn {
       padding: 3px 7px;
-      font-size: 11px;
+      font-size: var(--fs-base);
       border-radius: 6px;
       background: transparent;
       border: 1px solid transparent;
@@ -323,7 +326,7 @@
 
     .style-pop label {
       display: block;
-      font-size: 10px;
+      font-size: var(--fs-small);
       text-transform: uppercase;
       letter-spacing: 1.1px;
       color: var(--muted);
@@ -334,13 +337,12 @@
     .style-pop select {
       width: 100%;
       padding: 6px 8px;
-      font-size: 13px;
       background: var(--bg);
     }
 
     .size-row { display: flex; align-items: center; gap: 8px; }
-    .size-row button { padding: 3px 10px; font-size: 14px; line-height: 1; background: var(--bg); }
-    .size-row .size-val { font-size: 13px; min-width: 44px; text-align: center; color: var(--text); }
+    .size-row button { padding: 3px 10px; line-height: 1; background: var(--bg); }
+    .size-row .size-val { font-size: var(--fs-base); min-width: 44px; text-align: center; color: var(--text); }
 
     .swatches { display: flex; gap: 7px; }
     .swatch {
@@ -378,7 +380,7 @@
       justify-content: space-between;
       gap: 8px;
       padding: 4px 22px 5px 12px;
-      font-size: 10px;
+      font-size: var(--fs-small);
       color: var(--muted);
       border-top: 1px solid var(--line);
       background: var(--panel);
@@ -398,7 +400,7 @@
       border: 1px solid var(--accent);
       border-radius: 8px;
       padding: 9px 16px;
-      font-size: 13px;
+      font-size: var(--fs-base);
       opacity: 0;
       pointer-events: none;
       transition: opacity 0.2s, transform 0.2s;
