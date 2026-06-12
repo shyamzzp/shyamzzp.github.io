@@ -1,0 +1,753 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Updates Board</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #0d0f12;
+      --panel: #15181d;
+      --panel-2: #1d2128;
+      --text: #f2efe9;
+      --muted: #9aa3ad;
+      --line: #2c323c;
+      --accent: #6ed7b7;
+      --accent-2: #f4c15d;
+      --danger: #ff7f7f;
+      --term-bg: #0a0c0a;
+      --term-green: #3ee07f;
+      --radius: 10px;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background:
+        radial-gradient(1100px 500px at 85% -10%, rgba(110, 215, 183, 0.08), transparent 60%),
+        radial-gradient(900px 420px at 5% 110%, rgba(244, 193, 93, 0.06), transparent 60%),
+        var(--bg);
+      color: var(--text);
+    }
+
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 18px 24px;
+      border-bottom: 1px solid var(--line);
+      backdrop-filter: blur(6px);
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: rgba(13, 15, 18, 0.85);
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 18px;
+      letter-spacing: 0.4px;
+    }
+
+    header h1 span { color: var(--accent); }
+
+    .header-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+
+    button {
+      font: inherit;
+      color: var(--text);
+      background: var(--panel-2);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 7px 12px;
+      cursor: pointer;
+      transition: border-color 0.15s, background 0.15s, transform 0.1s;
+    }
+
+    button:hover { border-color: var(--accent); }
+    button:active { transform: scale(0.97); }
+    button.danger:hover { border-color: var(--danger); color: var(--danger); }
+
+    main {
+      display: grid;
+      grid-template-columns: 230px 1fr;
+      gap: 0;
+      min-height: calc(100vh - 63px);
+    }
+
+    /* ---------- palette ---------- */
+    aside {
+      border-right: 1px solid var(--line);
+      padding: 18px 14px;
+      background: var(--panel);
+    }
+
+    aside h2 {
+      margin: 0 0 12px;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 1.4px;
+      color: var(--muted);
+    }
+
+    .palette-item {
+      border: 1px dashed var(--line);
+      border-radius: var(--radius);
+      padding: 12px;
+      margin-bottom: 10px;
+      cursor: grab;
+      background: var(--panel-2);
+      user-select: none;
+      transition: border-color 0.15s, transform 0.12s;
+    }
+
+    .palette-item:hover { border-color: var(--accent); transform: translateY(-1px); }
+    .palette-item:active { cursor: grabbing; }
+
+    .palette-item .pi-title { font-size: 13px; font-weight: 600; margin-bottom: 3px; }
+    .palette-item .pi-desc { font-size: 11px; color: var(--muted); line-height: 1.4; }
+
+    .palette-item.term .pi-title { color: var(--term-green); font-family: "SF Mono", ui-monospace, Menlo, monospace; }
+
+    aside .hint {
+      margin-top: 18px;
+      font-size: 11px;
+      color: var(--muted);
+      line-height: 1.6;
+      border-top: 1px solid var(--line);
+      padding-top: 12px;
+    }
+
+    kbd {
+      background: var(--panel-2);
+      border: 1px solid var(--line);
+      border-radius: 4px;
+      padding: 1px 5px;
+      font-size: 10px;
+      font-family: ui-monospace, Menlo, monospace;
+    }
+
+    /* ---------- canvas ---------- */
+    #canvas {
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      align-content: start;
+    }
+
+    #canvas.drag-over {
+      outline: 2px dashed var(--accent);
+      outline-offset: -10px;
+      border-radius: var(--radius);
+    }
+
+    #empty-state {
+      border: 1px dashed var(--line);
+      border-radius: var(--radius);
+      padding: 60px 20px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.7;
+    }
+
+    /* ---------- cards ---------- */
+    .card {
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--panel);
+      overflow: hidden;
+      transition: border-color 0.15s, opacity 0.15s, box-shadow 0.15s;
+    }
+
+    .card.dragging { opacity: 0.4; }
+    .card.drop-before { box-shadow: 0 -3px 0 0 var(--accent); }
+    .card.drop-after { box-shadow: 0 3px 0 0 var(--accent); }
+
+    .card-head {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 10px;
+      background: var(--panel-2);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .drag-handle {
+      cursor: grab;
+      color: var(--muted);
+      font-size: 14px;
+      padding: 0 4px;
+      user-select: none;
+    }
+    .drag-handle:active { cursor: grabbing; }
+
+    .card-title {
+      flex: 1;
+      background: transparent;
+      border: 1px solid transparent;
+      border-radius: 6px;
+      color: var(--text);
+      font: inherit;
+      font-size: 13px;
+      font-weight: 600;
+      padding: 3px 6px;
+      min-width: 0;
+    }
+    .card-title:hover { border-color: var(--line); }
+    .card-title:focus { outline: none; border-color: var(--accent); background: var(--bg); }
+
+    .card-tools { display: flex; gap: 4px; }
+
+    .tool-btn {
+      padding: 4px 8px;
+      font-size: 11px;
+      border-radius: 6px;
+      background: transparent;
+      border: 1px solid transparent;
+      color: var(--muted);
+    }
+    .tool-btn:hover { border-color: var(--line); color: var(--text); }
+    .tool-btn.on { color: var(--accent); border-color: var(--accent); background: rgba(110, 215, 183, 0.08); }
+    .tool-btn.del:hover { color: var(--danger); border-color: var(--danger); }
+
+    .card-body { position: relative; }
+
+    .editor {
+      min-height: 90px;
+      padding: 14px 16px;
+      font-size: 14px;
+      line-height: 1.65;
+      outline: none;
+      white-space: pre-wrap;
+      word-break: break-word;
+      transition: filter 0.25s;
+    }
+
+    .editor:empty::before {
+      content: attr(data-placeholder);
+      color: var(--muted);
+      pointer-events: none;
+    }
+
+    /* blur option */
+    .card.blurred .editor { filter: blur(6px); }
+    .card.blurred .editor:focus { filter: none; }
+    .card.blurred .card-body::after {
+      content: "hidden — click to reveal";
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      color: var(--muted);
+      pointer-events: none;
+      opacity: 0.9;
+    }
+    .card.blurred .card-body:focus-within::after { display: none; }
+
+    /* terminal option */
+    .card.terminal { border-color: #1f3b2a; }
+    .card.terminal .card-head { background: #101510; border-bottom-color: #1f3b2a; }
+    .card.terminal .editor {
+      background: var(--term-bg);
+      color: var(--term-green);
+      font-family: "SF Mono", ui-monospace, Menlo, Consolas, monospace;
+      font-size: 13px;
+      text-shadow: 0 0 6px rgba(62, 224, 127, 0.35);
+    }
+    .card.terminal .editor::selection { background: rgba(62, 224, 127, 0.25); }
+    .card.terminal .term-prompt {
+      display: flex;
+      gap: 8px;
+      padding: 8px 16px 0;
+      background: var(--term-bg);
+      font-family: "SF Mono", ui-monospace, Menlo, monospace;
+      font-size: 12px;
+      color: var(--term-green);
+      opacity: 0.8;
+      user-select: none;
+    }
+    .term-dots { display: none; gap: 6px; align-items: center; margin-right: 4px; }
+    .card.terminal .term-dots { display: inline-flex; }
+    .term-dots i { width: 10px; height: 10px; border-radius: 50%; }
+    .term-dots i:nth-child(1) { background: #ff5f56; }
+    .term-dots i:nth-child(2) { background: #ffbd2e; }
+    .term-dots i:nth-child(3) { background: #27c93f; }
+
+    .term-prompt { display: none; }
+
+    .card-foot {
+      display: flex;
+      justify-content: space-between;
+      padding: 6px 12px;
+      font-size: 10.5px;
+      color: var(--muted);
+      border-top: 1px solid var(--line);
+      background: var(--panel);
+    }
+    .card.terminal .card-foot { background: #0c100c; border-top-color: #1f3b2a; }
+
+    .toast {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%) translateY(10px);
+      background: var(--panel-2);
+      border: 1px solid var(--accent);
+      border-radius: 8px;
+      padding: 9px 16px;
+      font-size: 13px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s, transform 0.2s;
+      z-index: 100;
+    }
+    .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+    @media (max-width: 720px) {
+      main { grid-template-columns: 1fr; }
+      aside { border-right: none; border-bottom: 1px solid var(--line); }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>updates<span>.board</span></h1>
+    <div class="header-actions">
+      <button id="btn-add-text">+ Text</button>
+      <button id="btn-add-term">+ Terminal</button>
+      <button id="btn-export">Export JSON</button>
+      <button id="btn-import">Import JSON</button>
+      <button id="btn-clear" class="danger">Clear all</button>
+    </div>
+  </header>
+
+  <main>
+    <aside>
+      <h2>Components</h2>
+      <div class="palette-item" draggable="true" data-type="text">
+        <div class="pi-title">📝 Text Editor</div>
+        <div class="pi-desc">Editable rich text block. Toggle blur to hide sensitive notes.</div>
+      </div>
+      <div class="palette-item term" draggable="true" data-type="terminal">
+        <div class="pi-title">$ Terminal</div>
+        <div class="pi-desc">Monospace block with CRT glow and mac-style traffic lights.</div>
+      </div>
+      <div class="hint">
+        Drag a component onto the canvas, or click the <kbd>+</kbd> buttons above.<br><br>
+        Drag the <kbd>⋮⋮</kbd> handle to reorder cards. Everything autosaves to your browser.
+      </div>
+    </aside>
+
+    <section id="canvas">
+      <div id="empty-state">
+        Nothing here yet.<br>
+        Drag a component from the left panel — or click <strong>+ Text</strong> / <strong>+ Terminal</strong> above.
+      </div>
+    </section>
+  </main>
+
+  <div class="toast" id="toast"></div>
+  <input type="file" id="file-input" accept="application/json" hidden>
+
+  <script>
+    (function () {
+      'use strict';
+
+      var STORE_KEY = 'updates-board-v1';
+      var canvas = document.getElementById('canvas');
+      var emptyState = document.getElementById('empty-state');
+      var toastEl = document.getElementById('toast');
+      var fileInput = document.getElementById('file-input');
+      var toastTimer = null;
+
+      /* ---------------- state (CRUD core) ---------------- */
+
+      var cards = load();
+
+      function load() {
+        try {
+          var raw = localStorage.getItem(STORE_KEY);
+          var parsed = raw ? JSON.parse(raw) : [];
+          return Array.isArray(parsed) ? parsed : [];
+        } catch (e) { return []; }
+      }
+
+      function save() {
+        localStorage.setItem(STORE_KEY, JSON.stringify(cards));
+      }
+
+      function uid() {
+        return 'c_' + Date.now().toString(36) + '_' + Math.random().toString(36).slice(2, 8);
+      }
+
+      function nowIso() { return new Date().toISOString(); }
+
+      // CREATE
+      function createCard(type, index) {
+        var card = {
+          id: uid(),
+          type: type === 'terminal' ? 'terminal' : 'text',
+          title: type === 'terminal' ? 'terminal' : 'untitled note',
+          content: '',
+          blur: false,
+          createdAt: nowIso(),
+          updatedAt: nowIso()
+        };
+        if (typeof index === 'number' && index >= 0 && index <= cards.length) {
+          cards.splice(index, 0, card);
+        } else {
+          cards.push(card);
+        }
+        save();
+        render();
+        focusEditor(card.id);
+        toast(card.type === 'terminal' ? 'Terminal added' : 'Text block added');
+        return card;
+      }
+
+      // UPDATE
+      function updateCard(id, patch) {
+        var card = findCard(id);
+        if (!card) return;
+        Object.keys(patch).forEach(function (k) { card[k] = patch[k]; });
+        card.updatedAt = nowIso();
+        save();
+      }
+
+      // DELETE
+      function deleteCard(id) {
+        var idx = cards.findIndex(function (c) { return c.id === id; });
+        if (idx === -1) return;
+        cards.splice(idx, 1);
+        save();
+        render();
+        toast('Deleted');
+      }
+
+      function duplicateCard(id) {
+        var src = findCard(id);
+        if (!src) return;
+        var idx = cards.findIndex(function (c) { return c.id === id; });
+        var copy = JSON.parse(JSON.stringify(src));
+        copy.id = uid();
+        copy.title = src.title + ' (copy)';
+        copy.createdAt = nowIso();
+        copy.updatedAt = nowIso();
+        cards.splice(idx + 1, 0, copy);
+        save();
+        render();
+        toast('Duplicated');
+      }
+
+      function moveCard(id, toIndex) {
+        var fromIndex = cards.findIndex(function (c) { return c.id === id; });
+        if (fromIndex === -1) return;
+        var item = cards.splice(fromIndex, 1)[0];
+        if (fromIndex < toIndex) toIndex -= 1;
+        cards.splice(toIndex, 0, item);
+        save();
+        render();
+      }
+
+      function findCard(id) {
+        return cards.find(function (c) { return c.id === id; });
+      }
+
+      /* ---------------- rendering ---------------- */
+
+      function render() {
+        canvas.querySelectorAll('.card').forEach(function (el) { el.remove(); });
+        emptyState.style.display = cards.length ? 'none' : 'block';
+        cards.forEach(function (card) {
+          canvas.appendChild(buildCardEl(card));
+        });
+      }
+
+      function buildCardEl(card) {
+        var el = document.createElement('div');
+        el.className = 'card' +
+          (card.type === 'terminal' ? ' terminal' : '') +
+          (card.blur ? ' blurred' : '');
+        el.dataset.id = card.id;
+
+        var head = document.createElement('div');
+        head.className = 'card-head';
+
+        var handle = document.createElement('span');
+        handle.className = 'drag-handle';
+        handle.title = 'Drag to reorder';
+        handle.textContent = '⋮⋮';
+        handle.draggable = true;
+
+        var dots = document.createElement('span');
+        dots.className = 'term-dots';
+        dots.innerHTML = '<i></i><i></i><i></i>';
+
+        var title = document.createElement('input');
+        title.className = 'card-title';
+        title.value = card.title;
+        title.spellcheck = false;
+        title.addEventListener('change', function () {
+          updateCard(card.id, { title: title.value.trim() || 'untitled' });
+          title.value = findCard(card.id).title;
+          refreshFoot();
+        });
+
+        var tools = document.createElement('div');
+        tools.className = 'card-tools';
+
+        var blurBtn = toolBtn('Blur', card.blur, function () {
+          updateCard(card.id, { blur: !findCard(card.id).blur });
+          render();
+        });
+        blurBtn.title = 'Toggle blur (hide content until focused)';
+
+        var termBtn = toolBtn('Term', card.type === 'terminal', function () {
+          var c = findCard(card.id);
+          updateCard(card.id, { type: c.type === 'terminal' ? 'text' : 'terminal' });
+          render();
+        });
+        termBtn.title = 'Toggle terminal styling';
+
+        var dupBtn = toolBtn('Copy', false, function () { duplicateCard(card.id); });
+        dupBtn.title = 'Duplicate card';
+
+        var delBtn = toolBtn('✕', false, function () {
+          if (confirm('Delete "' + card.title + '"?')) deleteCard(card.id);
+        });
+        delBtn.classList.add('del');
+        delBtn.title = 'Delete card';
+
+        tools.append(blurBtn, termBtn, dupBtn, delBtn);
+        head.append(handle, dots, title, tools);
+
+        var body = document.createElement('div');
+        body.className = 'card-body';
+
+        var prompt = document.createElement('div');
+        prompt.className = 'term-prompt';
+        prompt.textContent = 'shyam@updates ~ %';
+        if (card.type === 'terminal') prompt.style.display = 'flex';
+
+        var editor = document.createElement('div');
+        editor.className = 'editor';
+        editor.contentEditable = 'true';
+        editor.spellcheck = false;
+        editor.dataset.placeholder = card.type === 'terminal'
+          ? 'type a command or log output…'
+          : 'start typing…';
+        editor.innerText = card.content;
+
+        var saveDebounce = null;
+        editor.addEventListener('input', function () {
+          clearTimeout(saveDebounce);
+          saveDebounce = setTimeout(function () {
+            updateCard(card.id, { content: editor.innerText });
+            refreshFoot();
+          }, 250);
+        });
+        editor.addEventListener('blur', function () {
+          clearTimeout(saveDebounce);
+          updateCard(card.id, { content: editor.innerText });
+          refreshFoot();
+        });
+
+        body.append(prompt, editor);
+
+        var foot = document.createElement('div');
+        foot.className = 'card-foot';
+        function refreshFoot() {
+          var c = findCard(card.id);
+          if (!c) return;
+          foot.innerHTML =
+            '<span>' + c.type + (c.blur ? ' · blurred' : '') + '</span>' +
+            '<span>updated ' + new Date(c.updatedAt).toLocaleString() + ' UTC' +
+            (c.content ? ' · ' + c.content.length + ' chars' : '') + '</span>';
+        }
+        refreshFoot();
+
+        el.append(head, body, foot);
+
+        /* reorder drag */
+        handle.addEventListener('dragstart', function (e) {
+          e.dataTransfer.setData('text/card-id', card.id);
+          e.dataTransfer.effectAllowed = 'move';
+          el.classList.add('dragging');
+        });
+        handle.addEventListener('dragend', function () {
+          el.classList.remove('dragging');
+          clearDropMarkers();
+        });
+
+        el.addEventListener('dragover', function (e) {
+          if (!dragHasType(e, 'text/card-id') && !dragHasType(e, 'text/palette-type')) return;
+          e.preventDefault();
+          var before = isBeforeHalf(e, el);
+          el.classList.toggle('drop-before', before);
+          el.classList.toggle('drop-after', !before);
+        });
+        el.addEventListener('dragleave', function () {
+          el.classList.remove('drop-before', 'drop-after');
+        });
+        el.addEventListener('drop', function (e) {
+          e.preventDefault();
+          e.stopPropagation();
+          var before = isBeforeHalf(e, el);
+          var idx = cards.findIndex(function (c) { return c.id === card.id; });
+          var target = before ? idx : idx + 1;
+          var movedId = e.dataTransfer.getData('text/card-id');
+          var palType = e.dataTransfer.getData('text/palette-type');
+          clearDropMarkers();
+          if (movedId) moveCard(movedId, target);
+          else if (palType) createCard(palType, target);
+        });
+
+        return el;
+      }
+
+      function toolBtn(label, on, onClick) {
+        var b = document.createElement('button');
+        b.className = 'tool-btn' + (on ? ' on' : '');
+        b.textContent = label;
+        b.addEventListener('click', onClick);
+        return b;
+      }
+
+      function isBeforeHalf(e, el) {
+        var rect = el.getBoundingClientRect();
+        return (e.clientY - rect.top) < rect.height / 2;
+      }
+
+      function clearDropMarkers() {
+        canvas.querySelectorAll('.drop-before, .drop-after').forEach(function (n) {
+          n.classList.remove('drop-before', 'drop-after');
+        });
+      }
+
+      function dragHasType(e, type) {
+        return Array.prototype.indexOf.call(e.dataTransfer.types, type) !== -1;
+      }
+
+      function focusEditor(id) {
+        var el = canvas.querySelector('.card[data-id="' + id + '"] .editor');
+        if (el) el.focus();
+      }
+
+      function toast(msg) {
+        toastEl.textContent = msg;
+        toastEl.classList.add('show');
+        clearTimeout(toastTimer);
+        toastTimer = setTimeout(function () { toastEl.classList.remove('show'); }, 1600);
+      }
+
+      /* ---------------- palette drag ---------------- */
+
+      document.querySelectorAll('.palette-item').forEach(function (item) {
+        item.addEventListener('dragstart', function (e) {
+          e.dataTransfer.setData('text/palette-type', item.dataset.type);
+          e.dataTransfer.effectAllowed = 'copy';
+        });
+        item.addEventListener('click', function () {
+          createCard(item.dataset.type);
+        });
+      });
+
+      canvas.addEventListener('dragover', function (e) {
+        if (!dragHasType(e, 'text/card-id') && !dragHasType(e, 'text/palette-type')) return;
+        e.preventDefault();
+        canvas.classList.add('drag-over');
+      });
+      canvas.addEventListener('dragleave', function (e) {
+        if (e.target === canvas) canvas.classList.remove('drag-over');
+      });
+      canvas.addEventListener('drop', function (e) {
+        e.preventDefault();
+        canvas.classList.remove('drag-over');
+        clearDropMarkers();
+        var palType = e.dataTransfer.getData('text/palette-type');
+        var movedId = e.dataTransfer.getData('text/card-id');
+        if (palType) createCard(palType);          // drop on empty area → append
+        else if (movedId) moveCard(movedId, cards.length);
+      });
+      canvas.addEventListener('dragend', function () {
+        canvas.classList.remove('drag-over');
+        clearDropMarkers();
+      });
+
+      /* ---------------- header actions ---------------- */
+
+      document.getElementById('btn-add-text').addEventListener('click', function () {
+        createCard('text');
+      });
+      document.getElementById('btn-add-term').addEventListener('click', function () {
+        createCard('terminal');
+      });
+
+      document.getElementById('btn-export').addEventListener('click', function () {
+        var blob = new Blob([JSON.stringify(cards, null, 2)], { type: 'application/json' });
+        var a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = 'updates-board.json';
+        a.click();
+        URL.revokeObjectURL(a.href);
+        toast('Exported ' + cards.length + ' card(s)');
+      });
+
+      document.getElementById('btn-import').addEventListener('click', function () {
+        fileInput.click();
+      });
+      fileInput.addEventListener('change', function () {
+        var file = fileInput.files[0];
+        if (!file) return;
+        var reader = new FileReader();
+        reader.onload = function () {
+          try {
+            var data = JSON.parse(reader.result);
+            if (!Array.isArray(data)) throw new Error('not an array');
+            data.forEach(function (c) {
+              cards.push({
+                id: uid(),
+                type: c.type === 'terminal' ? 'terminal' : 'text',
+                title: String(c.title || 'imported'),
+                content: String(c.content || ''),
+                blur: !!c.blur,
+                createdAt: c.createdAt || nowIso(),
+                updatedAt: nowIso()
+              });
+            });
+            save();
+            render();
+            toast('Imported ' + data.length + ' card(s)');
+          } catch (err) {
+            toast('Import failed: invalid JSON');
+          }
+          fileInput.value = '';
+        };
+        reader.readAsText(file);
+      });
+
+      document.getElementById('btn-clear').addEventListener('click', function () {
+        if (!cards.length) return;
+        if (!confirm('Delete all ' + cards.length + ' card(s)? This cannot be undone.')) return;
+        cards = [];
+        save();
+        render();
+        toast('Board cleared');
+      });
+
+      render();
+    })();
+  </script>
+</body>
+</html>
