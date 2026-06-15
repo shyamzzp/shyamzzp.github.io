@@ -1707,11 +1707,20 @@
   }
 
   async function pbLogin(email, password) {
-    const res = await fetch(PB_URL + '/api/collections/users/auth-with-password', {
-      method: 'POST', headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ identity: email, password: password })
-    });
-    if (!res.ok) throw new Error('Invalid email or password');
+    let res;
+    try {
+      res = await fetch(PB_URL + '/api/collections/users/auth-with-password', {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ identity: email, password: password })
+      });
+    } catch (netErr) {
+      throw new Error('Network/CORS error reaching PocketBase: ' + netErr.message);
+    }
+    if (!res.ok) {
+      let msg = 'Sign in failed (HTTP ' + res.status + ')';
+      try { const j = await res.json(); if (j && j.message) msg = j.message + ' (HTTP ' + res.status + ')'; } catch (e) {}
+      throw new Error(msg);
+    }
     const data = await res.json();
     authToken = data.token;
     authUserId = data.record.id;
@@ -1722,9 +1731,16 @@
   async function pbFetchRecord() {
     const url = PB_URL + '/api/collections/' + PB_COLLECTION + '/records?perPage=1&filter=' +
       encodeURIComponent('user="' + authUserId + '"');
-    const res = await fetch(url, { headers: pbHeaders() });
+    let res;
+    try { res = await fetch(url, { headers: pbHeaders() }); }
+    catch (netErr) { throw new Error('Network/CORS error: ' + netErr.message); }
     if (res.status === 401 || res.status === 403) throw { auth: true };
-    if (!res.ok) throw new Error('Could not load notes');
+    if (!res.ok) {
+      let msg = 'Could not load notes (HTTP ' + res.status + ')';
+      if (res.status === 404) msg = 'Collection "' + PB_COLLECTION + '" not found (HTTP 404) — create it in PocketBase';
+      try { const j = await res.json(); if (j && j.message) msg += ' — ' + j.message; } catch (e) {}
+      throw new Error(msg);
+    }
     const data = await res.json();
     return (data.items && data.items[0]) || null;
   }
@@ -1785,7 +1801,7 @@
       hideLogin();
     } catch (err) {
       if (err && err.auth) handleAuthExpired();
-      else flashStatus('Could not reach PocketBase');
+      else flashStatus((err && err.message) || 'Could not reach PocketBase', true);
     }
   }
 
