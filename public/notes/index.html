@@ -646,6 +646,64 @@
   .section[data-color] .color-dot {
     background: var(--sec-dot) !important;
   }
+
+  /* ── Login overlay ── */
+  .login-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    background: var(--bg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .login-overlay.hidden { display: none; }
+  .login-box {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 280px;
+    padding: 22px;
+    background: var(--toolbar-bg);
+    border: 1px solid var(--toolbar-border);
+    border-radius: 6px;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.5);
+  }
+  .login-title {
+    color: var(--title-text);
+    font-family: 'Courier New', monospace;
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 4px;
+  }
+  .login-box input {
+    background: var(--search-bg);
+    color: var(--text);
+    border: 1px solid var(--search-border);
+    padding: 8px 10px;
+    font-family: 'Courier New', monospace;
+    font-size: 13px;
+    border-radius: 3px;
+    outline: none;
+  }
+  .login-box input:focus { border-color: var(--text); }
+  .login-box button {
+    background: var(--btn-bg);
+    color: var(--btn-text);
+    border: 1px solid var(--toolbar-border);
+    padding: 8px;
+    font-family: 'Courier New', monospace;
+    font-size: 13px;
+    border-radius: 3px;
+    cursor: pointer;
+  }
+  .login-box button:hover { background: var(--btn-hover); }
+  .login-error {
+    color: #e06050;
+    font-family: 'Courier New', monospace;
+    font-size: 11px;
+    min-height: 14px;
+  }
 </style>
 </head>
 <body>
@@ -704,8 +762,26 @@
     <button id="save-btn" title="Save as HTML (Ctrl+S)">⬇ Save</button>
     <button id="clear-btn" title="Clear all sections">⌫ Clear All</button>
   </div>
+  <div class="tb-sep"></div>
+
+  <!-- Account -->
+  <div class="tb-group">
+    <span id="account-email" class="tb-meta-label"></span>
+    <button id="logout-btn" title="Log out" style="display:none">⎋ Logout</button>
+  </div>
 
   <span id="status">Saved ✓</span>
+</div>
+
+<!-- Login overlay (PocketBase) -->
+<div id="login-overlay" class="login-overlay hidden">
+  <form id="login-form" class="login-box">
+    <div class="login-title">Notes — Sign in</div>
+    <input id="login-email" type="email" placeholder="Email" autocomplete="username" required>
+    <input id="login-password" type="password" placeholder="Password" autocomplete="current-password" required>
+    <button id="login-submit" type="submit">Sign in</button>
+    <div id="login-error" class="login-error"></div>
+  </form>
 </div>
 
 <!-- Shared floating color picker -->
@@ -726,6 +802,13 @@
   const INITIAL_ROWS = 6;      // rows created on first load
   const GROW_ROWS = 4;         // rows appended each time the user nears the end
   const STORAGE_KEY = 'notes_v3';
+  // ── PocketBase storage ──
+  const PB_URL = 'https://shyamzzp.pockethost.io';
+  const PB_COLLECTION = 'notes';     // collection: fields user (relation→users) + data (json)
+  const PB_AUTH_KEY = 'pb_auth_notes';
+  // Exported standalone snapshots carry a seed and run fully offline (no login).
+  const OFFLINE = !!window.__NOTES_SEED__;
+  let authToken = null, authUserId = null, authEmail = null, recordId = null;
   let searchMatches = [];
   let searchIndex = -1;
   let theme = 'dark';
@@ -1179,15 +1262,10 @@
   }
 
   // ── Persistence ──
-  function loadState() {
+  // Populate the grid from a saved state object.
+  function applyState(data) {
+    if (!data) return;
     try {
-      let raw = null;
-      try { raw = localStorage.getItem(STORAGE_KEY); } catch (e) {}
-      // Standalone exported files seed their data here (works even when
-      // localStorage is unavailable, e.g. opened via file://).
-      if (!raw && window.__NOTES_SEED__) raw = window.__NOTES_SEED__;
-      if (!raw) return;
-      const data = JSON.parse(raw);
       if (data.theme) applyTheme(data.theme, false);
       const notes = data.notes || [];
       ensureSections(notes.length);   // create enough cells for the saved data
@@ -1218,6 +1296,15 @@
     } catch (e) {}
   }
 
+  // Offline / exported-snapshot loader (used only when a seed is present).
+  function loadSeedState() {
+    let raw = null;
+    if (window.__NOTES_SEED__) raw = window.__NOTES_SEED__;
+    if (!raw) { try { raw = localStorage.getItem(STORAGE_KEY); } catch (e) {} }
+    if (!raw) return;
+    try { applyState(JSON.parse(raw)); } catch (e) {}
+  }
+
   function isEmptySection(i) {
     return !textareas[i].value &&
            !titles[i].value &&
@@ -1244,9 +1331,19 @@
     }
     return { notes, theme, cardHeight, fontFamily };
   }
+  // Save: PocketBase when online & authed; localStorage only for offline
+  // exported snapshots (seed mode).
+  let saveTimer = null;
   function autoSave() {
-    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(currentState())); } catch (e) {}
-    flashStatus();
+    if (OFFLINE) {
+      try { localStorage.setItem(STORAGE_KEY, JSON.stringify(currentState())); } catch (e) {}
+      flashStatus('Saved ✓');
+      return;
+    }
+    if (!authToken) return; // not signed in yet
+    clearTimeout(saveTimer);
+    flashStatus('Saving…', true);
+    saveTimer = setTimeout(() => { saveToPB(); }, 700);
   }
 
   // ── Move / reorder a cell (drag-and-drop) ──
@@ -1289,11 +1386,12 @@
   }
 
   let statusTimer;
-  function flashStatus() {
+  function flashStatus(msg, sticky) {
     const el = document.getElementById('status');
+    if (msg) el.textContent = msg;
     el.classList.add('show');
     clearTimeout(statusTimer);
-    statusTimer = setTimeout(() => el.classList.remove('show'), 1200);
+    if (!sticky) statusTimer = setTimeout(() => el.classList.remove('show'), 1400);
   }
 
   // ── Per-section font size ──
@@ -1583,12 +1681,153 @@
     autoSave();
   });
 
+  // ── PocketBase auth + sync ──
+  function pbHeaders() {
+    const h = { 'Content-Type': 'application/json' };
+    if (authToken) h['Authorization'] = authToken;
+    return h;
+  }
+  function saveAuth() {
+    try { localStorage.setItem(PB_AUTH_KEY, JSON.stringify({ token: authToken, userId: authUserId, email: authEmail })); } catch (e) {}
+  }
+  function loadAuth() {
+    try {
+      const r = localStorage.getItem(PB_AUTH_KEY);
+      if (r) { const a = JSON.parse(r); authToken = a.token; authUserId = a.userId; authEmail = a.email; }
+    } catch (e) {}
+  }
+  function clearAuth() {
+    authToken = authUserId = authEmail = null;
+    recordId = null;
+    try { localStorage.removeItem(PB_AUTH_KEY); } catch (e) {}
+  }
+  function setAccountUI() {
+    document.getElementById('account-email').textContent = authEmail || '';
+    document.getElementById('logout-btn').style.display = authToken ? '' : 'none';
+  }
+
+  async function pbLogin(email, password) {
+    const res = await fetch(PB_URL + '/api/collections/users/auth-with-password', {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ identity: email, password: password })
+    });
+    if (!res.ok) throw new Error('Invalid email or password');
+    const data = await res.json();
+    authToken = data.token;
+    authUserId = data.record.id;
+    authEmail = data.record.email;
+    saveAuth();
+  }
+
+  async function pbFetchRecord() {
+    const url = PB_URL + '/api/collections/' + PB_COLLECTION + '/records?perPage=1&filter=' +
+      encodeURIComponent('user="' + authUserId + '"');
+    const res = await fetch(url, { headers: pbHeaders() });
+    if (res.status === 401 || res.status === 403) throw { auth: true };
+    if (!res.ok) throw new Error('Could not load notes');
+    const data = await res.json();
+    return (data.items && data.items[0]) || null;
+  }
+
+  async function loadFromPB() {
+    flashStatus('Loading…', true);
+    const rec = await pbFetchRecord();
+    if (rec) {
+      recordId = rec.id;
+      let d = rec.data;
+      if (typeof d === 'string') { try { d = JSON.parse(d); } catch (e) { d = {}; } }
+      applyState(d || {});
+    }
+    ensureSections(sections.length + GROW_ROWS * COLS);
+    flashStatus('Loaded ✓');
+  }
+
+  async function saveToPB() {
+    if (!authToken) return;
+    const state = currentState();
+    try {
+      let res;
+      if (recordId) {
+        res = await fetch(PB_URL + '/api/collections/' + PB_COLLECTION + '/records/' + recordId, {
+          method: 'PATCH', headers: pbHeaders(), body: JSON.stringify({ data: state })
+        });
+      } else {
+        res = await fetch(PB_URL + '/api/collections/' + PB_COLLECTION + '/records', {
+          method: 'POST', headers: pbHeaders(), body: JSON.stringify({ user: authUserId, data: state })
+        });
+      }
+      if (res.status === 401 || res.status === 403) { handleAuthExpired(); return; }
+      if (!res.ok) throw new Error('save failed');
+      const rec = await res.json();
+      recordId = rec.id;
+      flashStatus('Saved ✓');
+    } catch (e) {
+      flashStatus('Sync error — retrying…', true);
+      clearTimeout(saveTimer);
+      saveTimer = setTimeout(saveToPB, 4000);
+    }
+  }
+
+  function showLogin() {
+    document.getElementById('login-overlay').classList.remove('hidden');
+    setTimeout(() => document.getElementById('login-email').focus(), 0);
+  }
+  function hideLogin() { document.getElementById('login-overlay').classList.add('hidden'); }
+  function handleAuthExpired() {
+    clearAuth(); setAccountUI(); showLogin(); flashStatus('Session expired — sign in again');
+  }
+
+  async function startSession() {
+    setAccountUI();
+    if (!authToken) { showLogin(); return; }
+    try {
+      await loadFromPB();
+      hideLogin();
+    } catch (err) {
+      if (err && err.auth) handleAuthExpired();
+      else flashStatus('Could not reach PocketBase');
+    }
+  }
+
+  if (!OFFLINE) {
+    document.getElementById('login-form').addEventListener('submit', async e => {
+      e.preventDefault();
+      const email = document.getElementById('login-email').value.trim();
+      const password = document.getElementById('login-password').value;
+      const errEl = document.getElementById('login-error');
+      const btn = document.getElementById('login-submit');
+      errEl.textContent = '';
+      btn.disabled = true; btn.textContent = 'Signing in…';
+      try {
+        await pbLogin(email, password);
+        setAccountUI();
+        await loadFromPB();
+        hideLogin();
+        document.getElementById('login-password').value = '';
+      } catch (err) {
+        errEl.textContent = (err && err.message) || 'Sign in failed';
+      } finally {
+        btn.disabled = false; btn.textContent = 'Sign in';
+      }
+    });
+    document.getElementById('logout-btn').addEventListener('click', () => {
+      clearAuth();
+      location.reload();
+    });
+  }
+
   // ── Init ──
-  ensureSections(INITIAL_ROWS * COLS); // baseline grid before any saved data loads
-  loadState();
-  ensureSections(sections.length + GROW_ROWS * COLS); // buffer so scrolling has room
+  ensureSections(INITIAL_ROWS * COLS); // baseline grid
   applyCardHeight();
   applyFilters();
+  if (OFFLINE) {
+    loadSeedState();                                    // standalone snapshot
+    ensureSections(sections.length + GROW_ROWS * COLS);
+    applyCardHeight();
+  } else {
+    loadAuth();
+    startSession();                                     // login + load from PocketBase
+  }
 })();
 </script>
 </body>
