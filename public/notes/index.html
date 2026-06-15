@@ -408,7 +408,7 @@
 
   .textarea {
     flex: 1;
-    background: var(--cell-bg);
+    background: transparent;
     color: var(--text);
     border: none;
     outline: none;
@@ -418,9 +418,47 @@
     line-height: 1.55;
     resize: none;
     width: 100%;
+    position: relative;
+    z-index: 1;
+    caret-color: var(--text);
   }
   .textarea::placeholder { color: var(--placeholder); }
-  .textarea:focus { background: color-mix(in srgb, var(--cell-bg) 85%, var(--text) 15%); }
+
+  /* ── Pane wrapper + in-text highlight backdrop ── */
+  .pane {
+    position: relative;
+    flex: 1;
+    display: flex;
+    min-width: 0;
+    min-height: 0;
+    overflow: hidden;
+    background: var(--cell-bg);
+  }
+  .pane:focus-within { background: color-mix(in srgb, var(--cell-bg) 85%, var(--text) 15%); }
+
+  .hl-backdrop {
+    position: absolute;
+    inset: 0;
+    margin: 0;
+    padding: 8px 10px;
+    font-family: var(--note-font, 'Courier New', monospace);
+    font-size: var(--font-size);
+    line-height: 1.55;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    color: transparent;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 0;
+  }
+  /* Urgency token highlights (U1=low … U4=high, U5=critical) */
+  .hl { border-radius: 2px; padding: 0 1px; }
+  .hl-u1 { background: rgba(46,204,113,0.45); }   /* green  */
+  .hl-u2 { background: rgba(52,152,219,0.45); }   /* blue   */
+  .hl-u3 { background: rgba(243,156,18,0.52); }   /* orange */
+  .hl-u4 { background: rgba(231,76,60,0.58); }    /* red    */
+  .hl-u5 { background: rgba(155,89,182,0.55); }   /* purple */
 
   /* ── Cell body & split panes ── */
   .cell-body {
@@ -565,10 +603,10 @@
     border-right-color: var(--sec-border);
     border-bottom-color: var(--sec-border);
   }
-  .section[data-color] .textarea {
+  .section[data-color] .pane {
     background: color-mix(in srgb, var(--sec-dot) 22%, var(--cell-bg));
   }
-  .section[data-color] .textarea:focus {
+  .section[data-color] .pane:focus-within {
     background: color-mix(in srgb, var(--sec-dot) 10%, var(--cell-bg));
   }
   .section[data-color] .section-title {
@@ -811,6 +849,28 @@
     sectionColors.forEach((c, i) => applyColor(i, c));
   }
 
+  // ── In-text highlighting ──
+  // Urgency tokens like U1..U5 (case-insensitive, whole word) get colored.
+  const URGENCY_RE = /\bU[1-5]\b/gi;
+  function escapeHtml(s) {
+    return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  }
+  function highlightHTML(text) {
+    let h = escapeHtml(text).replace(URGENCY_RE, m => {
+      const lvl = m.replace(/[^0-9]/g, '');
+      return '<span class="hl hl-u' + lvl + '">' + m + '</span>';
+    });
+    if (h.charCodeAt(h.length - 1) === 10) h += ' '; // mirror trailing newline
+    return h;
+  }
+  function updateHighlight(ta) {
+    if (ta && ta._bd) ta._bd.innerHTML = highlightHTML(ta.value);
+  }
+  function applyTaFontSize(ta, px) {
+    ta.style.fontSize = px + 'px';
+    if (ta._bd) ta._bd.style.fontSize = px + 'px';
+  }
+
   // ── Build grid ──
   const grid = document.getElementById('grid');
   const textareas = [];
@@ -881,7 +941,7 @@
 
     const ta = makeTextarea(i);
     textareas.push(ta);
-    body.appendChild(ta);
+    body.appendChild(ta._wrap);
 
     sec.appendChild(hdr);
     sec.appendChild(body);
@@ -890,21 +950,33 @@
     titleInput.addEventListener('input', autoSave);
   }
 
-  // Create a configured textarea (used for primary and secondary panes)
+  // Create a configured textarea wrapped in a highlight pane.
+  // Returns the textarea; ta._wrap is the pane element, ta._bd the backdrop.
   function makeTextarea(i, secondary) {
+    const wrap = document.createElement('div');
+    wrap.className = 'pane';
+    const backdrop = document.createElement('div');
+    backdrop.className = 'hl-backdrop';
+    backdrop.setAttribute('aria-hidden', 'true');
     const ta = document.createElement('textarea');
     ta.className = 'textarea';
     ta.placeholder = 'notes…';
     ta.spellcheck = false;
-    ta.style.fontSize = sectionFontSizes[i] + 'px';
-    ta.addEventListener('input', () => { updateWordCount(i); autoSave(); });
+    ta._wrap = wrap;
+    ta._bd = backdrop;
+    wrap.appendChild(backdrop);
+    wrap.appendChild(ta);
+    applyTaFontSize(ta, sectionFontSizes[i]);
+    ta.addEventListener('input', () => { updateHighlight(ta); updateWordCount(i); autoSave(); });
     ta.addEventListener('focus', () => { activeSectionIdx = i; updateFontSizeUI(); });
+    ta.addEventListener('scroll', () => { backdrop.scrollTop = ta.scrollTop; backdrop.scrollLeft = ta.scrollLeft; });
     ta.addEventListener('keydown', (e) => {
       if (e.key === 'Tab') {
         e.preventDefault();
         const start = ta.selectionStart, end = ta.selectionEnd;
         ta.value = ta.value.slice(0, start) + '\t' + ta.value.slice(end);
         ta.selectionStart = ta.selectionEnd = start + 1;
+        updateHighlight(ta);
         updateWordCount(i);
         autoSave();
       }
@@ -947,10 +1019,10 @@
     const body = cellBodies[i];
     const primary = textareas[i];
     body.innerHTML = '';                 // detaches children; element refs (and their values) survive
-    primary.style.flex = '';
+    primary._wrap.style.flex = '';
     body.classList.toggle('split', !!mode);
     body.style.flexDirection = mode === 'col' ? 'column' : 'row';
-    body.appendChild(primary);
+    body.appendChild(primary._wrap);
     splitBtns[i].textContent = mode ? '⊟' : '⊞';
     splitBtns[i].title = mode ? 'Change / merge split' : 'Split this cell';
     if (!mode) { updateWordCount(i); return; }
@@ -959,11 +1031,12 @@
     splitter.className = 'cell-splitter';
     attachSplitterDrag(splitter, i);
     body.appendChild(splitter);
-    body.appendChild(textareas2[i]);
+    body.appendChild(textareas2[i]._wrap);
     const p = splitPos[i];
-    primary.style.flex = '0 0 ' + p + '%';
-    textareas2[i].style.flex = '0 0 ' + (100 - p) + '%';
+    primary._wrap.style.flex = '0 0 ' + p + '%';
+    textareas2[i]._wrap.style.flex = '0 0 ' + (100 - p) + '%';
     updateWordCount(i);
+    updateHighlight(textareas2[i]);
   }
 
   function attachSplitterDrag(splitter, i) {
@@ -978,8 +1051,8 @@
           : (ev.clientY - rect.top) / rect.height * 100;
         pct = Math.max(12, Math.min(88, pct));
         splitPos[i] = pct;
-        textareas[i].style.flex = '0 0 ' + pct + '%';
-        textareas2[i].style.flex = '0 0 ' + (100 - pct) + '%';
+        textareas[i]._wrap.style.flex = '0 0 ' + pct + '%';
+        textareas2[i]._wrap.style.flex = '0 0 ' + (100 - pct) + '%';
       }
       function onUp() {
         document.removeEventListener('mousemove', onMove);
@@ -1015,15 +1088,17 @@
         textareas[i].value = n.text || '';
         titles[i].value = n.title || '';
         if (n.color !== undefined) sectionColors[i] = n.color;
-        if (n.fontSize) { sectionFontSizes[i] = n.fontSize; textareas[i].style.fontSize = n.fontSize + 'px'; }
+        if (n.fontSize) { sectionFontSizes[i] = n.fontSize; applyTaFontSize(textareas[i], n.fontSize); }
         if (n.split) {
           splitPos[i] = (typeof n.splitPos === 'number') ? n.splitPos : 50;
           setSplit(i, n.split);
           if (textareas2[i]) {
             textareas2[i].value = n.text2 || '';
-            textareas2[i].style.fontSize = sectionFontSizes[i] + 'px';
+            applyTaFontSize(textareas2[i], sectionFontSizes[i]);
+            updateHighlight(textareas2[i]);
           }
         }
+        updateHighlight(textareas[i]);
         updateWordCount(i);
       });
       if (typeof data.cardHeight === 'number' || data.cardHeight === null) {
@@ -1078,8 +1153,8 @@
   function setSectionFontSize(idx, size, save = true) {
     if (idx < 0 || idx >= SECTIONS) return;
     sectionFontSizes[idx] = Math.max(9, Math.min(24, size));
-    textareas[idx].style.fontSize = sectionFontSizes[idx] + 'px';
-    if (textareas2[idx]) textareas2[idx].style.fontSize = sectionFontSizes[idx] + 'px';
+    applyTaFontSize(textareas[idx], sectionFontSizes[idx]);
+    if (textareas2[idx]) applyTaFontSize(textareas2[idx], sectionFontSizes[idx]);
     if (idx === activeSectionIdx) updateFontSizeUI();
     if (save) autoSave();
   }
@@ -1328,9 +1403,10 @@
       titles[i].value = '';
       sectionColors[i] = null;
       applyColor(i, null);
-      if (textareas2[i]) textareas2[i].value = '';
+      if (textareas2[i]) { textareas2[i].value = ''; updateHighlight(textareas2[i]); }
       splitPos[i] = 50;
       if (splitModes[i]) setSplit(i, null);
+      updateHighlight(ta);
       updateWordCount(i);
     });
     applyFilters();
