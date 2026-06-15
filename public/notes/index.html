@@ -1763,9 +1763,9 @@
     try { res = await fetch(url, { headers: pbHeaders() }); }
     catch (netErr) { throw new Error('Network/CORS error: ' + netErr.message); }
     if (res.status === 401 || res.status === 403) throw { auth: true };
+    if (res.status === 404) throw { missing: true };
     if (!res.ok) {
       let msg = 'Could not load notes (HTTP ' + res.status + ')';
-      if (res.status === 404) msg = 'Collection "' + PB_COLLECTION + '" not found (HTTP 404) — create it in PocketBase';
       try { const j = await res.json(); if (j && j.message) msg += ' — ' + j.message; } catch (e) {}
       throw new Error(msg);
     }
@@ -1773,9 +1773,48 @@
     return (data.items && data.items[0]) || null;
   }
 
+  // Auto-provision the notes collection (superuser only). Tries the PB ≥0.23
+  // "fields" payload first, then the legacy "schema" payload.
+  async function pbCreateCollection() {
+    const headers = pbHeaders();
+    const attempts = [
+      { name: PB_COLLECTION, type: 'base', fields: [
+        { name: 'key', type: 'text' },
+        { name: 'data', type: 'json', maxSize: 5000000 }
+      ] },
+      { name: PB_COLLECTION, type: 'base', schema: [
+        { name: 'key', type: 'text' },
+        { name: 'data', type: 'json', options: { maxSize: 5000000 } }
+      ] }
+    ];
+    for (const body of attempts) {
+      const res = await fetch(PB_URL + '/api/collections', {
+        method: 'POST', headers, body: JSON.stringify(body)
+      });
+      if (res.ok) return true;
+    }
+    return false;
+  }
+
   async function loadFromPB() {
     flashStatus('Loading…', true);
-    const rec = await pbFetchRecord();
+    let rec;
+    try {
+      rec = await pbFetchRecord();
+    } catch (err) {
+      if (err && err.missing) {
+        if (isSuperuser) {
+          flashStatus('Creating "' + PB_COLLECTION + '" collection…', true);
+          const ok = await pbCreateCollection();
+          if (!ok) throw new Error('Could not create collection "' + PB_COLLECTION + '" automatically — create it manually in PocketBase');
+          rec = await pbFetchRecord();
+        } else {
+          throw new Error('Collection "' + PB_COLLECTION + '" not found — ask an admin to create it');
+        }
+      } else {
+        throw err;
+      }
+    }
     if (rec) {
       recordId = rec.id;
       let d = rec.data;
