@@ -361,6 +361,10 @@
     overflow-y: auto;
     overflow-x: hidden;
   }
+  /* Mobile: two columns per row */
+  @media (max-width: 640px) {
+    #grid { grid-template-columns: repeat(2, 1fr); }
+  }
 
   .section {
     display: flex;
