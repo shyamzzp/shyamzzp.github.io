@@ -804,11 +804,12 @@
   const STORAGE_KEY = 'notes_v3';
   // ── PocketBase storage ──
   const PB_URL = 'https://shyamzzp.pockethost.io';
-  const PB_COLLECTION = 'notes';     // collection: fields user (relation→users) + data (json)
+  const PB_COLLECTION = 'notes';     // collection: fields key (text) + data (json)
   const PB_AUTH_KEY = 'pb_auth_notes';
+  const SUPERUSER_KEY = 'board';      // record key used when signed in as admin/superuser
   // Exported standalone snapshots carry a seed and run fully offline (no login).
   const OFFLINE = !!window.__NOTES_SEED__;
-  let authToken = null, authUserId = null, authEmail = null, recordId = null;
+  let authToken = null, authUserId = null, authEmail = null, recordId = null, isSuperuser = false;
   let searchMatches = [];
   let searchIndex = -1;
   let theme = 'dark';
@@ -1688,49 +1689,76 @@
     return h;
   }
   function saveAuth() {
-    try { localStorage.setItem(PB_AUTH_KEY, JSON.stringify({ token: authToken, userId: authUserId, email: authEmail })); } catch (e) {}
+    try { localStorage.setItem(PB_AUTH_KEY, JSON.stringify({ token: authToken, userId: authUserId, email: authEmail, su: isSuperuser })); } catch (e) {}
   }
   function loadAuth() {
     try {
       const r = localStorage.getItem(PB_AUTH_KEY);
-      if (r) { const a = JSON.parse(r); authToken = a.token; authUserId = a.userId; authEmail = a.email; }
+      if (r) { const a = JSON.parse(r); authToken = a.token; authUserId = a.userId; authEmail = a.email; isSuperuser = !!a.su; }
     } catch (e) {}
   }
   function clearAuth() {
     authToken = authUserId = authEmail = null;
+    isSuperuser = false;
     recordId = null;
     try { localStorage.removeItem(PB_AUTH_KEY); } catch (e) {}
   }
+  // Record key for the current identity (admins share one 'board' record).
+  function notesKey() { return isSuperuser ? SUPERUSER_KEY : authUserId; }
   function setAccountUI() {
     document.getElementById('account-email').textContent = authEmail || '';
     document.getElementById('logout-btn').style.display = authToken ? '' : 'none';
   }
 
-  async function pbLogin(email, password) {
+  async function tryAuth(path, email, password) {
     let res;
     try {
-      res = await fetch(PB_URL + '/api/collections/users/auth-with-password', {
+      res = await fetch(PB_URL + path, {
         method: 'POST', headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ identity: email, password: password })
       });
     } catch (netErr) {
       throw new Error('Network/CORS error reaching PocketBase: ' + netErr.message);
     }
-    if (!res.ok) {
-      let msg = 'Sign in failed (HTTP ' + res.status + ')';
-      try { const j = await res.json(); if (j && j.message) msg = j.message + ' (HTTP ' + res.status + ')'; } catch (e) {}
-      throw new Error(msg);
+    return res;
+  }
+  async function pbLogin(email, password) {
+    // 1) regular user account in the `users` collection
+    let res = await tryAuth('/api/collections/users/auth-with-password', email, password);
+    if (res.ok) {
+      const data = await res.json();
+      authToken = data.token; authUserId = data.record.id; authEmail = data.record.email; isSuperuser = false;
+      saveAuth(); return;
     }
-    const data = await res.json();
-    authToken = data.token;
-    authUserId = data.record.id;
-    authEmail = data.record.email;
-    saveAuth();
+    const userStatus = res.status;
+    // 2) admin / superuser (PocketBase ≥ 0.23)
+    res = await tryAuth('/api/collections/_superusers/auth-with-password', email, password);
+    if (res.ok) {
+      const data = await res.json();
+      authToken = data.token; authUserId = (data.record && data.record.id) || 'admin'; authEmail = email; isSuperuser = true;
+      saveAuth(); return;
+    }
+    // 3) legacy admins endpoint (PocketBase < 0.23)
+    let legacy;
+    try {
+      legacy = await fetch(PB_URL + '/api/admins/auth-with-password', {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ identity: email, password: password })
+      });
+    } catch (e) { legacy = null; }
+    if (legacy && legacy.ok) {
+      const data = await legacy.json();
+      authToken = data.token; authUserId = (data.admin && data.admin.id) || 'admin'; authEmail = email; isSuperuser = true;
+      saveAuth(); return;
+    }
+    let msg = 'Failed to authenticate (HTTP ' + userStatus + ') — wrong email/password';
+    try { const j = await res.json(); if (j && j.message) msg = j.message + ' (HTTP ' + res.status + ')'; } catch (e) {}
+    throw new Error(msg);
   }
 
   async function pbFetchRecord() {
     const url = PB_URL + '/api/collections/' + PB_COLLECTION + '/records?perPage=1&filter=' +
-      encodeURIComponent('user="' + authUserId + '"');
+      encodeURIComponent('key="' + notesKey() + '"');
     let res;
     try { res = await fetch(url, { headers: pbHeaders() }); }
     catch (netErr) { throw new Error('Network/CORS error: ' + netErr.message); }
@@ -1769,18 +1797,23 @@
         });
       } else {
         res = await fetch(PB_URL + '/api/collections/' + PB_COLLECTION + '/records', {
-          method: 'POST', headers: pbHeaders(), body: JSON.stringify({ user: authUserId, data: state })
+          method: 'POST', headers: pbHeaders(), body: JSON.stringify({ key: notesKey(), data: state })
         });
       }
       if (res.status === 401 || res.status === 403) { handleAuthExpired(); return; }
-      if (!res.ok) throw new Error('save failed');
+      if (!res.ok) {
+        let msg = 'Save failed (HTTP ' + res.status + ')';
+        if (res.status === 404) msg = 'Collection "' + PB_COLLECTION + '" not found — create it in PocketBase';
+        try { const j = await res.json(); if (j && j.message) msg += ' — ' + j.message; } catch (e2) {}
+        throw new Error(msg);
+      }
       const rec = await res.json();
       recordId = rec.id;
       flashStatus('Saved ✓');
     } catch (e) {
-      flashStatus('Sync error — retrying…', true);
+      flashStatus((e && e.message) || 'Sync error — retrying…', true);
       clearTimeout(saveTimer);
-      saveTimer = setTimeout(saveToPB, 4000);
+      saveTimer = setTimeout(saveToPB, 5000);
     }
   }
 
