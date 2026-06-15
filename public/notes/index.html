@@ -1757,8 +1757,9 @@
   }
 
   async function pbFetchRecord() {
-    const url = PB_URL + '/api/collections/' + PB_COLLECTION + '/records?perPage=1&filter=' +
-      encodeURIComponent('key="' + notesKey() + '"');
+    // Single-record board: grab the most recent record with no field filter,
+    // so the collection only needs a `data` JSON field.
+    const url = PB_URL + '/api/collections/' + PB_COLLECTION + '/records?perPage=1&sort=-updated';
     let res;
     try { res = await fetch(url, { headers: pbHeaders() }); }
     catch (netErr) { throw new Error('Network/CORS error: ' + netErr.message); }
@@ -1836,7 +1837,7 @@
         });
       } else {
         res = await fetch(PB_URL + '/api/collections/' + PB_COLLECTION + '/records', {
-          method: 'POST', headers: pbHeaders(), body: JSON.stringify({ key: notesKey(), data: state })
+          method: 'POST', headers: pbHeaders(), body: JSON.stringify({ data: state })
         });
       }
       if (res.status === 401 || res.status === 403) { handleAuthExpired(); return; }
