@@ -307,6 +307,62 @@
   .textarea::placeholder { color: var(--placeholder); }
   .textarea:focus { background: color-mix(in srgb, var(--cell-bg) 85%, var(--text) 15%); }
 
+  /* ── Cell body & split panes ── */
+  .cell-body {
+    flex: 1;
+    display: flex;
+    flex-direction: row;
+    min-height: 0;
+    min-width: 0;
+    overflow: hidden;
+  }
+  .cell-body.split > .textarea { flex: 0 0 50%; }
+
+  .cell-splitter {
+    flex: 0 0 5px;
+    background: var(--border);
+    position: relative;
+    z-index: 2;
+  }
+  .cell-splitter:hover { background: var(--text); }
+  .cell-body[style*="row"] > .cell-splitter,
+  .cell-body:not([style*="column"]) > .cell-splitter { cursor: col-resize; }
+  .cell-body[style*="column"] > .cell-splitter { cursor: row-resize; }
+
+  /* Split control button in header */
+  .split-btn {
+    background: transparent;
+    border: none;
+    color: var(--count-text);
+    font-size: 11px;
+    line-height: 1;
+    padding: 0 3px;
+    height: auto;
+    cursor: pointer;
+    flex-shrink: 0;
+    margin-left: 2px;
+  }
+  .split-btn:hover { color: var(--text); background: transparent; }
+
+  /* Split picker popup */
+  .split-popup {
+    position: absolute;
+    z-index: 100;
+    background: var(--toolbar-bg);
+    border: 1px solid var(--toolbar-border);
+    border-radius: 4px;
+    padding: 4px;
+    display: flex;
+    gap: 4px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.5);
+  }
+  .split-popup.hidden { display: none; }
+  .split-popup button {
+    font-size: 14px;
+    padding: 4px 8px;
+    line-height: 1;
+  }
+
   /* Search highlight */
   mark.sh { background: var(--highlight); color: inherit; border-radius: 1px; }
   mark.sh.active { background: var(--highlight-active); }
@@ -463,6 +519,13 @@
 <!-- Shared floating color picker -->
 <div id="color-popup" class="color-picker-popup hidden"></div>
 
+<!-- Shared floating split picker -->
+<div id="split-popup" class="split-popup hidden">
+  <button data-split="row" title="Split side by side">⬌</button>
+  <button data-split="col" title="Split stacked (top / bottom)">⬍</button>
+  <button data-split="none" title="Merge into one">✕</button>
+</div>
+
 <div id="grid"></div>
 
 <script>
@@ -474,6 +537,8 @@
   let theme = 'dark';
   const sectionColors = new Array(SECTIONS).fill(null); // null = default
   const sectionFontSizes = new Array(SECTIONS).fill(13); // per-section font size
+  const splitModes = new Array(SECTIONS).fill(null); // null | 'row' (side by side) | 'col' (stacked)
+  const splitPos = new Array(SECTIONS).fill(50);      // first pane size, percent
   let activeSectionIdx = -1; // index of currently focused textarea
 
   // ── Color palette ──
@@ -626,10 +691,13 @@
   // ── Build grid ──
   const grid = document.getElementById('grid');
   const textareas = [];
+  const textareas2 = new Array(SECTIONS).fill(null); // secondary pane (when split)
+  const cellBodies = [];
   const titles = [];
   const wordCounts = [];
   const sections = [];
   const dots = [];
+  const splitBtns = [];
 
   for (let i = 0; i < SECTIONS; i++) {
     const sec = document.createElement('div');
@@ -665,23 +733,49 @@
       });
     })(i);
 
+    // Split control
+    const splitBtn = document.createElement('button');
+    splitBtn.className = 'split-btn';
+    splitBtn.textContent = '⊞';
+    splitBtn.title = 'Split this cell';
+    splitBtns.push(splitBtn);
+    (idx => {
+      splitBtn.addEventListener('click', e => {
+        e.stopPropagation();
+        if (splitTarget === idx && !splitPopup.classList.contains('hidden')) { closeSplitPopup(); return; }
+        openSplitPopup(idx, splitBtn);
+      });
+    })(i);
+
     hdr.appendChild(titleInput);
     hdr.appendChild(wc);
+    hdr.appendChild(splitBtn);
     hdr.appendChild(dot);
 
-    const ta = document.createElement('textarea');
-    ta.className = 'textarea';
-    ta.placeholder = `notes…`;
-    ta.spellcheck = false;
+    const body = document.createElement('div');
+    body.className = 'cell-body';
+    cellBodies.push(body);
+
+    const ta = makeTextarea(i);
     textareas.push(ta);
+    body.appendChild(ta);
 
     sec.appendChild(hdr);
-    sec.appendChild(ta);
+    sec.appendChild(body);
     grid.appendChild(sec);
 
-    ta.addEventListener('input', () => { updateWordCount(i); autoSave(); });
     titleInput.addEventListener('input', autoSave);
+  }
 
+  // Create a configured textarea (used for primary and secondary panes)
+  function makeTextarea(i, secondary) {
+    const ta = document.createElement('textarea');
+    ta.className = 'textarea';
+    ta.placeholder = 'notes…';
+    ta.spellcheck = false;
+    ta.style.fontSize = sectionFontSizes[i] + 'px';
+    ta.addEventListener('input', () => { updateWordCount(i); autoSave(); });
+    ta.addEventListener('focus', () => { activeSectionIdx = i; updateFontSizeUI(); });
     ta.addEventListener('keydown', (e) => {
       if (e.key === 'Tab') {
         e.preventDefault();
@@ -692,11 +786,98 @@
         autoSave();
       }
     });
+    return ta;
   }
 
+  // ── Cell splitting ──
+  const splitPopup = document.getElementById('split-popup');
+  let splitTarget = -1;
+
+  function openSplitPopup(idx, btnEl) {
+    splitTarget = idx;
+    const rect = btnEl.getBoundingClientRect();
+    splitPopup.classList.remove('hidden');
+    splitPopup.style.top = (rect.bottom + 4) + 'px';
+    splitPopup.style.left = Math.min(rect.left, window.innerWidth - 110) + 'px';
+  }
+  function closeSplitPopup() {
+    splitPopup.classList.add('hidden');
+    splitTarget = -1;
+  }
+  splitPopup.addEventListener('click', e => {
+    const btn = e.target.closest('button');
+    if (!btn || splitTarget < 0) return;
+    const mode = btn.dataset.split === 'none' ? null : btn.dataset.split;
+    setSplit(splitTarget, mode);
+    closeSplitPopup();
+    autoSave();
+  });
+  document.addEventListener('click', e => {
+    if (!splitPopup.classList.contains('hidden') && !splitPopup.contains(e.target) && !e.target.closest('.split-btn')) {
+      closeSplitPopup();
+    }
+  });
+
+  // Apply / change a section's split layout, preserving content
+  function setSplit(i, mode) {
+    splitModes[i] = mode;
+    const body = cellBodies[i];
+    const primary = textareas[i];
+    body.innerHTML = '';                 // detaches children; element refs (and their values) survive
+    primary.style.flex = '';
+    body.classList.toggle('split', !!mode);
+    body.style.flexDirection = mode === 'col' ? 'column' : 'row';
+    body.appendChild(primary);
+    splitBtns[i].textContent = mode ? '⊟' : '⊞';
+    splitBtns[i].title = mode ? 'Change / merge split' : 'Split this cell';
+    if (!mode) { updateWordCount(i); return; }
+    if (!textareas2[i]) textareas2[i] = makeTextarea(i, true);
+    const splitter = document.createElement('div');
+    splitter.className = 'cell-splitter';
+    attachSplitterDrag(splitter, i);
+    body.appendChild(splitter);
+    body.appendChild(textareas2[i]);
+    const p = splitPos[i];
+    primary.style.flex = '0 0 ' + p + '%';
+    textareas2[i].style.flex = '0 0 ' + (100 - p) + '%';
+    updateWordCount(i);
+  }
+
+  function attachSplitterDrag(splitter, i) {
+    splitter.addEventListener('mousedown', e => {
+      e.preventDefault();
+      const body = cellBodies[i];
+      const rect = body.getBoundingClientRect();
+      const horizontal = splitModes[i] === 'row'; // panes left/right
+      function onMove(ev) {
+        let pct = horizontal
+          ? (ev.clientX - rect.left) / rect.width * 100
+          : (ev.clientY - rect.top) / rect.height * 100;
+        pct = Math.max(12, Math.min(88, pct));
+        splitPos[i] = pct;
+        textareas[i].style.flex = '0 0 ' + pct + '%';
+        textareas2[i].style.flex = '0 0 ' + (100 - pct) + '%';
+      }
+      function onUp() {
+        document.removeEventListener('mousemove', onMove);
+        document.removeEventListener('mouseup', onUp);
+        document.body.style.userSelect = '';
+        autoSave();
+      }
+      document.addEventListener('mousemove', onMove);
+      document.addEventListener('mouseup', onUp);
+      document.body.style.userSelect = 'none';
+    });
+  }
+
+  function countWords(s) {
+    const t = s.trim();
+    return t ? t.split(/\s+/).length : 0;
+  }
   function updateWordCount(i) {
-    const val = textareas[i].value.trim();
-    wordCounts[i].textContent = (val ? val.split(/\s+/).length : 0) + 'w';
+    let n = countWords(textareas[i].value);
+    if (splitModes[i] && textareas2[i]) n += countWords(textareas2[i].value);
+    wordCounts[i].textContent = n + 'w';
   }
 
   // ── Persistence ──
@@ -712,6 +893,14 @@
         titles[i].value = n.title || '';
         if (n.color !== undefined) sectionColors[i] = n.color;
         if (n.fontSize) { sectionFontSizes[i] = n.fontSize; textareas[i].style.fontSize = n.fontSize + 'px'; }
+        if (n.split) {
+          splitPos[i] = (typeof n.splitPos === 'number') ? n.splitPos : 50;
+          setSplit(i, n.split);
+          if (textareas2[i]) {
+            textareas2[i].value = n.text2 || '';
+            textareas2[i].style.fontSize = sectionFontSizes[i] + 'px';
+          }
+        }
         updateWordCount(i);
       });
       if (typeof data.cardHeight === 'number' || data.cardHeight === null) {
@@ -728,7 +917,10 @@
       text: ta.value,
       title: titles[i].value,
       color: sectionColors[i] || null,
-      fontSize: sectionFontSizes[i]
+      fontSize: sectionFontSizes[i],
+      split: splitModes[i] || null,
+      splitPos: splitPos[i],
+      text2: textareas2[i] ? textareas2[i].value : ''
     }));
     localStorage.setItem(STORAGE_KEY, JSON.stringify({ notes, theme, cardHeight }));
     flashStatus();
@@ -763,20 +955,10 @@
     if (idx < 0 || idx >= SECTIONS) return;
     sectionFontSizes[idx] = Math.max(9, Math.min(24, size));
     textareas[idx].style.fontSize = sectionFontSizes[idx] + 'px';
+    if (textareas2[idx]) textareas2[idx].style.fontSize = sectionFontSizes[idx] + 'px';
     if (idx === activeSectionIdx) updateFontSizeUI();
     if (save) autoSave();
   }
-
-  // Track which section is active
-  textareas.forEach((ta, i) => {
-    ta.addEventListener('focus', () => {
-      activeSectionIdx = i;
-      updateFontSizeUI();
-    });
-    ta.addEventListener('blur', () => {
-      // Keep showing last focused section's size briefly; clear on toolbar focus
-    });
-  });
 
   document.getElementById('font-up').addEventListener('click', () => {
     if (activeSectionIdx < 0) return;
@@ -865,16 +1047,26 @@
   const searchInput = document.getElementById('search-input');
   const searchCountEl = document.getElementById('search-count');
 
+  // All visible panes (primary + any split secondary), in section order
+  function allPanes() {
+    const panes = [];
+    for (let i = 0; i < SECTIONS; i++) {
+      panes.push(textareas[i]);
+      if (splitModes[i] && textareas2[i]) panes.push(textareas2[i]);
+    }
+    return panes;
+  }
+
   function doSearch() {
     searchMatches = [];
     const q = searchInput.value;
     if (!q) { searchCountEl.textContent = ''; searchIndex = -1; return; }
     const lower = q.toLowerCase();
-    textareas.forEach((ta, i) => {
+    allPanes().forEach(ta => {
       const val = ta.value.toLowerCase();
       let pos = 0;
       while ((pos = val.indexOf(lower, pos)) !== -1) {
-        searchMatches.push({ section: i, pos, len: q.length });
+        searchMatches.push({ ta, pos, len: q.length });
         pos += q.length;
       }
     });
@@ -891,10 +1083,10 @@
   function scrollToMatch(idx) {
     if (!searchMatches.length || idx < 0) return;
     const m = searchMatches[idx];
-    const ta = textareas[m.section];
+    const ta = m.ta;
     ta.focus();
     ta.setSelectionRange(m.pos, m.pos + m.len);
-    const lineHeight = fontSize * 1.55;
+    const lineHeight = (parseFloat(getComputedStyle(ta).fontSize) || 13) * 1.55;
     const lineNum = (ta.value.slice(0, m.pos).match(/\n/g) || []).length;
     ta.scrollTop = Math.max(0, lineNum * lineHeight - ta.clientHeight / 2);
     searchCountEl.textContent = `${idx + 1}/${searchMatches.length}`;
@@ -927,24 +1119,18 @@
 
   // ── Save as HTML ──
   function saveHTML() {
-    const notesData = textareas.map((ta, i) => ({
-      text: ta.value,
-      title: titles[i].value,
-      color: sectionColors[i] || null,
-      fontSize: sectionFontSizes[i]
-    }));
+    // Capture every pane's value in document order (handles split cells)
+    const paneText = Array.from(document.querySelectorAll('.textarea')).map(t => t.value);
+    const titleText = Array.from(document.querySelectorAll('.section-title')).map(t => t.value);
     const savedScript = `
 <script>
 (function(){
-  var data = ${JSON.stringify(notesData)};
+  var paneText = ${JSON.stringify(paneText)};
+  var titleText = ${JSON.stringify(titleText)};
   var tas = document.querySelectorAll('.textarea');
   var tis = document.querySelectorAll('.section-title');
-  data.forEach(function(n,i){
-    if(tas[i]) tas[i].value = n.text||'';
-    if(tis[i]) tis[i].value = n.title||'';
-    if(n.color) sectionColors[i] = n.color;
-  });
-  reapplyAllColors();
+  paneText.forEach(function(v,i){ if(tas[i]) tas[i].value = v||''; });
+  titleText.forEach(function(v,i){ if(tis[i]) tis[i].value = v||''; });
 })();
 <\/script>`;
     const html = '<!DOCTYPE html>\n' + document.documentElement.outerHTML.replace('</body>', savedScript + '\n</body>');
@@ -984,6 +1170,9 @@
       titles[i].value = '';
       sectionColors[i] = null;
       applyColor(i, null);
+      if (textareas2[i]) textareas2[i].value = '';
+      splitPos[i] = 50;
+      if (splitModes[i]) setSplit(i, null);
       updateWordCount(i);
     });
     applyFilters();
