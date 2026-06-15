@@ -554,9 +554,11 @@
   /* Sections hidden by an active color filter */
   .section.filtered-out { display: none; }
 
-  /* Section tinting — applied via inline CSS vars on .section */
+  /* Section tinting — derived from the section's color (--sec-dot) so the
+     highlight is clearly visible. View mode is the boldest tint; focus
+     eases it off for comfortable editing. */
   .section[data-color] .section-header {
-    background: var(--sec-hdr-bg);
+    background: color-mix(in srgb, var(--sec-dot) 40%, var(--title-bg));
     border-bottom-color: var(--sec-border);
   }
   .section[data-color] {
@@ -564,10 +566,10 @@
     border-bottom-color: var(--sec-border);
   }
   .section[data-color] .textarea {
-    background: var(--sec-ta-bg);
+    background: color-mix(in srgb, var(--sec-dot) 22%, var(--cell-bg));
   }
   .section[data-color] .textarea:focus {
-    background: var(--sec-ta-focus);
+    background: color-mix(in srgb, var(--sec-dot) 10%, var(--cell-bg));
   }
   .section[data-color] .section-title {
     color: var(--sec-title);
