@@ -1739,21 +1739,20 @@
       saveAuth(); return;
     }
     // 3) legacy admins endpoint (PocketBase < 0.23)
-    let legacy;
+    let legacy = null, legacyStatus = '—';
     try {
       legacy = await fetch(PB_URL + '/api/admins/auth-with-password', {
         method: 'POST', headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ identity: email, password: password })
       });
-    } catch (e) { legacy = null; }
+      legacyStatus = legacy.status;
+    } catch (e) { legacyStatus = 'net'; }
     if (legacy && legacy.ok) {
       const data = await legacy.json();
       authToken = data.token; authUserId = (data.admin && data.admin.id) || 'admin'; authEmail = email; isSuperuser = true;
       saveAuth(); return;
     }
-    let msg = 'Failed to authenticate (HTTP ' + userStatus + ') — wrong email/password';
-    try { const j = await res.json(); if (j && j.message) msg = j.message + ' (HTTP ' + res.status + ')'; } catch (e) {}
-    throw new Error(msg);
+    throw new Error('Sign in failed — user:' + userStatus + ' superuser:' + res.status + ' admin:' + legacyStatus + ' (check email/password)');
   }
 
   async function pbFetchRecord() {
