@@ -350,19 +350,16 @@
   #status.show { opacity: 1; }
 
   /* ── Grid ── */
+  /* Infinite vertical scroller: 4 columns (25% each), rows of --card-h.
+     New rows are appended as you scroll. */
   #grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    grid-template-rows: repeat(4, 1fr);
+    grid-auto-rows: var(--card-h, 25vh);
     flex: 1;
     gap: 0;
-    overflow: hidden;
-  }
-  /* Fixed uniform card height for all cards (scrollable) */
-  #grid.fixed-height {
-    grid-template-rows: none;
-    grid-auto-rows: var(--card-h, 200px);
     overflow-y: auto;
+    overflow-x: hidden;
   }
 
   .section {
@@ -707,15 +704,18 @@
 
 <script>
 (function () {
-  const SECTIONS = 16;
+  const COLS = 4;              // cells per row (each 25% wide)
+  const INITIAL_ROWS = 6;      // rows created on first load
+  const GROW_ROWS = 4;         // rows appended each time the user nears the end
   const STORAGE_KEY = 'notes_v3';
   let searchMatches = [];
   let searchIndex = -1;
   let theme = 'dark';
-  const sectionColors = new Array(SECTIONS).fill(null); // null = default
-  const sectionFontSizes = new Array(SECTIONS).fill(13); // per-section font size
-  const splitModes = new Array(SECTIONS).fill(null); // null | 'row' (side by side) | 'col' (stacked)
-  const splitPos = new Array(SECTIONS).fill(50);      // first pane size, percent
+  // Section state grows dynamically (infinite scroll); arrays are appended to.
+  const sectionColors = [];     // null = default
+  const sectionFontSizes = [];  // per-section font size
+  const splitModes = [];        // null | 'row' (side by side) | 'col' (stacked)
+  const splitPos = [];          // first pane size, percent
   let activeSectionIdx = -1; // index of currently focused textarea
 
   // ── Color palette ──
@@ -905,10 +905,10 @@
     if (ta._bd) ta._bd.style.fontSize = px + 'px';
   }
 
-  // ── Build grid ──
+  // ── Build grid (infinite scroll) ──
   const grid = document.getElementById('grid');
   const textareas = [];
-  const textareas2 = new Array(SECTIONS).fill(null); // secondary pane (when split)
+  const textareas2 = [];   // secondary pane (when split), per section
   const cellBodies = [];
   const titles = [];
   const wordCounts = [];
@@ -916,10 +916,17 @@
   const dots = [];
   const splitBtns = [];
 
-  for (let i = 0; i < SECTIONS; i++) {
+  // Build one section at index i and append it to the grid.
+  function createSection(i) {
+    sectionColors[i] = null;
+    sectionFontSizes[i] = 13;
+    splitModes[i] = null;
+    splitPos[i] = 50;
+    textareas2[i] = null;
+
     const sec = document.createElement('div');
     sec.className = 'section';
-    sections.push(sec);
+    sections[i] = sec;
 
     const hdr = document.createElement('div');
     hdr.className = 'section-header';
@@ -929,40 +936,36 @@
     titleInput.placeholder = `Section ${i + 1}`;
     titleInput.type = 'text';
     titleInput.spellcheck = false;
-    titles.push(titleInput);
+    titles[i] = titleInput;
 
     const wc = document.createElement('span');
     wc.className = 'word-count';
     wc.textContent = '0w';
-    wordCounts.push(wc);
+    wordCounts[i] = wc;
 
     // Color dot
     const dot = document.createElement('div');
     dot.className = 'color-dot';
     dot.title = 'Set section color';
     dot.style.background = '#333';
-    dots.push(dot);
-    (idx => {
-      dot.addEventListener('click', e => {
-        e.stopPropagation();
-        if (popupTarget === idx && !popup.classList.contains('hidden')) { closePopup(); return; }
-        openPopup(idx, dot);
-      });
-    })(i);
+    dots[i] = dot;
+    dot.addEventListener('click', e => {
+      e.stopPropagation();
+      if (popupTarget === i && !popup.classList.contains('hidden')) { closePopup(); return; }
+      openPopup(i, dot);
+    });
 
     // Split control
     const splitBtn = document.createElement('button');
     splitBtn.className = 'split-btn';
     splitBtn.textContent = '⊞';
     splitBtn.title = 'Split this cell';
-    splitBtns.push(splitBtn);
-    (idx => {
-      splitBtn.addEventListener('click', e => {
-        e.stopPropagation();
-        if (splitTarget === idx && !splitPopup.classList.contains('hidden')) { closeSplitPopup(); return; }
-        openSplitPopup(idx, splitBtn);
-      });
-    })(i);
+    splitBtns[i] = splitBtn;
+    splitBtn.addEventListener('click', e => {
+      e.stopPropagation();
+      if (splitTarget === i && !splitPopup.classList.contains('hidden')) { closeSplitPopup(); return; }
+      openSplitPopup(i, splitBtn);
+    });
 
     hdr.appendChild(titleInput);
     hdr.appendChild(wc);
@@ -971,10 +974,10 @@
 
     const body = document.createElement('div');
     body.className = 'cell-body';
-    cellBodies.push(body);
+    cellBodies[i] = body;
 
     const ta = makeTextarea(i);
-    textareas.push(ta);
+    textareas[i] = ta;
     body.appendChild(ta._wrap);
 
     sec.appendChild(hdr);
@@ -983,6 +986,20 @@
 
     titleInput.addEventListener('input', autoSave);
   }
+
+  // Ensure at least `n` sections exist (rounded up to whole rows of COLS).
+  function ensureSections(n) {
+    const target = Math.ceil(Math.max(n, 1) / COLS) * COLS;
+    for (let i = sections.length; i < target; i++) createSection(i);
+  }
+
+  // Append more rows as the user scrolls near the bottom.
+  grid.addEventListener('scroll', () => {
+    if (grid.scrollTop + grid.clientHeight >= grid.scrollHeight - 80) {
+      ensureSections(sections.length + GROW_ROWS * COLS);
+      applyFilters();
+    }
+  });
 
   // Create a configured textarea wrapped in a highlight pane.
   // Returns the textarea; ta._wrap is the pane element, ta._bd the backdrop.
@@ -1113,12 +1130,17 @@
   // ── Persistence ──
   function loadState() {
     try {
-      const raw = localStorage.getItem(STORAGE_KEY);
+      let raw = null;
+      try { raw = localStorage.getItem(STORAGE_KEY); } catch (e) {}
+      // Standalone exported files seed their data here (works even when
+      // localStorage is unavailable, e.g. opened via file://).
+      if (!raw && window.__NOTES_SEED__) raw = window.__NOTES_SEED__;
       if (!raw) return;
       const data = JSON.parse(raw);
       if (data.theme) applyTheme(data.theme, false);
-      (data.notes || []).forEach((n, i) => {
-        if (i >= SECTIONS) return;
+      const notes = data.notes || [];
+      ensureSections(notes.length);   // create enough cells for the saved data
+      notes.forEach((n, i) => {
         textareas[i].value = n.text || '';
         titles[i].value = n.title || '';
         if (n.color !== undefined) sectionColors[i] = n.color;
@@ -1145,17 +1167,34 @@
     } catch (e) {}
   }
 
+  function isEmptySection(i) {
+    return !textareas[i].value &&
+           !titles[i].value &&
+           !sectionColors[i] &&
+           !splitModes[i] &&
+           sectionFontSizes[i] === 13 &&
+           !(textareas2[i] && textareas2[i].value);
+  }
+  function currentState() {
+    // Trim trailing empty sections so the infinite grid doesn't bloat storage.
+    let last = sections.length - 1;
+    while (last >= 0 && isEmptySection(last)) last--;
+    const notes = [];
+    for (let i = 0; i <= last; i++) {
+      notes.push({
+        text: textareas[i].value,
+        title: titles[i].value,
+        color: sectionColors[i] || null,
+        fontSize: sectionFontSizes[i],
+        split: splitModes[i] || null,
+        splitPos: splitPos[i],
+        text2: textareas2[i] ? textareas2[i].value : ''
+      });
+    }
+    return { notes, theme, cardHeight, fontFamily };
+  }
   function autoSave() {
-    const notes = textareas.map((ta, i) => ({
-      text: ta.value,
-      title: titles[i].value,
-      color: sectionColors[i] || null,
-      fontSize: sectionFontSizes[i],
-      split: splitModes[i] || null,
-      splitPos: splitPos[i],
-      text2: textareas2[i] ? textareas2[i].value : ''
-    }));
-    localStorage.setItem(STORAGE_KEY, JSON.stringify({ notes, theme, cardHeight, fontFamily }));
+    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(currentState())); } catch (e) {}
     flashStatus();
   }
 
@@ -1185,7 +1224,7 @@
   }
 
   function setSectionFontSize(idx, size, save = true) {
-    if (idx < 0 || idx >= SECTIONS) return;
+    if (idx < 0 || idx >= sections.length) return;
     sectionFontSizes[idx] = Math.max(9, Math.min(24, size));
     applyTaFontSize(textareas[idx], sectionFontSizes[idx]);
     if (textareas2[idx]) applyTaFontSize(textareas2[idx], sectionFontSizes[idx]);
@@ -1219,15 +1258,15 @@
   }
 
   function applyCardHeight() {
-    if (cardHeight === null) {
-      grid.classList.remove('fixed-height');
-      grid.style.removeProperty('--card-h');
-    } else {
-      grid.style.setProperty('--card-h', cardHeight + 'px');
-      grid.classList.add('fixed-height');
-    }
+    // Default ("Fit"): four rows fill the visible grid; otherwise a fixed height.
+    const h = cardHeight === null
+      ? Math.max(CARD_H_MIN, Math.floor((grid.clientHeight || window.innerHeight) / 4))
+      : cardHeight;
+    grid.style.setProperty('--card-h', h + 'px');
     updateCardHeightUI();
   }
+  // Keep the auto ("Fit") row height in sync with the viewport.
+  window.addEventListener('resize', () => { if (cardHeight === null) applyCardHeight(); });
 
   function setCardHeight(h, save = true) {
     if (h === null) cardHeight = null;
@@ -1317,7 +1356,7 @@
   // All visible panes (primary + any split secondary), in section order
   function allPanes() {
     const panes = [];
-    for (let i = 0; i < SECTIONS; i++) {
+    for (let i = 0; i < sections.length; i++) {
       panes.push(textareas[i]);
       if (splitModes[i] && textareas2[i]) panes.push(textareas2[i]);
     }
@@ -1385,22 +1424,29 @@
   });
 
   // ── Save as HTML ──
+  // Produces a standalone copy of this page whose data is seeded so the app
+  // rebuilds cleanly from it (instead of duplicating the generated DOM).
   function saveHTML() {
-    // Capture every pane's value in document order (handles split cells)
-    const paneText = Array.from(document.querySelectorAll('.textarea')).map(t => t.value);
-    const titleText = Array.from(document.querySelectorAll('.section-title')).map(t => t.value);
-    const savedScript = `
-<script>
-(function(){
-  var paneText = ${JSON.stringify(paneText)};
-  var titleText = ${JSON.stringify(titleText)};
-  var tas = document.querySelectorAll('.textarea');
-  var tis = document.querySelectorAll('.section-title');
-  paneText.forEach(function(v,i){ if(tas[i]) tas[i].value = v||''; });
-  titleText.forEach(function(v,i){ if(tis[i]) tis[i].value = v||''; });
-})();
-<\/script>`;
-    const html = '<!DOCTYPE html>\n' + document.documentElement.outerHTML.replace('</body>', savedScript + '\n</body>');
+    const root = document.documentElement.cloneNode(true);
+    // Empty the JS-generated containers so the app regenerates them once.
+    ['grid', 'color-popup', 'filter-swatches', 'font-family-select'].forEach(id => {
+      const el = root.querySelector('#' + id);
+      if (el) el.innerHTML = '';
+    });
+    // Drop any seed script from a previously-exported source.
+    root.querySelectorAll('script[data-notes-seed]').forEach(s => s.remove());
+
+    const seedJSON = JSON.stringify(JSON.stringify(currentState()));
+    const keyJSON = JSON.stringify(STORAGE_KEY);
+    const seedScript =
+      '<script data-notes-seed>window.__NOTES_SEED__=' + seedJSON +
+      ';try{if(!localStorage.getItem(' + keyJSON + '))localStorage.setItem(' + keyJSON +
+      ',window.__NOTES_SEED__);}catch(e){}<\/script>';
+    let outer = root.outerHTML;
+    // Inject the seed as the first thing in <head> so it runs before the app.
+    outer = outer.replace(/<head[^>]*>/i, m => m + '\n' + seedScript);
+
+    const html = '<!DOCTYPE html>\n' + outer;
     const blob = new Blob([html], { type: 'text/html' });
     const a = document.createElement('a');
     a.href = URL.createObjectURL(blob);
@@ -1448,7 +1494,10 @@
   });
 
   // ── Init ──
+  ensureSections(INITIAL_ROWS * COLS); // baseline grid before any saved data loads
   loadState();
+  ensureSections(sections.length + GROW_ROWS * COLS); // buffer so scrolling has room
+  applyCardHeight();
   applyFilters();
 })();
 </script>
