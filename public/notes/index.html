@@ -647,62 +647,168 @@
     background: var(--sec-dot) !important;
   }
 
-  /* ── Login overlay ── */
+  /* ── Login overlay (animated) ── */
   .login-overlay {
     position: fixed;
     inset: 0;
     z-index: 1000;
-    background: var(--bg);
     display: flex;
     align-items: center;
     justify-content: center;
+    overflow: hidden;
+    background:
+      radial-gradient(1200px 600px at 50% -10%, color-mix(in srgb, var(--text) 14%, var(--bg)), var(--bg) 60%),
+      var(--bg);
+    animation: lo-fade 0.5s ease both;
   }
   .login-overlay.hidden { display: none; }
+  /* drifting glow blobs */
+  .login-overlay::before,
+  .login-overlay::after {
+    content: '';
+    position: absolute;
+    width: 46vmax; height: 46vmax;
+    border-radius: 50%;
+    filter: blur(80px);
+    opacity: 0.20;
+    background: var(--text);
+    animation: lo-drift 16s ease-in-out infinite alternate;
+    pointer-events: none;
+  }
+  .login-overlay::before { top: -16vmax; left: -10vmax; }
+  .login-overlay::after  { bottom: -18vmax; right: -12vmax; animation-duration: 22s; opacity: 0.14; }
+  /* faint scanline grid for terminal vibe */
+  .login-grid {
+    position: absolute; inset: 0; pointer-events: none; opacity: 0.06;
+    background-image:
+      linear-gradient(var(--text) 1px, transparent 1px),
+      linear-gradient(90deg, var(--text) 1px, transparent 1px);
+    background-size: 38px 38px;
+    mask-image: radial-gradient(circle at 50% 45%, #000 30%, transparent 75%);
+    -webkit-mask-image: radial-gradient(circle at 50% 45%, #000 30%, transparent 75%);
+  }
+
   .login-box {
+    position: relative;
     display: flex;
     flex-direction: column;
-    gap: 10px;
-    width: 280px;
-    padding: 22px;
-    background: var(--toolbar-bg);
-    border: 1px solid var(--toolbar-border);
-    border-radius: 6px;
-    box-shadow: 0 8px 30px rgba(0,0,0,0.5);
+    gap: 12px;
+    width: 320px;
+    max-width: 88vw;
+    padding: 26px 24px 22px;
+    background: color-mix(in srgb, var(--toolbar-bg) 82%, transparent);
+    border: 1px solid color-mix(in srgb, var(--text) 35%, var(--toolbar-border));
+    border-radius: 10px;
+    box-shadow:
+      0 18px 60px rgba(0,0,0,0.55),
+      0 0 0 1px color-mix(in srgb, var(--text) 10%, transparent),
+      0 0 40px color-mix(in srgb, var(--text) 18%, transparent);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    animation: lo-rise 0.55s cubic-bezier(.2,.8,.2,1) both;
+  }
+  /* animated gradient hairline at the top edge */
+  .login-box::before {
+    content: '';
+    position: absolute; left: 14px; right: 14px; top: 0; height: 2px;
+    background: linear-gradient(90deg, transparent, var(--text), transparent);
+    background-size: 200% 100%;
+    animation: lo-sheen 3.2s linear infinite;
+    border-radius: 2px;
+    opacity: 0.7;
+  }
+  .login-logo {
+    font-family: 'Courier New', monospace;
+    font-size: 11px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--count-text);
   }
   .login-title {
     color: var(--title-text);
     font-family: 'Courier New', monospace;
-    font-size: 14px;
+    font-size: 20px;
     font-weight: bold;
-    margin-bottom: 4px;
+    margin: 2px 0 6px;
+    display: flex;
+    align-items: baseline;
+    gap: 2px;
   }
+  .login-title .caret {
+    width: 9px; height: 18px;
+    background: var(--text);
+    display: inline-block;
+    transform: translateY(2px);
+    animation: lo-blink 1.05s step-end infinite;
+  }
+  .login-field {
+    position: relative;
+    opacity: 0;
+    animation: lo-rise 0.5s ease both;
+  }
+  .login-field:nth-of-type(1) { animation-delay: 0.12s; }
+  .login-field:nth-of-type(2) { animation-delay: 0.20s; }
   .login-box input {
-    background: var(--search-bg);
+    width: 100%;
+    background: color-mix(in srgb, var(--search-bg) 85%, transparent);
     color: var(--text);
     border: 1px solid var(--search-border);
-    padding: 8px 10px;
+    padding: 11px 12px;
     font-family: 'Courier New', monospace;
     font-size: 13px;
-    border-radius: 3px;
+    border-radius: 6px;
     outline: none;
+    transition: border-color 0.18s, box-shadow 0.18s, background 0.18s;
   }
-  .login-box input:focus { border-color: var(--text); }
-  .login-box button {
-    background: var(--btn-bg);
-    color: var(--btn-text);
-    border: 1px solid var(--toolbar-border);
-    padding: 8px;
+  .login-box input:focus {
+    border-color: var(--text);
+    background: color-mix(in srgb, var(--cell-bg) 70%, transparent);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--text) 22%, transparent);
+  }
+  .login-box button[type="submit"] {
+    margin-top: 4px;
+    background: linear-gradient(180deg, color-mix(in srgb, var(--text) 26%, var(--btn-bg)), var(--btn-bg));
+    color: var(--title-text);
+    border: 1px solid color-mix(in srgb, var(--text) 45%, var(--toolbar-border));
+    padding: 11px;
     font-family: 'Courier New', monospace;
     font-size: 13px;
-    border-radius: 3px;
+    font-weight: bold;
+    letter-spacing: 0.04em;
+    border-radius: 6px;
     cursor: pointer;
+    transition: transform 0.12s ease, box-shadow 0.18s, filter 0.18s;
+    opacity: 0;
+    animation: lo-rise 0.5s ease 0.28s both;
   }
-  .login-box button:hover { background: var(--btn-hover); }
+  .login-box button[type="submit"]:hover {
+    filter: brightness(1.15);
+    box-shadow: 0 6px 20px color-mix(in srgb, var(--text) 30%, transparent);
+    transform: translateY(-1px);
+  }
+  .login-box button[type="submit"]:active { transform: translateY(0); }
+  .login-box button[type="submit"]:disabled { opacity: 0.6; cursor: default; transform: none; }
   .login-error {
-    color: #e06050;
+    color: #ff6f61;
     font-family: 'Courier New', monospace;
     font-size: 11px;
     min-height: 14px;
+    line-height: 1.4;
+  }
+  .login-error.show { animation: lo-shake 0.4s ease; }
+
+  @keyframes lo-fade { from { opacity: 0; } to { opacity: 1; } }
+  @keyframes lo-rise { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes lo-blink { 0%, 50% { opacity: 1; } 50.01%, 100% { opacity: 0; } }
+  @keyframes lo-sheen { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+  @keyframes lo-shake { 0%,100% { transform: translateX(0); } 20% { transform: translateX(-6px); } 40% { transform: translateX(6px); } 60% { transform: translateX(-4px); } 80% { transform: translateX(4px); } }
+  @keyframes lo-drift {
+    from { transform: translate(0,0) scale(1); }
+    to   { transform: translate(6vmax, 4vmax) scale(1.15); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .login-overlay, .login-box, .login-field, .login-box button[type="submit"] { animation: none !important; opacity: 1 !important; }
+    .login-overlay::before, .login-overlay::after, .login-box::before, .login-title .caret { animation: none !important; }
   }
 </style>
 </head>
@@ -775,10 +881,16 @@
 
 <!-- Login overlay (PocketBase) -->
 <div id="login-overlay" class="login-overlay hidden">
+  <div class="login-grid"></div>
   <form id="login-form" class="login-box">
-    <div class="login-title">Notes — Sign in</div>
-    <input id="login-email" type="email" placeholder="Email" autocomplete="username" required>
-    <input id="login-password" type="password" placeholder="Password" autocomplete="current-password" required>
+    <div class="login-logo">▚ NOTES</div>
+    <div class="login-title">Sign in<span class="caret"></span></div>
+    <div class="login-field">
+      <input id="login-email" type="email" placeholder="Email" autocomplete="username" required>
+    </div>
+    <div class="login-field">
+      <input id="login-password" type="password" placeholder="Password" autocomplete="current-password" required>
+    </div>
     <button id="login-submit" type="submit">Sign in</button>
     <div id="login-error" class="login-error"></div>
   </form>
@@ -1884,7 +1996,7 @@
       const password = document.getElementById('login-password').value;
       const errEl = document.getElementById('login-error');
       const btn = document.getElementById('login-submit');
-      errEl.textContent = '';
+      errEl.textContent = ''; errEl.classList.remove('show');
       btn.disabled = true; btn.textContent = 'Signing in…';
       try {
         await pbLogin(email, password);
@@ -1894,6 +2006,8 @@
         document.getElementById('login-password').value = '';
       } catch (err) {
         errEl.textContent = (err && err.message) || 'Sign in failed';
+        void errEl.offsetWidth;        // restart the shake animation
+        errEl.classList.add('show');
       } finally {
         btn.disabled = false; btn.textContent = 'Sign in';
       }
