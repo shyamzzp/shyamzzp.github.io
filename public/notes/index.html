@@ -609,6 +609,20 @@
   /* Sections hidden by an active color filter */
   .section.filtered-out { display: none; }
 
+  /* Drag-to-move */
+  .drag-handle {
+    cursor: grab;
+    color: var(--count-text);
+    font-size: 11px;
+    line-height: 1;
+    padding: 0 4px 0 0;
+    flex-shrink: 0;
+    user-select: none;
+  }
+  .drag-handle:active { cursor: grabbing; }
+  .section.dragging { opacity: 0.45; }
+  .section.drag-over { outline: 2px dashed var(--text); outline-offset: -2px; }
+
   /* Section tinting — derived from the section's color (--sec-dot) so the
      highlight is clearly visible. View mode is the boldest tint; focus
      eases it off for comfortable editing. */
@@ -721,6 +735,7 @@
   const splitModes = [];        // null | 'row' (side by side) | 'col' (stacked)
   const splitPos = [];          // first pane size, percent
   let activeSectionIdx = -1; // index of currently focused textarea
+  let dragSrcIdx = -1;       // section index being dragged
 
   // ── Color palette ──
   // Each entry: { id, label, dark:{hdr,ta,taFocus,border,title,dot}, light:{...} }
@@ -935,6 +950,37 @@
     const hdr = document.createElement('div');
     hdr.className = 'section-header';
 
+    // Drag handle to move this cell elsewhere
+    const grip = document.createElement('span');
+    grip.className = 'drag-handle';
+    grip.textContent = '⠿';
+    grip.title = 'Drag to move this cell';
+    grip.draggable = true;
+    grip.addEventListener('dragstart', e => {
+      dragSrcIdx = i;
+      sec.classList.add('dragging');
+      e.dataTransfer.effectAllowed = 'move';
+      try { e.dataTransfer.setData('text/plain', String(i)); } catch (err) {}
+    });
+    grip.addEventListener('dragend', () => {
+      sec.classList.remove('dragging');
+      sections.forEach(s => s.classList.remove('drag-over'));
+      dragSrcIdx = -1;
+    });
+    sec.addEventListener('dragover', e => {
+      if (dragSrcIdx < 0) return;
+      e.preventDefault();
+      e.dataTransfer.dropEffect = 'move';
+    });
+    sec.addEventListener('dragenter', () => { if (dragSrcIdx >= 0 && dragSrcIdx !== i) sec.classList.add('drag-over'); });
+    sec.addEventListener('dragleave', () => sec.classList.remove('drag-over'));
+    sec.addEventListener('drop', e => {
+      e.preventDefault();
+      sec.classList.remove('drag-over');
+      if (dragSrcIdx >= 0) moveSection(dragSrcIdx, i);
+      dragSrcIdx = -1;
+    });
+
     const titleInput = document.createElement('input');
     titleInput.className = 'section-title';
     titleInput.placeholder = `Section ${i + 1}`;
@@ -971,6 +1017,7 @@
       openSplitPopup(i, splitBtn);
     });
 
+    hdr.appendChild(grip);
     hdr.appendChild(titleInput);
     hdr.appendChild(wc);
     hdr.appendChild(splitBtn);
@@ -1200,6 +1247,45 @@
   function autoSave() {
     try { localStorage.setItem(STORAGE_KEY, JSON.stringify(currentState())); } catch (e) {}
     flashStatus();
+  }
+
+  // ── Move / reorder a cell (drag-and-drop) ──
+  function getNote(i) {
+    return {
+      text: textareas[i].value,
+      title: titles[i].value,
+      color: sectionColors[i] || null,
+      fontSize: sectionFontSizes[i],
+      split: splitModes[i] || null,
+      splitPos: splitPos[i],
+      text2: textareas2[i] ? textareas2[i].value : ''
+    };
+  }
+  function applyNote(i, n) {
+    textareas[i].value = n.text || '';
+    titles[i].value = n.title || '';
+    sectionFontSizes[i] = n.fontSize || 13;
+    applyTaFontSize(textareas[i], sectionFontSizes[i]);
+    splitPos[i] = (typeof n.splitPos === 'number') ? n.splitPos : 50;
+    setSplit(i, n.split || null);
+    if (n.split && textareas2[i]) {
+      textareas2[i].value = n.text2 || '';
+      applyTaFontSize(textareas2[i], sectionFontSizes[i]);
+      updateHighlight(textareas2[i]);
+    }
+    applyColor(i, n.color || null);
+    updateHighlight(textareas[i]);
+    updateWordCount(i);
+  }
+  // Move content from index `from` to index `to`, shifting the cells between.
+  function moveSection(from, to) {
+    if (from === to || from < 0 || to < 0) return;
+    const notes = sections.map((_, i) => getNote(i));
+    const [moved] = notes.splice(from, 1);
+    notes.splice(to, 0, moved);
+    notes.forEach((n, i) => applyNote(i, n));
+    applyFilters();
+    autoSave();
   }
 
   let statusTimer;
