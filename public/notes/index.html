@@ -44,6 +44,86 @@
     --highlight-active: rgba(0,160,0,0.38);
     --count-text: #5a9a5a;
   }
+  /* Midnight — deep blue dark */
+  html[data-theme="midnight"] {
+    --bg: #060a14;
+    --cell-bg: #04060d;
+    --border: #14203a;
+    --text: #6fa8dc;
+    --title-text: #8fc1ee;
+    --title-bg: #0a1020;
+    --placeholder: #2a3a55;
+    --toolbar-bg: #0a1020;
+    --toolbar-border: #1c2c48;
+    --btn-bg: #101a2e;
+    --btn-hover: #1a2a48;
+    --btn-text: #6fa8dc;
+    --search-bg: #0a1020;
+    --search-border: #2a4a7a;
+    --highlight: rgba(80,160,255,0.25);
+    --highlight-active: rgba(80,160,255,0.5);
+    --count-text: #3a5a8a;
+  }
+  /* Dracula — purple/pink dark */
+  html[data-theme="dracula"] {
+    --bg: #1a1626;
+    --cell-bg: #14101f;
+    --border: #322a44;
+    --text: #c9a8e9;
+    --title-text: #ff79c6;
+    --title-bg: #221b33;
+    --placeholder: #4a3a5e;
+    --toolbar-bg: #221b33;
+    --toolbar-border: #3a3050;
+    --btn-bg: #2a2240;
+    --btn-hover: #3a2e54;
+    --btn-text: #c9a8e9;
+    --search-bg: #221b33;
+    --search-border: #6a4a8a;
+    --highlight: rgba(255,121,198,0.22);
+    --highlight-active: rgba(255,121,198,0.45);
+    --count-text: #6a5a8a;
+  }
+  /* Amber — warm sepia light */
+  html[data-theme="amber"] {
+    --bg: #f3ecdd;
+    --cell-bg: #fdf8ee;
+    --border: #ddd0b8;
+    --text: #6b4f1d;
+    --title-text: #523b13;
+    --title-bg: #ece1cc;
+    --placeholder: #c2b18d;
+    --toolbar-bg: #e8dcc4;
+    --toolbar-border: #cebf9f;
+    --btn-bg: #e0d3b8;
+    --btn-hover: #d4c4a4;
+    --btn-text: #6b4f1d;
+    --search-bg: #fdf8ee;
+    --search-border: #b89a5e;
+    --highlight: rgba(180,120,0,0.2);
+    --highlight-active: rgba(180,120,0,0.4);
+    --count-text: #9a8458;
+  }
+  /* Slate — cool grey light */
+  html[data-theme="slate"] {
+    --bg: #e9edf1;
+    --cell-bg: #fbfcfd;
+    --border: #cbd3dc;
+    --text: #2d3e50;
+    --title-text: #1b2a3a;
+    --title-bg: #dde3ea;
+    --placeholder: #a8b4c0;
+    --toolbar-bg: #d8dee6;
+    --toolbar-border: #bcc6d2;
+    --btn-bg: #d0d8e0;
+    --btn-hover: #c0cad6;
+    --btn-text: #2d3e50;
+    --search-bg: #fbfcfd;
+    --search-border: #8a9aac;
+    --highlight: rgba(40,90,150,0.18);
+    --highlight-active: rgba(40,90,150,0.38);
+    --count-text: #6a7888;
+  }
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -58,6 +138,7 @@
 
   /* ── Toolbar ── */
   #toolbar {
+    --tb-h: 26px;
     display: flex;
     align-items: center;
     gap: 6px;
@@ -72,6 +153,18 @@
     display: flex;
     align-items: center;
     gap: 3px;
+    height: var(--tb-h);
+  }
+
+  /* Uniform height for all interactive toolbar controls */
+  #toolbar button,
+  #toolbar input,
+  #toolbar #font-size-display {
+    height: var(--tb-h);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
   }
 
   .tb-sep {
@@ -103,7 +196,7 @@
     min-width: 28px;
     text-align: center;
   }
-  #font-size-label {
+  #font-size-label, .tb-meta-label {
     color: var(--count-text);
     font-size: 10px;
     font-family: 'Courier New', monospace;
@@ -120,7 +213,7 @@
     font-family: 'Courier New', monospace;
     font-size: 11px;
     border-radius: 2px;
-    width: 160px;
+    width: 190px;
     outline: none;
   }
   #search-input::placeholder { color: var(--placeholder); }
@@ -145,10 +238,16 @@
   #grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    grid-template-rows: repeat(3, 1fr);
+    grid-template-rows: repeat(4, 1fr);
     flex: 1;
     gap: 0;
     overflow: hidden;
+  }
+  /* Fixed uniform card height for all cards (scrollable) */
+  #grid.fixed-height {
+    grid-template-rows: none;
+    grid-auto-rows: var(--card-h, 200px);
+    overflow-y: auto;
   }
 
   .section {
@@ -253,6 +352,37 @@
   .cp-swatch:hover { transform: scale(1.15); }
   .cp-swatch.selected { border-color: #fff; }
 
+  /* ── Color filter bar ── */
+  .filter-swatch {
+    width: 16px;
+    height: 16px;
+    border-radius: 3px;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: border-color 0.1s, transform 0.1s, opacity 0.1s;
+    opacity: 0.55;
+    position: relative;
+  }
+  .filter-swatch:hover { transform: scale(1.15); opacity: 0.85; }
+  .filter-swatch.active { border-color: #fff; opacity: 1; }
+  .filter-swatch[data-filter-id="none"] {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    color: var(--btn-text);
+  }
+  #filter-label {
+    color: var(--count-text);
+    font-size: 10px;
+    font-family: 'Courier New', monospace;
+    opacity: 0.55;
+    margin-right: 2px;
+  }
+
+  /* Sections hidden by an active color filter */
+  .section.filtered-out { display: none; }
+
   /* Section tinting — applied via inline CSS vars on .section */
   .section[data-color] .section-header {
     background: var(--sec-hdr-bg);
@@ -294,13 +424,30 @@
   </div>
   <div class="tb-sep"></div>
 
+  <!-- Card height (all cards at once) -->
+  <div class="tb-group">
+    <button id="card-h-down" title="Shorter cards">H−</button>
+    <span id="card-h-display">Auto</span>
+    <button id="card-h-up" title="Taller cards">H+</button>
+    <button id="card-h-auto" title="Fit all cards to screen">Fit</button>
+    <span class="tb-meta-label">all cards</span>
+  </div>
+  <div class="tb-sep"></div>
+
   <!-- Search -->
   <div class="tb-group">
-    <input id="search-input" type="text" placeholder="Search…" autocomplete="off" spellcheck="false">
+    <input id="search-input" type="text" placeholder="Search… ( / or Ctrl+F )" title="Focus search: / or Ctrl+F" autocomplete="off" spellcheck="false">
     <button id="search-prev" title="Previous match">↑</button>
     <button id="search-next" title="Next match">↓</button>
     <span id="search-count"></span>
     <button id="search-clear" title="Clear search">✕</button>
+  </div>
+  <div class="tb-sep"></div>
+
+  <!-- Color filter -->
+  <div class="tb-group">
+    <span id="filter-label">Filter:</span>
+    <div id="filter-swatches" class="tb-group"></div>
   </div>
   <div class="tb-sep"></div>
 
@@ -320,7 +467,7 @@
 
 <script>
 (function () {
-  const SECTIONS = 12;
+  const SECTIONS = 16;
   const STORAGE_KEY = 'notes_v3';
   let searchMatches = [];
   let searchIndex = -1;
@@ -371,6 +518,44 @@
     popup.appendChild(sw);
   });
 
+  // ── Build color filter bar ──
+  // Active filters: set of color ids ('none' = uncolored). Empty = show all.
+  const activeFilters = new Set();
+  const filterBar = document.getElementById('filter-swatches');
+  PALETTE.forEach(c => {
+    const sw = document.createElement('div');
+    sw.className = 'filter-swatch';
+    sw.title = c.id === 'none' ? 'Show uncolored' : 'Show ' + c.id;
+    sw.dataset.filterId = c.id;
+    if (c.id === 'none') {
+      sw.textContent = '○';
+    } else {
+      sw.style.background = c.dot;
+    }
+    filterBar.appendChild(sw);
+  });
+
+  filterBar.addEventListener('click', e => {
+    const sw = e.target.closest('.filter-swatch');
+    if (!sw) return;
+    const id = sw.dataset.filterId;
+    if (activeFilters.has(id)) activeFilters.delete(id);
+    else activeFilters.add(id);
+    sw.classList.toggle('active', activeFilters.has(id));
+    applyFilters();
+  });
+
+  function applyFilters() {
+    sections.forEach((sec, i) => {
+      if (activeFilters.size === 0) {
+        sec.classList.remove('filtered-out');
+        return;
+      }
+      const colorId = sectionColors[i] || 'none';
+      sec.classList.toggle('filtered-out', !activeFilters.has(colorId));
+    });
+  }
+
   let popupTarget = -1; // section index popup is open for
 
   function openPopup(secIdx, dotEl) {
@@ -396,6 +581,7 @@
     if (!sw || popupTarget < 0) return;
     const cid = sw.dataset.colorId;
     applyColor(popupTarget, cid === 'none' ? null : cid);
+    applyFilters();
     closePopup();
     autoSave();
   });
@@ -422,7 +608,7 @@
     }
     const entry = PALETTE.find(p => p.id === colorId);
     if (!entry) return;
-    const t = theme === 'light' ? entry.light : entry.dark;
+    const t = themeBase() === 'light' ? entry.light : entry.dark;
     sec.setAttribute('data-color', colorId);
     sec.style.setProperty('--sec-hdr-bg', t.hdr);
     sec.style.setProperty('--sec-ta-bg', t.ta);
@@ -528,6 +714,10 @@
         if (n.fontSize) { sectionFontSizes[i] = n.fontSize; textareas[i].style.fontSize = n.fontSize + 'px'; }
         updateWordCount(i);
       });
+      if (typeof data.cardHeight === 'number' || data.cardHeight === null) {
+        cardHeight = data.cardHeight;
+      }
+      applyCardHeight();
       reapplyAllColors();
       updateFontSizeUI();
     } catch (e) {}
@@ -540,7 +730,7 @@
       color: sectionColors[i] || null,
       fontSize: sectionFontSizes[i]
     }));
-    localStorage.setItem(STORAGE_KEY, JSON.stringify({ notes, theme }));
+    localStorage.setItem(STORAGE_KEY, JSON.stringify({ notes, theme, cardHeight }));
     flashStatus();
   }
 
@@ -602,17 +792,74 @@
   // Init buttons as disabled until a section is focused
   updateFontSizeUI();
 
+  // ── Uniform card height (all cards at once) ──
+  let cardHeight = null; // null = Fit (auto rows to viewport)
+  const CARD_H_MIN = 120, CARD_H_MAX = 600, CARD_H_STEP = 40;
+
+  function updateCardHeightUI() {
+    document.getElementById('card-h-display').textContent =
+      cardHeight === null ? 'Auto' : cardHeight + 'px';
+    document.getElementById('card-h-up').disabled   = cardHeight !== null && cardHeight >= CARD_H_MAX;
+    document.getElementById('card-h-down').disabled  = cardHeight !== null && cardHeight <= CARD_H_MIN;
+  }
+
+  function applyCardHeight() {
+    if (cardHeight === null) {
+      grid.classList.remove('fixed-height');
+      grid.style.removeProperty('--card-h');
+    } else {
+      grid.style.setProperty('--card-h', cardHeight + 'px');
+      grid.classList.add('fixed-height');
+    }
+    updateCardHeightUI();
+  }
+
+  function setCardHeight(h, save = true) {
+    if (h === null) cardHeight = null;
+    else cardHeight = Math.max(CARD_H_MIN, Math.min(CARD_H_MAX, h));
+    applyCardHeight();
+    if (save) autoSave();
+  }
+
+  document.getElementById('card-h-up').addEventListener('click', () => {
+    setCardHeight(cardHeight === null ? 240 : cardHeight + CARD_H_STEP);
+  });
+  document.getElementById('card-h-down').addEventListener('click', () => {
+    setCardHeight(cardHeight === null ? 200 : cardHeight - CARD_H_STEP);
+  });
+  document.getElementById('card-h-auto').addEventListener('click', () => {
+    setCardHeight(null);
+  });
+  updateCardHeightUI();
+
   // ── Theme ──
+  // Each theme maps to a palette base ('dark' or 'light') for section tinting.
+  const THEMES = [
+    { id: 'dark',     label: 'Dark',     base: 'dark'  },
+    { id: 'light',    label: 'Light',    base: 'light' },
+    { id: 'midnight', label: 'Midnight', base: 'dark'  },
+    { id: 'dracula',  label: 'Dracula',  base: 'dark'  },
+    { id: 'amber',    label: 'Amber',    base: 'light' },
+    { id: 'slate',    label: 'Slate',    base: 'light' },
+  ];
+  function themeBase() {
+    const t = THEMES.find(x => x.id === theme);
+    return t ? t.base : 'dark';
+  }
   function applyTheme(t, save = true) {
+    if (!THEMES.some(x => x.id === t)) t = 'dark';
     theme = t;
     document.documentElement.setAttribute('data-theme', t);
-    document.getElementById('theme-btn').textContent = t === 'dark' ? '◑ Theme' : '◐ Theme';
+    const meta = THEMES.find(x => x.id === t);
+    document.getElementById('theme-btn').textContent = '◑ ' + meta.label;
     reapplyAllColors();
     if (save) autoSave();
   }
-  document.getElementById('theme-btn').addEventListener('click', () => {
-    applyTheme(theme === 'dark' ? 'light' : 'dark');
-  });
+  function cycleTheme() {
+    const idx = THEMES.findIndex(x => x.id === theme);
+    applyTheme(THEMES[(idx + 1) % THEMES.length].id);
+  }
+  document.getElementById('theme-btn').addEventListener('click', cycleTheme);
 
   // ── Search ──
   const searchInput = document.getElementById('search-input');
@@ -718,6 +965,15 @@
       searchInput.focus();
       searchInput.select();
     }
+    // Quick "/" focuses search when not already typing in a field
+    if (e.key === '/' && !e.metaKey && !e.ctrlKey && !e.altKey) {
+      const tag = (document.activeElement && document.activeElement.tagName) || '';
+      if (tag !== 'INPUT' && tag !== 'TEXTAREA') {
+        e.preventDefault();
+        searchInput.focus();
+        searchInput.select();
+      }
+    }
   });
 
   // ── Clear all ──
@@ -730,11 +986,13 @@
       applyColor(i, null);
       updateWordCount(i);
     });
+    applyFilters();
     autoSave();
   });
 
   // ── Init ──
   loadState();
+  applyFilters();
 })();
 </script>
 </body>
