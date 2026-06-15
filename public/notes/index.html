@@ -452,13 +452,29 @@
     pointer-events: none;
     z-index: 0;
   }
-  /* Urgency token highlights (U1=low … U4=high, U5=critical) */
-  .hl { border-radius: 2px; padding: 0 1px; }
+  /* Token highlights — only background / inset shadow (layout-neutral so the
+     transparent backdrop stays aligned with the textarea text). */
+  .hl { border-radius: 2px; }
+  /* Urgency U1 (low) … U4 (high), U5 critical — filled */
   .hl-u1 { background: rgba(46,204,113,0.45); }   /* green  */
   .hl-u2 { background: rgba(52,152,219,0.45); }   /* blue   */
   .hl-u3 { background: rgba(243,156,18,0.52); }   /* orange */
   .hl-u4 { background: rgba(231,76,60,0.58); }    /* red    */
   .hl-u5 { background: rgba(155,89,182,0.55); }   /* purple */
+  /* Priority P1..P5 — outlined ring (distinct from urgency fills) */
+  .hl-p1 { box-shadow: inset 0 0 0 1.5px rgba(46,204,113,0.85); }
+  .hl-p2 { box-shadow: inset 0 0 0 1.5px rgba(52,152,219,0.85); }
+  .hl-p3 { box-shadow: inset 0 0 0 1.5px rgba(243,156,18,0.9); }
+  .hl-p4 { box-shadow: inset 0 0 0 1.5px rgba(231,76,60,0.9); }
+  .hl-p5 { box-shadow: inset 0 0 0 1.5px rgba(155,89,182,0.9); }
+  /* Status keywords */
+  .hl-done  { background: rgba(46,204,113,0.5); }    /* DONE / FIXED   */
+  .hl-todo  { background: rgba(241,196,15,0.5); }    /* TODO / WIP     */
+  .hl-alert { background: rgba(231,76,60,0.62); }    /* BUG / URGENT   */
+  /* Mentions, tags, dates */
+  .hl-mention { background: rgba(52,152,219,0.42); }
+  .hl-tag     { background: rgba(26,188,156,0.42); }
+  .hl-date    { background: rgba(149,165,166,0.4); }
 
   /* ── Cell body & split panes ── */
   .cell-body {
@@ -850,16 +866,34 @@
   }
 
   // ── In-text highlighting ──
-  // Urgency tokens like U1..U5 (case-insensitive, whole word) get colored.
-  const URGENCY_RE = /\bU[1-5]\b/gi;
+  // A single tokenizer pass colors several token types without nesting.
+  const HL_RE = new RegExp([
+    '\\bU[1-5]\\b',                                   // urgency U1..U5
+    '\\bP[1-5]\\b',                                   // priority P1..P5
+    '\\b(?:DONE|FIXED|RESOLVED|CLOSED)\\b',           // completed
+    '\\b(?:TODO|FIXME|WIP|REVIEW|PENDING|LATER)\\b',  // in-progress / todo
+    '\\b(?:BUG|BLOCKED|FAILED?|URGENT|ASAP|CRITICAL|IMPORTANT|RISK)\\b', // alert
+    '@\\w+',                                          // @mentions
+    '#\\w+',                                          // #tags
+    '\\b\\d{4}-\\d{2}-\\d{2}\\b'                       // ISO dates
+  ].join('|'), 'gi');
+
+  function classOf(m) {
+    if (/^[uU][1-5]$/.test(m)) return 'hl hl-u' + m[1];
+    if (/^[pP][1-5]$/.test(m)) return 'hl hl-p' + m[1];
+    if (m[0] === '@') return 'hl hl-mention';
+    if (m[0] === '#') return 'hl hl-tag';
+    if (/^\d{4}-\d{2}-\d{2}$/.test(m)) return 'hl hl-date';
+    const up = m.toUpperCase();
+    if (/^(DONE|FIXED|RESOLVED|CLOSED)$/.test(up)) return 'hl hl-done';
+    if (/^(TODO|FIXME|WIP|REVIEW|PENDING|LATER)$/.test(up)) return 'hl hl-todo';
+    return 'hl hl-alert';
+  }
   function escapeHtml(s) {
     return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
   }
   function highlightHTML(text) {
-    let h = escapeHtml(text).replace(URGENCY_RE, m => {
-      const lvl = m.replace(/[^0-9]/g, '');
-      return '<span class="hl hl-u' + lvl + '">' + m + '</span>';
-    });
+    let h = escapeHtml(text).replace(HL_RE, m => '<span class="' + classOf(m) + '">' + m + '</span>');
     if (h.charCodeAt(h.length - 1) === 10) h += ' '; // mirror trailing newline
     return h;
   }
