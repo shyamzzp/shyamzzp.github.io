@@ -1908,8 +1908,33 @@
     return false;
   }
 
+  // Ensure the collection has a `data` JSON field (superuser only). A manually
+  // created collection often has no custom fields, which breaks saving.
+  async function pbEnsureSchema() {
+    if (!isSuperuser) return;
+    let res;
+    try { res = await fetch(PB_URL + '/api/collections/' + PB_COLLECTION, { headers: pbHeaders() }); }
+    catch (e) { return; }
+    if (!res.ok) return;
+    const col = await res.json();
+    const fields = col.fields || col.schema || [];
+    if (fields.some(f => f.name === 'data')) return; // already present
+    const id = col.id || PB_COLLECTION;
+    // PB ≥0.23 "fields" payload, then legacy "schema"
+    let p = await fetch(PB_URL + '/api/collections/' + id, {
+      method: 'PATCH', headers: pbHeaders(),
+      body: JSON.stringify({ fields: fields.concat([{ name: 'data', type: 'json', maxSize: 5000000 }]) })
+    });
+    if (p.ok) return;
+    await fetch(PB_URL + '/api/collections/' + id, {
+      method: 'PATCH', headers: pbHeaders(),
+      body: JSON.stringify({ schema: (col.schema || []).concat([{ name: 'data', type: 'json', options: { maxSize: 5000000 } }]) })
+    });
+  }
+
   async function loadFromPB() {
     flashStatus('Loading…', true);
+    if (isSuperuser) { try { await pbEnsureSchema(); } catch (e) {} }
     let rec;
     try {
       rec = await pbFetchRecord();
