@@ -1964,16 +1964,18 @@
 
   async function saveToPB() {
     if (!authToken) return;
-    const state = currentState();
+    // Send as a JSON string so it persists whether the `data` field is typed
+    // as JSON or plain text (sending a raw object into a text field stored NA).
+    const payload = { data: JSON.stringify(currentState()) };
     try {
       let res;
       if (recordId) {
         res = await fetch(PB_URL + '/api/collections/' + PB_COLLECTION + '/records/' + recordId, {
-          method: 'PATCH', headers: pbHeaders(), body: JSON.stringify({ data: state })
+          method: 'PATCH', headers: pbHeaders(), body: JSON.stringify(payload)
         });
       } else {
         res = await fetch(PB_URL + '/api/collections/' + PB_COLLECTION + '/records', {
-          method: 'POST', headers: pbHeaders(), body: JSON.stringify({ data: state })
+          method: 'POST', headers: pbHeaders(), body: JSON.stringify(payload)
         });
       }
       if (res.status === 401 || res.status === 403) { handleAuthExpired(); return; }
