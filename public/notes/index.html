@@ -1908,8 +1908,8 @@
     return false;
   }
 
-  // Ensure the collection has a `data` JSON field (superuser only). A manually
-  // created collection often has no custom fields, which breaks saving.
+  // Ensure the collection has the fields we use (superuser only): data (json,
+  // the full board), plus title + cards for readable rows in the admin table.
   async function pbEnsureSchema() {
     if (!isSuperuser) return;
     let res;
@@ -1917,18 +1917,26 @@
     catch (e) { return; }
     if (!res.ok) return;
     const col = await res.json();
-    const fields = col.fields || col.schema || [];
-    if (fields.some(f => f.name === 'data')) return; // already present
+    const existing = col.fields || col.schema || [];
+    const have = new Set(existing.map(f => f.name));
+    const wantNew = [];     // PB ≥0.23 "fields" format
+    const wantOld = [];     // legacy "schema" format
+    const defs = [
+      { name: 'data',  newDef: { name: 'data',  type: 'json', maxSize: 5000000 }, oldDef: { name: 'data',  type: 'json', options: { maxSize: 5000000 } } },
+      { name: 'title', newDef: { name: 'title', type: 'text' },                   oldDef: { name: 'title', type: 'text', options: {} } },
+      { name: 'cards', newDef: { name: 'cards', type: 'number' },                 oldDef: { name: 'cards', type: 'number', options: {} } }
+    ];
+    defs.forEach(d => { if (!have.has(d.name)) { wantNew.push(d.newDef); wantOld.push(d.oldDef); } });
+    if (!wantNew.length) return; // all present
     const id = col.id || PB_COLLECTION;
-    // PB ≥0.23 "fields" payload, then legacy "schema"
     let p = await fetch(PB_URL + '/api/collections/' + id, {
       method: 'PATCH', headers: pbHeaders(),
-      body: JSON.stringify({ fields: fields.concat([{ name: 'data', type: 'json', maxSize: 5000000 }]) })
+      body: JSON.stringify({ fields: existing.concat(wantNew) })
     });
     if (p.ok) return;
     await fetch(PB_URL + '/api/collections/' + id, {
       method: 'PATCH', headers: pbHeaders(),
-      body: JSON.stringify({ schema: (col.schema || []).concat([{ name: 'data', type: 'json', options: { maxSize: 5000000 } }]) })
+      body: JSON.stringify({ schema: (col.schema || []).concat(wantOld) })
     });
   }
 
@@ -1962,11 +1970,24 @@
     flashStatus('Loaded ✓');
   }
 
+  // Human-readable summary for the admin table columns.
+  function boardSummary() {
+    let cards = 0, title = '';
+    for (let i = 0; i < sections.length; i++) {
+      if (!isEmptySection(i)) {
+        cards++;
+        if (!title) title = (titles[i].value || textareas[i].value || '').trim().slice(0, 80);
+      }
+    }
+    return { title: title || 'Notes board', cards: cards };
+  }
   async function saveToPB() {
     if (!authToken) return;
-    // Send as a JSON string so it persists whether the `data` field is typed
-    // as JSON or plain text (sending a raw object into a text field stored NA).
-    const payload = { data: JSON.stringify(currentState()) };
+    // Send `data` as a JSON string so it persists whether the field is typed
+    // as JSON or plain text. title/cards are extra columns (ignored by PB if
+    // the collection doesn't have them).
+    const sum = boardSummary();
+    const payload = { data: JSON.stringify(currentState()), title: sum.title, cards: sum.cards };
     try {
       let res;
       if (recordId) {
