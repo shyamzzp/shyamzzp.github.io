@@ -830,6 +830,15 @@
   </div>
   <div class="tb-sep"></div>
 
+  <!-- Global font size (all cards) -->
+  <div class="tb-group">
+    <button id="gfont-down" title="Decrease font size for all cards">A−</button>
+    <span id="gfont-size-display">13</span>
+    <button id="gfont-up" title="Increase font size for all cards">A+</button>
+    <span class="tb-meta-label">all cards</span>
+  </div>
+  <div class="tb-sep"></div>
+
   <!-- Font family (all notes) -->
   <div class="tb-group">
     <select id="font-family-select" title="Font family for all notes"></select>
@@ -932,6 +941,7 @@
   const splitPos = [];          // first pane size, percent
   let activeSectionIdx = -1; // index of currently focused textarea
   let dragSrcIdx = -1;       // section index being dragged
+  let globalFontSize = 13;   // default font size applied to all cards
 
   // ── Color palette ──
   // Each entry: { id, label, dark:{hdr,ta,taFocus,border,title,dot}, light:{...} }
@@ -1134,7 +1144,7 @@
   // Build one section at index i and append it to the grid.
   function createSection(i) {
     sectionColors[i] = null;
-    sectionFontSizes[i] = 13;
+    sectionFontSizes[i] = globalFontSize;
     splitModes[i] = null;
     splitPos[i] = 50;
     textareas2[i] = null;
@@ -1380,6 +1390,7 @@
     if (!data) return;
     try {
       if (data.theme) applyTheme(data.theme, false);
+      if (typeof data.globalFontSize === 'number') globalFontSize = data.globalFontSize;
       const notes = data.notes || [];
       ensureSections(notes.length);   // create enough cells for the saved data
       notes.forEach((n, i) => {
@@ -1406,6 +1417,7 @@
       if (data.fontFamily) applyFontFamily(data.fontFamily, false);
       reapplyAllColors();
       updateFontSizeUI();
+      if (typeof updateGlobalFontUI === 'function') updateGlobalFontUI();
     } catch (e) {}
   }
 
@@ -1423,7 +1435,7 @@
            !titles[i].value &&
            !sectionColors[i] &&
            !splitModes[i] &&
-           sectionFontSizes[i] === 13 &&
+           sectionFontSizes[i] === globalFontSize &&
            !(textareas2[i] && textareas2[i].value);
   }
   function currentState() {
@@ -1442,7 +1454,7 @@
         text2: textareas2[i] ? textareas2[i].value : ''
       });
     }
-    return { notes, theme, cardHeight, fontFamily };
+    return { notes, theme, cardHeight, fontFamily, globalFontSize };
   }
   // Save: PocketBase when online & authed; localStorage only for offline
   // exported snapshots (seed mode).
@@ -1546,6 +1558,27 @@
 
   // Init buttons as disabled until a section is focused
   updateFontSizeUI();
+
+  // ── Global font size (all cards at once) ──
+  function updateGlobalFontUI() {
+    document.getElementById('gfont-size-display').textContent = globalFontSize;
+    document.getElementById('gfont-up').disabled = globalFontSize >= 24;
+    document.getElementById('gfont-down').disabled = globalFontSize <= 9;
+  }
+  function setGlobalFontSize(size, save = true) {
+    globalFontSize = Math.max(9, Math.min(24, size));
+    for (let i = 0; i < sections.length; i++) {
+      sectionFontSizes[i] = globalFontSize;
+      applyTaFontSize(textareas[i], globalFontSize);
+      if (textareas2[i]) applyTaFontSize(textareas2[i], globalFontSize);
+    }
+    updateGlobalFontUI();
+    updateFontSizeUI();
+    if (save) autoSave();
+  }
+  document.getElementById('gfont-up').addEventListener('click', () => setGlobalFontSize(globalFontSize + 1));
+  document.getElementById('gfont-down').addEventListener('click', () => setGlobalFontSize(globalFontSize - 1));
+  updateGlobalFontUI();
 
   // ── Uniform card height (all cards at once) ──
   let cardHeight = null; // null = Fit (auto rows to viewport)
