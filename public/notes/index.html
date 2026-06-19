@@ -884,13 +884,16 @@ try { var _t = localStorage.getItem('notes_theme'); if (_t) document.documentEle
   }
   .space-tile .st-name { font-size: 14px; font-weight: bold; color: var(--title-text); word-break: break-word; }
   .space-tile .st-meta { font-size: 9px; color: var(--count-text); }
-  .space-tile .st-del {
-    position: absolute; top: 8px; right: 8px;
+  .space-tile .st-del, .space-tile .st-edit {
+    position: absolute; top: 8px;
     border: none; background: transparent; color: var(--count-text);
     cursor: pointer; font-size: 12px; opacity: 0; transition: opacity 0.15s; padding: 2px 5px; border-radius: 4px;
   }
-  .space-tile:hover .st-del { opacity: 0.8; }
+  .space-tile .st-del { right: 8px; }
+  .space-tile .st-edit { right: 30px; }
+  .space-tile:hover .st-del, .space-tile:hover .st-edit { opacity: 0.8; }
   .space-tile .st-del:hover { background: color-mix(in srgb, #e0503030, transparent); color: #ff6f61; }
+  .space-tile .st-edit:hover { background: color-mix(in srgb, var(--text) 18%, transparent); color: var(--text); }
   .sidebar-foot { padding: 10px; border-top: 1px solid var(--toolbar-border); }
   .add-space-btn {
     width: 100%; padding: 9px; border-radius: 8px; cursor: pointer;
@@ -2304,6 +2307,18 @@ try { var _t = localStorage.getItem('notes_theme'); if (_t) document.documentEle
     renderSpaces();
   }
 
+  // Rename a space (keeps the same slug/URL so existing links still work).
+  async function pbRenameSpace(sp, title) {
+    const res = await fetch(PB_URL + '/api/collections/' + PB_COLLECTION + '/records/' + sp.id, {
+      method: 'PATCH', headers: pbHeaders(), body: JSON.stringify({ title: title })
+    });
+    if (!res.ok) { flashStatus('Rename failed (HTTP ' + res.status + ')', true); return; }
+    sp.title = title;
+    if (currentSpace && currentSpace.id === sp.id) { setCurrentSpaceLabel(); document.title = title + ' — Notes'; }
+    renderSpaces();
+    flashStatus('Renamed ✓');
+  }
+
   // ── Sidebar & routing ──
   function openSidebar() {
     document.getElementById('sidebar').classList.add('open');
@@ -2335,9 +2350,15 @@ try { var _t = localStorage.getItem('notes_theme'); if (_t) document.documentEle
       const kind = document.createElement('span'); kind.className = 'st-kind'; kind.textContent = KIND_LABELS[sp.kind] || sp.kind;
       const name = document.createElement('div'); name.className = 'st-name'; name.textContent = sp.title;
       const meta = document.createElement('div'); meta.className = 'st-meta'; meta.textContent = (sp.cards || 0) + ' card' + (sp.cards === 1 ? '' : 's');
+      const edit = document.createElement('button'); edit.className = 'st-edit'; edit.title = 'Rename space'; edit.textContent = '✎';
       const del = document.createElement('button'); del.className = 'st-del'; del.title = 'Delete space'; del.textContent = '🗑';
-      tile.appendChild(kind); tile.appendChild(name); tile.appendChild(meta); tile.appendChild(del);
+      tile.appendChild(kind); tile.appendChild(name); tile.appendChild(meta); tile.appendChild(edit); tile.appendChild(del);
       tile.addEventListener('click', () => { closeSidebar(); location.hash = '#' + sp.slug; });
+      edit.addEventListener('click', e => {
+        e.stopPropagation();
+        const nn = prompt('Rename space', sp.title);
+        if (nn && nn.trim() && nn.trim() !== sp.title) pbRenameSpace(sp, nn.trim());
+      });
       del.addEventListener('click', e => {
         e.stopPropagation();
         if (confirm('Delete space "' + sp.title + '" and all its cards?')) pbDeleteSpace(sp);
@@ -2362,6 +2383,7 @@ try { var _t = localStorage.getItem('notes_theme'); if (_t) document.documentEle
     applyState(d || {});
     ensureSections(sections.length + GROW_ROWS * COLS);
     applyCardHeight();
+    sp.cards = cardCount();          // reflect the real count immediately
     document.title = sp.title + ' — Notes';
     setCurrentSpaceLabel();
     renderSpaces();
@@ -2405,6 +2427,7 @@ try { var _t = localStorage.getItem('notes_theme'); if (_t) document.documentEle
         throw new Error(msg);
       }
       currentSpace.cards = payload.cards;
+      if (document.getElementById('sidebar').classList.contains('open')) renderSpaces();
       flashStatus('Saved ✓');
     } catch (e) {
       flashStatus((e && e.message) || 'Sync error — retrying…', true);
