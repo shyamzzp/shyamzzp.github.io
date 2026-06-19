@@ -1,0 +1,1700 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Mastery Knowledge Base — Print Edition 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* ── Reset & Base ─────────────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --font-body: 'IBM Plex Sans', sans-serif;
+  --font-mono: 'IBM Plex Mono', monospace;
+
+  --bg:        #F4F2ED;
+  --surface:   #FDFCF9;
+  --border:    #DDD9D0;
+  --border-lt: #EAE7E0;
+  --text:      #1A1A18;
+  --text-2:    #3D3D38;
+  --text-3:    #6B6B64;
+  --text-4:    #9B9B91;
+
+  --m1: #1D4ED8;  --m1-bg: #EFF6FF;  --m1-border: #BFDBFE;
+  --m2: #047857;  --m2-bg: #ECFDF5;  --m2-border: #A7F3D0;
+  --m3: #B45309;  --m3-bg: #FFFBEB;  --m3-border: #FDE68A;
+  --m4: #6D28D9;  --m4-bg: #F5F3FF;  --m4-border: #DDD6FE;
+  --m5: #B91C1C;  --m5-bg: #FEF2F2;  --m5-border: #FECACA;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--font-body);
+  background: var(--bg);
+  color: var(--text);
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+/* ── Sidebar nav ──────────────────────────────────────────────────────────── */
+.sidebar {
+  position: fixed;
+  top: 0; left: 0;
+  width: 220px;
+  height: 100vh;
+  background: var(--surface);
+  border-right: 1px solid var(--border);
+  overflow-y: auto;
+  z-index: 100;
+  padding: 24px 0 40px;
+}
+
+.sidebar-title {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--text-3);
+  padding: 0 18px 16px;
+  border-bottom: 1px solid var(--border-lt);
+  margin-bottom: 12px;
+}
+
+.nav-module {
+  margin-bottom: 4px;
+}
+
+.nav-module-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 18px;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--text-3);
+  cursor: default;
+}
+
+.nav-dot {
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.nav-topic {
+  display: block;
+  padding: 5px 18px 5px 32px;
+  font-size: 11.5px;
+  color: var(--text-3);
+  text-decoration: none;
+  transition: color .15s, background .15s;
+  border-left: 2px solid transparent;
+  line-height: 1.4;
+}
+
+.nav-topic:hover { color: var(--text); background: var(--border-lt); }
+.nav-topic.active { color: var(--text); border-left-color: currentColor; font-weight: 500; }
+
+/* ── Main content ─────────────────────────────────────────────────────────── */
+.main {
+  margin-left: 220px;
+  min-height: 100vh;
+}
+
+/* ── Cover ────────────────────────────────────────────────────────────────── */
+.cover {
+  background: #12120F;
+  color: #fff;
+  padding: 80px 64px 72px;
+  position: relative;
+  overflow: hidden;
+}
+
+.cover::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 60% 50% at 80% 20%, rgba(29,78,216,.18) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 60% at 20% 80%, rgba(4,120,87,.12) 0%, transparent 60%);
+  pointer-events: none;
+}
+
+.cover-mod-bar {
+  display: flex;
+  gap: 0;
+  margin-bottom: 56px;
+  position: relative;
+}
+
+.cover-mod-chip {
+  flex: 1;
+  padding: 10px 14px;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: #fff;
+  border-right: 1px solid rgba(255,255,255,.12);
+}
+.cover-mod-chip:last-child { border-right: none; }
+
+.cover-eyebrow {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: .2em;
+  color: rgba(255,255,255,.4);
+  margin-bottom: 16px;
+  position: relative;
+}
+
+.cover-title {
+  font-size: clamp(40px, 7vw, 72px);
+  font-weight: 700;
+  line-height: 1.0;
+  letter-spacing: -.02em;
+  margin-bottom: 8px;
+  position: relative;
+}
+
+.cover-subtitle {
+  font-size: 18px;
+  font-weight: 300;
+  color: rgba(255,255,255,.55);
+  margin-bottom: 48px;
+  position: relative;
+}
+
+.cover-meta {
+  display: flex;
+  gap: 32px;
+  flex-wrap: wrap;
+  position: relative;
+}
+
+.cover-stat { text-align: center; }
+.cover-stat-num {
+  font-size: 32px;
+  font-weight: 700;
+  line-height: 1;
+  margin-bottom: 4px;
+}
+.cover-stat-label {
+  font-size: 11px;
+  color: rgba(255,255,255,.4);
+  text-transform: uppercase;
+  letter-spacing: .1em;
+}
+
+.cover-how {
+  margin-top: 56px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  position: relative;
+}
+
+.cover-how-item {
+  background: rgba(255,255,255,.05);
+  border: 1px solid rgba(255,255,255,.08);
+  border-radius: 8px;
+  padding: 16px;
+}
+
+.cover-how-step {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: .15em;
+  color: rgba(255,255,255,.35);
+  margin-bottom: 6px;
+  text-transform: uppercase;
+}
+
+.cover-how-title {
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+.cover-how-desc {
+  font-size: 12px;
+  color: rgba(255,255,255,.5);
+  line-height: 1.5;
+}
+
+/* ── Module section header ────────────────────────────────────────────────── */
+.module-header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  padding: 12px 64px;
+  border-bottom: 1px solid var(--border);
+  background: var(--surface);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.module-header-badge {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: .12em;
+  padding: 3px 10px;
+  border-radius: 100px;
+  text-transform: uppercase;
+}
+
+.module-header-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-2);
+}
+
+.module-header-count {
+  margin-left: auto;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-4);
+}
+
+/* ── Topic card ───────────────────────────────────────────────────────────── */
+.topic {
+  padding: 48px 64px 56px;
+  border-bottom: 1px solid var(--border);
+  background: var(--surface);
+}
+
+.topic:last-of-type { border-bottom: none; }
+
+.topic + .module-header { margin-top: 0; }
+
+.topic-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  margin-bottom: 28px;
+}
+
+.topic-num {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 500;
+  color: #fff;
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  letter-spacing: .05em;
+}
+
+.topic-head-text { flex: 1; min-width: 0; }
+
+.topic-title {
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -.01em;
+  line-height: 1.25;
+  margin-bottom: 6px;
+}
+
+.topic-subtitle {
+  font-size: 14px;
+  color: var(--text-3);
+  line-height: 1.55;
+  font-style: italic;
+}
+
+/* ── Two-column layout for topic body ────────────────────────────────────── */
+.topic-body {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+  align-items: start;
+}
+
+@media (max-width: 900px) {
+  .topic-body { grid-template-columns: 1fr; }
+  .main { margin-left: 0; }
+  .sidebar { display: none; }
+  .topic, .module-header { padding-left: 24px; padding-right: 24px; }
+  .cover { padding: 48px 24px; }
+  .cover-how { grid-template-columns: 1fr 1fr; }
+}
+
+.topic-col {}
+
+/* ── Section label ────────────────────────────────────────────────────────── */
+.sec-label {
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  font-weight: 500;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--text-4);
+  margin-bottom: 10px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--border-lt);
+}
+
+/* ── Bullets ──────────────────────────────────────────────────────────────── */
+.bullets { list-style: none; display: flex; flex-direction: column; gap: 0; }
+
+.bullets li {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--border-lt);
+  font-size: 13.5px;
+  line-height: 1.6;
+  color: var(--text-2);
+}
+
+.bullets li:last-child { border-bottom: none; }
+
+.bullet-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  margin-top: 7px;
+  flex-shrink: 0;
+}
+
+/* ── Deep dive ────────────────────────────────────────────────────────────── */
+.deep-dive {
+  font-size: 13.5px;
+  line-height: 1.75;
+  color: var(--text-2);
+  margin-bottom: 20px;
+}
+
+/* ── Key insight ──────────────────────────────────────────────────────────── */
+.key-insight {
+  border-radius: 8px;
+  padding: 16px 18px;
+  margin-bottom: 20px;
+  border-left: 3px solid;
+  position: relative;
+}
+
+.key-insight-label {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  font-weight: 500;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+
+.key-insight-text {
+  font-size: 13.5px;
+  line-height: 1.6;
+  font-style: italic;
+}
+
+/* ── Use cases ────────────────────────────────────────────────────────────── */
+.use-cases {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 24px;
+}
+
+.use-case-chip {
+  font-size: 11.5px;
+  padding: 4px 12px;
+  border-radius: 100px;
+  border: 1px solid var(--border);
+  color: var(--text-3);
+  background: var(--bg);
+  font-family: var(--font-mono);
+}
+
+/* ── Notes ────────────────────────────────────────────────────────────────── */
+.notes-block {
+  margin-top: 4px;
+}
+
+.notes-label {
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  letter-spacing: .15em;
+  text-transform: uppercase;
+  color: var(--text-4);
+  margin-bottom: 8px;
+}
+
+.notes-lines {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.notes-line {
+  height: 36px;
+  border-bottom: 1px solid var(--border);
+  background: var(--bg);
+}
+
+/* ── Module colour helpers ────────────────────────────────────────────────── */
+.m1 { --mc: var(--m1); --mc-bg: var(--m1-bg); --mc-border: var(--m1-border); }
+.m2 { --mc: var(--m2); --mc-bg: var(--m2-bg); --mc-border: var(--m2-border); }
+.m3 { --mc: var(--m3); --mc-bg: var(--m3-bg); --mc-border: var(--m3-border); }
+.m4 { --mc: var(--m4); --mc-bg: var(--m4-bg); --mc-border: var(--m4-border); }
+.m5 { --mc: var(--m5); --mc-bg: var(--m5-bg); --mc-border: var(--m5-border); }
+
+.topic-num { background: var(--mc); }
+
+.bullet-dot { background: var(--mc); }
+
+.key-insight {
+  background: var(--mc-bg);
+  border-color: var(--mc);
+}
+.key-insight-label { color: var(--mc); }
+.key-insight-text { color: var(--text-2); }
+
+.sec-label { color: var(--mc); border-color: var(--mc-border); opacity: .85; }
+
+.module-header-badge {
+  background: var(--mc-bg);
+  color: var(--mc);
+  border: 1px solid var(--mc-border);
+}
+
+.cover-mod-chip { background: var(--mc); }
+
+/* ── Print styles ─────────────────────────────────────────────────────────── */
+@media print {
+  .sidebar { display: none; }
+  .main { margin-left: 0; }
+  .module-header { position: static; }
+  .topic { page-break-inside: avoid; padding: 32px 40px; }
+  .cover { padding: 48px 40px; }
+  body { font-size: 13px; }
+  .cover-how { grid-template-columns: repeat(4,1fr); }
+}
+
+/* ── Scrollbar ────────────────────────────────────────────────────────────── */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+/* ── Active nav highlight ─────────────────────────────────────────────────── */
+.nav-topic.m1-active { color: var(--m1); border-left-color: var(--m1); }
+.nav-topic.m2-active { color: var(--m2); border-left-color: var(--m2); }
+.nav-topic.m3-active { color: var(--m3); border-left-color: var(--m3); }
+.nav-topic.m4-active { color: var(--m4); border-left-color: var(--m4); }
+.nav-topic.m5-active { color: var(--m5); border-left-color: var(--m5); }
+</style>
+</head>
+<body>
+
+<!-- ── Sidebar ───────────────────────────────────────────────────────────── -->
+<nav class="sidebar">
+  <div class="sidebar-title">AI Mastery · 20 Topics</div>
+
+  <div class="nav-module m1">
+    <div class="nav-module-label">
+      <span class="nav-dot" style="background:var(--m1)"></span>Module 01 · Foundations
+    </div>
+    <a href="#t01" class="nav-topic">T01 · The AI Spectrum</a>
+    <a href="#t02" class="nav-topic">T02 · OSS Ecosystem</a>
+    <a href="#t03" class="nav-topic">T03 · Agent Ecosystem</a>
+    <a href="#t04" class="nav-topic">T04 · Career Paths</a>
+    <a href="#t05" class="nav-topic">T05 · Best Resources</a>
+  </div>
+
+  <div class="nav-module m2">
+    <div class="nav-module-label">
+      <span class="nav-dot" style="background:var(--m2)"></span>Module 02 · Agent Concepts
+    </div>
+    <a href="#t06" class="nav-topic">T06 · 3 Workflow Types</a>
+    <a href="#t07" class="nav-topic">T07 · Agents vs Agentic AI</a>
+    <a href="#t08" class="nav-topic">T08 · 5 Agent Levels</a>
+    <a href="#t09" class="nav-topic">T09 · RPA vs AI Agents</a>
+  </div>
+
+  <div class="nav-module m3">
+    <div class="nav-module-label">
+      <span class="nav-dot" style="background:var(--m3)"></span>Module 03 · Architecture
+    </div>
+    <a href="#t10" class="nav-topic">T10 · 7 Architectures</a>
+    <a href="#t11" class="nav-topic">T11 · 9 Workflow Patterns</a>
+    <a href="#t12" class="nav-topic">T12 · Multi-Agent Patterns</a>
+    <a href="#t13" class="nav-topic">T13 · 6 Design Patterns</a>
+  </div>
+
+  <div class="nav-module m4">
+    <div class="nav-module-label">
+      <span class="nav-dot" style="background:var(--m4)"></span>Module 04 · Building
+    </div>
+    <a href="#t14" class="nav-topic">T14 · 7-Step Roadmap</a>
+    <a href="#t15" class="nav-topic">T15 · Comprehensive Guide</a>
+    <a href="#t16" class="nav-topic">T16 · Anthropic's Guide</a>
+    <a href="#t17" class="nav-topic">T17 · Learning Roadmap</a>
+  </div>
+
+  <div class="nav-module m5">
+    <div class="nav-module-label">
+      <span class="nav-dot" style="background:var(--m5)"></span>Module 05 · RAG & Tools
+    </div>
+    <a href="#t18" class="nav-topic">T18 · RAG → Agentic RAG</a>
+    <a href="#t19" class="nav-topic">T19 · Tool Calling via MCP</a>
+    <a href="#t20" class="nav-topic">T20 · Tool Strategies</a>
+  </div>
+</nav>
+
+<!-- ── Main ──────────────────────────────────────────────────────────────── -->
+<main class="main">
+
+<!-- Cover -->
+<section class="cover">
+  <div class="cover-mod-bar">
+    <div class="cover-mod-chip m1" style="background:var(--m1)">01 · Foundations</div>
+    <div class="cover-mod-chip m2" style="background:var(--m2)">02 · Agent Concepts</div>
+    <div class="cover-mod-chip m3" style="background:var(--m3)">03 · Architecture</div>
+    <div class="cover-mod-chip m4" style="background:var(--m4)">04 · Building</div>
+    <div class="cover-mod-chip m5" style="background:var(--m5)">05 · RAG & Tools</div>
+  </div>
+
+  <div class="cover-eyebrow">AI Mastery · Print Edition 2026</div>
+  <h1 class="cover-title">Knowledge Base</h1>
+  <p class="cover-subtitle">20 topics · Deep insights · Notes spaces · Study, annotate, apply</p>
+
+  <div class="cover-meta">
+    <div class="cover-stat">
+      <div class="cover-stat-num" style="color:#93C5FD">20</div>
+      <div class="cover-stat-label">Topics</div>
+    </div>
+    <div class="cover-stat">
+      <div class="cover-stat-num" style="color:#6EE7B7">5</div>
+      <div class="cover-stat-label">Modules</div>
+    </div>
+    <div class="cover-stat">
+      <div class="cover-stat-num" style="color:#FCD34D">100+</div>
+      <div class="cover-stat-label">Concepts</div>
+    </div>
+    <div class="cover-stat">
+      <div class="cover-stat-num" style="color:#C4B5FD">∞</div>
+      <div class="cover-stat-label">Notes Space</div>
+    </div>
+  </div>
+
+  <div class="cover-how">
+    <div class="cover-how-item">
+      <div class="cover-how-step">Step 01</div>
+      <div class="cover-how-title">Read</div>
+      <div class="cover-how-desc">Work through Core Concepts, then Deep Dive, then Key Insight on every topic.</div>
+    </div>
+    <div class="cover-how-item">
+      <div class="cover-how-step">Step 02</div>
+      <div class="cover-how-title">Annotate</div>
+      <div class="cover-how-desc">Use the lined notes section on every topic — write questions, connections, examples.</div>
+    </div>
+    <div class="cover-how-item">
+      <div class="cover-how-step">Step 03</div>
+      <div class="cover-how-title">Apply</div>
+      <div class="cover-how-desc">After each module, build one small hands-on project. Theory + practice = retention.</div>
+    </div>
+    <div class="cover-how-item">
+      <div class="cover-how-step">Step 04</div>
+      <div class="cover-how-title">Revisit</div>
+      <div class="cover-how-desc">Return to pages that were unclear. Spaced repetition is the fastest path to mastery.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════════════════════ -->
+<!-- MODULE 01 -->
+<!-- ════════════════════════════════════════════════════════════════════════ -->
+<div class="module-header m1">
+  <span class="module-header-badge">Module 01</span>
+  <span class="module-header-title">Foundations & Ecosystem</span>
+  <span class="module-header-count">Topics 01 – 05</span>
+</div>
+
+<!-- T01 -->
+<article id="t01" class="topic m1">
+  <div class="topic-header">
+    <div class="topic-num">T01</div>
+    <div class="topic-head-text">
+      <h2 class="topic-title">The AI Spectrum: From ML to Agentic AI</h2>
+      <p class="topic-subtitle">Concentric-layer model showing how each AI paradigm builds on the previous — the essential mental model before touching any framework.</p>
+    </div>
+  </div>
+  <div class="topic-body">
+    <div class="topic-col">
+      <div class="sec-label">Core Concepts</div>
+      <ul class="bullets">
+        <li><span class="bullet-dot"></span><span><strong>Layer 1 — AI & ML:</strong> Statistical models turning labelled data into decisions. Supervised (classification, regression), unsupervised (clustering), reinforcement learning. Core tools: Scikit-learn, XGBoost, Spark MLlib.</span></li>
+        <li><span class="bullet-dot"></span><span><strong>Layer 2 — Neural Networks:</strong> Deep architectures for complex pattern recognition. CNNs for vision, LSTMs and Transformers for sequences. Breakthrough: attention mechanism (2017). Requires GPU compute.</span></li>
+        <li><span class="bullet-dot"></span><span><strong>Layer 3 — Generative AI:</strong> Models that produce novel content from learned distributions. Enables RAG, prompt engineering, fine-tuning. Models: GPT-4o, Claude, Gemini, Llama 3, Mistral.</span></li>
+        <li><span class="bullet-dot"></span><span><strong>Layer 4 — AI Agents:</strong> Autonomous systems with tool access, memory, and planning. Execute multi-step tasks with minimal human intervention. Core loop: perceive → reason → act → observe → repeat.</span></li>
+        <li><span class="bullet-dot"></span><span><strong>Layer 5 — Agentic AI:</strong> Networks of cooperating agents automating entire business processes. Adds governance, rollback, delegation, and cross-agent coordination via protocols like A2A, ACP, AGP.</span></li>
+        <li><span class="bullet-dot"></span><span><strong>Key shift:</strong> reactive (responds to inputs) → proactive (pursues goals across time). Each layer inherits and extends all capabilities below it.</span></li>
+      </ul>
+    </div>
+    <div class="topic-col">
+      <div class="sec-label">Deep Dive</div>
+      <p class="deep-dive">The concentric model prevents two opposite design mistakes: under-engineering (a single prompt where an agent loop is needed) and over-engineering (building autonomous agents for tasks a simple pipeline handles reliably and cheaply). Before designing any system, ask: does this task actually require Layer 4–5 autonomy, or would a deterministic Layer 2–3 workflow be more reliable and cheaper? Production teams consistently over-architect toward agents when a simple chained prompt would suffice. The sweet spot for most enterprise tasks in 2026 is Layer 3–4: agentic workflows with bounded autonomy and explicit human-in-the-loop checkpoints for irreversible actions. Truly autonomous Layer 5 systems — persistent, self-improving, multi-domain — remain largely research territory.</p>
+
+      <div class="key-insight">
+        <div class="key-insight-label">Key Insight</div>
+        <p class="key-insight-text">The spectrum is not a replacement hierarchy — all layers coexist in production stacks simultaneously. A customer service agent uses an LLM (L3) to reason, calls a database tool (L4), and escalates to a human (L5 governance). Design for the right layer, not the newest one.</p>
+      </div>
+
+      <div class="sec-label" style="margin-top:16px">Use Cases</div>
+      <div class="use-cases">
+        <span class="use-case-chip">Enterprise automation (L5)</span>
+        <span class="use-case-chip">Coding assistants (L4)</span>
+        <span class="use-case-chip">Document classification (L2)</span>
+      </div>
+
+      <div class="notes-block">
+        <div class="notes-label">My Notes</div>
+        <div class="notes-lines">
+          <div class="notes-line"></div>
+          <div class="notes-line"></div>
+          <div class="notes-line"></div>
+          <div class="notes-line"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</article>
+
+<!-- T02 -->
+<article id="t02" class="topic m1">
+  <div class="topic-header">
+    <div class="topic-num">T02</div>
+    <div class="topic-head-text">
+      <h2 class="topic-title">Open-Source AI Ecosystem Map</h2>
+      <p class="topic-subtitle">Full landscape of open-source AI components from raw data to deployed applications — assemble production stacks without vendor lock-in.</p>
+    </div>
+  </div>
+  <div class="topic-body">
+    <div class="topic-col">
+      <div class="sec-label">Core Concepts</div>
+      <ul class="bullets">
+        <li><span class="bullet-dot"></span><span><strong>Data Layer:</strong> HuggingFace Datasets, Roboflow (vision), Label Studio (annotation), DVC (versioning), Great Expectations (quality validation).</span></li>
+        <li><span class="bullet-dot"></span><span><strong>Model Layer:</strong> Llama 3 (Meta), Mistral/Mixtral, Falcon (TII), Phi-3 (Microsoft), Gemma (Google), Qwen (Alibaba), DeepSeek. All runnable locally.</span></li>
+        <li><span class="bullet-dot"></span><span><strong>Training & Fine-tuning:</strong> PyTorch (dominant), JAX/Flax, DeepSpeed (ZeRO sharding), Unsloth (4–5× faster LoRA), Axolotl, LLaMA-Factory.</span></li>
+        <li><span class="bullet-dot"></span><span><strong>Inference Serving:</strong> vLLM (PagedAttention — 10× throughput), Ollama (local one-click), llama.cpp (CPU+GPU quantised), TGI (HuggingFace), Triton Server.</span></li>
+        <li><span class="bullet-dot"></span><span><strong>Orchestration & Agents:</strong> LangChain, LlamaIndex, CrewAI, AutoGen (Microsoft), LangGraph (stateful graphs), Agno, Pydantic AI.</span></li>
+        <li><span class="bullet-dot"></span><span><strong>Vector Databases:</strong> Chroma (embedded, prototyping), Qdrant (high performance), Weaviate (hybrid), Milvus (cloud scale), pgvector (Postgres extension).</span></li>
+        <li><span class="bullet-dot"></span><span><strong>Eval & MLOps:</strong> MLflow, W&B, BentoML, Ray Serve, RAGAS (RAG eval), DeepEval, Langfuse, LangSmith (observability).</span></li>
+      </ul>
+    </div>
+    <div class="topic-col">
+      <div class="sec-label">Deep Dive</div>
+      <p class="deep-dive">The open-source AI stack now matches or exceeds closed APIs on most benchmarks at a fraction of the cost. Critical model selection insight: Llama 3 70B at 4-bit quantisation runs on a single 24 GB GPU and matches GPT-3.5 on most enterprise tasks. For fine-tuning, LoRA adapts models using less than 1% of parameters — critical for domain adaptation without catastrophic forgetting. The orchestration framework choice is consequential: LangGraph is most production-proven for complex flows due to its explicit state graph model with deterministic replay for debugging. CrewAI is the best entry point for multi-agent systems. For evaluation, RAGAS provides automated metrics (faithfulness, answer relevancy, context recall) without requiring human labels — essential for CI/CD regression testing.</p>
+
+      <div class="key-insight">
+        <div class="key-insight-label">Key Insight</div>
+        <p class="key-insight-text">The competitive moat in 2026 is not the model — it is the data pipeline and evaluation framework. Anyone can run Llama 3; few organisations have clean domain data and automated evaluation infrastructure. These two assets compound in ways that model access does not.</p>
+      </div>
+
+      <div class="sec-label" style="margin-top:16px">Use Cases</div>
+      <div class="use-cases">
+        <span class="use-case-chip">Local LLM deployment (Ollama)</span>
+        <span class="use-case-chip">Production RAG (LlamaIndex + Qdrant)</span>
+        <span class="use-case-chip">Domain fine-tuning (Unsloth + LoRA)</span>
+      </div>
+
+      <div class="notes-block">
+        <div class="notes-label">My Notes</div>
+        <div class="notes-lines">
+          <div class="notes-line"></div>
+          <div class="notes-line"></div>
+          <div class="notes-line"></div>
+          <div class="notes-line"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</article>
+
+<!-- T03 -->
+<article id="t03" class="topic m1">
+  <div class="topic-header">
+    <div class="topic-num">T03</div>
+    <div class="topic-head-text">
+      <h2 class="topic-title">AI Agent Ecosystem Map</h2>
+      <p class="topic-subtitle">Commercial landscape of AI agent tooling organised by layer — from LLM engines through to role-specific SaaS agents. A vendor selection map.</p>
+    </div>
+  </div>
+  <div class="topic-body">
+    <div class="topic-col">
+      <div class="sec-label">Core Concepts</div>
+      <ul class="bullets">
+        <li><span class="bullet-dot"></span><span><strong>AI Engines:</strong> OpenAI (GPT-4o), Anthropic (Claude Sonnet/Opus), Google (Gemini 1.5), Meta (Llama 3), Cohere (Command R+), Mistral AI. Primary access via API.</span></li>
+        <li><span class="bullet-dot"></span><span><strong>Developer Frameworks:</strong> AutoGen (Microsoft), LangChain, LlamaIndex, CrewAI, LangGraph, Agno — full code-level control over agent behaviour.</span></li>
+        <li><span class="bullet-dot"></span><span><strong>Agent Builder Platforms:</strong> Relevance AI, Agent.ai, SuperAGI, Wordware — low-code/no-code construction with visual interfaces.</span></li>
+        <li><span class="bullet-dot"></span><span><strong>Automation / iPaaS:</strong> Zapier AI, Make, Workato, Relay.app, n8n — connect agents to hundreds of SaaS tools without custom API code.</span></li>
+        <li><span class="bullet-dot"></span><span><strong>Observability:</strong> LangSmith, Langfuse, AgentOps, Arize Phoenix — trace every LLM call, tool invocation, latency, and token cost.</span></li>
+        <li><span class="bullet-dot"></span><span><strong>Role-Specific Agents:</strong> Sales (Artisan, AiSDR), Support (Intercom Fin, Sierra, Decagon), Coding (Cursor, Devin), Research (Perplexity).</span></li>
+        <li><span class="bullet-dot"></span><span><strong>SaaS-Embedded:</strong> Salesforce Agentforce, HubSpot AI, ServiceNow AI, Zendesk AI — agents embedded where the data already lives.</span></li>
+      </ul>
+    </div>
+    <div class="topic-col">
+      <div class="sec-label">Deep Dive</div>
+      <p class="deep-dive">The ecosystem has stratified into three tiers by 2026. Tier 1 (Foundation): OpenAI, Anthropic, and Google control 80%+ of enterprise LLM spend. Tier 2 (Framework): open-source community frameworks (LangChain, CrewAI) versus enterprise-grade stateful frameworks (LangGraph, AutoGen). Tier 3 (Application): hundreds of role-specific SaaS agents built on Tiers 1–2. If you are a developer, the framework tier gives maximum control at lowest cost. If you are an enterprise operator, SaaS-embedded agents offer the fastest path to value. The emerging competitive differentiator across all tiers is observability — teams instrumenting every agent call debug 5× faster and reduce costs 30–40% by identifying redundant tool calls.</p>
+
+      <div class="key-insight">
+        <div class="key-insight-label">Key Insight</div>
+        <p class="key-insight-text">The ecosystem is consolidating fast. By late 2026, most enterprises will standardise on: 1 foundation model vendor + 1 orchestration framework + 1 observability platform. Choose these three carefully — switching costs are high once workflows are built on them.</p>
+      </div>
+
+      <div class="sec-label" style="margin-top:16px">Use Cases</div>
+      <div class="use-cases">
+        <span class="use-case-chip">Customer support (Sierra/Fin)</span>
+        <span class="use-case-chip">Sales outreach (Artisan)</span>
+        <span class="use-case-chip">Internal knowledge (LangGraph + Claude)</span>
+      </div>
+
+      <div class="notes-block">
+        <div class="notes-label">My Notes</div>
+        <div class="notes-lines">
+          <div class="notes-line"></div>
+          <div class="notes-line"></div>
+          <div class="notes-line"></div>
+          <div class="notes-line"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</article>
+
+<!-- T04 -->
+<article id="t04" class="topic m1">
+  <div class="topic-header">
+    <div class="topic-num">T04</div>
+    <div class="topic-head-text">
+      <h2 class="topic-title">Top AI Career Paths & Required Skills</h2>
+      <p class="topic-subtitle">14 distinct roles in the AI industry with skill maps — target your development strategically rather than learning everything at once.</p>
+    </div>
+  </div>
+  <div class="topic-body">
+    <div class="topic-col">
+      <div class="sec-label">Core Concepts</div>
+      <ul class="bullets">
+        <li><span class="bullet-dot"></span><span><strong>ML Engineer:</strong> Python, PyTorch/TF, feature engineering, distributed training, AWS/GCP. Trains and deploys models. $150K–$250K.</span></li>
+        <li><span class="bullet-dot"></span><span><strong>AI Engineer:</strong> LLM APIs, RAG, agent frameworks, prompt engineering, LangGraph, eval design. Fastest-growing role in 2025–26. No PhD required.</span></li>
+        <li><span class="bullet-dot"></span><span><strong>Data Scientist:</strong> Python, R, SQL, statistics, A/B testing, Power BI. Derives business insights; increasingly requires LLM integration skills.</span></li>
+        <li><span class="bullet-dot"></span><span><strong>NLP Specialist:</strong> HuggingFace Transformers, SpaCy, BERT/RoBERTa, fine-tuning. Role actively merging with AI Engineer.</span></li>
+        <li><span class="bullet-dot"></span><span><strong>MLOps Engineer:</strong> Kubernetes, Docker, MLflow, CI/CD, BentoML, Ray Serve, cost monitoring. Keeps models reliable and scalable in production.</span></li>
+        <li><span class="bullet-dot"></span><span><strong>AI Safety Researcher:</strong> Alignment theory, RLHF, red-teaming, interpretability, constitutional AI. Academic + industry roles at frontier labs.</span></li>
+        <li><span class="bullet-dot"></span><span><strong>AI Product Manager:</strong> Jira, Figma, user research, LLM product sense, evaluation framework design. Bridge between technical and business.</span></li>
+        <li><span class="bullet-dot"></span><span><strong>AI Infra Architect:</strong> Kubernetes, Terraform, GPU clusters, vLLM deployment, FinOps for AI cost optimisation at scale.</span></li>
+      </ul>
+    </div>
+    <div class="topic-col">
+      <div class="sec-label">Deep Dive</div>
+      <p class="deep-dive">The AI Engineer role is the most strategically valuable to pursue in 2026: it sits at the intersection of software engineering and ML without requiring a traditional ML PhD. Core AI Engineer competencies: LLM API integration, prompt engineering and systematic evaluation, RAG pipeline construction, agent framework usage, and observability tooling. The skill gap is real and growing — companies have more ML Engineers (who train models) than AI Engineers (who deploy them usefully). Senior AI Engineer compensation: $180K–$300K at top-tier companies. The path from software engineer to AI engineer is 6–12 months of focused upskilling. Key differentiators: systematic output evaluation, production-grade system prompt design, cost management, and the judgment to know when NOT to use an LLM.</p>
+
+      <div class="key-insight">
+        <div class="key-insight-label">Key Insight</div>
+        <p class="key-insight-text">The most hireable AI professional in 2026 is not the PhD who trains models but the engineer who ships a reliable, evaluated, observable AI system to production in weeks rather than months. Deployment skill beats theoretical depth in most roles.</p>
+      </div>
+
+      <div class="sec-label" style="margin-top:16px">Use Cases</div>
+      <div class="use-cases">
+        <span class="use-case-chip">Career planning & targeting</span>
+        <span class="use-case-chip">Team hiring roadmap</span>
+        <span class="use-case-chip">Personal skill gap assessment</span>
+      </div>
+
+      <div class="notes-block">
+        <div class="notes-label">My Notes</div>
+        <div class="notes-lines">
+          <div class="notes-line"></div>
+          <div class="notes-line"></div>
+          <div class="notes-line"></div>
+          <div class="notes-line"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</article>
+
+<!-- T05 -->
+<article id="t05" class="topic m1">
+  <div class="topic-header">
+    <div class="topic-num">T05</div>
+    <div class="topic-head-text">
+      <h2 class="topic-title">26 Best Resources to Learn AI (2026)</h2>
+      <p class="topic-subtitle">Curated, prioritised learning library across 5 categories — ranked by learning ROI. Start with the top items in each category.</p>
+    </div>
+  </div>
+  <div class="topic-body">
+    <div class="topic-col">
+      <div class="sec-label">Core Concepts</div>
+      <ul class="bullets">
+        <li><span class="bullet-dot"></span><span><strong>Books:</strong> AI Engineering (Chip Huyen — definitive production LLM guide), Designing ML Systems (Huyen), Build LLM Apps from Scratch (Raschka), Hands-on ML (Geron).</span></li>
+        <li><span class="bullet-dot"></span><span><strong>Free Courses:</strong> DeepLearning.AI short courses (LangChain, RAG, Agents — all free, 1–2 hrs each), Fast.ai Practical Deep Learning, HuggingFace NLP Course, Stanford CS229.</span></li>
+        <li><span class="bullet-dot"></span><span><strong>Tech Blogs:</strong> Lilian Weng / Lil'Log (OpenAI), Simon Willison's Weblog, Chip Huyen blog, Anthropic Research Blog, Google DeepMind Blog.</span></li>
+        <li><span class="bullet-dot"></span><span><strong>Newsletters:</strong> The Batch (deeplearning.ai), ByteByteGo, Latent Space (technical AI podcast + newsletter), TLDR AI, AI Snake Oil.</span></li>
+        <li><span class="bullet-dot"></span><span><strong>Foundational Papers:</strong> Attention Is All You Need (2017), InstructGPT (2022 — RLHF), ReAct (2022 — agent reasoning), Self-RAG (2023), Toolformer (2023), Constitutional AI (Anthropic 2022).</span></li>
+        <li><span class="bullet-dot"></span><span><strong>Practice:</strong> Kaggle (competitions + datasets), GAIA Benchmark (agent eval), ARC-AGI (reasoning), ToolBench (tool-use), LangChain Hub (prompt templates).</span></li>
+        <li><span class="bullet-dot"></span><span><strong>Communities:</strong> HuggingFace Discord, Latent Space Discord, r/MachineLearning, r/LocalLLaMA, AI Engineer World's Fair (annual), NeurIPS/ICML.</span></li>
+      </ul>
+    </div>
+    <div class="topic-col">
+      <div class="sec-label">Deep Dive</div>
+      <p class="deep-dive">Optimal learning sequence from zero to production AI engineer: (1) DeepLearning.AI 'LangChain for LLM Application Development' — free, 2 hours, builds something on day one. (2) Read Lilian Weng's 'LLM-powered Autonomous Agents' blog post — best single overview of agent architecture, still accurate in 2026. (3) Work through HuggingFace Agents course end-to-end. (4) Build a project using the 7-step agent roadmap. (5) Read the ReAct paper. (6) Set up LangSmith and add observability to your project. This sequence takes 3–4 weeks of focused effort and produces a developer who can build, evaluate, and operate production agent systems. For books, Chip Huyen's 'AI Engineering' bridges the gap between ML theory and production systems that most resources leave unmapped.</p>
+
+      <div class="key-insight">
+        <div class="key-insight-label">Key Insight</div>
+        <p class="key-insight-text">Lilian Weng's 'LLM-powered Autonomous Agents' blog post is freely available PhD-level education. It remains the best single introduction to the agent field in 2026. Read it before any agent framework documentation — it will save you weeks of confusion.</p>
+      </div>
+
+      <div class="sec-label" style="margin-top:16px">Use Cases</div>
+      <div class="use-cases">
+        <span class="use-case-chip">Personal learning plan</span>
+        <span class="use-case-chip">Team resource curation</span>
+        <span class="use-case-chip">Interview preparation</span>
+      </div>
+
+      <div class="notes-block">
+        <div class="notes-label">My Notes</div>
+        <div class="notes-lines">
+          <div class="notes-line"></div>
+          <div class="notes-line"></div>
+          <div class="notes-line"></div>
+          <div class="notes-line"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</article>
+
+<!-- MODULE 02 -->
+<div class="module-header m2">
+  <span class="module-header-badge">Module 02</span>
+  <span class="module-header-title">Agent Concepts</span>
+  <span class="module-header-count">Topics 06 – 09</span>
+</div>
+
+<!-- T06 -->
+<article id="t06" class="topic m2">
+  <div class="topic-header">
+    <div class="topic-num">T06</div>
+    <div class="topic-head-text">
+      <h2 class="topic-title">3 Types of AI Workflows</h2>
+      <p class="topic-subtitle">Michel Lieben's classification framework — choose the right workflow type before building anything to avoid expensive rework.</p>
+    </div>
+  </div>
+  <div class="topic-body">
+    <div class="topic-col">
+      <div class="sec-label">Core Concepts</div>
+      <ul class="bullets">
+        <li><span class="bullet-dot"></span><span><strong>Type 1 — Non-Agentic:</strong> Single LLM call. User provides input, model generates output. No tools, no memory, no iteration. Examples: ChatGPT single prompt, content generation, text classification. Cheapest and most predictable.</span></li>
+        <li><span class="bullet-dot"></span><span><strong>Type 2 — Agentic Workflow:</strong> Pre-defined multi-step sequence. Human designs the flow graph; LLM executes each node. Includes tools, conditionals, loops — but workflow structure is fixed at design time. Examples: GitHub Copilot, document processing pipelines.</span></li>
+        <li><span class="bullet-dot"></span><span><strong>Type 3 — AI Agent:</strong> LLM decides the workflow dynamically at runtime. Given a goal, it plans steps, selects tools, observes results, re-plans. Examples: Devin (coding), Manus AI, open-ended research agents.</span></li>
+        <li><span class="bullet-dot"></span><span><strong>Key distinction:</strong> In Type 2, a human writes the conditional logic at design time. In Type 3, the LLM writes it dynamically at runtime from a goal description alone.</span></li>
+        <li><span class="bullet-dot"></span><span><strong>Reliability:</strong> Type 1 > Type 2 > Type 3 (highest first). Autonomy: Type 3 > Type 2 > Type 1 (highest first).</span></li>
+        <li><span class="bullet-dot"></span><span><strong>Cost:</strong> Type 1 cheapest (1 LLM call) → Type 2 moderate (N deterministic calls) → Type 3 expensive (unpredictable N calls plus tool API costs).</span></li>
+      </ul>
+    </div>
+    <div class="topic-col">
+      <div class="sec-label">Deep Dive</div>
+      <p class="deep-dive">Most production AI systems in 2026 are Type 2 (Agentic Workflows), not Type 3 — despite the marketing. Type 2 is preferred because it is auditable (every step logged), has known cost (predictable LLM call count), and is debuggable (when it fails, you know exactly which step). Type 3 is appropriate when the task space is too large or variable to enumerate upfront: open-ended research, novel code generation, dynamic customer interactions. The key engineering heuristic: start with Type 2, only upgrade to Type 3 when Type 2's rigidity demonstrably causes failures on real inputs. Anthropic's own guidance says exactly this — use the simplest possible solution that achieves the goal reliably. Type 2 systems are 3–5× cheaper to operate and 5–10× faster to debug.</p>
+
+      <div class="key-insight">
+        <div class="key-insight-label">Key Insight</div>
+        <p class="key-insight-text">80% of enterprise value comes from well-engineered Type 2 workflows that are boring, reliable, and cheap. The industry oversells Type 3 because it sounds exciting. Build Type 2 first — upgrade only when you can demonstrate Type 2 fails on your specific task.</p>
+      </div>
+
+      <div class="sec-label" style="margin-top:16px">Use Cases</div>
+      <div class="use-cases">
+        <span class="use-case-chip">Invoice processing (Type 2)</span>
+        <span class="use-case-chip">Open-ended research (Type 3)</span>
+        <span class="use-case-chip">Summarisation (Type 1)</span>
+      </div>
+
+      <div class="notes-block">
+        <div class="notes-label">My Notes</div>
+        <div class="notes-lines">
+          <div class="notes-line"></div>
+          <div class="notes-line"></div>
+          <div class="notes-line"></div>
+          <div class="notes-line"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</article>
+
+<!-- T07 -->
+<article id="t07" class="topic m2">
+  <div class="topic-header">
+    <div class="topic-num">T07</div>
+    <div class="topic-head-text">
+      <h2 class="topic-title">AI Agents vs. Agentic AI: Key Differences</h2>
+      <p class="topic-subtitle">Academic taxonomy from arXiv 2505.10468 — precise language prevents architectural over- or under-engineering from day one.</p>
+    </div>
+  </div>
+  <div class="topic-body">
+    <div class="topic-col">
+      <div class="sec-label">Core Concepts</div>
+      <ul class="bullets">
+        <li><span class="bullet-dot"></span><span><strong>AI Agent:</strong> Single autonomous entity within a defined domain. Uses tools, has memory, can plan. High autonomy within narrow scope. Reactive to explicit goal specification. Example: a customer support agent.</span></li>
+        <li><span class="bullet-dot"></span><span><strong>Agentic AI:</strong> System of multiple collaborating agents proactively pursuing complex, multi-domain objectives. Self-organising — agents can spawn sub-agents and delegate dynamically.</span></li>
+        <li><span class="bullet-dot"></span><span><strong>Generative Agent:</strong> Third category from the paper. Focused on content creation via large-scale pre-training. Creative tasks — writing, image generation, code synthesis.</span></li>
+        <li><span class="bullet-dot"></span><span><strong>Autonomy axis:</strong> AI Agent (medium) → Agentic AI (high) → Fully Autonomous (theoretical in 2026).</span></li>
+        <li><span class="bullet-dot"></span><span><strong>Task complexity:</strong> AI Agent handles single well-defined tasks. Agentic AI coordinates multi-domain workflows that emerge dynamically.</span></li>
+        <li><span class="bullet-dot"></span><span><strong>Learning mode:</strong> AI Agent uses rule-based or fine-tuned responses. Agentic AI can use reinforcement learning and meta-learning across episodes.</span></li>
+        <li><span class="bullet-dot"></span><span><strong>Key differentiator — AI Agent:</strong> tool-use within scope. Agentic AI: inter-agent collaboration and emergent coordination across domains.</span></li>
+      </ul>
+    </div>
+    <div class="topic-col">
+      <div class="sec-label">Deep Dive</div>
+      <p class="deep-dive">The distinction matters most at the architecture planning stage. If you need one LLM to complete a task — however complex — you are building an AI Agent. If you need multiple specialised LLMs to collaborate (a planner, researchers, a writer, an editor, a quality critic), you are building Agentic AI. The taxonomy adds a third dimension: temporal horizon. Agents are episodic — complete one task and terminate. Agentic AI systems are persistent, running continuously and accumulating learning across many tasks over time. Current production systems (CrewAI teams, AutoGen groups) are architecturally Agentic AI in structure but limited by context window size and the absence of robust cross-session state persistence. Where your system falls determines memory architecture, evaluation strategy, and safety requirements.</p>
+
+      <div class="key-insight">
+        <div class="key-insight-label">Key Insight</div>
+        <p class="key-insight-text">When someone says 'AI Agent' in a meeting, they likely mean an Agentic Workflow (Type 2). When they say 'Agentic AI', they mean a multi-agent system. Get the terminology precise before architecture begins — ambiguous language leads to systems built for the wrong requirements.</p>
+      </div>
+
+      <div class="sec-label" style="margin-top:16px">Use Cases</div>
+      <div class="use-cases">
+        <span class="use-case-chip">Architecture scoping</span>
+        <span class="use-case-chip">RFP language precision</span>
+        <span class="use-case-chip">Research classification</span>
+      </div>
+
+      <div class="notes-block">
+        <div class="notes-label">My Notes</div>
+        <div class="notes-lines">
+          <div class="notes-line"></div>
+          <div class="notes-line"></div>
+          <div class="notes-line"></div>
+          <div class="notes-line"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</article>
+
+<!-- T08 -->
+<article id="t08" class="topic m2">
+  <div class="topic-header">
+    <div class="topic-num">T08</div>
+    <div class="topic-head-text">
+      <h2 class="topic-title">5 Levels of AI Agents (HuggingFace Framework)</h2>
+      <p class="topic-subtitle">Progressive capability taxonomy for benchmarking existing tools and targeting the right complexity level when designing new systems.</p>
+    </div>
+  </div>
+  <div class="topic-body">
+    <div class="topic-col">
+      <div class="sec-label">Core Concepts</div>
+      <ul class="bullets">
+        <li><span class="bullet-dot"></span><span><strong>L1 — Simple Processor:</strong> LLM has zero impact on control flow. Called once; result used directly. No iteration, no branching. Most basic ChatGPT usage is Level 1.</span></li>
+        <li><span class="bullet-dot"></span><span><strong>L2 — Router:</strong> LLM determines which of N predefined paths to take. Classifies input and selects a handler but does not control what happens inside it. Example: intent classification → FAQ vs. human agent.</span></li>
+        <li><span class="bullet-dot"></span><span><strong>L3 — Tool Calling (ReAct):</strong> LLM decides which tools to invoke, reasons over outputs. Core loop: reason → select tool → parse result → repeat. Most production AI agents in 2026 are Level 3.</span></li>
+        <li><span class="bullet-dot"></span><span><strong>L4a — Multi-Step Agent:</strong> Meta-agent orchestrates iteration over specialist sub-agents. Can spawn workers, aggregate results, re-plan. Example: research agent coordinating search, analysis, writing sub-agents.</span></li>
+        <li><span class="bullet-dot"></span><span><strong>L4b — Fully Autonomous:</strong> Creates new functions or code at runtime to extend its own capabilities. Example: Devin writing and executing its own test suite to fix a bug.</span></li>
+        <li><span class="bullet-dot"></span><span><strong>L5 (Theoretical):</strong> Self-modifying architecture. Modifies own weights or structure across sessions. Not deployed in production as of 2026.</span></li>
+      </ul>
+    </div>
+    <div class="topic-col">
+      <div class="sec-label">Deep Dive</div>
+      <p class="deep-dive">Mapping popular tools to this framework: ChatGPT with browsing = Level 3. GitHub Copilot = Level 2–3. Cursor (full codebase context + edits) = Level 3–4a. Devin = Level 4b. Gemini Deep Research = Level 4a. The jump from Level 3 to Level 4 introduces exponentially more failure modes because the agent can now spawn sub-processes it cannot fully supervise. Every Level 4+ system needs comprehensive tracing via LangSmith or Langfuse — without it, debugging multi-agent failures is extremely difficult. The practical sweet spot for most business automation is Level 3: tool-calling with a ReAct loop delivers genuine utility (search, calculate, read files, call APIs) while maintaining predictability (the tool set is fixed even if the sequence is dynamic). Build to Level 3 first; upgrade to Level 4 only when Level 3 demonstrably fails on your specific use case.</p>
+
+      <div class="key-insight">
+        <div class="key-insight-label">Key Insight</div>
+        <p class="key-insight-text">Level 3 agents (tool-calling with ReAct) deliver 80% of the value at 20% of the complexity and cost of Level 4. Build to Level 3 first. Only upgrade when you have clear evidence that Level 3 cannot solve your specific problem — not because Level 4 sounds more impressive.</p>
+      </div>
+
+      <div class="sec-label" style="margin-top:16px">Use Cases</div>
+      <div class="use-cases">
+        <span class="use-case-chip">Benchmarking existing tools</span>
+        <span class="use-case-chip">Targeting build complexity</span>
+        <span class="use-case-chip">Autonomy risk assessment</span>
+      </div>
+
+      <div class="notes-block">
+        <div class="notes-label">My Notes</div>
+        <div class="notes-lines">
+          <div class="notes-line"></div>
+          <div class="notes-line"></div>
+          <div class="notes-line"></div>
+          <div class="notes-line"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</article>
+
+<!-- T09 -->
+<article id="t09" class="topic m2">
+  <div class="topic-header">
+    <div class="topic-num">T09</div>
+    <div class="topic-head-text">
+      <h2 class="topic-title">RPA vs. AI Agents</h2>
+      <p class="topic-subtitle">Critical architecture decision for enterprise automation — when to use each and how to combine them effectively.</p>
+    </div>
+  </div>
+  <div class="topic-body">
+    <div class="topic-col">
+      <div class="sec-label">Core Concepts</div>
+      <ul class="bullets">
+        <li><span class="bullet-dot"></span><span><strong>RPA:</strong> Rule-based scripts mimicking human UI interactions. Clicks buttons, fills forms, reads structured data. Tools: UiPath, Blue Prism, Automation Anywhere. Mature technology with established ROI.</span></li>
+        <li><span class="bullet-dot"></span><span><strong>RPA characteristics:</strong> Deterministic (same input → same output), brittle (breaks on UI changes), low variable cost, easy to audit and certify, fast ROI on stable high-volume processes.</span></li>
+        <li><span class="bullet-dot"></span><span><strong>AI Agent characteristics:</strong> Adaptive (handles variation and ambiguity), natural language understanding, dynamic tool selection at runtime, processes unstructured inputs (PDFs, emails, images).</span></li>
+        <li><span class="bullet-dot"></span><span><strong>Architecture — RPA:</strong> trigger → fixed decision tree → predefined tool calls → output. AI Agent: trigger → LLM reasons → selects from dynamic tool registry → observes → re-reasons → completes.</span></li>
+        <li><span class="bullet-dot"></span><span><strong>Cost model:</strong> RPA has low variable cost but high maintenance cost (script updates every process change). AI Agents have high variable cost (LLM calls) but low maintenance (natural language adapts).</span></li>
+        <li><span class="bullet-dot"></span><span><strong>Hybrid pattern (dominant in 2026):</strong> RPA handles known, stable, high-volume cases (70–80% of volume). AI Agents handle exceptions, unstructured inputs, novel judgment calls (20–30%).</span></li>
+      </ul>
+    </div>
+    <div class="topic-col">
+      <div class="sec-label">Deep Dive</div>
+      <p class="deep-dive">The hybrid RPA + AI Agent pattern is the dominant enterprise automation architecture in 2026. Pure RPA fails as processes change faster than scripts can be maintained — the average RPA script requires significant rework every 6–12 months. Pure AI Agents are too expensive and unpredictable for high-volume, stable tasks. The optimal split: RPA handles structured, stable cases at low cost; AI Agents handle the exception tail requiring judgment, ambiguous inputs, or documents that defy rigid parsing. Key trend to watch: RPA platforms are rapidly absorbing AI agent capabilities (UiPath, Automation Anywhere both have LLM integration layers). By 2027, the distinction between 'RPA with AI features' and 'AI Agent with automation primitives' will largely disappear at the platform level.</p>
+
+      <div class="key-insight">
+        <div class="key-insight-label">Key Insight</div>
+        <p class="key-insight-text">The question is never 'RPA or AI Agent?' — it is 'which steps need rigid determinism, and which need adaptive reasoning?' Split the workflow accordingly. Never replace a working, reliable RPA bot with an LLM just because LLMs are newer.</p>
+      </div>
+
+      <div class="sec-label" style="margin-top:16px">Use Cases</div>
+      <div class="use-cases">
+        <span class="use-case-chip">Invoice processing (RPA + AI exceptions)</span>
+        <span class="use-case-chip">Customer onboarding (RPA forms + AI NLP)</span>
+        <span class="use-case-chip">IT ticket triage (AI + RPA resolution)</span>
+      </div>
+
+      <div class="notes-block">
+        <div class="notes-label">My Notes</div>
+        <div class="notes-lines">
+          <div class="notes-line"></div>
+          <div class="notes-line"></div>
+          <div class="notes-line"></div>
+          <div class="notes-line"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</article>
+
+<!-- MODULE 03 -->
+<div class="module-header m3">
+  <span class="module-header-badge">Module 03</span>
+  <span class="module-header-title">Architecture & Patterns</span>
+  <span class="module-header-count">Topics 10 – 13</span>
+</div>
+
+<!-- T10 -->
+<article id="t10" class="topic m3">
+  <div class="topic-header">
+    <div class="topic-num">T10</div>
+    <div class="topic-head-text">
+      <h2 class="topic-title">AI Agent Architectures in Practice (7 Patterns)</h2>
+      <p class="topic-subtitle">Concrete implementation patterns from production deployments — the actual building blocks you will wire together in real systems.</p>
+    </div>
+  </div>
+  <div class="topic-body">
+    <div class="topic-col">
+      <div class="sec-label">Core Concepts</div>
+      <ul class="bullets">
+        <li><span class="bullet-dot"></span><span><strong>Pattern 1 — Single Agent + Tools:</strong> One LLM with a fixed set of function tools (search, DB query, calculator, file I/O). Simplest production architecture. Start here for ~60% of use cases.</span></li>
+        <li><span class="bullet-dot"></span><span><strong>Pattern 2 — Single Agent + MCP Servers:</strong> Same as P1 but tools exposed via Model Context Protocol servers. Decouples tool implementation from agent code. Enables reuse across multiple agents and LLM providers.</span></li>
+        <li><span class="bullet-dot"></span><span><strong>Pattern 3 — Single Agent + Router:</strong> Agent classifies input type, routes to one of N specialised downstream handlers. Enables domain specialisation without full multi-agent complexity.</span></li>
+        <li><span class="bullet-dot"></span><span><strong>Pattern 4 — Human in the Loop:</strong> Approval checkpoints before irreversible actions (send email, make payment, delete record). Agent pauses awaiting human approval. Critical for regulated and high-stakes workflows.</span></li>
+        <li><span class="bullet-dot"></span><span><strong>Pattern 5 — Sequential Agents:</strong> Agent A completes task and passes structured output to Agent B, which passes to C. Each agent specialised for one transformation step. Clear, debuggable, composable.</span></li>
+        <li><span class="bullet-dot"></span><span><strong>Pattern 6 — Hierarchical + Parallel:</strong> Orchestrator dispatches tasks to multiple worker agents simultaneously. Synthesizer combines all results. Best for research and document processing at scale.</span></li>
+        <li><span class="bullet-dot"></span><span><strong>Pattern 7 — Fully Autonomous + Shared Tools:</strong> Multiple peer agents with shared tool registry. No single orchestrator. Highest autonomy; highest debugging complexity. Experimental in 2026.</span></li>
+      </ul>
+    </div>
+    <div class="topic-col">
+      <div class="sec-label">Deep Dive</div>
+      <p class="deep-dive">Pattern selection is the most consequential architectural decision. Pattern 1 covers approximately 60% of real use cases — do not add complexity without evidence it is necessary. Pattern 5 (sequential) handles complex multi-step document workflows reliably and is the second most common production pattern. Pattern 6 (hierarchical parallel) delivers major latency improvements when tasks can be decomposed and parallelised — multi-source research or batch document processing. The MCP pattern (P2) is strategically significant: by standardising tool interfaces, it allows building a tool registry once and reusing it across different LLMs and frameworks — worth investing in even if you only have one agent today.</p>
+
+      <div class="key-insight">
+        <div class="key-insight-label">Key Insight</div>
+        <p class="key-insight-text">Patterns 1–4 cover 90% of production use cases. Only add multi-agent orchestration complexity (Patterns 5–7) when single-agent approaches demonstrably fail on your specific task. Every additional agent is an additional failure point to instrument and debug.</p>
+      </div>
+
+      <div class="sec-label" style="margin-top:16px">Use Cases</div>
+      <div class="use-cases">
+        <span class="use-case-chip">Customer support (Pattern 3: routing)</span>
+        <span class="use-case-chip">Legal document review (Pattern 5)</span>
+        <span class="use-case-chip">Multi-source research (Pattern 6)</span>
+      </div>
+
+      <div class="notes-block">
+        <div class="notes-label">My Notes</div>
+        <div class="notes-lines">
+          <div class="notes-line"></div>
+          <div class="notes-line"></div>
+          <div class="notes-line"></div>
+          <div class="notes-line"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</article>
+
+<!-- T11 -->
+<article id="t11" class="topic m3">
+  <div class="topic-header">
+    <div class="topic-num">T11</div>
+    <div class="topic-head-text">
+      <h2 class="topic-title">9 Agentic Workflow Patterns</h2>
+      <p class="topic-subtitle">The canonical production workflow patterns — know all 9, deploy selectively based on actual requirements and constraints.</p>
+    </div>
+  </div>
+  <div class="topic-body">
+    <div class="topic-col">
+      <div class="sec-label">Core Concepts</div>
+      <ul class="bullets">
+        <li><span class="bullet-dot"></span><span><strong>1. Prompt Chaining:</strong> LLM call A → output feeds B → output feeds C. Gate node validates each step. Best for: sequential document transformation, multi-step chatbot logic.</span></li>
+        <li><span class="bullet-dot"></span><span><strong>2. Parallelisation:</strong> Multiple independent LLM calls run simultaneously; Aggregator combines results. Variants: sectioning vs. voting. Best for: guardrails, automated evaluation.</span></li>
+        <li><span class="bullet-dot"></span><span><strong>3. Orchestrator-Worker:</strong> Central Orchestrator decomposes task, delegates to Worker LLMs, Synthesizer combines. Best for: Agentic RAG, coding agents.</span></li>
+        <li><span class="bullet-dot"></span><span><strong>4. Evaluator-Optimizer:</strong> Generator produces output; Evaluator scores it; if below threshold, Generator revises with feedback. Loops until pass. Best for: data science agents, content QA.</span></li>
+        <li><span class="bullet-dot"></span><span><strong>5. Routing:</strong> Classifier selects which specialised handler to invoke. Handlers are isolated and independently optimised. Best for: customer support triage, Multi-Agent Debate (MAD).</span></li>
+        <li><span class="bullet-dot"></span><span><strong>6. Autonomous Loop:</strong> Agent runs until goal met or budget exceeded. No fixed step count. Best for: Computer Use Agents (CUA), open-ended tasks.</span></li>
+        <li><span class="bullet-dot"></span><span><strong>7. Reflexion:</strong> After each action, agent generates self-critique. Revised plan fed back to executor. N iterations. Best for: complex monitoring, full-stack app building.</span></li>
+        <li><span class="bullet-dot"></span><span><strong>8. ReWoo:</strong> Agent generates complete plan upfront without calling any tools. Executes in batch. Reduces LLM calls ~40% vs. ReAct. Best for: deep research, structured Q&A.</span></li>
+        <li><span class="bullet-dot"></span><span><strong>9. Plan-and-Execute:</strong> Planner generates subtask list. Specialists solve each. Planner re-plans for failed subtasks. Best for: business process automation.</span></li>
+      </ul>
+    </div>
+    <div class="topic-col">
+      <div class="sec-label">Deep Dive</div>
+      <p class="deep-dive">The Evaluator-Optimizer pattern is the most underused high-value pattern: adding a critic LLM that scores output quality yields 30–50% quality improvement with only a 2× cost increase — an excellent trade-off for quality-sensitive tasks. The ReWoo pattern reduces total LLM calls by ~40% compared to vanilla ReAct on multi-step tasks by front-loading all reasoning before tool execution. Combining patterns unlocks further leverage: Orchestrator-Worker paired with Evaluator-Optimizer gives a system where a coordinator decomposes tasks AND each task has built-in quality assurance — used by leading AI research and content generation products.</p>
+
+      <div class="key-insight">
+        <div class="key-insight-label">Key Insight</div>
+        <p class="key-insight-text">Parallelisation + Evaluator-Optimizer is the highest-ROI pattern combination: parallelisation gives speed, Evaluator-Optimizer gives quality. These are the two things users care most about — and this combination delivers both simultaneously for a moderate cost increase.</p>
+      </div>
+
+      <div class="sec-label" style="margin-top:16px">Use Cases</div>
+      <div class="use-cases">
+        <span class="use-case-chip">Content pipelines (Chaining + Evaluator)</span>
+        <span class="use-case-chip">Code review (Evaluator-Optimizer)</span>
+        <span class="use-case-chip">Support routing (Routing + Orchestrator)</span>
+      </div>
+
+      <div class="notes-block">
+        <div class="notes-label">My Notes</div>
+        <div class="notes-lines">
+          <div class="notes-line"></div>
+          <div class="notes-line"></div>
+          <div class="notes-line"></div>
+          <div class="notes-line"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</article>
+
+<!-- T12 -->
+<article id="t12" class="topic m3">
+  <div class="topic-header">
+    <div class="topic-num">T12</div>
+    <div class="topic-head-text">
+      <h2 class="topic-title">Multi-Agent Design Patterns</h2>
+      <p class="topic-subtitle">6 structural patterns for inter-agent coordination — system-level architecture for how multiple specialised agents collaborate.</p>
+    </div>
+  </div>
+  <div class="topic-body">
+    <div class="topic-col">
+      <div class="sec-label">Core Concepts</div>
+      <ul class="bullets">
+        <li><span class="bullet-dot"></span><span><strong>1. Sequential:</strong> Agent A completes, hands structured output to Agent B. Simplest multi-agent pattern. Clear, debuggable, predictable. Limitation: no parallelism or backtracking.</span></li>
+        <li><span class="bullet-dot"></span><span><strong>2. Router / Meta-Agent:</strong> Gatekeeper classifies request, delegates to appropriate specialist agent. Example: travel planner → Flight Agent or Hotel Agent. Enables specialisation without tight coupling.</span></li>
+        <li><span class="bullet-dot"></span><span><strong>3. Parallel / Divisor:</strong> Divisor decomposes task into independent parallel subtasks, dispatches to N workers. Aggregator combines results. Speed scales with workers; requires effective task decomposition.</span></li>
+        <li><span class="bullet-dot"></span><span><strong>4. Generator-Critic:</strong> Multiple generators each attempt the full task independently. Critic evaluates all candidates, selects best or synthesises superior output. Highest quality; 3–5× cost premium.</span></li>
+        <li><span class="bullet-dot"></span><span><strong>5. Network / Mesh:</strong> Meta-agent coordinates pool of specialists (Coding, Debug, Documentation, Testing). Agents pass work back and forth as needed. Complex but highly flexible.</span></li>
+        <li><span class="bullet-dot"></span><span><strong>6. Autonomous Swarm:</strong> Peer agents communicate directly without central orchestrator. Emergent coordination. Research-grade in 2026 — not recommended for production.</span></li>
+      </ul>
+    </div>
+    <div class="topic-col">
+      <div class="sec-label">Deep Dive</div>
+      <p class="deep-dive">The Generator-Critic pattern deserves particular attention — it is the multi-agent equivalent of Evaluator-Optimizer with candidate diversity. Instead of one generator being evaluated iteratively, multiple generators produce candidates in parallel and a judge LLM selects the best or synthesises them. Empirically, this yields notably higher quality on creative and analytical tasks because it samples from different solution paths. The cost premium is 3–5× higher LLM spend, so Generator-Critic is reserved for tasks where output quality is the primary metric: legal drafting, strategic analysis, code security audit. The Network pattern is what most mature CrewAI deployments evolve toward — a stable team of specialised agents with defined roles and handoff protocols coordinated by an orchestrator.</p>
+
+      <div class="key-insight">
+        <div class="key-insight-label">Key Insight</div>
+        <p class="key-insight-text">Generator-Critic consistently produces the highest quality output of any multi-agent pattern but is rarely used due to cost. For tasks where quality is genuinely critical — legal, medical, financial decisions — the 3–5× cost premium is often justified by the quality improvement and risk reduction.</p>
+      </div>
+
+      <div class="sec-label" style="margin-top:16px">Use Cases</div>
+      <div class="use-cases">
+        <span class="use-case-chip">Code security review (Generator-Critic)</span>
+        <span class="use-case-chip">Research synthesis (Network)</span>
+        <span class="use-case-chip">Customer routing (Meta-Agent)</span>
+      </div>
+
+      <div class="notes-block">
+        <div class="notes-label">My Notes</div>
+        <div class="notes-lines">
+          <div class="notes-line"></div>
+          <div class="notes-line"></div>
+          <div class="notes-line"></div>
+          <div class="notes-line"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</article>
+
+<!-- T13 -->
+<article id="t13" class="topic m3">
+  <div class="topic-header">
+    <div class="topic-num">T13</div>
+    <div class="topic-head-text">
+      <h2 class="topic-title">6 Agentic Design Patterns Explained</h2>
+      <p class="topic-subtitle">Six production-deployed patterns in 2026 with real product examples showing each pattern at scale.</p>
+    </div>
+  </div>
+  <div class="topic-body">
+    <div class="topic-col">
+      <div class="sec-label">Core Concepts</div>
+      <ul class="bullets">
+        <li><span class="bullet-dot"></span><span><strong>1. ReAct (Reason + Act):</strong> Alternates reasoning traces with tool-use actions. Thought → Action → Observation → repeat until goal. Used by virtually all commercial AI agent products as the default architecture.</span></li>
+        <li><span class="bullet-dot"></span><span><strong>2. CodeAct:</strong> Agent writes and executes Python code instead of calling JSON tool functions. More expressive; can compose operations no pre-defined tool covers. Requires secure sandbox (E2B, Modal). Used by: Manus AI.</span></li>
+        <li><span class="bullet-dot"></span><span><strong>3. MCP Tool Use:</strong> Standardised protocol for tool access. Agent has MCP Client; tools run as MCP Servers via STDIO (local) or HTTP/SSE (remote). Dynamic discovery — no hardcoded schemas. Used by: Cursor, Claude.ai.</span></li>
+        <li><span class="bullet-dot"></span><span><strong>4. Self-Reflection:</strong> After generating output, agent evaluates it against criteria, produces structured critique, then revises. Iterates N times. Structurally: generate → reflect → critique → revise. Used by: OpenServe AI.</span></li>
+        <li><span class="bullet-dot"></span><span><strong>5. Multi-Agent Workflow:</strong> Task decomposed across specialists, each with defined role, persona, tool set. Orchestrator coordinates handoffs. Used by: Gemini Deep Research.</span></li>
+        <li><span class="bullet-dot"></span><span><strong>6. Agentic RAG:</strong> Retrieval is an autonomous loop — decides which index to query, reformulates queries, combines multi-source evidence. Used by: Perplexity AI.</span></li>
+      </ul>
+    </div>
+    <div class="topic-col">
+      <div class="sec-label">Deep Dive</div>
+      <p class="deep-dive">MCP is the most strategically significant development in the agentic AI stack in 2025–2026. Before MCP, every agent framework had proprietary tool definition formats — LangChain's Tool class, OpenAI's function_calling schema, Anthropic's tool_use format — creating massive integration overhead when switching frameworks or models. MCP standardises tool interfaces at the protocol level (JSON-RPC over STDIO or HTTP), meaning a tool server built for Claude works identically with GPT-4, Llama 3, and Gemini — zero additional code. The analogy is USB replacing proprietary device connectors. Build your internal tool servers as MCP-compliant from day one, even if you only have one agent today. As you add agents, new LLMs, or frameworks, your tool investments carry over automatically.</p>
+
+      <div class="key-insight">
+        <div class="key-insight-label">Key Insight</div>
+        <p class="key-insight-text">MCP will become the dominant tool interface standard by 2027. Teams building MCP-native tool servers now are creating reusable infrastructure assets. Teams building framework-specific tools are creating technical debt that compounds with every future agent project.</p>
+      </div>
+
+      <div class="sec-label" style="margin-top:16px">Use Cases</div>
+      <div class="use-cases">
+        <span class="use-case-chip">General agent tasks (ReAct)</span>
+        <span class="use-case-chip">Open-ended automation (CodeAct)</span>
+        <span class="use-case-chip">Enterprise integrations (MCP)</span>
+      </div>
+
+      <div class="notes-block">
+        <div class="notes-label">My Notes</div>
+        <div class="notes-lines">
+          <div class="notes-line"></div>
+          <div class="notes-line"></div>
+          <div class="notes-line"></div>
+          <div class="notes-line"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</article>
+
+<!-- MODULE 04 -->
+<div class="module-header m4">
+  <span class="module-header-badge">Module 04</span>
+  <span class="module-header-title">Building AI Agents</span>
+  <span class="module-header-count">Topics 14 – 17</span>
+</div>
+
+<!-- T14 -->
+<article id="t14" class="topic m4">
+  <div class="topic-header">
+    <div class="topic-num">T14</div>
+    <div class="topic-head-text">
+      <h2 class="topic-title">7-Step Roadmap for Building Scalable AI Agents</h2>
+      <p class="topic-subtitle">Practical, opinionated build sequence from zero to production-grade agent. Follow these steps in order — skipping ahead causes expensive rework.</p>
+    </div>
+  </div>
+  <div class="topic-body">
+    <div class="topic-col">
+      <div class="sec-label">Core Concepts</div>
+      <ul class="bullets">
+        <li><span class="bullet-dot"></span><span><strong>Step 1 — Choose Your LLM:</strong> Evaluate on 4 axes: capability (benchmark on your task), cost (tokens per dollar), latency (time to first token), context window size. Open-source: Llama 3 70B, Mistral Large. Closed: Claude Sonnet, GPT-4o, Gemini Pro.</span></li>
+        <li><span class="bullet-dot"></span><span><strong>Step 2 — Define Agent Logic:</strong> Choose reasoning architecture (ReAct for general, Plan-Execute for structured, Reflexion for quality-critical). Define what triggers the agent, what constitutes completion, explicit stopping conditions.</span></li>
+        <li><span class="bullet-dot"></span><span><strong>Step 3 — Write System Instructions:</strong> The system prompt is the agent's constitution. Define: persona, capabilities, constraints, output format, and — critically — what the agent must NOT do. Template and version-control all prompts.</span></li>
+        <li><span class="bullet-dot"></span><span><strong>Step 4 — Add Memory:</strong> Short-term (volatile, session): sliding context window + summarisation via Mem0 or ZepAI. Long-term (persistent): facts and preferences in vector DB + structured DB. Design retrieval strategy carefully.</span></li>
+        <li><span class="bullet-dot"></span><span><strong>Step 5 — Connect Tools & APIs:</strong> Define function schemas clearly. Implement defensive error handling for every tool: timeout, retry with backoff, graceful failure. Test each tool in isolation before integrating with the agent.</span></li>
+        <li><span class="bullet-dot"></span><span><strong>Step 6 — Define Job Scope:</strong> Specific, narrow job description. Explicit list of what the agent CANNOT do. Hard limits: max tool calls per session, token budget, cost ceiling. Specificity prevents hallucination and scope creep.</span></li>
+        <li><span class="bullet-dot"></span><span><strong>Step 7 — Scale to Multi-Agent:</strong> Once single agent is stable and evaluated, introduce a Planner that decomposes complex tasks for specialist agents. Name agents by function. Instrument all inter-agent communication with structured logs.</span></li>
+      </ul>
+    </div>
+    <div class="topic-col">
+      <div class="sec-label">Deep Dive</div>
+      <p class="deep-dive">The most common build failure: skipping Step 6 (Job Scope Definition). Without explicit constraints, LLM agents interpret their mandate too broadly — they hallucinate tools they lack, loop indefinitely, or make decisions that should have been escalated. The second most common failure is poor tool design in Step 5. Well-designed tools are atomic (one action, one purpose), composable (output of one is valid input to next), and defensive (fail loudly rather than silently). Memory architecture (Step 4) is the hardest engineering challenge: deciding what to persist, when to retrieve, and how to prevent memory poisoning. Recommended 2026 production stack: Mem0 with Redis backend for short-term, pgvector for long-term semantic search, Postgres for metadata.</p>
+
+      <div class="key-insight">
+        <div class="key-insight-label">Key Insight</div>
+        <p class="key-insight-text">The system prompt (Step 3) and tool design (Step 5) account for 80% of agent output quality. Spend disproportionate time here. A carefully crafted prompt with average tools consistently outperforms a mediocre prompt with sophisticated tools.</p>
+      </div>
+
+      <div class="sec-label" style="margin-top:16px">Use Cases</div>
+      <div class="use-cases">
+        <span class="use-case-chip">Building from scratch</span>
+        <span class="use-case-chip">Agent audit checklist</span>
+        <span class="use-case-chip">Team onboarding template</span>
+      </div>
+
+      <div class="notes-block">
+        <div class="notes-label">My Notes</div>
+        <div class="notes-lines">
+          <div class="notes-line"></div>
+          <div class="notes-line"></div>
+          <div class="notes-line"></div>
+          <div class="notes-line"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</article>
+
+<!-- T15 -->
+<article id="t15" class="topic m4">
+  <div class="topic-header">
+    <div class="topic-num">T15</div>
+    <div class="topic-head-text">
+      <h2 class="topic-title">Comprehensive Guide for Building AI Agents</h2>
+      <p class="topic-subtitle">End-to-end reference: qualification criteria, framework selection, memory architecture, multi-agent protocols, and evaluation.</p>
+    </div>
+  </div>
+  <div class="topic-body">
+    <div class="topic-col">
+      <div class="sec-label">Core Concepts</div>
+      <ul class="bullets">
+        <li><span class="bullet-dot"></span><span><strong>What is NOT an agent:</strong> A chatbot with no tools. A script with if/else logic. A simple feedback loop. A fine-tuned static model. An agent must have: reasoning + tool access + dynamic decision-making at runtime.</span></li>
+        <li><span class="bullet-dot"></span><span><strong>Framework selection:</strong> Agent SDK (OpenAI) — streaming-first; LangGraph — stateful graphs, enterprise; Google ADK — full-stack with eval; AutoGen — fine-grained multi-agent; LlamaIndex — data-centric RAG agents; CrewAI — role-based teams, easiest start.</span></li>
+        <li><span class="bullet-dot"></span><span><strong>Memory architecture:</strong> Short-term (volatile, session): active task context, recent tool outputs — sliding window or session summary. Long-term (persistent): facts, preferences, past patterns — vector DB + structured DB.</span></li>
+        <li><span class="bullet-dot"></span><span><strong>Multi-agent protocols 2026:</strong> A2A (Google — enterprise cross-vendor coordination), ACP (IBM — async agent messaging), AGP (Cisco — network-layer routing for agent traffic).</span></li>
+        <li><span class="bullet-dot"></span><span><strong>Evaluation dimensions:</strong> Task accuracy, Tool efficiency, Adaptability to novel inputs, Safety (respects constraints, avoids unauthorised actions).</span></li>
+        <li><span class="bullet-dot"></span><span><strong>Production checklist:</strong> Structured logging of all LLM calls and tool invocations; per-session cost budgeting; input validation; output schema enforcement; graceful human escalation path; rate limiting.</span></li>
+      </ul>
+    </div>
+    <div class="topic-col">
+      <div class="sec-label">Deep Dive</div>
+      <p class="deep-dive">Framework selection is highly consequential because migration costs are significant once workflows are built. The dominant choice for complex enterprise systems in 2026 is LangGraph — its explicit state machine model uniquely suits workflows requiring deterministic replay for debugging and strict auditability in regulated industries. CrewAI remains the best entry point for multi-agent newcomers: its role-based abstraction maps naturally to how product managers think about work. The evaluation problem is where most teams underinvest chronically. Without systematic evaluation infrastructure, you cannot safely iterate on prompts, tools, or model versions. RAGAS for RAG pipelines and DeepEval for general agent tasks are the leading open-source evaluation frameworks. Integrate them into CI/CD so every change is automatically regression-tested before deployment.</p>
+
+      <div class="key-insight">
+        <div class="key-insight-label">Key Insight</div>
+        <p class="key-insight-text">Evaluation infrastructure is the most underinvested area in AI agent development. Teams that build evaluation pipelines early iterate 3–5× faster because they can change prompts, tools, and models without fear of silent regressions reaching production users.</p>
+      </div>
+
+      <div class="sec-label" style="margin-top:16px">Use Cases</div>
+      <div class="use-cases">
+        <span class="use-case-chip">Framework selection decision</span>
+        <span class="use-case-chip">Production readiness audit</span>
+        <span class="use-case-chip">Multi-agent system design</span>
+      </div>
+
+      <div class="notes-block">
+        <div class="notes-label">My Notes</div>
+        <div class="notes-lines">
+          <div class="notes-line"></div>
+          <div class="notes-line"></div>
+          <div class="notes-line"></div>
+          <div class="notes-line"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</article>
+
+<!-- T16 -->
+<article id="t16" class="topic m4">
+  <div class="topic-header">
+    <div class="topic-num">T16</div>
+    <div class="topic-head-text">
+      <h2 class="topic-title">How to Build Effective AI Agents (Anthropic's Guide)</h2>
+      <p class="topic-subtitle">Anthropic's official guidance — distilled from building some of the most capable production agents. Reflects hard-won practical lessons.</p>
+    </div>
+  </div>
+  <div class="topic-body">
+    <div class="topic-col">
+      <div class="sec-label">Core Concepts</div>
+      <ul class="bullets">
+        <li><span class="bullet-dot"></span><span><strong>Core principle:</strong> Use the simplest solution that reliably achieves the goal. LLM-based agents are a last resort. Always ask: could this be solved with a deterministic script?</span></li>
+        <li><span class="bullet-dot"></span><span><strong>Prefer workflows over agents:</strong> Agentic workflows are more reliable, auditable, debuggable, and cheaper than fully autonomous agents. Use agents only when workflows fail on real inputs.</span></li>
+        <li><span class="bullet-dot"></span><span><strong>Minimal permission principle:</strong> Grant the agent only permissions it strictly needs. Never give write access when read suffices. Never give internet access when local knowledge base suffices.</span></li>
+        <li><span class="bullet-dot"></span><span><strong>Human-in-the-loop for irreversible actions:</strong> Before any action that cannot be undone (send email, make payment, delete record), insert an explicit approval checkpoint. Default to requiring human confirmation for consequential actions.</span></li>
+        <li><span class="bullet-dot"></span><span><strong>Design for graceful failure:</strong> Agents must know when to stop and escalate rather than continuing autonomously in uncertain situations. Define explicit stopping conditions and maximum step budgets.</span></li>
+        <li><span class="bullet-dot"></span><span><strong>Test extensively and adversarially:</strong> Errors compound across agent steps. Test: unit (each tool), integration (tool + LLM), end-to-end (full task), adversarial (prompt injection, edge cases).</span></li>
+        <li><span class="bullet-dot"></span><span><strong>5 core patterns (Anthropic official):</strong> Prompt Chaining, Routing, Parallelisation, Orchestrator-Worker, Evaluator-Optimizer. These five cover 95% of production agentic needs.</span></li>
+      </ul>
+    </div>
+    <div class="topic-col">
+      <div class="sec-label">Deep Dive</div>
+      <p class="deep-dive">Anthropic's perspective differs distinctly from startup-culture approaches: they emphasise that autonomous agent errors in production can be catastrophic and difficult to reverse — data loss, incorrect external communications, financial errors, compliance violations. Their recommendation to start simple is grounded in empirical observation that the majority of engineering teams over-engineer their initial architectures. The minimal permission principle is both a safety and cost principle — an agent with read-only access cannot corrupt data, cannot make costly unnecessary API calls, and cannot create compliance liability. The 5 core patterns form a capability ladder: start with Chaining, add Routing for diverse inputs, add Parallelisation for speed, add Orchestrator-Worker for complex decomposable tasks, add Evaluator-Optimizer for stringent quality requirements.</p>
+
+      <div class="key-insight">
+        <div class="key-insight-label">Key Insight</div>
+        <p class="key-insight-text">Anthropic's most counterintuitive finding: teams building the most capable, reliable AI products in 2026 consistently have the simplest agent architectures. Complexity is a liability that compounds in production. Simplicity is a design goal — not just a starting constraint to overcome.</p>
+      </div>
+
+      <div class="sec-label" style="margin-top:16px">Use Cases</div>
+      <div class="use-cases">
+        <span class="use-case-chip">Enterprise deployment governance</span>
+        <span class="use-case-chip">Agent design review</span>
+        <span class="use-case-chip">Risk assessment for AI systems</span>
+      </div>
+
+      <div class="notes-block">
+        <div class="notes-label">My Notes</div>
+        <div class="notes-lines">
+          <div class="notes-line"></div>
+          <div class="notes-line"></div>
+          <div class="notes-line"></div>
+          <div class="notes-line"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</article>
+
+<!-- T17 -->
+<article id="t17" class="topic m4">
+  <div class="topic-header">
+    <div class="topic-num">T17</div>
+    <div class="topic-head-text">
+      <h2 class="topic-title">AI Agent Learning Roadmap</h2>
+      <p class="topic-subtitle">Sequential path from Python basics to production multi-agent systems — follow this order, prerequisites matter more in this field than most.</p>
+    </div>
+  </div>
+  <div class="topic-body">
+    <div class="topic-col">
+      <div class="sec-label">Core Concepts</div>
+      <ul class="bullets">
+        <li><span class="bullet-dot"></span><span><strong>Node 1 — Programming:</strong> Python with async/await (essential for concurrent tool calls), TypeScript basics. Data structures, API integration, error handling, testing. Minimum 3 months Python before Node 2.</span></li>
+        <li><span class="bullet-dot"></span><span><strong>Node 2 — ML & LLM Fundamentals:</strong> Understand transformers, attention, tokenisation, temperature, top-p. Not to train models — to set parameters intelligently and debug unexpected outputs.</span></li>
+        <li><span class="bullet-dot"></span><span><strong>Node 3 — LLM API Proficiency:</strong> OpenAI, Anthropic, Google Gemini API. System prompts, multi-turn history, function calling, streaming. Build 5 small projects before advancing.</span></li>
+        <li><span class="bullet-dot"></span><span><strong>Node 4 — Prompt Engineering:</strong> Zero-shot, few-shot, chain-of-thought. System prompt design. JSON mode output specification. Prompt versioning with evaluation. Highest-leverage Node — do not skip.</span></li>
+        <li><span class="bullet-dot"></span><span><strong>Node 5 — RAG Systems:</strong> Embeddings, vector databases (start Chroma, progress to Qdrant). Chunking strategies. Retrieval evaluation with RAGAS. Build a document Q&A system end-to-end.</span></li>
+        <li><span class="bullet-dot"></span><span><strong>Nodes 6–7 — Agent Frameworks & Tools:</strong> LangChain → LangGraph → CrewAI. Build agent with 3+ tools. Write custom tools as MCP servers. Build a tool registry with 5+ tools.</span></li>
+        <li><span class="bullet-dot"></span><span><strong>Nodes 8–10 — Advanced:</strong> Multi-agent systems (Orchestrator-Worker → Sequential → Network). Evaluation & Observability (LangSmith, RAGAS, regression suite). Production deployment (Modal, Fly.io, auth, rate limiting, cost tracking).</span></li>
+      </ul>
+    </div>
+    <div class="topic-col">
+      <div class="sec-label">Deep Dive</div>
+      <p class="deep-dive">The single most common learning mistake: jumping to Node 6 (agent frameworks) without completing Nodes 4–5. Without solid prompt engineering (Node 4), system prompts are ineffective and the agent underperforms regardless of the framework. Without RAG skills (Node 5), agents hallucinate on knowledge tasks. Nodes 4 and 5 are the highest-ROI investments in the entire roadmap. Realistic timeline: Nodes 1–5 take 3–4 months of focused study and project work. Nodes 6–8 take 2–3 months. Nodes 9–10 take 1–2 months. Total: 6–9 months to a production-ready AI engineer role. Key resources: DeepLearning.AI for Nodes 1–3, Anthropic and OpenAI prompt engineering guides for Node 4, LlamaIndex and LangChain documentation for Nodes 5–6.</p>
+
+      <div class="key-insight">
+        <div class="key-insight-label">Key Insight</div>
+        <p class="key-insight-text">Nodes 4 (Prompt Engineering) and 9 (Evaluation) are the two most important nodes that most learners rush through. Engineers who master these two consistently outperform those who prioritise framework knowledge alone — by 3–5× in real production system quality.</p>
+      </div>
+
+      <div class="sec-label" style="margin-top:16px">Use Cases</div>
+      <div class="use-cases">
+        <span class="use-case-chip">Self-directed learning plan</span>
+        <span class="use-case-chip">Bootcamp curriculum design</span>
+        <span class="use-case-chip">Team upskilling roadmap</span>
+      </div>
+
+      <div class="notes-block">
+        <div class="notes-label">My Notes</div>
+        <div class="notes-lines">
+          <div class="notes-line"></div>
+          <div class="notes-line"></div>
+          <div class="notes-line"></div>
+          <div class="notes-line"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</article>
+
+<!-- MODULE 05 -->
+<div class="module-header m5">
+  <span class="module-header-badge">Module 05</span>
+  <span class="module-header-title">RAG & Tools</span>
+  <span class="module-header-count">Topics 18 – 20</span>
+</div>
+
+<!-- T18 -->
+<article id="t18" class="topic m5">
+  <div class="topic-header">
+    <div class="topic-num">T18</div>
+    <div class="topic-head-text">
+      <h2 class="topic-title">RAG to Agentic RAG: 3-Stage Evolution</h2>
+      <p class="topic-subtitle">How Retrieval-Augmented Generation evolved from a simple pipeline to an autonomous retrieval agent — each stage addresses clear limitations of the previous.</p>
+    </div>
+  </div>
+  <div class="topic-body">
+    <div class="topic-col">
+      <div class="sec-label">Core Concepts</div>
+      <ul class="bullets">
+        <li><span class="bullet-dot"></span><span><strong>Stage 1 — Naive RAG:</strong> embed query → retrieve top-k chunks from vector DB → prepend to prompt → generate answer. Fast to build; works for simple factual Q&A over clean documents. Key failures: poor retrieval, irrelevant chunks, context overflow.</span></li>
+        <li><span class="bullet-dot"></span><span><strong>Stage 2 — Advanced RAG:</strong> adds HyDE (embed ideal answer instead of raw query), query expansion, reranking (CrossEncoder scores chunks after initial retrieval), semantic chunking, hybrid search (dense + sparse BM25), metadata filtering.</span></li>
+        <li><span class="bullet-dot"></span><span><strong>Stage 3 — Agentic RAG:</strong> retrieval is an autonomous agent loop. Agent decides: which indexes to query, how to reformulate queries based on initial results, whether web search is needed, when enough evidence has been gathered.</span></li>
+        <li><span class="bullet-dot"></span><span><strong>Sub-patterns:</strong> Self-RAG (model decides when to retrieve — not every turn, cutting costs 40–60%), CRAG (Corrective RAG — low confidence triggers web search fallback), Adaptive RAG (routes to different strategies by query type).</span></li>
+        <li><span class="bullet-dot"></span><span><strong>Memory in Agentic RAG:</strong> short-term (current retrieval session), long-term (which facts proved reliable in past sessions), episodic (user preferences and past query patterns).</span></li>
+        <li><span class="bullet-dot"></span><span><strong>RAGAS evaluation:</strong> Faithfulness (answer grounded in retrieved docs?), Answer Relevancy (addresses the question?), Context Recall (all necessary docs retrieved?), Context Precision (retrieved docs relevant?).</span></li>
+      </ul>
+    </div>
+    <div class="topic-col">
+      <div class="sec-label">Deep Dive</div>
+      <p class="deep-dive">The jump from Naive RAG to Agentic RAG reduces hallucination rates by 60–80% in controlled RAGAS benchmarks. The critical Naive RAG failure: vector similarity search returns plausible-but-wrong chunks (semantically similar but factually irrelevant), and the LLM confidently fabricates an answer — a failure invisible to end users until damage is done. Agentic RAG breaks this by making retrieval a deliberate, observable, correctable loop. The single most impactful upgrade to any existing RAG system is adding a CrossEncoder reranking step (Stage 2): it consistently improves answer quality by 25–40% with minimal latency overhead. Recommended production stack: LlamaIndex (orchestration) + Qdrant (vector storage) + RAGAS (evaluation) + Langfuse (observability).</p>
+
+      <div class="key-insight">
+        <div class="key-insight-label">Key Insight</div>
+        <p class="key-insight-text">The single most impactful RAG upgrade is adding CrossEncoder reranking after initial retrieval (Stage 2 improvement). It consistently improves answer quality by 25–40% with minimal latency overhead — the highest ROI improvement in the entire RAG quality ladder.</p>
+      </div>
+
+      <div class="sec-label" style="margin-top:16px">Use Cases</div>
+      <div class="use-cases">
+        <span class="use-case-chip">Enterprise knowledge base (Agentic RAG)</span>
+        <span class="use-case-chip">Legal research (Advanced RAG)</span>
+        <span class="use-case-chip">Internal FAQ (Naive RAG sufficient)</span>
+      </div>
+
+      <div class="notes-block">
+        <div class="notes-label">My Notes</div>
+        <div class="notes-lines">
+          <div class="notes-line"></div>
+          <div class="notes-line"></div>
+          <div class="notes-line"></div>
+          <div class="notes-line"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</article>
+
+<!-- T19 -->
+<article id="t19" class="topic m5">
+  <div class="topic-header">
+    <div class="topic-num">T19</div>
+    <div class="topic-head-text">
+      <h2 class="topic-title">Tool Calling via MCP (Model Context Protocol)</h2>
+      <p class="topic-subtitle">How MCP standardises tool access across all AI agents — becoming the universal interface between LLMs and external capabilities.</p>
+    </div>
+  </div>
+  <div class="topic-body">
+    <div class="topic-col">
+      <div class="sec-label">Core Concepts</div>
+      <ul class="bullets">
+        <li><span class="bullet-dot"></span><span><strong>Traditional tool calling:</strong> Manually define JSON schema per tool, add to each LLM API call, LLM generates tool_call, developer dispatches manually, result appended to context. Must repeat for every tool, every vendor, every framework.</span></li>
+        <li><span class="bullet-dot"></span><span><strong>MCP architecture:</strong> Agent embeds an MCP Client. Tools run as independent MCP Servers. Client automatically discovers available tools via tool listing endpoint. No manual schema definition per tool per framework.</span></li>
+        <li><span class="bullet-dot"></span><span><strong>MCP primitives:</strong> Tools (callable functions — search, run code, write file, query DB), Resources (readable data — file content, DB records, API responses), Prompts (reusable parametrised prompt templates).</span></li>
+        <li><span class="bullet-dot"></span><span><strong>Connection transports:</strong> STDIO (local subprocess — low latency, secure, for DB and file system tools), HTTP/SSE (remote service — deployable and scalable, for web APIs and cloud services). Agent code is identical regardless of transport.</span></li>
+        <li><span class="bullet-dot"></span><span><strong>MCP adoption 2026:</strong> Claude.ai (full native), OpenAI (function calling compatible), Google Gemini (announced), Cursor IDE (deep integration), VS Code (official extension). Growing community library for GitHub, Notion, Slack, Gmail.</span></li>
+        <li><span class="bullet-dot"></span><span><strong>Building an MCP server:</strong> Implement list_tools() returning available schemas; implement call_tool(name, args) executing the tool and returning structured results. MCP client handles all protocol details.</span></li>
+      </ul>
+    </div>
+    <div class="topic-col">
+      <div class="sec-label">Deep Dive</div>
+      <p class="deep-dive">MCP changes the economics of tool development fundamentally. Without MCP, building a tool for one framework means rebuilding integration logic for every other framework. With MCP, you build the tool server once and any MCP-compatible client uses it — Claude, GPT-4, Llama 3, any framework — with zero additional integration code. This creates a tool marketplace network effect: community-built MCP servers for GitHub, Slack, Notion, Google Drive, code execution sandboxes are already available as open-source. An agent developer in 2026 can bootstrap a powerful, well-connected agent by connecting to pre-built community MCP servers rather than writing tool integration code. The STDIO transport is valuable for security-sensitive tools (local database, file system, internal APIs) because it runs as a local process with OS-level permission controls and makes no outbound network calls.</p>
+
+      <div class="key-insight">
+        <div class="key-insight-label">Key Insight</div>
+        <p class="key-insight-text">MCP eliminates tool integration overhead — 50–100 lines of boilerplate per tool per framework now becomes connecting to a pre-built MCP server. Build your tool servers MCP-compliant from day one. The reuse compounds with every future agent project — write once, use everywhere.</p>
+      </div>
+
+      <div class="sec-label" style="margin-top:16px">Use Cases</div>
+      <div class="use-cases">
+        <span class="use-case-chip">IDE coding assistant (Cursor + MCP)</span>
+        <span class="use-case-chip">Enterprise SaaS integrations</span>
+        <span class="use-case-chip">Secure local DB access (STDIO MCP)</span>
+      </div>
+
+      <div class="notes-block">
+        <div class="notes-label">My Notes</div>
+        <div class="notes-lines">
+          <div class="notes-line"></div>
+          <div class="notes-line"></div>
+          <div class="notes-line"></div>
+          <div class="notes-line"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</article>
+
+<!-- T20 -->
+<article id="t20" class="topic m5">
+  <div class="topic-header">
+    <div class="topic-num">T20</div>
+    <div class="topic-head-text">
+      <h2 class="topic-title">Tool Using Strategies in AI Agents</h2>
+      <p class="topic-subtitle">4 tactical patterns for efficient tool management — tool calls are the primary cost and latency driver in production, so strategic tool use is essential.</p>
+    </div>
+  </div>
+  <div class="topic-body">
+    <div class="topic-col">
+      <div class="sec-label">Core Concepts</div>
+      <ul class="bullets">
+        <li><span class="bullet-dot"></span><span><strong>Strategy 1 — Caching:</strong> Cache tool results keyed by hash(tool_name + serialised_inputs). Return cached result without any API call on identical requests. Best for: web search, DB queries, expensive external APIs. Implement with Redis and appropriate TTL. Can reduce costs 40–60% for search-heavy agents.</span></li>
+        <li><span class="bullet-dot"></span><span><strong>Strategy 2 — Parallelisation:</strong> Identify tool calls where result B does not depend on result A. Dispatch concurrently with asyncio.gather(). Example: searching 3 data sources simultaneously. Reduces end-to-end latency 50–70% on multi-tool tasks with zero quality impact.</span></li>
+        <li><span class="bullet-dot"></span><span><strong>Strategy 3 — Chaining:</strong> Design tools so structured output of one is valid input to the next. Build explicit transformation steps. Example: web_search() → extract_entities() → lookup_entity() → format_result(). Reduces intermediate LLM reasoning calls.</span></li>
+        <li><span class="bullet-dot"></span><span><strong>Strategy 4 — Grouping:</strong> Bundle semantically coupled tools into a single composite tool. Example: travel_research(destination) internally calls flight_search + hotel_search + weather + visa as a batch. Reduces round-trips and improves LLM context efficiency.</span></li>
+        <li><span class="bullet-dot"></span><span><strong>Tool Budgeting:</strong> Hard limit of 20 tool calls per session by default; alert at 15. Prevents runaway agents from excessive API spend.</span></li>
+        <li><span class="bullet-dot"></span><span><strong>Retry with backoff:</strong> Retry with exponential backoff (1s, 2s, 4s delays) — transient tool failures should not abort the agent. Maximum 3 retries before escalating to the user.</span></li>
+      </ul>
+    </div>
+    <div class="topic-col">
+      <div class="sec-label">Deep Dive</div>
+      <p class="deep-dive">Tool cost management is the primary operational lever for agent economics in production. In a typical production agent, 60–80% of total system cost comes from tool calls — external API fees, compute, latency — not LLM reasoning. Parallelisation is the easiest and highest-impact single optimisation: if your agent makes 5 sequential API calls and 3 are independent, converting to async execution cuts latency by 40% with zero quality loss and zero additional cost. Caching is the highest ROI optimisation for search-heavy agents: common queries cost near-zero after the first execution. The grouping strategy requires upfront design discipline but pays dividends at scale — each grouped call eliminates 3–5 individual API round-trips. For agents handling more than 100 sessions per day, implement all 4 strategies. For prototypes, start with parallelisation first.</p>
+
+      <div class="key-insight">
+        <div class="key-insight-label">Key Insight</div>
+        <p class="key-insight-text">Caching + Parallelisation together reduce operating costs by 50–70% and cut latency in half. These two strategies should be implemented before any agent system moves to production scale — they are the lowest-effort, highest-impact production optimisations available.</p>
+      </div>
+
+      <div class="sec-label" style="margin-top:16px">Use Cases</div>
+      <div class="use-cases">
+        <span class="use-case-chip">High-frequency search agents (caching)</span>
+        <span class="use-case-chip">Multi-source research (parallelisation)</span>
+        <span class="use-case-chip">Travel booking (grouping + chaining)</span>
+      </div>
+
+      <div class="notes-block">
+        <div class="notes-label">My Notes</div>
+        <div class="notes-lines">
+          <div class="notes-line"></div>
+          <div class="notes-line"></div>
+          <div class="notes-line"></div>
+          <div class="notes-line"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</article>
+
+</main>
+
+<script>
+// Active nav highlighting on scroll
+const topics = document.querySelectorAll('article[id]');
+const navLinks = document.querySelectorAll('.nav-topic');
+
+const modClass = {
+  t01:'m1',t02:'m1',t03:'m1',t04:'m1',t05:'m1',
+  t06:'m2',t07:'m2',t08:'m2',t09:'m2',
+  t10:'m3',t11:'m3',t12:'m3',t13:'m3',
+  t14:'m4',t15:'m4',t16:'m4',t17:'m4',
+  t18:'m5',t19:'m5',t20:'m5',
+};
+
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const id = entry.target.id;
+      navLinks.forEach(l => {
+        l.classList.remove('active','m1-active','m2-active','m3-active','m4-active','m5-active');
+      });
+      const active = document.querySelector(`.nav-topic[href="#${id}"]`);
+      if (active) {
+        active.classList.add('active', modClass[id]+'-active');
+        active.scrollIntoView({ block: 'nearest' });
+      }
+    }
+  });
+}, { rootMargin: '-10% 0px -85% 0px' });
+
+topics.forEach(t => observer.observe(t));
+</script>
+</body>
+</html>

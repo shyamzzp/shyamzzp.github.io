@@ -1,0 +1,1759 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<meta name="theme-color" content="#0a0a0a">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Unbroken2.0">
+<title>Unbroken2.0</title>
+<link rel="manifest" href="/unbroken2.0/manifest.webmanifest">
+<link rel="icon" href="/unbroken2.0/icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/unbroken2.0/icon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:wght@400;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #0a0a0a;
+    --surface: #111111;
+    --surface2: #1a1a1a;
+    --border: #222222;
+    --text: #f0ede8;
+    --muted: #5a5a5a;
+    --accent: #e05c2e;
+    --accent-dim: #3a1a0f;
+    --green: #2ea84a;
+    --green-dim: #0d2e17;
+    --danger: #c0392b;
+  }
+
+  html, body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    min-height: 100vh;
+    min-height: 100dvh;
+    overflow-x: hidden;
+  }
+
+  body {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    padding: 28px;
+  }
+
+  .demo-stage {
+    align-items: center;
+    display: grid;
+    gap: 84px;
+    grid-template-columns: minmax(300px, 390px) minmax(300px, 460px);
+    justify-content: center;
+    min-height: calc(100vh - 56px);
+    min-height: calc(100dvh - 56px);
+    width: 100%;
+  }
+
+  .phone-frame {
+    background: linear-gradient(145deg, #1d1d1f, #050505 42%, #2a2a2d);
+    border: 1px solid #333338;
+    border-radius: 52px;
+    box-shadow:
+      0 34px 80px rgba(0, 0, 0, 0.58),
+      inset 0 0 0 2px rgba(255, 255, 255, 0.05);
+    height: min(844px, calc(100dvh - 56px));
+    max-height: 844px;
+    padding: 14px;
+    position: relative;
+    width: min(390px, calc(100vw - 56px));
+  }
+
+  .phone-frame::before,
+  .phone-frame::after {
+    background: #050505;
+    border-radius: 999px;
+    content: "";
+    position: absolute;
+    width: 3px;
+  }
+
+  .phone-frame::before {
+    height: 72px;
+    left: -3px;
+    top: 142px;
+  }
+
+  .phone-frame::after {
+    height: 96px;
+    right: -3px;
+    top: 188px;
+  }
+
+  .phone-screen {
+    background: var(--bg);
+    border: 1px solid #111;
+    border-radius: 40px;
+    height: 100%;
+    overflow: hidden;
+    position: relative;
+    width: 100%;
+  }
+
+  .phone-speaker {
+    background: #050505;
+    border-radius: 0 0 18px 18px;
+    height: 28px;
+    left: 50%;
+    position: absolute;
+    top: 14px;
+    transform: translateX(-50%);
+    width: 116px;
+    z-index: 20;
+  }
+
+  .phone-speaker::after {
+    background: #1e1e21;
+    border-radius: 999px;
+    content: "";
+    height: 5px;
+    left: 50%;
+    position: absolute;
+    top: 9px;
+    transform: translateX(-50%);
+    width: 42px;
+  }
+
+  .app-intro {
+    max-width: 460px;
+  }
+
+  .intro-eyebrow {
+    color: var(--accent);
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 4px;
+    margin-bottom: 18px;
+    text-transform: uppercase;
+  }
+
+  .intro-title {
+    color: var(--text);
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(64px, 8vw, 104px);
+    letter-spacing: 6px;
+    line-height: 0.88;
+    margin-bottom: 24px;
+    text-transform: uppercase;
+  }
+
+  .intro-copy {
+    color: rgba(240, 237, 232, 0.78);
+    font-size: 17px;
+    font-weight: 300;
+    line-height: 1.7;
+    margin-bottom: 34px;
+    max-width: 420px;
+  }
+
+  .intro-section {
+    border-top: 1px solid var(--border);
+    padding: 22px 0;
+  }
+
+  .intro-section-title {
+    color: var(--muted);
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 3px;
+    margin-bottom: 12px;
+    text-transform: uppercase;
+  }
+
+  .intro-section p {
+    color: rgba(240, 237, 232, 0.72);
+    font-size: 14px;
+    line-height: 1.65;
+    margin: 0;
+  }
+
+  .intro-steps {
+    display: grid;
+    gap: 8px;
+  }
+
+  .intro-step {
+    align-items: center;
+    background: var(--surface);
+    border: 1px solid transparent;
+    border-radius: 4px;
+    display: flex;
+    gap: 14px;
+    padding: 15px 16px;
+  }
+
+  .intro-step-number {
+    color: var(--accent);
+    flex: 0 0 auto;
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 2px;
+  }
+
+  .intro-step-text {
+    color: var(--text);
+    font-size: 14px;
+    line-height: 1.35;
+  }
+
+  .intro-metrics {
+    display: grid;
+    gap: 8px;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .intro-metric {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 16px 12px;
+  }
+
+  .intro-metric strong {
+    color: var(--accent);
+    display: block;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 34px;
+    font-weight: 400;
+    line-height: 1;
+  }
+
+  .intro-metric span {
+    color: var(--muted);
+    display: block;
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 2px;
+    margin-top: 8px;
+    text-transform: uppercase;
+  }
+
+  .screen {
+    display: none;
+    flex-direction: column;
+    height: 100%;
+    min-height: 100%;
+    overflow: hidden;
+    width: 100%;
+  }
+  .screen.active { display: flex; }
+
+  /* ─── SETUP SCREEN ─── */
+  #screen-setup {
+    padding: 0;
+    background: var(--bg);
+  }
+
+  .setup-header {
+    padding: 60px 28px 32px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 52px;
+    letter-spacing: 4px;
+    color: var(--text);
+    line-height: 1;
+  }
+
+  .logo-sub {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-top: 6px;
+  }
+
+  .setup-body {
+    flex: 1;
+    overflow-y: auto;
+    padding: 28px 28px 104px;
+    scrollbar-width: none;
+  }
+
+  .setup-body::-webkit-scrollbar { display: none; }
+
+  .section-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 14px;
+  }
+
+  .habit-catalog {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    margin-bottom: 32px;
+  }
+
+  .habit-option {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 12px 12px 12px 18px;
+    background: var(--surface);
+    border: 1px solid transparent;
+    cursor: pointer;
+    transition: border-color 0.15s, background 0.15s;
+    border-radius: 4px;
+  }
+  .habit-option:active { background: var(--surface2); }
+  .habit-option.selected {
+    border-color: var(--accent);
+    background: var(--accent-dim);
+  }
+  .habit-option.selected .habit-dot {
+    background: var(--accent);
+    box-shadow: 0 0 0 3px var(--accent-dim);
+  }
+
+  .habit-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--border);
+    flex-shrink: 0;
+    transition: background 0.15s;
+  }
+
+  .habit-name {
+    font-size: 15px;
+    font-weight: 400;
+    color: var(--text);
+    flex: 1;
+  }
+
+  .habit-delete-btn {
+    align-items: center;
+    background: transparent;
+    border: none;
+    border-radius: 4px;
+    color: var(--accent);
+    cursor: pointer;
+    display: inline-flex;
+    height: 28px;
+    justify-content: center;
+    padding: 0;
+    width: 28px;
+  }
+  .habit-delete-btn:hover,
+  .habit-delete-btn:focus-visible {
+    color: #f07a44;
+    outline: none;
+  }
+  .habit-delete-btn svg {
+    height: 14px;
+    pointer-events: none;
+    stroke-width: 1.8;
+    width: 14px;
+  }
+  .habit-delete-btn path {
+    stroke: currentColor;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .habit-custom-row {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 16px 18px;
+    background: var(--surface);
+    border: 1px solid transparent;
+    border-radius: 4px;
+    margin-bottom: 32px;
+    transition: border-color 0.15s;
+  }
+  .habit-custom-row.selected { border-color: var(--accent); background: var(--accent-dim); }
+  .habit-custom-row .habit-dot {
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    background: var(--border);
+    flex-shrink: 0;
+    transition: background 0.15s;
+  }
+  .habit-custom-row.selected .habit-dot { background: var(--accent); }
+
+  #custom-habit-input {
+    background: transparent;
+    border: none;
+    outline: none;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    color: var(--text);
+    flex: 1;
+    caret-color: var(--accent);
+  }
+  #custom-habit-input::placeholder { color: var(--muted); }
+
+  .duration-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    margin-bottom: 0;
+  }
+
+  .duration-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 18px 8px;
+    background: var(--surface);
+    border: 1px solid transparent;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: border-color 0.15s, background 0.15s;
+    text-align: center;
+  }
+  .duration-btn:active { background: var(--surface2); }
+  .duration-btn.selected {
+    border-color: var(--accent);
+    background: var(--accent-dim);
+  }
+  .duration-btn.selected .duration-num { color: var(--accent); }
+
+  .duration-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 38px;
+    color: var(--text);
+    line-height: 1;
+  }
+
+  .duration-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-top: 4px;
+  }
+
+  .setup-action-bar {
+    background: linear-gradient(180deg, rgba(10, 10, 10, 0), var(--bg) 28%);
+    bottom: 0;
+    left: 0;
+    padding: 28px;
+    position: absolute;
+    right: 0;
+    z-index: 4;
+  }
+
+  .start-btn {
+    width: 100%;
+    padding: 18px;
+    background: var(--accent);
+    color: #fff;
+    font-family: 'Space Mono', monospace;
+    font-size: 13px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: opacity 0.15s;
+  }
+  .start-btn:disabled { opacity: 0.25; cursor: not-allowed; }
+  .start-btn:not(:disabled):active { opacity: 0.85; }
+
+  /* ─── DASHBOARD SCREEN ─── */
+  #screen-dashboard {
+    background: var(--bg);
+  }
+
+  .dashboard-header {
+    border-bottom: 1px solid var(--border);
+    padding: 58px 28px 24px;
+  }
+
+  .dashboard-topline,
+  .active-topline {
+    align-items: flex-start;
+    display: flex;
+    gap: 16px;
+    justify-content: space-between;
+  }
+
+  .dashboard-body {
+    flex: 1;
+    overflow-y: auto;
+    padding: 24px 28px 28px;
+    scrollbar-width: none;
+  }
+
+  .dashboard-body::-webkit-scrollbar { display: none; }
+
+  .habit-list {
+    display: grid;
+    gap: 8px;
+  }
+
+  .habit-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    cursor: pointer;
+    padding: 16px;
+    text-align: left;
+    width: 100%;
+  }
+
+  .habit-card:active { background: var(--surface2); }
+
+  .habit-card-row {
+    align-items: flex-start;
+    display: flex;
+    gap: 12px;
+    justify-content: space-between;
+  }
+
+  .habit-card-title {
+    color: var(--text);
+    font-size: 15px;
+    line-height: 1.35;
+  }
+
+  .habit-card-meta {
+    color: var(--muted);
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 2px;
+    margin-top: 8px;
+    text-transform: uppercase;
+  }
+
+  .habit-card-status {
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    color: var(--muted);
+    flex: 0 0 auto;
+    font-family: 'Space Mono', monospace;
+    font-size: 8px;
+    letter-spacing: 1.5px;
+    padding: 5px 8px;
+    text-transform: uppercase;
+  }
+
+  .habit-card-status.ready {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  .habit-card-status.done {
+    border-color: var(--green);
+    color: var(--green);
+  }
+
+  .habit-card-status.checked {
+    border-color: var(--green);
+    color: var(--green);
+  }
+
+  .habit-card-status.broken {
+    border-color: var(--danger);
+    color: var(--danger);
+  }
+
+  .habit-progress {
+    background: var(--border);
+    border-radius: 999px;
+    height: 4px;
+    margin-top: 14px;
+    overflow: hidden;
+  }
+
+  .habit-progress-bar {
+    background: var(--accent);
+    height: 100%;
+    transition: width 0.2s;
+  }
+
+  .habit-card.done .habit-progress-bar {
+    background: var(--green);
+  }
+
+  .add-habit-btn,
+  .back-btn,
+  .mobile-about-btn,
+  .about-close-btn {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    color: var(--text);
+    cursor: pointer;
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 2px;
+    padding: 10px 12px;
+    text-transform: uppercase;
+  }
+
+  .add-habit-btn:active,
+  .back-btn:active,
+  .mobile-about-btn:active,
+  .about-close-btn:active {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  .mobile-about-btn,
+  .about-close-btn {
+    display: none;
+  }
+
+  .dashboard-actions {
+    align-items: flex-end;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  /* ─── ACTIVE SCREEN ─── */
+  #screen-active {
+    padding: 0;
+    position: relative;
+  }
+
+  .active-header {
+    padding: 52px 28px 20px;
+  }
+
+  .active-habit-name {
+    font-size: 13px;
+    font-weight: 400;
+    color: var(--muted);
+    font-family: 'Space Mono', monospace;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    max-width: 200px;
+  }
+
+  .abandon-btn {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: 2px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px 0;
+    text-transform: uppercase;
+  }
+  .abandon-btn:active { color: var(--danger); }
+
+  .active-actions {
+    align-items: flex-end;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .day-hero {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px 28px 40px;
+  }
+
+  .day-fraction {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 110px;
+    line-height: 0.9;
+    color: var(--text);
+    letter-spacing: -2px;
+    text-align: center;
+  }
+
+  .day-fraction .slash { color: var(--muted); }
+  .day-fraction .total { color: var(--border); font-size: 80px; }
+
+  .day-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    margin-top: 12px;
+    margin-bottom: 32px;
+  }
+
+  .checkin-status {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    padding: 8px 16px;
+    border-radius: 2px;
+  }
+  .checkin-status.done {
+    color: var(--green);
+    background: var(--green-dim);
+  }
+
+  .checkin-btn {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: border-color 0.2s, background 0.2s, transform 0.1s;
+    margin-bottom: 32px;
+  }
+  .checkin-btn:active { transform: scale(0.96); background: var(--surface2); }
+  .checkin-btn.ready {
+    border-color: var(--accent);
+    background: var(--accent-dim);
+  }
+  .checkin-btn.ready:active { border-color: var(--accent); }
+  .checkin-btn.checked {
+    border-color: var(--green);
+    background: var(--green-dim);
+    cursor: default;
+  }
+  .checkin-btn.checked:active { transform: none; }
+
+  .checkin-icon {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 28px;
+    letter-spacing: 3px;
+    color: var(--muted);
+  }
+  .checkin-btn.ready .checkin-icon { color: var(--accent); }
+  .checkin-btn.checked .checkin-icon { color: var(--green); }
+
+  .checkin-sub {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 3px;
+    color: var(--muted);
+    text-transform: uppercase;
+    margin-top: 6px;
+  }
+  .checkin-btn.ready .checkin-sub { color: var(--accent); }
+  .checkin-btn.checked .checkin-sub { color: var(--green); }
+
+  .dot-track {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+    padding: 0 28px 40px;
+    max-width: 340px;
+    margin: 0 auto;
+  }
+
+  .dot-day {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    color: var(--muted);
+    background: var(--surface);
+    border: 1px solid var(--border);
+    transition: background 0.2s, border-color 0.2s;
+  }
+  .dot-day.done {
+    background: var(--green-dim);
+    border-color: var(--green);
+    color: var(--green);
+  }
+  .dot-day.today {
+    border-color: var(--accent);
+    color: var(--text);
+  }
+  .dot-day.done.today {
+    background: var(--green-dim);
+    border-color: var(--green);
+    color: var(--green);
+  }
+
+  /* ─── BROKEN SCREEN ─── */
+  #screen-broken {
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 40px 28px;
+  }
+
+  .broken-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 96px;
+    color: var(--danger);
+    letter-spacing: 6px;
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+
+  .broken-rule {
+    width: 60px;
+    height: 1px;
+    background: var(--border);
+    margin: 24px auto;
+  }
+
+  .broken-habit {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .broken-days {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 48px;
+    color: var(--text);
+  }
+
+  .broken-days-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-top: 4px;
+    margin-bottom: 40px;
+  }
+
+  .broken-msg {
+    font-size: 14px;
+    font-weight: 300;
+    color: var(--muted);
+    line-height: 1.7;
+    max-width: 260px;
+    margin: 0 auto 40px;
+  }
+
+  .restart-btn {
+    padding: 16px 40px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    color: var(--text);
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: border-color 0.15s;
+    margin-bottom: 12px;
+    display: block;
+    width: 100%;
+    max-width: 260px;
+    margin: 0 auto 12px;
+  }
+  .restart-btn:active { border-color: var(--accent); }
+
+  /* ─── COMPLETE SCREEN ─── */
+  #screen-complete {
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 40px 28px;
+  }
+
+  .complete-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 80px;
+    color: var(--green);
+    letter-spacing: 4px;
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+  .complete-title-2 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 46px;
+    color: var(--text);
+    letter-spacing: 4px;
+  }
+
+  .complete-rule {
+    width: 60px; height: 1px;
+    background: var(--border);
+    margin: 24px auto;
+  }
+
+  .complete-habit {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+
+  .complete-days {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 64px;
+    color: var(--text);
+  }
+
+  .complete-days-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 40px;
+  }
+
+  .complete-msg {
+    font-size: 14px;
+    font-weight: 300;
+    color: var(--muted);
+    line-height: 1.7;
+    max-width: 260px;
+    margin: 0 auto 40px;
+  }
+
+  .new-habit-btn {
+    padding: 16px 40px;
+    background: var(--green-dim);
+    border: 1px solid var(--green);
+    color: var(--green);
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    border-radius: 4px;
+    cursor: pointer;
+    display: block;
+    width: 100%;
+    max-width: 260px;
+    margin: 0 auto;
+    transition: opacity 0.15s;
+  }
+  .new-habit-btn:active { opacity: 0.8; }
+
+  /* Tap animation */
+  @keyframes pulse-check {
+    0% { transform: scale(1); }
+    40% { transform: scale(0.92); }
+    70% { transform: scale(1.04); }
+    100% { transform: scale(1); }
+  }
+  .checkin-btn.pulse { animation: pulse-check 0.35s ease; }
+
+  @media (max-width: 980px) {
+    body {
+      align-items: flex-start;
+    }
+
+    .demo-stage {
+      gap: 52px;
+      grid-template-columns: minmax(0, 1fr);
+      min-height: auto;
+      padding: 12px 0 40px;
+    }
+
+    .phone-frame,
+    .app-intro {
+      justify-self: center;
+    }
+
+    .app-intro {
+      max-width: min(560px, calc(100vw - 56px));
+    }
+  }
+
+  @media (max-width: 520px) {
+    body {
+      padding: 0;
+    }
+
+    .demo-stage {
+      display: block;
+      min-height: 100vh;
+      min-height: 100dvh;
+      padding: 0;
+    }
+
+    .phone-frame {
+      border: 0;
+      border-radius: 0;
+      box-shadow: none;
+      height: 100vh;
+      height: 100dvh;
+      max-height: none;
+      padding: 0;
+      width: 100vw;
+    }
+
+    .phone-frame::before,
+    .phone-frame::after,
+    .phone-speaker {
+      display: none;
+    }
+
+    .phone-screen {
+      border: 0;
+      border-radius: 0;
+    }
+
+    .app-intro {
+      background: var(--bg);
+      display: none;
+      height: 100vh;
+      height: 100dvh;
+      inset: 0;
+      max-width: none;
+      overscroll-behavior: contain;
+      overflow-y: auto;
+      padding: calc(76px + env(safe-area-inset-top)) 28px calc(28px + env(safe-area-inset-bottom));
+      position: fixed;
+      -webkit-overflow-scrolling: touch;
+      z-index: 60;
+    }
+
+    body.show-about .app-intro {
+      display: block;
+    }
+
+    body.show-about {
+      overflow: hidden;
+    }
+
+    .mobile-about-btn,
+    .about-close-btn {
+      display: inline-flex;
+    }
+
+    .about-close-btn {
+      background: var(--accent-dim);
+      border-color: var(--accent);
+      color: var(--accent);
+      position: fixed;
+      right: calc(18px + env(safe-area-inset-right));
+      top: calc(18px + env(safe-area-inset-top));
+      z-index: 80;
+    }
+
+    .intro-eyebrow {
+      font-size: 10px;
+      letter-spacing: 3px;
+      margin-bottom: 14px;
+    }
+
+    .intro-title {
+      font-size: 58px;
+      letter-spacing: 4px;
+      margin-bottom: 18px;
+    }
+
+    .intro-copy {
+      font-size: 15px;
+      margin-bottom: 22px;
+    }
+
+    .intro-section {
+      padding: 18px 0;
+    }
+
+    .intro-step {
+      padding: 14px;
+    }
+
+    .intro-metrics {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 380px) {
+    .phone-frame {
+      height: 100vh;
+      height: 100dvh;
+      width: 100vw;
+    }
+
+    .setup-header {
+      padding: 54px 24px 28px;
+    }
+
+    .dashboard-header,
+    .active-header {
+      padding-left: 24px;
+      padding-right: 24px;
+    }
+
+    .dashboard-body {
+      padding: 22px 24px 24px;
+    }
+
+    .setup-body {
+      padding: 24px;
+    }
+
+    .intro-title {
+      font-size: 50px;
+    }
+  }
+</style>
+</head>
+<body>
+
+<main class="demo-stage" aria-label="Unbroken2.0 mobile demo">
+<div class="phone-frame">
+<div class="phone-speaker" aria-hidden="true"></div>
+<div class="phone-screen">
+
+<!-- ═══ DASHBOARD SCREEN ═══ -->
+<div id="screen-dashboard" class="screen">
+  <div class="dashboard-header">
+    <div class="dashboard-topline">
+      <div>
+        <div class="logo">UNBROKEN2.0</div>
+        <div class="logo-sub">Multiple habits &nbsp;·&nbsp; No skips</div>
+      </div>
+      <div class="dashboard-actions">
+        <button class="add-habit-btn" id="add-habit-btn">Add</button>
+        <button class="mobile-about-btn js-about-btn">About</button>
+      </div>
+    </div>
+  </div>
+  <div class="dashboard-body">
+    <div class="section-label">Tracked habits</div>
+    <div class="habit-list" id="habit-list"></div>
+  </div>
+</div>
+
+<!-- ═══ SETUP SCREEN ═══ -->
+<div id="screen-setup" class="screen">
+  <div class="setup-header">
+    <div class="dashboard-topline">
+      <div>
+        <div class="logo">UNBROKEN2.0</div>
+        <div class="logo-sub">Add habit &nbsp;·&nbsp; No skips</div>
+      </div>
+      <div class="dashboard-actions">
+        <button class="back-btn" id="setup-back-btn">Back</button>
+        <button class="mobile-about-btn js-about-btn">About</button>
+      </div>
+    </div>
+  </div>
+  <div class="setup-body">
+    <div class="section-label">Choose your habit</div>
+    <div class="habit-catalog" id="habit-catalog"></div>
+    <div class="habit-custom-row" id="custom-row">
+      <div class="habit-dot" id="custom-dot"></div>
+      <input type="text" id="custom-habit-input" placeholder="Write your own habit…" maxlength="40" autocomplete="off" autocorrect="off" spellcheck="false">
+    </div>
+
+    <div class="section-label">Commit for how long</div>
+    <div class="duration-grid">
+      <div class="duration-btn" data-days="7">
+        <span class="duration-num">7</span>
+        <span class="duration-label">Days</span>
+      </div>
+      <div class="duration-btn selected" data-days="14">
+        <span class="duration-num">14</span>
+        <span class="duration-label">Days</span>
+      </div>
+      <div class="duration-btn" data-days="21">
+        <span class="duration-num">21</span>
+        <span class="duration-label">Days</span>
+      </div>
+    </div>
+
+    <div class="setup-action-bar">
+      <button class="start-btn" id="start-btn" disabled>Commit</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ ACTIVE SCREEN ═══ -->
+<div id="screen-active" class="screen">
+  <div class="active-header">
+    <div class="active-topline">
+      <div class="active-habit-name" id="active-habit-name">—</div>
+      <div class="active-actions">
+        <button class="back-btn" id="active-back-btn">List</button>
+        <button class="abandon-btn" id="abandon-btn">Abandon</button>
+      </div>
+    </div>
+  </div>
+  <div class="day-hero">
+    <div class="day-fraction">
+      <span id="day-current">1</span><span class="slash">/</span><span class="total" id="day-total">21</span>
+    </div>
+    <div class="day-label">Day</div>
+    <div class="checkin-btn" id="checkin-btn">
+      <div class="checkin-icon" id="checkin-icon">CHECK IN</div>
+      <div class="checkin-sub" id="checkin-sub">Tap to mark done</div>
+    </div>
+  </div>
+  <div class="dot-track" id="dot-track"></div>
+</div>
+
+<!-- ═══ BROKEN SCREEN ═══ -->
+<div id="screen-broken" class="screen">
+  <div class="broken-title">BROKEN</div>
+  <div class="broken-rule"></div>
+  <div class="broken-habit" id="broken-habit-name">—</div>
+  <div class="broken-days" id="broken-days">0</div>
+  <div class="broken-days-label">days completed</div>
+  <div class="broken-msg">You missed a day. The rule was the rule, and you knew it going in. Start over.</div>
+  <button class="restart-btn" id="restart-btn">Start Over</button>
+  <button class="back-btn" id="broken-back-btn">Habit List</button>
+</div>
+
+<!-- ═══ COMPLETE SCREEN ═══ -->
+<div id="screen-complete" class="screen">
+  <div class="complete-title">DONE.</div>
+  <div class="complete-title-2">Unbroken2.0.</div>
+  <div class="complete-rule"></div>
+  <div class="complete-habit" id="complete-habit-name">—</div>
+  <div class="complete-days" id="complete-days">0</div>
+  <div class="complete-days-label">days. not one missed.</div>
+  <div class="complete-msg">You showed up every single day. That's it. That's the whole thing.</div>
+  <button class="new-habit-btn" id="new-habit-btn">Pick a New Habit</button>
+  <button class="back-btn" id="complete-back-btn">Habit List</button>
+</div>
+
+</div>
+</div>
+<aside class="app-intro" aria-label="About Unbroken2.0">
+  <button class="about-close-btn" id="about-close-btn">Close</button>
+  <div class="intro-eyebrow">Habit discipline app</div>
+  <h1 class="intro-title">Unbroken2.0</h1>
+  <p class="intro-copy">
+    A stripped-down commitment tracker for one or more habits. Pick each rule,
+    choose the number of days, and check in every day. Miss once and that chain
+    breaks.
+  </p>
+
+  <section class="intro-section">
+    <div class="intro-section-title">About</div>
+    <p>
+      Unbroken2.0 is built around deliberate constraint. No dashboards, no social
+      feed, no soft streak language. The product keeps attention on the actions
+      that matter today.
+    </p>
+  </section>
+
+  <section class="intro-section">
+    <div class="intro-section-title">How it works</div>
+    <div class="intro-steps">
+      <div class="intro-step">
+        <span class="intro-step-number">01</span>
+        <span class="intro-step-text">Choose a habit or write your own rule.</span>
+      </div>
+      <div class="intro-step">
+        <span class="intro-step-number">02</span>
+        <span class="intro-step-text">Commit for 7, 14, or 21 days.</span>
+      </div>
+      <div class="intro-step">
+        <span class="intro-step-number">03</span>
+        <span class="intro-step-text">Track each active habit from the list.</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="intro-section">
+    <div class="intro-section-title">Demo scope</div>
+    <div class="intro-metrics">
+      <div class="intro-metric">
+        <strong>∞</strong>
+        <span>Habits</span>
+      </div>
+      <div class="intro-metric">
+        <strong>3</strong>
+        <span>Commitments</span>
+      </div>
+      <div class="intro-metric">
+        <strong>0</strong>
+        <span>Skips</span>
+      </div>
+    </div>
+  </section>
+</aside>
+</main>
+
+<script>
+  const STORAGE_KEY = 'unbroken2_0_v1';
+  const CATALOG_KEY = 'unbroken2_0_catalog_v1';
+  const DEFAULT_CATALOG = [
+    '10 push-ups',
+    '30 squats',
+    'Read 10 pages',
+    '10-min meditation',
+    'No social media',
+    'Cold shower'
+  ];
+  let selectedHabit = null;
+  let selectedDuration = 14;
+  let activeHabitId = null;
+
+  function today() {
+    const d = new Date();
+    return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+  }
+
+  function daysBetween(a, b) {
+    const da = new Date(a), db = new Date(b);
+    return Math.round((db - da) / 86400000);
+  }
+
+  function escapeHtml(value) {
+    return String(value)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#039;');
+  }
+
+  function createHabit(habit, duration) {
+    return {
+      id: `${Date.now()}-${Math.random().toString(16).slice(2)}`,
+      habit,
+      duration,
+      startDate: today(),
+      checkins: [],
+      complete: false
+    };
+  }
+
+  function normalizeStore(raw) {
+    if (!raw) return { habits: [] };
+    if (Array.isArray(raw.habits)) {
+      return {
+        habits: raw.habits.map(habit => ({
+          ...habit,
+          id: habit.id || `${Date.now()}-${Math.random().toString(16).slice(2)}`,
+          checkins: Array.isArray(habit.checkins) ? habit.checkins : [],
+          complete: Boolean(habit.complete)
+        }))
+      };
+    }
+
+    if (raw.habit && raw.duration && raw.startDate) {
+      return {
+        habits: [{
+          id: raw.id || `${Date.now()}-legacy`,
+          habit: raw.habit,
+          duration: raw.duration,
+          startDate: raw.startDate,
+          checkins: Array.isArray(raw.checkins) ? raw.checkins : [],
+          complete: Boolean(raw.complete)
+        }]
+      };
+    }
+
+    return { habits: [] };
+  }
+
+  function loadStore() {
+    try { return normalizeStore(JSON.parse(localStorage.getItem(STORAGE_KEY))); }
+    catch(e) { return { habits: [] }; }
+  }
+
+  function saveStore(store) {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(normalizeStore(store)));
+  }
+
+  function normalizeCatalog(items) {
+    const source = Array.isArray(items) ? items : DEFAULT_CATALOG;
+    return [...new Set(source.map(item => String(item).trim()).filter(Boolean))];
+  }
+
+  function loadCatalog() {
+    const raw = localStorage.getItem(CATALOG_KEY);
+    if (!raw) return DEFAULT_CATALOG;
+    try { return normalizeCatalog(JSON.parse(raw)); }
+    catch(e) { return DEFAULT_CATALOG; }
+  }
+
+  function saveCatalog(items) {
+    localStorage.setItem(CATALOG_KEY, JSON.stringify(normalizeCatalog(items)));
+  }
+
+  function addCatalogItem(value) {
+    const habit = String(value).trim();
+    if (!habit) return;
+    const catalog = loadCatalog();
+    if (!catalog.some(item => item.toLowerCase() === habit.toLowerCase())) {
+      catalog.push(habit);
+      saveCatalog(catalog);
+      renderCatalog();
+    }
+  }
+
+  function updateHabit(updatedHabit) {
+    const store = loadStore();
+    store.habits = store.habits.map(habit =>
+      habit.id === updatedHabit.id ? updatedHabit : habit
+    );
+    saveStore(store);
+  }
+
+  function removeHabit(id) {
+    const store = loadStore();
+    store.habits = store.habits.filter(habit => habit.id !== id);
+    saveStore(store);
+    if (activeHabitId === id) activeHabitId = null;
+  }
+
+  function getHabit(id) {
+    return loadStore().habits.find(habit => habit.id === id) || null;
+  }
+
+  function showScreen(id) {
+    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+    document.getElementById('screen-' + id).classList.add('active');
+  }
+
+  function checkForBreak(state) {
+    if (!state || state.complete) return false;
+    const t = today();
+    const checkins = state.checkins;
+    if (checkins.length === 0) {
+      const daysSinceStart = daysBetween(state.startDate, t);
+      return daysSinceStart > 0;
+    }
+    const lastCheckin = checkins[checkins.length - 1];
+    const gap = daysBetween(lastCheckin, t);
+    return gap > 1;
+  }
+
+  function getDayNumber(state) {
+    const t = today();
+    return daysBetween(state.startDate, t) + 1;
+  }
+
+  function getHabitStatus(habit) {
+    if (habit.complete) return 'done';
+    if (checkForBreak(habit)) return 'broken';
+    if (habit.checkins.includes(today())) return 'checked';
+    return 'ready';
+  }
+
+  function renderDashboard() {
+    activeHabitId = null;
+    const store = loadStore();
+    const list = document.getElementById('habit-list');
+    list.innerHTML = '';
+
+    if (store.habits.length === 0) {
+      showSetup(false);
+      return;
+    }
+
+    store.habits.forEach(habit => {
+      const status = getHabitStatus(habit);
+      const dayNum = Math.min(getDayNumber(habit), habit.duration);
+      const progress = Math.min(100, Math.round((habit.checkins.length / habit.duration) * 100));
+      const card = document.createElement('button');
+      card.type = 'button';
+      card.className = `habit-card ${status}`;
+      card.innerHTML = `
+        <div class="habit-card-row">
+          <div>
+            <div class="habit-card-title">${escapeHtml(habit.habit)}</div>
+            <div class="habit-card-meta">${habit.checkins.length}/${habit.duration} done · day ${dayNum}</div>
+          </div>
+          <span class="habit-card-status ${status}">${status}</span>
+        </div>
+        <div class="habit-progress">
+          <div class="habit-progress-bar" style="width: ${progress}%"></div>
+        </div>
+      `;
+      card.addEventListener('click', () => openHabit(habit.id));
+      list.appendChild(card);
+    });
+
+    showScreen('dashboard');
+  }
+
+  function showSetup(canGoBack = true) {
+    resetSetupForm();
+    document.getElementById('setup-back-btn').hidden = !canGoBack;
+    renderCatalog();
+    showScreen('setup');
+  }
+
+  function openHabit(id) {
+    const habit = getHabit(id);
+    if (!habit) {
+      renderDashboard();
+      return;
+    }
+
+    activeHabitId = id;
+
+    if (habit.complete) {
+      document.getElementById('complete-habit-name').textContent = habit.habit.toUpperCase();
+      document.getElementById('complete-days').textContent = habit.checkins.length;
+      showScreen('complete');
+      return;
+    }
+
+    if (checkForBreak(habit)) {
+      document.getElementById('broken-habit-name').textContent = habit.habit.toUpperCase();
+      document.getElementById('broken-days').textContent = habit.checkins.length;
+      showScreen('broken');
+      return;
+    }
+
+    renderActive(habit);
+  }
+
+  function renderActive(state) {
+    const t = today();
+    const dayNum = Math.min(getDayNumber(state), state.duration);
+    const checkedToday = state.checkins.includes(t);
+
+    document.getElementById('active-habit-name').textContent = state.habit.toUpperCase();
+    document.getElementById('day-current').textContent = dayNum;
+    document.getElementById('day-total').textContent = state.duration;
+
+    const btn = document.getElementById('checkin-btn');
+    const icon = document.getElementById('checkin-icon');
+    const sub = document.getElementById('checkin-sub');
+
+    btn.className = 'checkin-btn';
+    if (checkedToday) {
+      btn.classList.add('checked');
+      icon.textContent = 'DONE';
+      sub.textContent = 'See you tomorrow';
+    } else {
+      btn.classList.add('ready');
+      icon.textContent = 'CHECK IN';
+      sub.textContent = 'Tap to mark done';
+    }
+
+    const track = document.getElementById('dot-track');
+    track.innerHTML = '';
+    for (let i = 1; i <= state.duration; i++) {
+      const d = document.createElement('div');
+      d.className = 'dot-day';
+      d.textContent = i;
+      const dateForDay = new Date(state.startDate);
+      dateForDay.setDate(dateForDay.getDate() + i - 1);
+      const dateStr = `${dateForDay.getFullYear()}-${String(dateForDay.getMonth()+1).padStart(2,'0')}-${String(dateForDay.getDate()).padStart(2,'0')}`;
+      if (state.checkins.includes(dateStr)) d.classList.add('done');
+      if (dateStr === t) d.classList.add('today');
+      track.appendChild(d);
+    }
+
+    showScreen('active');
+  }
+
+  function init() {
+    closeAbout();
+    saveStore(loadStore());
+    renderDashboard();
+  }
+
+  function openAbout() {
+    const about = document.querySelector('.app-intro');
+    document.body.classList.add('show-about');
+    if (about) about.scrollTop = 0;
+  }
+
+  function closeAbout() {
+    document.body.classList.remove('show-about');
+  }
+
+  // ── Setup interactions ──
+  function updateStartBtn() {
+    const custom = document.getElementById('custom-habit-input').value.trim();
+    const habitReady = selectedHabit !== null || custom.length > 0;
+    document.getElementById('start-btn').disabled = !habitReady;
+  }
+
+  function resetSetupForm() {
+    selectedHabit = null;
+    selectedDuration = 14;
+    document.querySelectorAll('.habit-option').forEach(o => o.classList.remove('selected'));
+    document.querySelectorAll('.duration-btn').forEach(b => b.classList.remove('selected'));
+    document.querySelector('.duration-btn[data-days="14"]').classList.add('selected');
+    customInput.value = '';
+    document.getElementById('custom-row').classList.remove('selected');
+    document.getElementById('custom-dot').style.background = '';
+    document.getElementById('start-btn').disabled = true;
+  }
+
+  function selectCatalogHabit(option) {
+    document.querySelectorAll('.habit-option').forEach(o => o.classList.remove('selected'));
+    document.getElementById('custom-row').classList.remove('selected');
+    document.getElementById('custom-dot').style.background = '';
+    document.getElementById('custom-habit-input').value = '';
+    option.classList.add('selected');
+    selectedHabit = option.dataset.habit;
+    updateStartBtn();
+  }
+
+  function renderCatalog() {
+    const catalog = loadCatalog();
+    const catalogEl = document.getElementById('habit-catalog');
+    catalogEl.innerHTML = '';
+
+    catalog.forEach(habit => {
+      const option = document.createElement('div');
+      option.className = 'habit-option';
+      option.dataset.habit = habit;
+      option.innerHTML = `
+        <div class="habit-dot"></div>
+        <span class="habit-name">${escapeHtml(habit)}</span>
+        <button class="habit-delete-btn" type="button" aria-label="Remove ${escapeHtml(habit)}">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M3 6h18"></path>
+            <path d="M8 6V4h8v2"></path>
+            <path d="M9 10v7"></path>
+            <path d="M15 10v7"></path>
+            <path d="M6 6l1 15h10l1-15"></path>
+          </svg>
+        </button>
+      `;
+      option.addEventListener('click', () => selectCatalogHabit(option));
+      option.querySelector('.habit-delete-btn').addEventListener('click', event => {
+        event.stopPropagation();
+        const nextCatalog = loadCatalog().filter(item => item !== habit);
+        saveCatalog(nextCatalog);
+        if (selectedHabit === habit) {
+          selectedHabit = null;
+          updateStartBtn();
+        }
+        renderCatalog();
+      });
+      catalogEl.appendChild(option);
+    });
+  }
+
+  const customInput = document.getElementById('custom-habit-input');
+  customInput.addEventListener('focus', () => {
+    document.querySelectorAll('.habit-option').forEach(o => o.classList.remove('selected'));
+    document.getElementById('custom-row').classList.add('selected');
+    document.getElementById('custom-dot').style.background = 'var(--accent)';
+    selectedHabit = null;
+    updateStartBtn();
+  });
+  customInput.addEventListener('input', () => {
+    selectedHabit = null;
+    updateStartBtn();
+  });
+
+  document.querySelectorAll('.duration-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.duration-btn').forEach(b => b.classList.remove('selected'));
+      btn.classList.add('selected');
+      selectedDuration = parseInt(btn.dataset.days);
+    });
+  });
+
+  document.getElementById('start-btn').addEventListener('click', () => {
+    const customVal = customInput.value.trim();
+    const habit = customVal || selectedHabit;
+    if (!habit) return;
+    if (customVal) addCatalogItem(customVal);
+    const store = loadStore();
+    const newHabit = createHabit(habit, selectedDuration);
+    store.habits.push(newHabit);
+    saveStore(store);
+    resetSetupForm();
+    openHabit(newHabit.id);
+  });
+
+  // ── Check-in ──
+  document.getElementById('checkin-btn').addEventListener('click', () => {
+    const state = getHabit(activeHabitId);
+    if (!state || state.complete) return;
+    const t = today();
+    if (state.checkins.includes(t)) return;
+
+    const btn = document.getElementById('checkin-btn');
+    btn.classList.add('pulse');
+    btn.addEventListener('animationend', () => btn.classList.remove('pulse'), { once: true });
+
+    state.checkins.push(t);
+
+    if (state.checkins.length >= state.duration) {
+      state.complete = true;
+      updateHabit(state);
+      setTimeout(() => {
+        document.getElementById('complete-habit-name').textContent = state.habit.toUpperCase();
+        document.getElementById('complete-days').textContent = state.checkins.length;
+        showScreen('complete');
+      }, 600);
+      return;
+    }
+
+    updateHabit(state);
+    renderActive(state);
+  });
+
+  // ── Abandon ──
+  document.getElementById('abandon-btn').addEventListener('click', () => {
+    if (confirm('Abandon this challenge? Your progress will be lost.')) {
+      removeHabit(activeHabitId);
+      renderDashboard();
+    }
+  });
+
+  // ── Restart after break ──
+  document.getElementById('restart-btn').addEventListener('click', () => {
+    const habit = getHabit(activeHabitId);
+    if (!habit) {
+      showSetup();
+      return;
+    }
+    const restartedHabit = {
+      ...habit,
+      startDate: today(),
+      checkins: [],
+      complete: false
+    };
+    updateHabit(restartedHabit);
+    renderActive(restartedHabit);
+  });
+
+  // ── New habit after complete ──
+  document.getElementById('new-habit-btn').addEventListener('click', showSetup);
+  document.getElementById('add-habit-btn').addEventListener('click', showSetup);
+  document.getElementById('setup-back-btn').addEventListener('click', renderDashboard);
+  document.getElementById('active-back-btn').addEventListener('click', renderDashboard);
+  document.getElementById('broken-back-btn').addEventListener('click', renderDashboard);
+  document.getElementById('complete-back-btn').addEventListener('click', renderDashboard);
+  document.querySelectorAll('.js-about-btn').forEach(btn => {
+    btn.addEventListener('click', openAbout);
+  });
+  document.getElementById('about-close-btn').addEventListener('click', closeAbout);
+  window.addEventListener('pageshow', closeAbout);
+  window.addEventListener('keydown', event => {
+    if (event.key === 'Escape') closeAbout();
+  });
+
+  init();
+</script>
+</body>
+</html>

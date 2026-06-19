@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-label="VOXos Docs">
+  <rect width="1200" height="630" fill="#faf7ed"/>
+  <rect x="84" y="78" width="1032" height="474" fill="#fffdf6" stroke="#d7c9a8" stroke-width="2"/>
+  <rect x="126" y="132" width="152" height="112" fill="#171512"/>
+  <rect x="126" y="132" width="26" height="26" fill="#276749"/>
+  <rect x="252" y="132" width="26" height="26" fill="#276749"/>
+  <rect x="126" y="218" width="26" height="26" fill="#276749"/>
+  <text x="166" y="202" fill="#fff2c8" font-family="system-ui, -apple-system, sans-serif" font-size="40" font-weight="300">Vox</text>
+  <text x="230" y="209" fill="#7fd09d" font-family="system-ui, -apple-system, sans-serif" font-size="26" font-weight="300">OS</text>
+  <text x="326" y="176" fill="#276749" font-family="system-ui, -apple-system, sans-serif" font-size="18" font-weight="700">NATIVE IOS COMMAND OS</text>
+  <text x="326" y="234" fill="#171512" font-family="system-ui, -apple-system, sans-serif" font-size="58" font-weight="500">VOXos Documentation</text>
+  <text x="326" y="294" fill="#665f50" font-family="system-ui, -apple-system, sans-serif" font-size="25">Setup guides, integration runbooks, feature logs, and validation notes.</text>
+  <rect x="326" y="360" width="218" height="58" fill="#276749"/>
+  <text x="366" y="397" fill="#fffdf6" font-family="system-ui, -apple-system, sans-serif" font-size="22" font-weight="600">Open docs</text>
+  <rect x="566" y="360" width="218" height="58" fill="#f2ead9" stroke="#d7c9a8" stroke-width="2"/>
+  <text x="606" y="397" fill="#171512" font-family="system-ui, -apple-system, sans-serif" font-size="22" font-weight="600">Feature log</text>
+</svg>
