@@ -14,6 +14,7 @@ import TempMailCaseStudy from "./Views/CaseStudy/TempMailCaseStudy";
 import WisprFlowCaseStudy from "./Views/CaseStudy/WisprFlowCaseStudy";
 import WorkflowyCaseStudy from "./Views/CaseStudy/WorkflowyCaseStudy";
 import Projects from "./Views/Projects/Projects";
+import Print from "./Views/Print/Print";
 import Work from "./Work";
 
 function App() {
@@ -44,6 +45,7 @@ function App() {
         <Route path="/workflowy-case-study" element={<WorkflowyCaseStudy />} />
         <Route path="/projects" element={<Projects />} />
         <Route path="/work" element={<Work />} />
+        <Route path="/print" element={<Print />} />
       </Routes>
     </Router>
   );
