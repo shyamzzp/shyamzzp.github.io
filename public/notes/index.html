@@ -4,6 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Notes</title>
+<script>/* Apply the saved theme before paint to avoid a flash of the default theme */
+try { var _t = localStorage.getItem('notes_theme'); if (_t) document.documentElement.setAttribute('data-theme', _t); } catch (e) {}</script>
 <style>
   :root {
     --bg: #0a0e0a;
@@ -476,6 +478,31 @@
   .hl-mention { background: rgba(52,152,219,0.42); }
   .hl-tag     { background: rgba(26,188,156,0.42); }
   .hl-date    { background: rgba(149,165,166,0.4); }
+
+  /* ── Card flip (front board / back: next-day task) ── */
+  .flip-inner { flex: 1; display: flex; min-height: 0; min-width: 0; }
+  .card-back {
+    flex: 1; display: none; flex-direction: column;
+    min-height: 0; background: var(--cell-bg);
+  }
+  .section.flipped .cell-body { display: none; }
+  .section.flipped .card-back { display: flex; }
+  .card-back-label {
+    flex-shrink: 0;
+    font-family: 'Courier New', monospace;
+    font-size: 9px; letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--title-text);
+    padding: 3px 8px;
+    background: color-mix(in srgb, var(--text) 14%, var(--title-bg));
+    border-bottom: 1px solid var(--border);
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .card-back-label .hint { opacity: 0.6; text-transform: none; letter-spacing: 0; }
+  .section.flip-anim .flip-inner { animation: cardFlip 0.4s ease; }
+  @keyframes cardFlip {
+    from { transform: perspective(700px) rotateY(-90deg); opacity: 0.15; }
+    to   { transform: none; opacity: 1; }
+  }
 
   /* ── Cell body & split panes ── */
   .cell-body {
@@ -1063,6 +1090,7 @@
   // Section state grows dynamically (infinite scroll); arrays are appended to.
   const sectionColors = [];     // null = default
   const sectionStruck = [];     // per-card strikethrough flag
+  const backTextareas = [];     // per-card "next-day task" (back face)
   const sectionFontSizes = [];  // per-section font size
   const splitModes = [];        // null | 'row' (side by side) | 'col' (stacked)
   const splitPos = [];          // first pane size, percent
@@ -1227,6 +1255,18 @@
     autoSave();
   }
 
+  // Flip a card between its front (board) and back (next-day task).
+  function flipCard(i) {
+    const sec = sections[i];
+    if (!sec) return;
+    sec.classList.add('flip-anim');
+    setTimeout(() => sec.classList.remove('flip-anim'), 400);
+    sec.classList.toggle('flipped');
+    const onBack = sec.classList.contains('flipped');
+    const target = onBack ? backTextareas[i] : textareas[i];
+    if (target) target.focus();
+  }
+
   // ── In-text highlighting ──
   // A single tokenizer pass colors several token types without nesting.
   const HL_RE = new RegExp([
@@ -1383,8 +1423,33 @@
     textareas[i] = ta;
     body.appendChild(ta._wrap);
 
+    // Flip container: front (board) + back (next-day task)
+    const flip = document.createElement('div');
+    flip.className = 'flip-inner';
+    const back = document.createElement('div');
+    back.className = 'card-back';
+    const backLabel = document.createElement('div');
+    backLabel.className = 'card-back-label';
+    backLabel.innerHTML = '<span>Next-day task</span><span class="hint">Ctrl/⌘ + double-click to flip</span>';
+    const taBack = document.createElement('textarea');
+    taBack.className = 'textarea card-back-ta';
+    taBack.placeholder = 'tomorrow…';
+    taBack.spellcheck = false;
+    taBack.style.fontSize = globalFontSize + 'px';
+    taBack.addEventListener('input', autoSave);
+    backTextareas[i] = taBack;
+    back.appendChild(backLabel);
+    back.appendChild(taBack);
+    flip.appendChild(body);
+    flip.appendChild(back);
+
+    // Ctrl/Cmd + double-click flips the focused card.
+    sec.addEventListener('dblclick', e => {
+      if (e.ctrlKey || e.metaKey) { e.preventDefault(); flipCard(i); }
+    });
+
     sec.appendChild(hdr);
-    sec.appendChild(body);
+    sec.appendChild(flip);
     grid.appendChild(sec);
 
     titleInput.addEventListener('input', autoSave);
@@ -1542,6 +1607,7 @@
       notes.forEach((n, i) => {
         textareas[i].value = n.text || '';
         titles[i].value = n.title || '';
+        if (backTextareas[i]) backTextareas[i].value = n.back || '';
         if (n.color !== undefined) sectionColors[i] = n.color;
         applyCardStrike(i, !!n.struck);
         if (n.fontSize) { sectionFontSizes[i] = n.fontSize; applyTaFontSize(textareas[i], n.fontSize); }
@@ -1584,7 +1650,8 @@
            !sectionStruck[i] &&
            !splitModes[i] &&
            sectionFontSizes[i] === globalFontSize &&
-           !(textareas2[i] && textareas2[i].value);
+           !(textareas2[i] && textareas2[i].value) &&
+           !(backTextareas[i] && backTextareas[i].value);
   }
   function currentState() {
     // Trim trailing empty sections so the infinite grid doesn't bloat storage.
@@ -1600,7 +1667,8 @@
         fontSize: sectionFontSizes[i],
         split: splitModes[i] || null,
         splitPos: splitPos[i],
-        text2: textareas2[i] ? textareas2[i].value : ''
+        text2: textareas2[i] ? textareas2[i].value : '',
+        back: backTextareas[i] ? backTextareas[i].value : ''
       });
     }
     return { notes, theme, cardHeight, fontFamily, globalFontSize };
@@ -1630,7 +1698,8 @@
       fontSize: sectionFontSizes[i],
       split: splitModes[i] || null,
       splitPos: splitPos[i],
-      text2: textareas2[i] ? textareas2[i].value : ''
+      text2: textareas2[i] ? textareas2[i].value : '',
+      back: backTextareas[i] ? backTextareas[i].value : ''
     };
   }
   function applyNote(i, n) {
@@ -1647,6 +1716,7 @@
     }
     applyColor(i, n.color || null);
     applyCardStrike(i, !!n.struck);
+    if (backTextareas[i]) backTextareas[i].value = n.back || '';
     updateHighlight(textareas[i]);
     updateWordCount(i);
   }
@@ -1722,6 +1792,7 @@
       sectionFontSizes[i] = globalFontSize;
       applyTaFontSize(textareas[i], globalFontSize);
       if (textareas2[i]) applyTaFontSize(textareas2[i], globalFontSize);
+      if (backTextareas[i]) backTextareas[i].style.fontSize = globalFontSize + 'px';
     }
     updateGlobalFontUI();
     updateFontSizeUI();
@@ -1852,6 +1923,7 @@
     if (!THEMES.some(x => x.id === t)) t = 'dark';
     theme = t;
     document.documentElement.setAttribute('data-theme', t);
+    try { localStorage.setItem('notes_theme', t); } catch (e) {} // cache to avoid flicker next load
     const meta = THEMES.find(x => x.id === t);
     document.getElementById('theme-btn').textContent = '◑ ' + meta.label;
     reapplyAllColors();
@@ -1997,6 +2069,8 @@
       sectionColors[i] = null;
       applyColor(i, null);
       applyCardStrike(i, false);
+      if (backTextareas[i]) backTextareas[i].value = '';
+      if (sections[i]) sections[i].classList.remove('flipped');
       if (textareas2[i]) { textareas2[i].value = ''; updateHighlight(textareas2[i]); }
       splitPos[i] = 50;
       if (splitModes[i]) setSplit(i, null);
@@ -2410,6 +2484,7 @@
   }
 
   // ── Init ──
+  try { var _ct = localStorage.getItem('notes_theme'); if (_ct && THEMES.some(x => x.id === _ct)) applyTheme(_ct, false); } catch (e) {}
   ensureSections(INITIAL_ROWS * COLS); // baseline grid
   applyCardHeight();
   applyFilters();
