@@ -2318,7 +2318,12 @@ try { var _t = localStorage.getItem('notes_theme'); if (_t) document.documentEle
     });
     if (!res.ok) { flashStatus('Rename failed (HTTP ' + res.status + ')', true); return; }
     sp.title = title;
-    if (currentSpace && currentSpace.id === sp.id) { setCurrentSpaceLabel(); document.title = title + ' — Notes'; }
+    // Keep the open space object in sync so a later autosave won't write the old title back.
+    if (currentSpace && currentSpace.id === sp.id) {
+      currentSpace.title = title;
+      setCurrentSpaceLabel();
+      document.title = title + ' — Notes';
+    }
     renderSpaces();
     flashStatus('Renamed ✓');
   }
