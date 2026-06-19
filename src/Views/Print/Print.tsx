@@ -5,12 +5,9 @@ const ROWS = 4;
 const COLS = 3;
 const CELL_COUNT = ROWS * COLS;
 
-const CATEGORIES = ["personal", "work", "other"] as const;
-type Category = (typeof CATEGORIES)[number];
-
 type Cell = {
   text: string;
-  category: Category;
+  category: string;
 };
 
 type SheetState = {
@@ -19,7 +16,7 @@ type SheetState = {
 };
 
 const emptyCells = (): Cell[] =>
-  Array.from({ length: CELL_COUNT }, () => ({ text: "", category: "personal" }));
+  Array.from({ length: CELL_COUNT }, () => ({ text: "", category: "" }));
 
 const formatDate = (offsetDays: number): string => {
   const d = new Date();
@@ -27,14 +24,12 @@ const formatDate = (offsetDays: number): string => {
   return d.toISOString().slice(0, 10);
 };
 
-const STORAGE_KEY = "print-planner-v1";
+const STORAGE_KEY = "print-planner-v2";
 
 function Sheet({
-  title,
   state,
   onChange,
 }: {
-  title: string;
   state: SheetState;
   onChange: (next: SheetState) => void;
 }) {
@@ -48,33 +43,24 @@ function Sheet({
   return (
     <div className="sheet">
       <div className="sheet-header">
-        <span className="sheet-title">{title}</span>
-        <span className="sheet-date">
-          <input
-            type="date"
-            value={state.date}
-            onChange={(e) => onChange({ ...state, date: e.target.value })}
-          />
-        </span>
+        <input
+          className="sheet-date"
+          type="date"
+          value={state.date}
+          onChange={(e) => onChange({ ...state, date: e.target.value })}
+        />
       </div>
 
       <div className="grid">
         {state.cells.map((cell, i) => (
-          <div className="cell" data-category={cell.category} key={i}>
-            <div className="cell-category">
-              <select
-                value={cell.category}
-                onChange={(e) =>
-                  updateCell(i, { category: e.target.value as Category })
-                }
-              >
-                {CATEGORIES.map((cat) => (
-                  <option key={cat} value={cat}>
-                    {cat.charAt(0).toUpperCase() + cat.slice(1)}
-                  </option>
-                ))}
-              </select>
-            </div>
+          <div className="cell" key={i}>
+            <input
+              className="cell-category"
+              type="text"
+              placeholder="Category"
+              value={cell.category}
+              onChange={(e) => updateCell(i, { category: e.target.value })}
+            />
             <textarea
               className="cell-textarea"
               placeholder="Task details…"
@@ -98,7 +84,6 @@ function Print() {
     cells: emptyCells(),
   });
 
-  // Load any previously saved planner
   useEffect(() => {
     try {
       const raw = localStorage.getItem(STORAGE_KEY);
@@ -112,7 +97,6 @@ function Print() {
     }
   }, []);
 
-  // Persist on change
   useEffect(() => {
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify({ today, tomorrow }));
@@ -126,6 +110,10 @@ function Print() {
     setTomorrow({ date: formatDate(1), cells: emptyCells() });
   };
 
+  // Export uses the browser's print dialog -> "Save as PDF".
+  // The @page / @media print rules below produce clean A4 portrait pages.
+  const handleExport = () => window.print();
+
   return (
     <div className="print-page">
       <div className="print-toolbar">
@@ -134,15 +122,15 @@ function Print() {
           <button className="print-btn secondary" onClick={handleClear}>
             Clear
           </button>
-          <button className="print-btn" onClick={() => window.print()}>
-            Print
+          <button className="print-btn" onClick={handleExport}>
+            Export PDF
           </button>
         </div>
       </div>
 
       <div className="sheets">
-        <Sheet title="Today" state={today} onChange={setToday} />
-        <Sheet title="Tomorrow" state={tomorrow} onChange={setTomorrow} />
+        <Sheet state={today} onChange={setToday} />
+        <Sheet state={tomorrow} onChange={setTomorrow} />
       </div>
     </div>
   );
