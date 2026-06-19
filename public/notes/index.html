@@ -838,84 +838,82 @@ try { var _t = localStorage.getItem('notes_theme'); if (_t) document.documentEle
     .login-overlay::before, .login-overlay::after, .login-box::before, .login-title .caret { animation: none !important; }
   }
 
-  /* ── Spaces landing ── */
-  .spaces-overlay {
-    position: fixed;
-    inset: 0;
-    z-index: 900;
-    overflow: auto;
-    background:
-      radial-gradient(1200px 600px at 50% -10%, color-mix(in srgb, var(--text) 12%, var(--bg)), var(--bg) 60%),
-      var(--bg);
-    animation: lo-fade 0.4s ease both;
+  /* ── Spaces sidebar (off-canvas) ── */
+  #space-backdrop {
+    position: fixed; inset: 0; z-index: 850;
+    background: rgba(0,0,0,0.45);
+    opacity: 0; pointer-events: none; transition: opacity 0.2s;
   }
-  .spaces-overlay.hidden { display: none; }
-  .spaces-inner { max-width: 880px; margin: 0 auto; padding: 48px 24px 64px; }
-  .spaces-title {
-    color: var(--title-text);
-    font-family: 'Courier New', monospace;
-    font-size: 26px; font-weight: bold;
+  #space-backdrop.open { opacity: 1; pointer-events: auto; }
+  .sidebar {
+    position: fixed; top: 0; left: 0; bottom: 0; z-index: 860;
+    width: 270px; max-width: 84vw;
+    display: flex; flex-direction: column;
+    background: var(--toolbar-bg);
+    border-right: 1px solid var(--toolbar-border);
+    box-shadow: 4px 0 24px rgba(0,0,0,0.4);
+    transform: translateX(-100%);
+    transition: transform 0.24s cubic-bezier(.2,.8,.2,1);
   }
-  .spaces-sub {
-    color: var(--count-text);
-    font-family: 'Courier New', monospace;
-    font-size: 12px; margin-top: 4px;
+  .sidebar.open { transform: translateX(0); }
+  .sidebar-head {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 14px 14px 10px;
+    border-bottom: 1px solid var(--toolbar-border);
   }
-  .spaces-grid {
-    margin-top: 26px;
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
-    gap: 14px;
-  }
+  .sidebar-title { color: var(--title-text); font-family: 'Courier New', monospace; font-size: 15px; font-weight: bold; }
+  .sidebar-close { background: transparent; border: none; color: var(--count-text); font-size: 16px; cursor: pointer; }
+  .sidebar-close:hover { color: var(--text); }
+  #spaces-grid { flex: 1; overflow-y: auto; padding: 8px; display: flex; flex-direction: column; gap: 6px; }
   .space-tile {
     position: relative;
-    display: flex; flex-direction: column; gap: 8px;
-    min-height: 120px;
-    padding: 16px;
-    border-radius: 10px;
-    cursor: pointer;
+    display: flex; flex-direction: column; gap: 3px;
+    padding: 10px 12px; border-radius: 8px; cursor: pointer;
     color: var(--text);
-    background: color-mix(in srgb, var(--toolbar-bg) 80%, transparent);
-    border: 1px solid var(--toolbar-border);
+    background: color-mix(in srgb, var(--text) 6%, transparent);
+    border: 1px solid transparent;
     font-family: 'Courier New', monospace;
-    transition: transform 0.12s, box-shadow 0.18s, border-color 0.18s;
-    animation: lo-rise 0.45s ease both;
+    transition: background 0.15s, border-color 0.15s;
   }
-  .space-tile:hover {
-    transform: translateY(-2px);
-    border-color: var(--text);
-    box-shadow: 0 10px 30px rgba(0,0,0,0.45), 0 0 24px color-mix(in srgb, var(--text) 16%, transparent);
-  }
+  .space-tile:hover { border-color: var(--toolbar-border); background: color-mix(in srgb, var(--text) 12%, transparent); }
+  .space-tile.current { border-color: var(--text); background: color-mix(in srgb, var(--text) 14%, transparent); }
   .space-tile .st-kind {
-    align-self: flex-start;
-    font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase;
-    padding: 2px 7px; border-radius: 999px;
-    background: color-mix(in srgb, var(--text) 22%, transparent);
-    color: var(--title-text);
+    align-self: flex-start; font-size: 8px; letter-spacing: 0.12em; text-transform: uppercase;
+    padding: 1px 6px; border-radius: 999px;
+    background: color-mix(in srgb, var(--text) 22%, transparent); color: var(--title-text);
   }
-  .space-tile .st-name { font-size: 16px; font-weight: bold; color: var(--title-text); word-break: break-word; }
-  .space-tile .st-meta { margin-top: auto; font-size: 10px; color: var(--count-text); }
+  .space-tile .st-name { font-size: 14px; font-weight: bold; color: var(--title-text); word-break: break-word; }
+  .space-tile .st-meta { font-size: 9px; color: var(--count-text); }
   .space-tile .st-del {
     position: absolute; top: 8px; right: 8px;
     border: none; background: transparent; color: var(--count-text);
-    cursor: pointer; font-size: 12px; opacity: 0; transition: opacity 0.15s;
-    padding: 2px 5px; border-radius: 4px;
+    cursor: pointer; font-size: 12px; opacity: 0; transition: opacity 0.15s; padding: 2px 5px; border-radius: 4px;
   }
   .space-tile:hover .st-del { opacity: 0.8; }
   .space-tile .st-del:hover { background: color-mix(in srgb, #e0503030, transparent); color: #ff6f61; }
-  .space-tile.add { align-items: center; justify-content: center; border-style: dashed; }
-  .space-tile.add .plus { font-size: 34px; line-height: 1; color: var(--text); }
-  .space-tile.add .lbl { font-size: 11px; color: var(--count-text); }
+  .sidebar-foot { padding: 10px; border-top: 1px solid var(--toolbar-border); }
+  .add-space-btn {
+    width: 100%; padding: 9px; border-radius: 8px; cursor: pointer;
+    font-family: 'Courier New', monospace; font-size: 13px;
+    background: var(--btn-bg); color: var(--title-text);
+    border: 1px dashed color-mix(in srgb, var(--text) 45%, var(--toolbar-border));
+  }
+  .add-space-btn:hover { background: var(--btn-hover); }
+  #current-space {
+    color: var(--title-text); font-family: 'Courier New', monospace;
+    font-size: 12px; font-weight: bold; max-width: 200px;
+    overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  }
 
   .new-space-form {
-    margin-top: 22px; display: flex; gap: 8px; flex-wrap: wrap; align-items: center;
+    margin-top: 10px; display: flex; flex-direction: column; gap: 8px;
   }
   .new-space-form.hidden { display: none; }
   .new-space-form input, .new-space-form select, .new-space-form button {
     font-family: 'Courier New', monospace; font-size: 13px; padding: 9px 11px; border-radius: 6px;
     background: var(--search-bg); color: var(--text); border: 1px solid var(--search-border); outline: none;
   }
-  .new-space-form input { min-width: 220px; }
+  .new-space-form input { min-width: 0; }
   .new-space-form button { cursor: pointer; background: var(--btn-bg); color: var(--btn-text); border-color: var(--toolbar-border); }
   .new-space-form button[type="submit"] { color: var(--title-text); border-color: color-mix(in srgb, var(--text) 45%, var(--toolbar-border)); }
   .spaces-msg { margin-top: 14px; font-family: 'Courier New', monospace; font-size: 11px; color: var(--count-text); min-height: 14px; }
@@ -936,7 +934,8 @@ try { var _t = localStorage.getItem('notes_theme'); if (_t) document.documentEle
 <div id="toolbar">
   <!-- Spaces -->
   <div class="tb-group">
-    <button id="spaces-btn" title="Back to spaces">≡ Spaces</button>
+    <button id="menu-btn" title="Spaces menu">☰</button>
+    <span id="current-space"></span>
   </div>
   <div class="tb-sep"></div>
 
@@ -1036,14 +1035,16 @@ try { var _t = localStorage.getItem('notes_theme'); if (_t) document.documentEle
   </form>
 </div>
 
-<!-- Spaces landing -->
-<div id="spaces-overlay" class="spaces-overlay hidden">
-  <div class="spaces-inner">
-    <div class="spaces-head">
-      <div class="spaces-title">Your spaces</div>
-      <div class="spaces-sub">Pick a tracker, or create a new one. Each space has its own cards.</div>
-    </div>
-    <div id="spaces-grid" class="spaces-grid"></div>
+<!-- Spaces sidebar -->
+<div id="space-backdrop"></div>
+<aside id="sidebar" class="sidebar">
+  <div class="sidebar-head">
+    <span class="sidebar-title">Spaces</span>
+    <button id="sidebar-close" class="sidebar-close" title="Close">✕</button>
+  </div>
+  <div id="spaces-grid"></div>
+  <div class="sidebar-foot">
+    <button id="add-space-btn" class="add-space-btn">+ New space</button>
     <form id="new-space-form" class="new-space-form hidden">
       <input id="new-space-name" type="text" placeholder="Space name (e.g. Personal)" autocomplete="off" required>
       <select id="new-space-kind">
@@ -1056,7 +1057,7 @@ try { var _t = localStorage.getItem('notes_theme'); if (_t) document.documentEle
     </form>
     <div id="spaces-msg" class="spaces-msg"></div>
   </div>
-</div>
+</aside>
 
 <!-- Shared floating color picker -->
 <div id="color-popup" class="color-picker-popup hidden"></div>
@@ -2303,38 +2304,46 @@ try { var _t = localStorage.getItem('notes_theme'); if (_t) document.documentEle
     renderSpaces();
   }
 
-  // ── Views & routing ──
-  function showSpacesView() { document.getElementById('spaces-overlay').classList.remove('hidden'); }
-  function showBoardView() { document.getElementById('spaces-overlay').classList.add('hidden'); }
+  // ── Sidebar & routing ──
+  function openSidebar() {
+    document.getElementById('sidebar').classList.add('open');
+    document.getElementById('space-backdrop').classList.add('open');
+  }
+  function closeSidebar() {
+    document.getElementById('sidebar').classList.remove('open');
+    document.getElementById('space-backdrop').classList.remove('open');
+    document.getElementById('new-space-form').classList.add('hidden');
+  }
   function currentSlug() { return decodeURIComponent((location.hash || '').replace(/^#\/?/, '')).trim(); }
+  function setCurrentSpaceLabel() {
+    document.getElementById('current-space').textContent = currentSpace ? currentSpace.title : 'No space — open menu ☰';
+  }
 
   function renderSpaces() {
     const grid = document.getElementById('spaces-grid');
     grid.innerHTML = '';
+    if (!spaces.length) {
+      const empty = document.createElement('div');
+      empty.className = 'st-meta';
+      empty.style.padding = '10px';
+      empty.textContent = 'No spaces yet. Create one below.';
+      grid.appendChild(empty);
+    }
     spaces.forEach(sp => {
       const tile = document.createElement('div');
-      tile.className = 'space-tile';
+      tile.className = 'space-tile' + (currentSpace && currentSpace.id === sp.id ? ' current' : '');
       const kind = document.createElement('span'); kind.className = 'st-kind'; kind.textContent = KIND_LABELS[sp.kind] || sp.kind;
       const name = document.createElement('div'); name.className = 'st-name'; name.textContent = sp.title;
       const meta = document.createElement('div'); meta.className = 'st-meta'; meta.textContent = (sp.cards || 0) + ' card' + (sp.cards === 1 ? '' : 's');
       const del = document.createElement('button'); del.className = 'st-del'; del.title = 'Delete space'; del.textContent = '🗑';
       tile.appendChild(kind); tile.appendChild(name); tile.appendChild(meta); tile.appendChild(del);
-      tile.addEventListener('click', () => { location.hash = '#' + sp.slug; });
+      tile.addEventListener('click', () => { closeSidebar(); location.hash = '#' + sp.slug; });
       del.addEventListener('click', e => {
         e.stopPropagation();
         if (confirm('Delete space "' + sp.title + '" and all its cards?')) pbDeleteSpace(sp);
       });
       grid.appendChild(tile);
     });
-    const add = document.createElement('div');
-    add.className = 'space-tile add';
-    add.innerHTML = '<div class="plus">+</div><div class="lbl">New space</div>';
-    add.addEventListener('click', () => {
-      const f = document.getElementById('new-space-form');
-      f.classList.remove('hidden');
-      document.getElementById('new-space-name').focus();
-    });
-    grid.appendChild(add);
   }
 
   async function openSpaceBySlug(slug) {
@@ -2354,19 +2363,24 @@ try { var _t = localStorage.getItem('notes_theme'); if (_t) document.documentEle
     ensureSections(sections.length + GROW_ROWS * COLS);
     applyCardHeight();
     document.title = sp.title + ' — Notes';
-    showBoardView();
+    setCurrentSpaceLabel();
+    renderSpaces();
+    closeSidebar();
     flashStatus('Loaded ✓');
   }
 
   async function route() {
     const slug = currentSlug();
+    spaces = await pbListSpaces();
     if (!slug) {
+      // No space selected: keep the board full-width but open the menu to pick one.
       currentSpace = null; recordId = null;
-      document.title = 'Notes — Spaces';
-      spaces = await pbListSpaces();
+      document.title = 'Notes';
+      setCurrentSpaceLabel();
       renderSpaces();
-      showSpacesView();
+      openSidebar();
     } else {
+      renderSpaces();
       await openSpaceBySlug(slug);
     }
   }
@@ -2469,9 +2483,18 @@ try { var _t = localStorage.getItem('notes_theme'); if (_t) document.documentEle
       document.getElementById('new-space-form').classList.add('hidden');
       document.getElementById('spaces-msg').textContent = '';
     });
+    document.getElementById('add-space-btn').addEventListener('click', () => {
+      document.getElementById('new-space-form').classList.remove('hidden');
+      document.getElementById('new-space-name').focus();
+    });
 
-    // Toolbar: back to spaces
-    document.getElementById('spaces-btn').addEventListener('click', () => { location.hash = ''; });
+    // Sidebar toggles
+    document.getElementById('menu-btn').addEventListener('click', () => {
+      const sb = document.getElementById('sidebar');
+      if (sb.classList.contains('open')) closeSidebar(); else { renderSpaces(); openSidebar(); }
+    });
+    document.getElementById('sidebar-close').addEventListener('click', closeSidebar);
+    document.getElementById('space-backdrop').addEventListener('click', closeSidebar);
 
     // React to URL hash changes (per-space navigation).
     window.addEventListener('hashchange', () => {
