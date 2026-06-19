@@ -810,11 +810,109 @@
     .login-overlay, .login-box, .login-field, .login-box button[type="submit"] { animation: none !important; opacity: 1 !important; }
     .login-overlay::before, .login-overlay::after, .login-box::before, .login-title .caret { animation: none !important; }
   }
+
+  /* ── Spaces landing ── */
+  .spaces-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 900;
+    overflow: auto;
+    background:
+      radial-gradient(1200px 600px at 50% -10%, color-mix(in srgb, var(--text) 12%, var(--bg)), var(--bg) 60%),
+      var(--bg);
+    animation: lo-fade 0.4s ease both;
+  }
+  .spaces-overlay.hidden { display: none; }
+  .spaces-inner { max-width: 880px; margin: 0 auto; padding: 48px 24px 64px; }
+  .spaces-title {
+    color: var(--title-text);
+    font-family: 'Courier New', monospace;
+    font-size: 26px; font-weight: bold;
+  }
+  .spaces-sub {
+    color: var(--count-text);
+    font-family: 'Courier New', monospace;
+    font-size: 12px; margin-top: 4px;
+  }
+  .spaces-grid {
+    margin-top: 26px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+    gap: 14px;
+  }
+  .space-tile {
+    position: relative;
+    display: flex; flex-direction: column; gap: 8px;
+    min-height: 120px;
+    padding: 16px;
+    border-radius: 10px;
+    cursor: pointer;
+    color: var(--text);
+    background: color-mix(in srgb, var(--toolbar-bg) 80%, transparent);
+    border: 1px solid var(--toolbar-border);
+    font-family: 'Courier New', monospace;
+    transition: transform 0.12s, box-shadow 0.18s, border-color 0.18s;
+    animation: lo-rise 0.45s ease both;
+  }
+  .space-tile:hover {
+    transform: translateY(-2px);
+    border-color: var(--text);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.45), 0 0 24px color-mix(in srgb, var(--text) 16%, transparent);
+  }
+  .space-tile .st-kind {
+    align-self: flex-start;
+    font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase;
+    padding: 2px 7px; border-radius: 999px;
+    background: color-mix(in srgb, var(--text) 22%, transparent);
+    color: var(--title-text);
+  }
+  .space-tile .st-name { font-size: 16px; font-weight: bold; color: var(--title-text); word-break: break-word; }
+  .space-tile .st-meta { margin-top: auto; font-size: 10px; color: var(--count-text); }
+  .space-tile .st-del {
+    position: absolute; top: 8px; right: 8px;
+    border: none; background: transparent; color: var(--count-text);
+    cursor: pointer; font-size: 12px; opacity: 0; transition: opacity 0.15s;
+    padding: 2px 5px; border-radius: 4px;
+  }
+  .space-tile:hover .st-del { opacity: 0.8; }
+  .space-tile .st-del:hover { background: color-mix(in srgb, #e0503030, transparent); color: #ff6f61; }
+  .space-tile.add { align-items: center; justify-content: center; border-style: dashed; }
+  .space-tile.add .plus { font-size: 34px; line-height: 1; color: var(--text); }
+  .space-tile.add .lbl { font-size: 11px; color: var(--count-text); }
+
+  .new-space-form {
+    margin-top: 22px; display: flex; gap: 8px; flex-wrap: wrap; align-items: center;
+  }
+  .new-space-form.hidden { display: none; }
+  .new-space-form input, .new-space-form select, .new-space-form button {
+    font-family: 'Courier New', monospace; font-size: 13px; padding: 9px 11px; border-radius: 6px;
+    background: var(--search-bg); color: var(--text); border: 1px solid var(--search-border); outline: none;
+  }
+  .new-space-form input { min-width: 220px; }
+  .new-space-form button { cursor: pointer; background: var(--btn-bg); color: var(--btn-text); border-color: var(--toolbar-border); }
+  .new-space-form button[type="submit"] { color: var(--title-text); border-color: color-mix(in srgb, var(--text) 45%, var(--toolbar-border)); }
+  .spaces-msg { margin-top: 14px; font-family: 'Courier New', monospace; font-size: 11px; color: var(--count-text); min-height: 14px; }
+
+  /* Card-level strike: whole card shown struck */
+  .section.struck .textarea { text-decoration: line-through; text-decoration-thickness: 1px; opacity: 0.72; }
+  .section.struck .section-title { text-decoration: line-through; }
+  .strike-btn {
+    background: transparent; border: none; color: var(--count-text);
+    font-size: 11px; line-height: 1; padding: 0 3px; cursor: pointer; flex-shrink: 0;
+  }
+  .strike-btn:hover { color: var(--text); }
+  .section.struck .strike-btn { color: var(--text); }
 </style>
 </head>
 <body>
 
 <div id="toolbar">
+  <!-- Spaces -->
+  <div class="tb-group">
+    <button id="spaces-btn" title="Back to spaces">≡ Spaces</button>
+  </div>
+  <div class="tb-sep"></div>
+
   <!-- Theme -->
   <div class="tb-group">
     <button id="theme-btn" title="Toggle theme">◑ Theme</button>
@@ -911,6 +1009,28 @@
   </form>
 </div>
 
+<!-- Spaces landing -->
+<div id="spaces-overlay" class="spaces-overlay hidden">
+  <div class="spaces-inner">
+    <div class="spaces-head">
+      <div class="spaces-title">Your spaces</div>
+      <div class="spaces-sub">Pick a tracker, or create a new one. Each space has its own cards.</div>
+    </div>
+    <div id="spaces-grid" class="spaces-grid"></div>
+    <form id="new-space-form" class="new-space-form hidden">
+      <input id="new-space-name" type="text" placeholder="Space name (e.g. Personal)" autocomplete="off" required>
+      <select id="new-space-kind">
+        <option value="personal">Personal</option>
+        <option value="office">Office</option>
+        <option value="other">Other</option>
+      </select>
+      <button type="submit">Create</button>
+      <button type="button" id="new-space-cancel">Cancel</button>
+    </form>
+    <div id="spaces-msg" class="spaces-msg"></div>
+  </div>
+</div>
+
 <!-- Shared floating color picker -->
 <div id="color-popup" class="color-picker-popup hidden"></div>
 
@@ -942,6 +1062,7 @@
   let theme = 'dark';
   // Section state grows dynamically (infinite scroll); arrays are appended to.
   const sectionColors = [];     // null = default
+  const sectionStruck = [];     // per-card strikethrough flag
   const sectionFontSizes = [];  // per-section font size
   const splitModes = [];        // null | 'row' (side by side) | 'col' (stacked)
   const splitPos = [];          // first pane size, percent
@@ -1097,6 +1218,15 @@
     sectionColors.forEach((c, i) => applyColor(i, c));
   }
 
+  function applyCardStrike(i, on) {
+    sectionStruck[i] = !!on;
+    if (sections[i]) sections[i].classList.toggle('struck', !!on);
+  }
+  function toggleCardStrike(i) {
+    applyCardStrike(i, !sectionStruck[i]);
+    autoSave();
+  }
+
   // ── In-text highlighting ──
   // A single tokenizer pass colors several token types without nesting.
   const HL_RE = new RegExp([
@@ -1151,6 +1281,7 @@
   // Build one section at index i and append it to the grid.
   function createSection(i) {
     sectionColors[i] = null;
+    sectionStruck[i] = false;
     sectionFontSizes[i] = globalFontSize;
     splitModes[i] = null;
     splitPos[i] = 50;
@@ -1218,6 +1349,13 @@
       openPopup(i, dot);
     });
 
+    // Card-level strikethrough toggle
+    const strikeCardBtn = document.createElement('button');
+    strikeCardBtn.className = 'strike-btn';
+    strikeCardBtn.innerHTML = 'S&#822;';
+    strikeCardBtn.title = 'Strike out this whole card';
+    strikeCardBtn.addEventListener('click', e => { e.stopPropagation(); toggleCardStrike(i); });
+
     // Split control
     const splitBtn = document.createElement('button');
     splitBtn.className = 'split-btn';
@@ -1233,6 +1371,7 @@
     hdr.appendChild(grip);
     hdr.appendChild(titleInput);
     hdr.appendChild(wc);
+    hdr.appendChild(strikeCardBtn);
     hdr.appendChild(splitBtn);
     hdr.appendChild(dot);
 
@@ -1404,6 +1543,7 @@
         textareas[i].value = n.text || '';
         titles[i].value = n.title || '';
         if (n.color !== undefined) sectionColors[i] = n.color;
+        applyCardStrike(i, !!n.struck);
         if (n.fontSize) { sectionFontSizes[i] = n.fontSize; applyTaFontSize(textareas[i], n.fontSize); }
         if (n.split) {
           splitPos[i] = (typeof n.splitPos === 'number') ? n.splitPos : 50;
@@ -1441,6 +1581,7 @@
     return !textareas[i].value &&
            !titles[i].value &&
            !sectionColors[i] &&
+           !sectionStruck[i] &&
            !splitModes[i] &&
            sectionFontSizes[i] === globalFontSize &&
            !(textareas2[i] && textareas2[i].value);
@@ -1455,6 +1596,7 @@
         text: textareas[i].value,
         title: titles[i].value,
         color: sectionColors[i] || null,
+        struck: !!sectionStruck[i],
         fontSize: sectionFontSizes[i],
         split: splitModes[i] || null,
         splitPos: splitPos[i],
@@ -1484,6 +1626,7 @@
       text: textareas[i].value,
       title: titles[i].value,
       color: sectionColors[i] || null,
+      struck: !!sectionStruck[i],
       fontSize: sectionFontSizes[i],
       split: splitModes[i] || null,
       splitPos: splitPos[i],
@@ -1503,6 +1646,7 @@
       updateHighlight(textareas2[i]);
     }
     applyColor(i, n.color || null);
+    applyCardStrike(i, !!n.struck);
     updateHighlight(textareas[i]);
     updateWordCount(i);
   }
@@ -1846,13 +1990,13 @@
   });
 
   // ── Clear all ──
-  document.getElementById('clear-btn').addEventListener('click', () => {
-    if (!confirm('Clear all sections? This cannot be undone.')) return;
+  function clearAllSections() {
     textareas.forEach((ta, i) => {
       ta.value = '';
       titles[i].value = '';
       sectionColors[i] = null;
       applyColor(i, null);
+      applyCardStrike(i, false);
       if (textareas2[i]) { textareas2[i].value = ''; updateHighlight(textareas2[i]); }
       splitPos[i] = 50;
       if (splitModes[i]) setSplit(i, null);
@@ -1860,6 +2004,10 @@
       updateWordCount(i);
     });
     applyFilters();
+  }
+  document.getElementById('clear-btn').addEventListener('click', () => {
+    if (!confirm('Clear all cards in this space? This cannot be undone.')) return;
+    clearAllSections();
     autoSave();
   });
 
@@ -1960,11 +2108,13 @@
     const headers = pbHeaders();
     const attempts = [
       { name: PB_COLLECTION, type: 'base', fields: [
-        { name: 'key', type: 'text' },
+        { name: 'slug', type: 'text' }, { name: 'kind', type: 'text' },
+        { name: 'title', type: 'text' }, { name: 'cards', type: 'number' },
         { name: 'data', type: 'json', maxSize: 5000000 }
       ] },
       { name: PB_COLLECTION, type: 'base', schema: [
-        { name: 'key', type: 'text' },
+        { name: 'slug', type: 'text', options: {} }, { name: 'kind', type: 'text', options: {} },
+        { name: 'title', type: 'text', options: {} }, { name: 'cards', type: 'number', options: {} },
         { name: 'data', type: 'json', options: { maxSize: 5000000 } }
       ] }
     ];
@@ -1991,6 +2141,8 @@
     const wantNew = [];     // PB ≥0.23 "fields" format
     const wantOld = [];     // legacy "schema" format
     const defs = [
+      { name: 'slug',  newDef: { name: 'slug',  type: 'text' },                   oldDef: { name: 'slug',  type: 'text', options: {} } },
+      { name: 'kind',  newDef: { name: 'kind',  type: 'text' },                   oldDef: { name: 'kind',  type: 'text', options: {} } },
       { name: 'data',  newDef: { name: 'data',  type: 'json', maxSize: 5000000 }, oldDef: { name: 'data',  type: 'json', options: { maxSize: 5000000 } } },
       { name: 'title', newDef: { name: 'title', type: 'text' },                   oldDef: { name: 'title', type: 'text', options: {} } },
       { name: 'cards', newDef: { name: 'cards', type: 'number' },                 oldDef: { name: 'cards', type: 'number', options: {} } }
@@ -2009,74 +2161,162 @@
     });
   }
 
-  async function loadFromPB() {
-    flashStatus('Loading…', true);
+  // ── Spaces (multi-board) ──
+  let spaces = [];          // [{id, slug, title, kind, cards, data?}]
+  let currentSpace = null;  // open space, or null on the landing page
+  const KIND_LABELS = { personal: 'Personal', office: 'Office', other: 'Other' };
+
+  function slugify(s) {
+    return (s || '').toLowerCase().trim().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '').slice(0, 40) || 'space';
+  }
+  function emptyBoard() {
+    return JSON.stringify({ notes: [], theme: theme, fontFamily: fontFamily, globalFontSize: globalFontSize });
+  }
+  function cardCount() {
+    let n = 0;
+    for (let i = 0; i < sections.length; i++) if (!isEmptySection(i)) n++;
+    return n;
+  }
+
+  // Ensure the collection exists + has our fields. Throws {auth} / Error.
+  async function pbEnsureCollection() {
     if (isSuperuser) { try { await pbEnsureSchema(); } catch (e) {} }
-    let rec;
-    try {
-      rec = await pbFetchRecord();
-    } catch (err) {
-      if (err && err.missing) {
-        if (isSuperuser) {
-          flashStatus('Creating "' + PB_COLLECTION + '" collection…', true);
-          const ok = await pbCreateCollection();
-          if (!ok) throw new Error('Could not create collection "' + PB_COLLECTION + '" automatically — create it manually in PocketBase');
-          rec = await pbFetchRecord();
-        } else {
-          throw new Error('Collection "' + PB_COLLECTION + '" not found — ask an admin to create it');
-        }
-      } else {
-        throw err;
-      }
+    let res;
+    try { res = await fetch(PB_URL + '/api/collections/' + PB_COLLECTION + '/records?perPage=1', { headers: pbHeaders() }); }
+    catch (e) { throw new Error('Network/CORS error: ' + e.message); }
+    if (res.status === 401 || res.status === 403) throw { auth: true };
+    if (res.status === 404) {
+      if (!isSuperuser) throw new Error('Collection "' + PB_COLLECTION + '" not found — ask an admin to create it');
+      flashStatus('Creating "' + PB_COLLECTION + '" collection…', true);
+      const ok = await pbCreateCollection();
+      if (!ok) throw new Error('Could not create collection "' + PB_COLLECTION + '" automatically');
+      try { await pbEnsureSchema(); } catch (e) {}
+      return;
     }
-    if (rec) {
-      recordId = rec.id;
-      let d = rec.data;
-      if (typeof d === 'string') { try { d = JSON.parse(d); } catch (e) { d = {}; } }
-      applyState(d || {});
+    if (!res.ok) throw new Error('Load failed (HTTP ' + res.status + ')');
+  }
+
+  async function pbListSpaces() {
+    const res = await fetch(PB_URL + '/api/collections/' + PB_COLLECTION + '/records?perPage=200&sort=-updated', { headers: pbHeaders() });
+    if (res.status === 401 || res.status === 403) throw { auth: true };
+    if (!res.ok) throw new Error('Could not list spaces (HTTP ' + res.status + ')');
+    const data = await res.json();
+    return (data.items || []).map(it => ({
+      id: it.id,
+      slug: it.slug || slugify(it.title || it.id),
+      title: it.title || 'Untitled',
+      kind: it.kind || 'other',
+      cards: it.cards || 0,
+      data: it.data
+    }));
+  }
+
+  async function pbCreateSpace(title, kind) {
+    const slug = slugify(title);
+    const body = { slug: slug, title: title, kind: kind, data: emptyBoard(), cards: 0 };
+    const res = await fetch(PB_URL + '/api/collections/' + PB_COLLECTION + '/records', {
+      method: 'POST', headers: pbHeaders(), body: JSON.stringify(body)
+    });
+    if (!res.ok) { let m = 'Create failed (HTTP ' + res.status + ')'; try { const j = await res.json(); if (j && j.message) m += ' — ' + j.message; } catch (e) {} throw new Error(m); }
+    const rec = await res.json();
+    return { id: rec.id, slug: rec.slug || slug, title: title, kind: kind, cards: 0 };
+  }
+
+  async function pbDeleteSpace(sp) {
+    const res = await fetch(PB_URL + '/api/collections/' + PB_COLLECTION + '/records/' + sp.id, { method: 'DELETE', headers: pbHeaders() });
+    if (!res.ok && res.status !== 204) { flashStatus('Delete failed (HTTP ' + res.status + ')', true); return; }
+    spaces = spaces.filter(s => s.id !== sp.id);
+    renderSpaces();
+  }
+
+  // ── Views & routing ──
+  function showSpacesView() { document.getElementById('spaces-overlay').classList.remove('hidden'); }
+  function showBoardView() { document.getElementById('spaces-overlay').classList.add('hidden'); }
+  function currentSlug() { return decodeURIComponent((location.hash || '').replace(/^#\/?/, '')).trim(); }
+
+  function renderSpaces() {
+    const grid = document.getElementById('spaces-grid');
+    grid.innerHTML = '';
+    spaces.forEach(sp => {
+      const tile = document.createElement('div');
+      tile.className = 'space-tile';
+      const kind = document.createElement('span'); kind.className = 'st-kind'; kind.textContent = KIND_LABELS[sp.kind] || sp.kind;
+      const name = document.createElement('div'); name.className = 'st-name'; name.textContent = sp.title;
+      const meta = document.createElement('div'); meta.className = 'st-meta'; meta.textContent = (sp.cards || 0) + ' card' + (sp.cards === 1 ? '' : 's');
+      const del = document.createElement('button'); del.className = 'st-del'; del.title = 'Delete space'; del.textContent = '🗑';
+      tile.appendChild(kind); tile.appendChild(name); tile.appendChild(meta); tile.appendChild(del);
+      tile.addEventListener('click', () => { location.hash = '#' + sp.slug; });
+      del.addEventListener('click', e => {
+        e.stopPropagation();
+        if (confirm('Delete space "' + sp.title + '" and all its cards?')) pbDeleteSpace(sp);
+      });
+      grid.appendChild(tile);
+    });
+    const add = document.createElement('div');
+    add.className = 'space-tile add';
+    add.innerHTML = '<div class="plus">+</div><div class="lbl">New space</div>';
+    add.addEventListener('click', () => {
+      const f = document.getElementById('new-space-form');
+      f.classList.remove('hidden');
+      document.getElementById('new-space-name').focus();
+    });
+    grid.appendChild(add);
+  }
+
+  async function openSpaceBySlug(slug) {
+    let sp = spaces.find(s => s.slug === slug);
+    if (!sp) { spaces = await pbListSpaces(); sp = spaces.find(s => s.slug === slug); }
+    if (!sp) { flashStatus('Space "' + slug + '" not found', true); location.hash = ''; return; }
+    flashStatus('Loading…', true);
+    currentSpace = sp; recordId = sp.id;
+    clearAllSections();
+    let d = sp.data;
+    if (d === undefined) {
+      const r = await fetch(PB_URL + '/api/collections/' + PB_COLLECTION + '/records/' + sp.id, { headers: pbHeaders() });
+      if (r.ok) { const rec = await r.json(); d = rec.data; sp.data = d; }
     }
+    if (typeof d === 'string') { try { d = JSON.parse(d); } catch (e) { d = {}; } }
+    applyState(d || {});
     ensureSections(sections.length + GROW_ROWS * COLS);
+    applyCardHeight();
+    document.title = sp.title + ' — Notes';
+    showBoardView();
     flashStatus('Loaded ✓');
   }
 
-  // Human-readable summary for the admin table columns.
-  function boardSummary() {
-    let cards = 0, title = '';
-    for (let i = 0; i < sections.length; i++) {
-      if (!isEmptySection(i)) {
-        cards++;
-        if (!title) title = (titles[i].value || textareas[i].value || '').trim().slice(0, 80);
-      }
+  async function route() {
+    const slug = currentSlug();
+    if (!slug) {
+      currentSpace = null; recordId = null;
+      document.title = 'Notes — Spaces';
+      spaces = await pbListSpaces();
+      renderSpaces();
+      showSpacesView();
+    } else {
+      await openSpaceBySlug(slug);
     }
-    return { title: title || 'Notes board', cards: cards };
   }
+
   async function saveToPB() {
-    if (!authToken) return;
-    // Send `data` as a JSON string so it persists whether the field is typed
-    // as JSON or plain text. title/cards are extra columns (ignored by PB if
-    // the collection doesn't have them).
-    const sum = boardSummary();
-    const payload = { data: JSON.stringify(currentState()), title: sum.title, cards: sum.cards };
+    if (!authToken || !currentSpace) return; // only save while a space is open
+    const payload = {
+      data: JSON.stringify(currentState()),
+      title: currentSpace.title,
+      kind: currentSpace.kind,
+      slug: currentSpace.slug,
+      cards: cardCount()
+    };
     try {
-      let res;
-      if (recordId) {
-        res = await fetch(PB_URL + '/api/collections/' + PB_COLLECTION + '/records/' + recordId, {
-          method: 'PATCH', headers: pbHeaders(), body: JSON.stringify(payload)
-        });
-      } else {
-        res = await fetch(PB_URL + '/api/collections/' + PB_COLLECTION + '/records', {
-          method: 'POST', headers: pbHeaders(), body: JSON.stringify(payload)
-        });
-      }
+      const res = await fetch(PB_URL + '/api/collections/' + PB_COLLECTION + '/records/' + currentSpace.id, {
+        method: 'PATCH', headers: pbHeaders(), body: JSON.stringify(payload)
+      });
       if (res.status === 401 || res.status === 403) { handleAuthExpired(); return; }
       if (!res.ok) {
         let msg = 'Save failed (HTTP ' + res.status + ')';
-        if (res.status === 404) msg = 'Collection "' + PB_COLLECTION + '" not found — create it in PocketBase';
         try { const j = await res.json(); if (j && j.message) msg += ' — ' + j.message; } catch (e2) {}
         throw new Error(msg);
       }
-      const rec = await res.json();
-      recordId = rec.id;
+      currentSpace.cards = payload.cards;
       flashStatus('Saved ✓');
     } catch (e) {
       flashStatus((e && e.message) || 'Sync error — retrying…', true);
@@ -2098,8 +2338,9 @@
     setAccountUI();
     if (!authToken) { showLogin(); return; }
     try {
-      await loadFromPB();
+      await pbEnsureCollection();
       hideLogin();
+      await route();   // landing or a specific space based on the URL hash
     } catch (err) {
       if (err && err.auth) handleAuthExpired();
       else flashStatus((err && err.message) || 'Could not reach PocketBase', true);
@@ -2117,10 +2358,8 @@
       btn.disabled = true; btn.textContent = 'Signing in…';
       try {
         await pbLogin(email, password);
-        setAccountUI();
-        await loadFromPB();
-        hideLogin();
         document.getElementById('login-password').value = '';
+        await startSession();
       } catch (err) {
         errEl.textContent = (err && err.message) || 'Sign in failed';
         void errEl.offsetWidth;        // restart the shake animation
@@ -2131,7 +2370,42 @@
     });
     document.getElementById('logout-btn').addEventListener('click', () => {
       clearAuth();
+      location.hash = '';
       location.reload();
+    });
+
+    // New-space form
+    document.getElementById('new-space-form').addEventListener('submit', async e => {
+      e.preventDefault();
+      const name = document.getElementById('new-space-name').value.trim();
+      const kind = document.getElementById('new-space-kind').value;
+      const msg = document.getElementById('spaces-msg');
+      if (!name) return;
+      msg.textContent = 'Creating space…';
+      try {
+        const sp = await pbCreateSpace(name, kind);
+        spaces.unshift(sp);
+        document.getElementById('new-space-name').value = '';
+        document.getElementById('new-space-form').classList.add('hidden');
+        msg.textContent = '';
+        location.hash = '#' + sp.slug;   // navigate into the new space
+      } catch (err) { msg.textContent = (err && err.message) || 'Could not create space'; }
+    });
+    document.getElementById('new-space-cancel').addEventListener('click', () => {
+      document.getElementById('new-space-form').classList.add('hidden');
+      document.getElementById('spaces-msg').textContent = '';
+    });
+
+    // Toolbar: back to spaces
+    document.getElementById('spaces-btn').addEventListener('click', () => { location.hash = ''; });
+
+    // React to URL hash changes (per-space navigation).
+    window.addEventListener('hashchange', () => {
+      if (!authToken) return;
+      route().catch(err => {
+        if (err && err.auth) handleAuthExpired();
+        else flashStatus((err && err.message) || 'Navigation error', true);
+      });
     });
   }
 
@@ -2145,7 +2419,7 @@
     applyCardHeight();
   } else {
     loadAuth();
-    startSession();                                     // login + load from PocketBase
+    startSession();                                     // login → spaces/board
   }
 })();
 </script>
