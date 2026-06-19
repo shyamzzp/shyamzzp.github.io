@@ -240,11 +240,12 @@ try { var _t = localStorage.getItem('notes_theme'); if (_t) document.documentEle
 
   /* ── Toolbar ── */
   #toolbar {
-    --tb-h: 26px;
+    --tb-h: 28px;
     display: flex;
     align-items: center;
-    gap: 6px;
-    padding: 4px 8px;
+    column-gap: 14px;      /* clear spacing between action groups */
+    row-gap: 8px;          /* breathing room when it wraps to a 2nd line */
+    padding: 7px 12px;
     background: var(--toolbar-bg);
     border-bottom: 1px solid var(--toolbar-border);
     flex-shrink: 0;
@@ -254,7 +255,7 @@ try { var _t = localStorage.getItem('notes_theme'); if (_t) document.documentEle
   .tb-group {
     display: flex;
     align-items: center;
-    gap: 3px;
+    gap: 4px;              /* tight grouping for controls that belong together */
     height: var(--tb-h);
   }
 
@@ -270,11 +271,14 @@ try { var _t = localStorage.getItem('notes_theme'); if (_t) document.documentEle
     line-height: 1;
   }
 
+  /* Group spacing is handled by the toolbar's column-gap; keep a faint
+     divider but let the gap do the separating (no extra margins). */
   .tb-sep {
     width: 1px;
-    height: 18px;
+    height: 16px;
     background: var(--toolbar-border);
-    margin: 0 3px;
+    margin: 0;
+    opacity: 0.6;
   }
 
   button {
