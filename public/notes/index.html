@@ -1438,7 +1438,7 @@ try { var _t = localStorage.getItem('notes_theme'); if (_t) document.documentEle
     back.className = 'card-back';
     const backLabel = document.createElement('div');
     backLabel.className = 'card-back-label';
-    backLabel.innerHTML = '<span>Next-day task</span><span class="hint">Ctrl/⌘ + double-click to flip</span>';
+    backLabel.innerHTML = '<span>Next-day task</span><span class="hint">Ctrl/⌘ + double-click, or double-tap Ctrl/⌘, to flip</span>';
     const taBack = document.createElement('textarea');
     taBack.className = 'textarea card-back-ta';
     taBack.placeholder = 'tomorrow…';
@@ -2066,6 +2066,39 @@ try { var _t = localStorage.getItem('notes_theme'); if (_t) document.documentEle
         searchInput.focus();
         searchInput.select();
       }
+    }
+  });
+
+  // ── Double-tap Ctrl (or ⌘) to flip the focused card ──
+  // Mirrors the Ctrl/⌘ + double-click gesture, but from the keyboard so you can
+  // flip to the "next-day task" face without reaching for the mouse.
+  function focusedSectionIndex() {
+    const el = document.activeElement;
+    if (el && el.closest) {
+      const sec = el.closest('.section');
+      if (sec) { const idx = sections.indexOf(sec); if (idx >= 0) return idx; }
+    }
+    return activeSectionIdx;
+  }
+  let lastCtrlUp = 0;
+  let ctrlUsedAsModifier = false;
+  document.addEventListener('keydown', (e) => {
+    // A non-modifier key pressed while Ctrl/⌘ is held means it's a shortcut
+    // (e.g. Ctrl+S), not a standalone tap — so don't treat the release as a tap.
+    if (e.key !== 'Control' && e.key !== 'Meta' && (e.ctrlKey || e.metaKey)) {
+      ctrlUsedAsModifier = true;
+    }
+  });
+  document.addEventListener('keyup', (e) => {
+    if (e.key !== 'Control' && e.key !== 'Meta') return;
+    if (ctrlUsedAsModifier) { ctrlUsedAsModifier = false; lastCtrlUp = 0; return; }
+    const now = Date.now();
+    if (lastCtrlUp && now - lastCtrlUp < 450) {
+      lastCtrlUp = 0;
+      const i = focusedSectionIndex();
+      if (i >= 0) flipCard(i);
+    } else {
+      lastCtrlUp = now;
     }
   });
 
