@@ -24,7 +24,7 @@ try { var _t = localStorage.getItem('notes_theme'); if (_t) document.documentEle
     --search-border: #3a6a3a;
     --highlight: rgba(80,255,80,0.28);
     --highlight-active: rgba(80,255,80,0.55);
-    --count-text: #5a9a5a;
+    --count-text: #7ec07e;
     --font-size: 13px;
   }
   html[data-theme="light"] {
@@ -64,7 +64,7 @@ try { var _t = localStorage.getItem('notes_theme'); if (_t) document.documentEle
     --search-border: #2a4a7a;
     --highlight: rgba(80,160,255,0.25);
     --highlight-active: rgba(80,160,255,0.5);
-    --count-text: #3a5a8a;
+    --count-text: #6f93c8;
   }
   /* Dracula — purple/pink dark */
   html[data-theme="dracula"] {
@@ -84,7 +84,7 @@ try { var _t = localStorage.getItem('notes_theme'); if (_t) document.documentEle
     --search-border: #6a4a8a;
     --highlight: rgba(255,121,198,0.22);
     --highlight-active: rgba(255,121,198,0.45);
-    --count-text: #6a5a8a;
+    --count-text: #9d88c2;
   }
   /* Carbon — neutral monochrome dark */
   html[data-theme="carbon"] {
@@ -104,7 +104,7 @@ try { var _t = localStorage.getItem('notes_theme'); if (_t) document.documentEle
     --search-border: #4a4a4a;
     --highlight: rgba(255,255,255,0.18);
     --highlight-active: rgba(255,255,255,0.38);
-    --count-text: #8a8a8a;
+    --count-text: #a6a6a6;
   }
   /* Nord — arctic blue-grey dark */
   html[data-theme="nord"] {
@@ -124,7 +124,7 @@ try { var _t = localStorage.getItem('notes_theme'); if (_t) document.documentEle
     --search-border: #5e81ac;
     --highlight: rgba(136,192,208,0.25);
     --highlight-active: rgba(136,192,208,0.5);
-    --count-text: #7b88a1;
+    --count-text: #98a4bd;
   }
   /* Matrix — intense green terminal */
   html[data-theme="matrix"] {
@@ -144,7 +144,7 @@ try { var _t = localStorage.getItem('notes_theme'); if (_t) document.documentEle
     --search-border: #1f8f4f;
     --highlight: rgba(0,255,102,0.3);
     --highlight-active: rgba(0,255,102,0.6);
-    --count-text: #2f9f5f;
+    --count-text: #4fcf7f;
   }
   /* Crimson — dark red ember */
   html[data-theme="crimson"] {
@@ -164,7 +164,7 @@ try { var _t = localStorage.getItem('notes_theme'); if (_t) document.documentEle
     --search-border: #7a3a44;
     --highlight: rgba(255,100,120,0.22);
     --highlight-active: rgba(255,100,120,0.45);
-    --count-text: #9a5a62;
+    --count-text: #c68a92;
   }
   /* Ocean — deep teal dark */
   html[data-theme="ocean"] {
@@ -184,7 +184,7 @@ try { var _t = localStorage.getItem('notes_theme'); if (_t) document.documentEle
     --search-border: #1f6a70;
     --highlight: rgba(95,224,216,0.24);
     --highlight-active: rgba(95,224,216,0.48);
-    --count-text: #4f8f90;
+    --count-text: #6fc1c0;
   }
   /* Amber — warm sepia light */
   html[data-theme="amber"] {
@@ -296,7 +296,7 @@ try { var _t = localStorage.getItem('notes_theme'); if (_t) document.documentEle
   button:hover { background: var(--btn-hover); }
   button.active { background: var(--btn-hover); border-color: var(--text); }
 
-  #font-size-display {
+  #font-size-display, #gfont-size-display, #card-h-display {
     color: var(--count-text);
     font-size: 11px;
     font-family: 'Courier New', monospace;
@@ -307,7 +307,7 @@ try { var _t = localStorage.getItem('notes_theme'); if (_t) document.documentEle
     color: var(--count-text);
     font-size: 10px;
     font-family: 'Courier New', monospace;
-    opacity: 0.55;
+    opacity: 0.8;
     margin-left: 2px;
   }
   button:disabled { opacity: 0.3; cursor: default; }
@@ -633,7 +633,7 @@ try { var _t = localStorage.getItem('notes_theme'); if (_t) document.documentEle
     color: var(--count-text);
     font-size: 10px;
     font-family: 'Courier New', monospace;
-    opacity: 0.55;
+    opacity: 0.8;
     margin-right: 2px;
   }
 

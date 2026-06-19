@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.css": "/static/css/main.6986a48f.css",
+    "main.css": "/static/css/main.2f0d6058.css",
     "main.js": "/static/js/main.18ade018.js",
     "static/js/41.d816575f.chunk.js": "/static/js/41.d816575f.chunk.js",
     "static/media/skype.png": "/static/media/skype.ab4e958cf232a0d52b44.png",
@@ -14,12 +14,12 @@
     "static/media/agile-development.md": "/static/media/agile-development.4ce4456c57805cf3acf0.md",
     "static/media/github-site.md": "/static/media/github-site.4ce4456c57805cf3acf0.md",
     "static/media/not-available.md": "/static/media/not-available.730b22ad26a5448338a4.md",
-    "main.6986a48f.css.map": "/static/css/main.6986a48f.css.map",
+    "main.2f0d6058.css.map": "/static/css/main.2f0d6058.css.map",
     "main.18ade018.js.map": "/static/js/main.18ade018.js.map",
     "41.d816575f.chunk.js.map": "/static/js/41.d816575f.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.6986a48f.css",
+    "static/css/main.2f0d6058.css",
     "static/js/main.18ade018.js"
   ]
 }
