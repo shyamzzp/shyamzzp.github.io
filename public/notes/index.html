@@ -2345,19 +2345,43 @@ try { var _t = localStorage.getItem('notes_theme'); if (_t) document.documentEle
   }
 
   // Rename a space (keeps the same slug/URL so existing links still work).
-  async function pbRenameSpace(sp, title) {
-    const res = await fetch(PB_URL + '/api/collections/' + PB_COLLECTION + '/records/' + sp.id, {
-      method: 'PATCH', headers: pbHeaders(), body: JSON.stringify({ title: title })
-    });
-    if (!res.ok) { flashStatus('Rename failed (HTTP ' + res.status + ')', true); return; }
+  function applySpaceTitle(sp, title) {
     sp.title = title;
-    // Keep the open space object in sync so a later autosave won't write the old title back.
+    // Keep the open space object in sync so the toolbar + a later autosave use the new title.
     if (currentSpace && currentSpace.id === sp.id) {
       currentSpace.title = title;
       setCurrentSpaceLabel();
       document.title = title + ' — Notes';
     }
     renderSpaces();
+  }
+  async function pbRenameSpace(sp, title) {
+    const prev = sp.title;
+    // Optimistic: show the new name in the toolbar/sidebar immediately, then persist.
+    applySpaceTitle(sp, title);
+    flashStatus('Renaming…', true);
+    let res;
+    try {
+      // Send the full record shape (not just title) so collections with stricter
+      // update rules accept it — same payload style the card autosave uses.
+      res = await fetch(PB_URL + '/api/collections/' + PB_COLLECTION + '/records/' + sp.id, {
+        method: 'PATCH', headers: pbHeaders(),
+        body: JSON.stringify({ title: title, slug: sp.slug, kind: sp.kind })
+      });
+    } catch (e) {
+      applySpaceTitle(sp, prev);
+      flashStatus('Rename failed — ' + ((e && e.message) || 'network error'), true);
+      return;
+    }
+    if (res.status === 401 || res.status === 403) { applySpaceTitle(sp, prev); handleAuthExpired(); return; }
+    if (!res.ok) {
+      // Revert the optimistic change and surface why it failed.
+      applySpaceTitle(sp, prev);
+      let m = 'Rename failed (HTTP ' + res.status + ')';
+      try { const j = await res.json(); if (j && j.message) m += ' — ' + j.message; } catch (e) {}
+      flashStatus(m, true);
+      return;
+    }
     flashStatus('Renamed ✓');
   }
 
