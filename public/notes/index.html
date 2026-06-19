@@ -872,6 +872,12 @@
   </div>
   <div class="tb-sep"></div>
 
+  <!-- Format -->
+  <div class="tb-group">
+    <button id="strike-btn" title="Strikethrough selected text">S&#822;</button>
+  </div>
+  <div class="tb-sep"></div>
+
   <!-- Save -->
   <div class="tb-group">
     <button id="save-btn" title="Save as HTML (Ctrl+S)">⬇ Save</button>
@@ -942,6 +948,7 @@
   let activeSectionIdx = -1; // index of currently focused textarea
   let dragSrcIdx = -1;       // section index being dragged
   let globalFontSize = 13;   // default font size applied to all cards
+  let lastFocusedTextarea = null; // most recently focused pane (for toolbar actions)
 
   // ── Color palette ──
   // Each entry: { id, label, dark:{hdr,ta,taFocus,border,title,dot}, light:{...} }
@@ -1276,7 +1283,7 @@
     wrap.appendChild(ta);
     applyTaFontSize(ta, sectionFontSizes[i]);
     ta.addEventListener('input', () => { updateHighlight(ta); updateWordCount(i); autoSave(); });
-    ta.addEventListener('focus', () => { activeSectionIdx = i; updateFontSizeUI(); });
+    ta.addEventListener('focus', () => { activeSectionIdx = i; lastFocusedTextarea = ta; updateFontSizeUI(); });
     ta.addEventListener('scroll', () => { backdrop.scrollTop = ta.scrollTop; backdrop.scrollLeft = ta.scrollLeft; });
     ta.addEventListener('keydown', (e) => {
       if (e.key === 'Tab') {
@@ -1579,6 +1586,35 @@
   document.getElementById('gfont-up').addEventListener('click', () => setGlobalFontSize(globalFontSize + 1));
   document.getElementById('gfont-down').addEventListener('click', () => setGlobalFontSize(globalFontSize - 1));
   updateGlobalFontUI();
+
+  // ── Strikethrough selected text (combining U+0336, works in plain textareas) ──
+  var STRIKE = String.fromCharCode(0x0336);
+  function toggleStrike(str) {
+    if (str.indexOf(STRIKE) !== -1) return str.split(STRIKE).join('');   // un-strike
+    return Array.from(str).map(ch => ch + STRIKE).join('');              // strike
+  }
+  const strikeBtn = document.getElementById('strike-btn');
+  // Keep the textarea focused/selected when the button is pressed.
+  strikeBtn.addEventListener('mousedown', e => e.preventDefault());
+  strikeBtn.addEventListener('click', () => {
+    let ta = document.activeElement;
+    if (!ta || ta.tagName !== 'TEXTAREA' || !ta.classList.contains('textarea')) ta = lastFocusedTextarea;
+    if (!ta) { flashStatus('Click into a card first'); return; }
+    const start = ta.selectionStart, end = ta.selectionEnd;
+    if (start == null || start === end) { flashStatus('Select text to strike'); return; }
+    const before = ta.value.slice(0, start);
+    const sel = ta.value.slice(start, end);
+    const after = ta.value.slice(end);
+    const replaced = toggleStrike(sel);
+    ta.value = before + replaced + after;
+    ta.focus();
+    ta.setSelectionRange(start, start + replaced.length);
+    updateHighlight(ta);
+    const idx = textareas.indexOf(ta);
+    const idx2 = idx === -1 ? textareas2.indexOf(ta) : idx;
+    if (idx2 !== -1) updateWordCount(idx2);
+    autoSave();
+  });
 
   // ── Uniform card height (all cards at once) ──
   let cardHeight = null; // null = Fit (auto rows to viewport)
