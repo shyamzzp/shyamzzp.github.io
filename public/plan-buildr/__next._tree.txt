@@ -9,4 +9,4 @@
 :HL["/plan-buildr/_next/static/media/GitLabMono_Italic-s.p.14ohnq1nhyt21.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
 :HL["/plan-buildr/_next/static/media/c77846bcb3371a93-s.p.17l2q2xazf7qv.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
 :HL["/plan-buildr/_next/static/media/ef598559186306ee-s.p.1by13-3l7ep6q.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
-0:{"tree":{"name":"","param":null,"prefetchHints":16,"slots":{"children":{"name":"__PAGE__","param":null,"prefetchHints":0,"slots":null}}},"staleTime":300,"buildId":"1pwIzkckAcQdOfmXIivSL"}
+0:{"tree":{"name":"","param":null,"prefetchHints":16,"slots":{"children":{"name":"__PAGE__","param":null,"prefetchHints":0,"slots":null}}},"staleTime":300,"buildId":"MwBhL-izPrCng_pkEkUpL"}
