@@ -1,4 +1,4 @@
-<svg width="232" height="48" viewBox="0 0 232 48" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="plan-buildr">
+<svg width="250" height="48" viewBox="0 0 250 48" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="plan-buildr — brief your coding agent">
   <rect width="48" height="48" rx="11" fill="#c4623a"/>
   <g fill="#f6efe2">
     <rect x="12" y="13" width="15" height="4.6" rx="2.3"/>
@@ -6,5 +6,6 @@
     <rect x="12" y="30.4" width="19" height="4.6" rx="2.3"/>
   </g>
   <rect x="30.5" y="12.2" width="6" height="6" rx="1.7" fill="#15120e"/>
-  <text x="62" y="32" font-family="Newsreader, 'Iowan Old Style', Georgia, 'Times New Roman', serif" font-size="27" font-weight="500" fill="#1b1712">plan-buildr</text>
+  <text x="62" y="27" font-family="Spectral, 'Iowan Old Style', Georgia, 'Times New Roman', serif" font-size="25" font-weight="600" letter-spacing="-0.3" fill="#1b1712">plan<tspan fill="#c4623a">-</tspan>buildr</text>
+  <text x="63" y="40" font-family="ui-monospace, 'SF Mono', Menlo, monospace" font-size="7.5" letter-spacing="2.2" fill="#8a7d6b">BRIEF YOUR CODING AGENT</text>
 </svg>
