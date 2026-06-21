@@ -42,16 +42,23 @@ self.addEventListener("fetch", (event) => {
   // Only handle our own origin + scope; let API/media/cross-origin hit the network.
   if (url.origin !== self.location.origin || !url.pathname.startsWith(BASE)) return;
 
-  // App navigations: network-first, fall back to cache (offline shell).
+  // App navigations: network-first, fall back to the cached shell offline.
   if (req.mode === "navigate") {
     event.respondWith(
       fetch(req)
         .then((res) => {
-          const copy = res.clone();
-          caches.open(SHELL).then((c) => c.put(req, copy)).catch(() => {});
+          // Only persist a genuine app shell: a same-origin 200 that wasn't a
+          // redirect. Without this guard a 401/login/redirect/5xx HTML body
+          // could be stored and later served as the offline fallback. Store it
+          // under the single canonical shell URL so the cache can't grow one
+          // entry per URL+querystring.
+          if (res && res.status === 200 && res.type === "basic" && !res.redirected) {
+            const copy = res.clone();
+            caches.open(SHELL).then((c) => c.put(SHELL_URL, copy)).catch(() => {});
+          }
           return res;
         })
-        .catch(() => caches.match(req).then((r) => r || caches.match(SHELL_URL))),
+        .catch(() => caches.match(SHELL_URL)),
     );
     return;
   }
