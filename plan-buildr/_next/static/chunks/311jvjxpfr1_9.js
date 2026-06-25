@@ -1,1 +1,0 @@
-(globalThis.TURBOPACK||(globalThis.TURBOPACK=[])).push(["object"==typeof document?document.currentScript:void 0,29406,e=>{"use strict";var t=e.i(29418),i=e.i(51873);e.s(["default",0,function(){return(0,t.useEffect)(()=>{(0,i.trackPageview)();let e=()=>(0,i.trackPageview)();return window.addEventListener("popstate",e),()=>window.removeEventListener("popstate",e)},[]),null}])}]);

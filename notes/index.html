@@ -4,27 +4,25 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Notes</title>
-<script>/* Apply the saved theme before paint to avoid a flash of the default theme */
-try { var _t = localStorage.getItem('notes_theme'); if (_t) document.documentElement.setAttribute('data-theme', _t); } catch (e) {}</script>
 <style>
   :root {
-    --bg: #0a0e0a;
-    --cell-bg: #050705;
-    --border: #2a3a2a;
-    --text: #6fe06f;
-    --title-text: #9cf09c;
-    --title-bg: #0f140f;
-    --placeholder: #4a6f4a;
-    --toolbar-bg: #0f140f;
-    --toolbar-border: #2c3c2c;
-    --btn-bg: #162016;
-    --btn-hover: #21321f;
-    --btn-text: #7ad67a;
-    --search-bg: #0f140f;
-    --search-border: #3a6a3a;
-    --highlight: rgba(80,255,80,0.28);
-    --highlight-active: rgba(80,255,80,0.55);
-    --count-text: #7ec07e;
+    --bg: #0a0a0a;
+    --cell-bg: #000;
+    --border: #1a1a1a;
+    --text: #3a3;
+    --title-text: #5c5;
+    --title-bg: #0d0d0d;
+    --placeholder: #1e3a1e;
+    --toolbar-bg: #0d0d0d;
+    --toolbar-border: #1f1f1f;
+    --btn-bg: #111;
+    --btn-hover: #1a2a1a;
+    --btn-text: #4a4;
+    --search-bg: #0d0d0d;
+    --search-border: #2a4a2a;
+    --highlight: rgba(80,255,80,0.25);
+    --highlight-active: rgba(80,255,80,0.5);
+    --count-text: #2a5a2a;
     --font-size: 13px;
   }
   html[data-theme="light"] {
@@ -46,186 +44,6 @@ try { var _t = localStorage.getItem('notes_theme'); if (_t) document.documentEle
     --highlight-active: rgba(0,160,0,0.38);
     --count-text: #5a9a5a;
   }
-  /* Midnight — deep blue dark */
-  html[data-theme="midnight"] {
-    --bg: #060a14;
-    --cell-bg: #04060d;
-    --border: #14203a;
-    --text: #6fa8dc;
-    --title-text: #8fc1ee;
-    --title-bg: #0a1020;
-    --placeholder: #2a3a55;
-    --toolbar-bg: #0a1020;
-    --toolbar-border: #1c2c48;
-    --btn-bg: #101a2e;
-    --btn-hover: #1a2a48;
-    --btn-text: #6fa8dc;
-    --search-bg: #0a1020;
-    --search-border: #2a4a7a;
-    --highlight: rgba(80,160,255,0.25);
-    --highlight-active: rgba(80,160,255,0.5);
-    --count-text: #6f93c8;
-  }
-  /* Dracula — purple/pink dark */
-  html[data-theme="dracula"] {
-    --bg: #1a1626;
-    --cell-bg: #14101f;
-    --border: #322a44;
-    --text: #c9a8e9;
-    --title-text: #ff79c6;
-    --title-bg: #221b33;
-    --placeholder: #4a3a5e;
-    --toolbar-bg: #221b33;
-    --toolbar-border: #3a3050;
-    --btn-bg: #2a2240;
-    --btn-hover: #3a2e54;
-    --btn-text: #c9a8e9;
-    --search-bg: #221b33;
-    --search-border: #6a4a8a;
-    --highlight: rgba(255,121,198,0.22);
-    --highlight-active: rgba(255,121,198,0.45);
-    --count-text: #9d88c2;
-  }
-  /* Carbon — neutral monochrome dark */
-  html[data-theme="carbon"] {
-    --bg: #121212;
-    --cell-bg: #0c0c0c;
-    --border: #2e2e2e;
-    --text: #d0d0d0;
-    --title-text: #f0f0f0;
-    --title-bg: #1a1a1a;
-    --placeholder: #5a5a5a;
-    --toolbar-bg: #1a1a1a;
-    --toolbar-border: #2e2e2e;
-    --btn-bg: #222;
-    --btn-hover: #2e2e2e;
-    --btn-text: #d0d0d0;
-    --search-bg: #1a1a1a;
-    --search-border: #4a4a4a;
-    --highlight: rgba(255,255,255,0.18);
-    --highlight-active: rgba(255,255,255,0.38);
-    --count-text: #a6a6a6;
-  }
-  /* Nord — arctic blue-grey dark */
-  html[data-theme="nord"] {
-    --bg: #2e3440;
-    --cell-bg: #272c36;
-    --border: #3b4252;
-    --text: #d8dee9;
-    --title-text: #88c0d0;
-    --title-bg: #323845;
-    --placeholder: #616e88;
-    --toolbar-bg: #323845;
-    --toolbar-border: #3b4252;
-    --btn-bg: #3b4252;
-    --btn-hover: #434c5e;
-    --btn-text: #d8dee9;
-    --search-bg: #2e3440;
-    --search-border: #5e81ac;
-    --highlight: rgba(136,192,208,0.25);
-    --highlight-active: rgba(136,192,208,0.5);
-    --count-text: #98a4bd;
-  }
-  /* Matrix — intense green terminal */
-  html[data-theme="matrix"] {
-    --bg: #000700;
-    --cell-bg: #000300;
-    --border: #0f4f0f;
-    --text: #00ff66;
-    --title-text: #66ff99;
-    --title-bg: #021202;
-    --placeholder: #1f6f3f;
-    --toolbar-bg: #021202;
-    --toolbar-border: #0f4f0f;
-    --btn-bg: #041a04;
-    --btn-hover: #0a2e0a;
-    --btn-text: #00ff66;
-    --search-bg: #021202;
-    --search-border: #1f8f4f;
-    --highlight: rgba(0,255,102,0.3);
-    --highlight-active: rgba(0,255,102,0.6);
-    --count-text: #4fcf7f;
-  }
-  /* Crimson — dark red ember */
-  html[data-theme="crimson"] {
-    --bg: #160a0c;
-    --cell-bg: #100608;
-    --border: #3a1a20;
-    --text: #e8a0aa;
-    --title-text: #ff8090;
-    --title-bg: #1e0e12;
-    --placeholder: #6a3a42;
-    --toolbar-bg: #1e0e12;
-    --toolbar-border: #3a1a20;
-    --btn-bg: #281418;
-    --btn-hover: #381e24;
-    --btn-text: #e8a0aa;
-    --search-bg: #1e0e12;
-    --search-border: #7a3a44;
-    --highlight: rgba(255,100,120,0.22);
-    --highlight-active: rgba(255,100,120,0.45);
-    --count-text: #c68a92;
-  }
-  /* Ocean — deep teal dark */
-  html[data-theme="ocean"] {
-    --bg: #021418;
-    --cell-bg: #010d10;
-    --border: #0a3640;
-    --text: #7fdbd0;
-    --title-text: #5fe0d8;
-    --title-bg: #04181d;
-    --placeholder: #2f5f64;
-    --toolbar-bg: #04181d;
-    --toolbar-border: #0a3640;
-    --btn-bg: #062228;
-    --btn-hover: #0a3038;
-    --btn-text: #7fdbd0;
-    --search-bg: #04181d;
-    --search-border: #1f6a70;
-    --highlight: rgba(95,224,216,0.24);
-    --highlight-active: rgba(95,224,216,0.48);
-    --count-text: #6fc1c0;
-  }
-  /* Amber — warm sepia light */
-  html[data-theme="amber"] {
-    --bg: #f3ecdd;
-    --cell-bg: #fdf8ee;
-    --border: #ddd0b8;
-    --text: #6b4f1d;
-    --title-text: #523b13;
-    --title-bg: #ece1cc;
-    --placeholder: #c2b18d;
-    --toolbar-bg: #e8dcc4;
-    --toolbar-border: #cebf9f;
-    --btn-bg: #e0d3b8;
-    --btn-hover: #d4c4a4;
-    --btn-text: #6b4f1d;
-    --search-bg: #fdf8ee;
-    --search-border: #b89a5e;
-    --highlight: rgba(180,120,0,0.2);
-    --highlight-active: rgba(180,120,0,0.4);
-    --count-text: #9a8458;
-  }
-  /* Slate — cool grey light */
-  html[data-theme="slate"] {
-    --bg: #e9edf1;
-    --cell-bg: #fbfcfd;
-    --border: #cbd3dc;
-    --text: #2d3e50;
-    --title-text: #1b2a3a;
-    --title-bg: #dde3ea;
-    --placeholder: #a8b4c0;
-    --toolbar-bg: #d8dee6;
-    --toolbar-border: #bcc6d2;
-    --btn-bg: #d0d8e0;
-    --btn-hover: #c0cad6;
-    --btn-text: #2d3e50;
-    --search-bg: #fbfcfd;
-    --search-border: #8a9aac;
-    --highlight: rgba(40,90,150,0.18);
-    --highlight-active: rgba(40,90,150,0.38);
-    --count-text: #6a7888;
-  }
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -240,12 +58,10 @@ try { var _t = localStorage.getItem('notes_theme'); if (_t) document.documentEle
 
   /* ── Toolbar ── */
   #toolbar {
-    --tb-h: 28px;
     display: flex;
     align-items: center;
-    column-gap: 14px;      /* clear spacing between action groups */
-    row-gap: 8px;          /* breathing room when it wraps to a 2nd line */
-    padding: 7px 12px;
+    gap: 6px;
+    padding: 4px 8px;
     background: var(--toolbar-bg);
     border-bottom: 1px solid var(--toolbar-border);
     flex-shrink: 0;
@@ -255,30 +71,14 @@ try { var _t = localStorage.getItem('notes_theme'); if (_t) document.documentEle
   .tb-group {
     display: flex;
     align-items: center;
-    gap: 4px;              /* tight grouping for controls that belong together */
-    height: var(--tb-h);
+    gap: 3px;
   }
 
-  /* Uniform height for all interactive toolbar controls */
-  #toolbar button,
-  #toolbar input,
-  #toolbar select,
-  #toolbar #font-size-display {
-    height: var(--tb-h);
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    line-height: 1;
-  }
-
-  /* Group spacing is handled by the toolbar's column-gap; keep a faint
-     divider but let the gap do the separating (no extra margins). */
   .tb-sep {
     width: 1px;
-    height: 16px;
+    height: 18px;
     background: var(--toolbar-border);
-    margin: 0;
-    opacity: 0.6;
+    margin: 0 3px;
   }
 
   button {
@@ -296,18 +96,18 @@ try { var _t = localStorage.getItem('notes_theme'); if (_t) document.documentEle
   button:hover { background: var(--btn-hover); }
   button.active { background: var(--btn-hover); border-color: var(--text); }
 
-  #font-size-display, #gfont-size-display, #card-h-display {
+  #font-size-display {
     color: var(--count-text);
     font-size: 11px;
     font-family: 'Courier New', monospace;
     min-width: 28px;
     text-align: center;
   }
-  #font-size-label, .tb-meta-label {
+  #font-size-label {
     color: var(--count-text);
     font-size: 10px;
     font-family: 'Courier New', monospace;
-    opacity: 0.8;
+    opacity: 0.55;
     margin-left: 2px;
   }
   button:disabled { opacity: 0.3; cursor: default; }
@@ -320,7 +120,7 @@ try { var _t = localStorage.getItem('notes_theme'); if (_t) document.documentEle
     font-family: 'Courier New', monospace;
     font-size: 11px;
     border-radius: 2px;
-    width: 190px;
+    width: 160px;
     outline: none;
   }
   #search-input::placeholder { color: var(--placeholder); }
@@ -332,20 +132,6 @@ try { var _t = localStorage.getItem('notes_theme'); if (_t) document.documentEle
     min-width: 50px;
   }
 
-  #font-family-select {
-    background: var(--btn-bg);
-    color: var(--btn-text);
-    border: 1px solid var(--toolbar-border);
-    padding: 3px 6px;
-    font-family: 'Courier New', monospace;
-    font-size: 11px;
-    border-radius: 2px;
-    cursor: pointer;
-    outline: none;
-    max-width: 130px;
-  }
-  #font-family-select:focus { border-color: var(--text); }
-
   #status {
     margin-left: auto;
     color: var(--count-text);
@@ -356,20 +142,13 @@ try { var _t = localStorage.getItem('notes_theme'); if (_t) document.documentEle
   #status.show { opacity: 1; }
 
   /* ── Grid ── */
-  /* Infinite vertical scroller: 4 columns (25% each), rows of --card-h.
-     New rows are appended as you scroll. */
   #grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    grid-auto-rows: var(--card-h, 25vh);
+    grid-template-rows: repeat(3, 1fr);
     flex: 1;
     gap: 0;
-    overflow-y: auto;
-    overflow-x: hidden;
-  }
-  /* Mobile: two columns per row */
-  @media (max-width: 640px) {
-    #grid { grid-template-columns: repeat(2, 1fr); }
+    overflow: hidden;
   }
 
   .section {
@@ -415,154 +194,19 @@ try { var _t = localStorage.getItem('notes_theme'); if (_t) document.documentEle
 
   .textarea {
     flex: 1;
-    background: transparent;
+    background: var(--cell-bg);
     color: var(--text);
     border: none;
     outline: none;
     padding: 8px 10px;
-    font-family: var(--note-font, 'Courier New', monospace);
+    font-family: 'Courier New', monospace;
     font-size: var(--font-size);
     line-height: 1.55;
     resize: none;
     width: 100%;
-    position: relative;
-    z-index: 1;
-    caret-color: var(--text);
   }
   .textarea::placeholder { color: var(--placeholder); }
-
-  /* ── Pane wrapper + in-text highlight backdrop ── */
-  .pane {
-    position: relative;
-    flex: 1;
-    display: flex;
-    min-width: 0;
-    min-height: 0;
-    overflow: hidden;
-    background: var(--cell-bg);
-  }
-  .pane:focus-within { background: color-mix(in srgb, var(--cell-bg) 85%, var(--text) 15%); }
-
-  .hl-backdrop {
-    position: absolute;
-    inset: 0;
-    margin: 0;
-    padding: 8px 10px;
-    font-family: var(--note-font, 'Courier New', monospace);
-    font-size: var(--font-size);
-    line-height: 1.55;
-    white-space: pre-wrap;
-    word-wrap: break-word;
-    overflow-wrap: break-word;
-    color: transparent;
-    overflow: hidden;
-    pointer-events: none;
-    z-index: 0;
-  }
-  /* Token highlights — only background / inset shadow (layout-neutral so the
-     transparent backdrop stays aligned with the textarea text). */
-  .hl { border-radius: 2px; }
-  /* Urgency U1 (low) … U4 (high), U5 critical — filled */
-  .hl-u1 { background: rgba(46,204,113,0.45); }   /* green  */
-  .hl-u2 { background: rgba(52,152,219,0.45); }   /* blue   */
-  .hl-u3 { background: rgba(243,156,18,0.52); }   /* orange */
-  .hl-u4 { background: rgba(231,76,60,0.58); }    /* red    */
-  .hl-u5 { background: rgba(155,89,182,0.55); }   /* purple */
-  /* Priority P1..P5 — outlined ring (distinct from urgency fills) */
-  .hl-p1 { box-shadow: inset 0 0 0 1.5px rgba(46,204,113,0.85); }
-  .hl-p2 { box-shadow: inset 0 0 0 1.5px rgba(52,152,219,0.85); }
-  .hl-p3 { box-shadow: inset 0 0 0 1.5px rgba(243,156,18,0.9); }
-  .hl-p4 { box-shadow: inset 0 0 0 1.5px rgba(231,76,60,0.9); }
-  .hl-p5 { box-shadow: inset 0 0 0 1.5px rgba(155,89,182,0.9); }
-  /* Status keywords */
-  .hl-done  { background: rgba(46,204,113,0.5); }    /* DONE / FIXED   */
-  .hl-todo  { background: rgba(241,196,15,0.5); }    /* TODO / WIP     */
-  .hl-alert { background: rgba(231,76,60,0.62); }    /* BUG / URGENT   */
-  /* Mentions, tags, dates */
-  .hl-mention { background: rgba(52,152,219,0.42); }
-  .hl-tag     { background: rgba(26,188,156,0.42); }
-  .hl-date    { background: rgba(149,165,166,0.4); }
-
-  /* ── Card flip (front board / back: next-day task) ── */
-  .flip-inner { flex: 1; display: flex; min-height: 0; min-width: 0; }
-  .card-back {
-    flex: 1; display: none; flex-direction: column;
-    min-height: 0; background: var(--cell-bg);
-  }
-  .section.flipped .cell-body { display: none; }
-  .section.flipped .card-back { display: flex; }
-  .card-back-label {
-    flex-shrink: 0;
-    font-family: 'Courier New', monospace;
-    font-size: 9px; letter-spacing: 0.08em; text-transform: uppercase;
-    color: var(--title-text);
-    padding: 3px 8px;
-    background: color-mix(in srgb, var(--text) 14%, var(--title-bg));
-    border-bottom: 1px solid var(--border);
-    display: flex; justify-content: space-between; align-items: center;
-  }
-  .card-back-label .hint { opacity: 0.6; text-transform: none; letter-spacing: 0; }
-  .section.flip-anim .flip-inner { animation: cardFlip 0.4s ease; }
-  @keyframes cardFlip {
-    from { transform: perspective(700px) rotateY(-90deg); opacity: 0.15; }
-    to   { transform: none; opacity: 1; }
-  }
-
-  /* ── Cell body & split panes ── */
-  .cell-body {
-    flex: 1;
-    display: flex;
-    flex-direction: row;
-    min-height: 0;
-    min-width: 0;
-    overflow: hidden;
-  }
-  .cell-body.split > .textarea { flex: 0 0 50%; }
-
-  .cell-splitter {
-    flex: 0 0 5px;
-    background: var(--border);
-    position: relative;
-    z-index: 2;
-  }
-  .cell-splitter:hover { background: var(--text); }
-  .cell-body[style*="row"] > .cell-splitter,
-  .cell-body:not([style*="column"]) > .cell-splitter { cursor: col-resize; }
-  .cell-body[style*="column"] > .cell-splitter { cursor: row-resize; }
-
-  /* Split control button in header */
-  .split-btn {
-    background: transparent;
-    border: none;
-    color: var(--count-text);
-    font-size: 11px;
-    line-height: 1;
-    padding: 0 3px;
-    height: auto;
-    cursor: pointer;
-    flex-shrink: 0;
-    margin-left: 2px;
-  }
-  .split-btn:hover { color: var(--text); background: transparent; }
-
-  /* Split picker popup */
-  .split-popup {
-    position: absolute;
-    z-index: 100;
-    background: var(--toolbar-bg);
-    border: 1px solid var(--toolbar-border);
-    border-radius: 4px;
-    padding: 4px;
-    display: flex;
-    gap: 4px;
-    box-shadow: 0 4px 16px rgba(0,0,0,0.5);
-  }
-  .split-popup.hidden { display: none; }
-  .split-popup button {
-    font-size: 14px;
-    padding: 4px 8px;
-    line-height: 1;
-  }
+  .textarea:focus { background: color-mix(in srgb, var(--cell-bg) 85%, var(--text) 15%); }
 
   /* Search highlight */
   mark.sh { background: var(--highlight); color: inherit; border-radius: 1px; }
@@ -609,67 +253,20 @@ try { var _t = localStorage.getItem('notes_theme'); if (_t) document.documentEle
   .cp-swatch:hover { transform: scale(1.15); }
   .cp-swatch.selected { border-color: #fff; }
 
-  /* ── Color filter bar ── */
-  .filter-swatch {
-    width: 16px;
-    height: 16px;
-    border-radius: 3px;
-    cursor: pointer;
-    border: 2px solid transparent;
-    transition: border-color 0.1s, transform 0.1s, opacity 0.1s;
-    opacity: 0.55;
-    position: relative;
-  }
-  .filter-swatch:hover { transform: scale(1.15); opacity: 0.85; }
-  .filter-swatch.active { border-color: #fff; opacity: 1; }
-  .filter-swatch[data-filter-id="none"] {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 10px;
-    color: var(--btn-text);
-  }
-  #filter-label {
-    color: var(--count-text);
-    font-size: 10px;
-    font-family: 'Courier New', monospace;
-    opacity: 0.8;
-    margin-right: 2px;
-  }
-
-  /* Sections hidden by an active color filter */
-  .section.filtered-out { display: none; }
-
-  /* Drag-to-move */
-  .drag-handle {
-    cursor: grab;
-    color: var(--count-text);
-    font-size: 11px;
-    line-height: 1;
-    padding: 0 4px 0 0;
-    flex-shrink: 0;
-    user-select: none;
-  }
-  .drag-handle:active { cursor: grabbing; }
-  .section.dragging { opacity: 0.45; }
-  .section.drag-over { outline: 2px dashed var(--text); outline-offset: -2px; }
-
-  /* Section tinting — derived from the section's color (--sec-dot) so the
-     highlight is clearly visible. View mode is the boldest tint; focus
-     eases it off for comfortable editing. */
+  /* Section tinting — applied via inline CSS vars on .section */
   .section[data-color] .section-header {
-    background: color-mix(in srgb, var(--sec-dot) 40%, var(--title-bg));
+    background: var(--sec-hdr-bg);
     border-bottom-color: var(--sec-border);
   }
   .section[data-color] {
     border-right-color: var(--sec-border);
     border-bottom-color: var(--sec-border);
   }
-  .section[data-color] .pane {
-    background: color-mix(in srgb, var(--sec-dot) 22%, var(--cell-bg));
+  .section[data-color] .textarea {
+    background: var(--sec-ta-bg);
   }
-  .section[data-color] .pane:focus-within {
-    background: color-mix(in srgb, var(--sec-dot) 10%, var(--cell-bg));
+  .section[data-color] .textarea:focus {
+    background: var(--sec-ta-focus);
   }
   .section[data-color] .section-title {
     color: var(--sec-title);
@@ -677,275 +274,11 @@ try { var _t = localStorage.getItem('notes_theme'); if (_t) document.documentEle
   .section[data-color] .color-dot {
     background: var(--sec-dot) !important;
   }
-
-  /* ── Login overlay (animated) ── */
-  .login-overlay {
-    position: fixed;
-    inset: 0;
-    z-index: 1000;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
-    background:
-      radial-gradient(1200px 600px at 50% -10%, color-mix(in srgb, var(--text) 14%, var(--bg)), var(--bg) 60%),
-      var(--bg);
-    animation: lo-fade 0.5s ease both;
-  }
-  .login-overlay.hidden { display: none; }
-  /* drifting glow blobs */
-  .login-overlay::before,
-  .login-overlay::after {
-    content: '';
-    position: absolute;
-    width: 46vmax; height: 46vmax;
-    border-radius: 50%;
-    filter: blur(80px);
-    opacity: 0.20;
-    background: var(--text);
-    animation: lo-drift 16s ease-in-out infinite alternate;
-    pointer-events: none;
-  }
-  .login-overlay::before { top: -16vmax; left: -10vmax; }
-  .login-overlay::after  { bottom: -18vmax; right: -12vmax; animation-duration: 22s; opacity: 0.14; }
-  /* faint scanline grid for terminal vibe */
-  .login-grid {
-    position: absolute; inset: 0; pointer-events: none; opacity: 0.06;
-    background-image:
-      linear-gradient(var(--text) 1px, transparent 1px),
-      linear-gradient(90deg, var(--text) 1px, transparent 1px);
-    background-size: 38px 38px;
-    mask-image: radial-gradient(circle at 50% 45%, #000 30%, transparent 75%);
-    -webkit-mask-image: radial-gradient(circle at 50% 45%, #000 30%, transparent 75%);
-  }
-
-  .login-box {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    width: 320px;
-    max-width: 88vw;
-    padding: 26px 24px 22px;
-    background: color-mix(in srgb, var(--toolbar-bg) 82%, transparent);
-    border: 1px solid color-mix(in srgb, var(--text) 35%, var(--toolbar-border));
-    border-radius: 10px;
-    box-shadow:
-      0 18px 60px rgba(0,0,0,0.55),
-      0 0 0 1px color-mix(in srgb, var(--text) 10%, transparent),
-      0 0 40px color-mix(in srgb, var(--text) 18%, transparent);
-    backdrop-filter: blur(6px);
-    -webkit-backdrop-filter: blur(6px);
-    animation: lo-rise 0.55s cubic-bezier(.2,.8,.2,1) both;
-  }
-  /* animated gradient hairline at the top edge */
-  .login-box::before {
-    content: '';
-    position: absolute; left: 14px; right: 14px; top: 0; height: 2px;
-    background: linear-gradient(90deg, transparent, var(--text), transparent);
-    background-size: 200% 100%;
-    animation: lo-sheen 3.2s linear infinite;
-    border-radius: 2px;
-    opacity: 0.7;
-  }
-  .login-logo {
-    font-family: 'Courier New', monospace;
-    font-size: 11px;
-    letter-spacing: 0.3em;
-    text-transform: uppercase;
-    color: var(--count-text);
-  }
-  .login-title {
-    color: var(--title-text);
-    font-family: 'Courier New', monospace;
-    font-size: 20px;
-    font-weight: bold;
-    margin: 2px 0 6px;
-    display: flex;
-    align-items: baseline;
-    gap: 2px;
-  }
-  .login-title .caret {
-    width: 9px; height: 18px;
-    background: var(--text);
-    display: inline-block;
-    transform: translateY(2px);
-    animation: lo-blink 1.05s step-end infinite;
-  }
-  .login-field {
-    position: relative;
-    opacity: 0;
-    animation: lo-rise 0.5s ease both;
-  }
-  .login-field:nth-of-type(1) { animation-delay: 0.12s; }
-  .login-field:nth-of-type(2) { animation-delay: 0.20s; }
-  .login-box input {
-    width: 100%;
-    background: color-mix(in srgb, var(--search-bg) 85%, transparent);
-    color: var(--text);
-    border: 1px solid var(--search-border);
-    padding: 11px 12px;
-    font-family: 'Courier New', monospace;
-    font-size: 13px;
-    border-radius: 6px;
-    outline: none;
-    transition: border-color 0.18s, box-shadow 0.18s, background 0.18s;
-  }
-  .login-box input:focus {
-    border-color: var(--text);
-    background: color-mix(in srgb, var(--cell-bg) 70%, transparent);
-    box-shadow: 0 0 0 3px color-mix(in srgb, var(--text) 22%, transparent);
-  }
-  .login-box button[type="submit"] {
-    margin-top: 4px;
-    background: linear-gradient(180deg, color-mix(in srgb, var(--text) 26%, var(--btn-bg)), var(--btn-bg));
-    color: var(--title-text);
-    border: 1px solid color-mix(in srgb, var(--text) 45%, var(--toolbar-border));
-    padding: 11px;
-    font-family: 'Courier New', monospace;
-    font-size: 13px;
-    font-weight: bold;
-    letter-spacing: 0.04em;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: transform 0.12s ease, box-shadow 0.18s, filter 0.18s;
-    opacity: 0;
-    animation: lo-rise 0.5s ease 0.28s both;
-  }
-  .login-box button[type="submit"]:hover {
-    filter: brightness(1.15);
-    box-shadow: 0 6px 20px color-mix(in srgb, var(--text) 30%, transparent);
-    transform: translateY(-1px);
-  }
-  .login-box button[type="submit"]:active { transform: translateY(0); }
-  .login-box button[type="submit"]:disabled { opacity: 0.6; cursor: default; transform: none; }
-  .login-error {
-    color: #ff6f61;
-    font-family: 'Courier New', monospace;
-    font-size: 11px;
-    min-height: 14px;
-    line-height: 1.4;
-  }
-  .login-error.show { animation: lo-shake 0.4s ease; }
-
-  @keyframes lo-fade { from { opacity: 0; } to { opacity: 1; } }
-  @keyframes lo-rise { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
-  @keyframes lo-blink { 0%, 50% { opacity: 1; } 50.01%, 100% { opacity: 0; } }
-  @keyframes lo-sheen { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
-  @keyframes lo-shake { 0%,100% { transform: translateX(0); } 20% { transform: translateX(-6px); } 40% { transform: translateX(6px); } 60% { transform: translateX(-4px); } 80% { transform: translateX(4px); } }
-  @keyframes lo-drift {
-    from { transform: translate(0,0) scale(1); }
-    to   { transform: translate(6vmax, 4vmax) scale(1.15); }
-  }
-  @media (prefers-reduced-motion: reduce) {
-    .login-overlay, .login-box, .login-field, .login-box button[type="submit"] { animation: none !important; opacity: 1 !important; }
-    .login-overlay::before, .login-overlay::after, .login-box::before, .login-title .caret { animation: none !important; }
-  }
-
-  /* ── Spaces sidebar (off-canvas) ── */
-  #space-backdrop {
-    position: fixed; inset: 0; z-index: 850;
-    background: rgba(0,0,0,0.45);
-    opacity: 0; pointer-events: none; transition: opacity 0.2s;
-  }
-  #space-backdrop.open { opacity: 1; pointer-events: auto; }
-  .sidebar {
-    position: fixed; top: 0; left: 0; bottom: 0; z-index: 860;
-    width: 270px; max-width: 84vw;
-    display: flex; flex-direction: column;
-    background: var(--toolbar-bg);
-    border-right: 1px solid var(--toolbar-border);
-    box-shadow: 4px 0 24px rgba(0,0,0,0.4);
-    transform: translateX(-100%);
-    transition: transform 0.24s cubic-bezier(.2,.8,.2,1);
-  }
-  .sidebar.open { transform: translateX(0); }
-  .sidebar-head {
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 14px 14px 10px;
-    border-bottom: 1px solid var(--toolbar-border);
-  }
-  .sidebar-title { color: var(--title-text); font-family: 'Courier New', monospace; font-size: 15px; font-weight: bold; }
-  .sidebar-close { background: transparent; border: none; color: var(--count-text); font-size: 16px; cursor: pointer; }
-  .sidebar-close:hover { color: var(--text); }
-  #spaces-grid { flex: 1; overflow-y: auto; padding: 8px; display: flex; flex-direction: column; gap: 6px; }
-  .space-tile {
-    position: relative;
-    display: flex; flex-direction: column; gap: 3px;
-    padding: 10px 12px; border-radius: 8px; cursor: pointer;
-    color: var(--text);
-    background: color-mix(in srgb, var(--text) 6%, transparent);
-    border: 1px solid transparent;
-    font-family: 'Courier New', monospace;
-    transition: background 0.15s, border-color 0.15s;
-  }
-  .space-tile:hover { border-color: var(--toolbar-border); background: color-mix(in srgb, var(--text) 12%, transparent); }
-  .space-tile.current { border-color: var(--text); background: color-mix(in srgb, var(--text) 14%, transparent); }
-  .space-tile .st-kind {
-    align-self: flex-start; font-size: 8px; letter-spacing: 0.12em; text-transform: uppercase;
-    padding: 1px 6px; border-radius: 999px;
-    background: color-mix(in srgb, var(--text) 22%, transparent); color: var(--title-text);
-  }
-  .space-tile .st-name { font-size: 14px; font-weight: bold; color: var(--title-text); word-break: break-word; }
-  .space-tile .st-meta { font-size: 9px; color: var(--count-text); }
-  .space-tile .st-del, .space-tile .st-edit {
-    position: absolute; top: 8px;
-    border: none; background: transparent; color: var(--count-text);
-    cursor: pointer; font-size: 12px; opacity: 0; transition: opacity 0.15s; padding: 2px 5px; border-radius: 4px;
-  }
-  .space-tile .st-del { right: 8px; }
-  .space-tile .st-edit { right: 30px; }
-  .space-tile:hover .st-del, .space-tile:hover .st-edit { opacity: 0.8; }
-  .space-tile .st-del:hover { background: color-mix(in srgb, #e0503030, transparent); color: #ff6f61; }
-  .space-tile .st-edit:hover { background: color-mix(in srgb, var(--text) 18%, transparent); color: var(--text); }
-  .sidebar-foot { padding: 10px; border-top: 1px solid var(--toolbar-border); }
-  .add-space-btn {
-    width: 100%; padding: 9px; border-radius: 8px; cursor: pointer;
-    font-family: 'Courier New', monospace; font-size: 13px;
-    background: var(--btn-bg); color: var(--title-text);
-    border: 1px dashed color-mix(in srgb, var(--text) 45%, var(--toolbar-border));
-  }
-  .add-space-btn:hover { background: var(--btn-hover); }
-  #current-space {
-    color: var(--title-text); font-family: 'Courier New', monospace;
-    font-size: 12px; font-weight: bold; max-width: 200px;
-    overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
-  }
-
-  .new-space-form {
-    margin-top: 10px; display: flex; flex-direction: column; gap: 8px;
-  }
-  .new-space-form.hidden { display: none; }
-  .new-space-form input, .new-space-form select, .new-space-form button {
-    font-family: 'Courier New', monospace; font-size: 13px; padding: 9px 11px; border-radius: 6px;
-    background: var(--search-bg); color: var(--text); border: 1px solid var(--search-border); outline: none;
-  }
-  .new-space-form input { min-width: 0; }
-  .new-space-form button { cursor: pointer; background: var(--btn-bg); color: var(--btn-text); border-color: var(--toolbar-border); }
-  .new-space-form button[type="submit"] { color: var(--title-text); border-color: color-mix(in srgb, var(--text) 45%, var(--toolbar-border)); }
-  .spaces-msg { margin-top: 14px; font-family: 'Courier New', monospace; font-size: 11px; color: var(--count-text); min-height: 14px; }
-
-  /* Card-level strike: whole card shown struck */
-  .section.struck .textarea { text-decoration: line-through; text-decoration-thickness: 1px; opacity: 0.72; }
-  .section.struck .section-title { text-decoration: line-through; }
-  .strike-btn {
-    background: transparent; border: none; color: var(--count-text);
-    font-size: 11px; line-height: 1; padding: 0 3px; cursor: pointer; flex-shrink: 0;
-  }
-  .strike-btn:hover { color: var(--text); }
-  .section.struck .strike-btn { color: var(--text); }
 </style>
 </head>
 <body>
 
 <div id="toolbar">
-  <!-- Spaces -->
-  <div class="tb-group">
-    <button id="menu-btn" title="Spaces menu">☰</button>
-    <span id="current-space"></span>
-  </div>
-  <div class="tb-sep"></div>
-
   <!-- Theme -->
   <div class="tb-group">
     <button id="theme-btn" title="Toggle theme">◑ Theme</button>
@@ -961,51 +294,13 @@ try { var _t = localStorage.getItem('notes_theme'); if (_t) document.documentEle
   </div>
   <div class="tb-sep"></div>
 
-  <!-- Global font size (all cards) -->
-  <div class="tb-group">
-    <button id="gfont-down" title="Decrease font size for all cards">A−</button>
-    <span id="gfont-size-display">13</span>
-    <button id="gfont-up" title="Increase font size for all cards">A+</button>
-    <span class="tb-meta-label">all cards</span>
-  </div>
-  <div class="tb-sep"></div>
-
-  <!-- Font family (all notes) -->
-  <div class="tb-group">
-    <select id="font-family-select" title="Font family for all notes"></select>
-  </div>
-  <div class="tb-sep"></div>
-
-  <!-- Card height (all cards at once) -->
-  <div class="tb-group">
-    <button id="card-h-down" title="Shorter cards">H−</button>
-    <span id="card-h-display">Auto</span>
-    <button id="card-h-up" title="Taller cards">H+</button>
-    <button id="card-h-auto" title="Fit all cards to screen">Fit</button>
-    <span class="tb-meta-label">all cards</span>
-  </div>
-  <div class="tb-sep"></div>
-
   <!-- Search -->
   <div class="tb-group">
-    <input id="search-input" type="text" placeholder="Search… ( / or Ctrl+F )" title="Focus search: / or Ctrl+F" autocomplete="off" spellcheck="false">
+    <input id="search-input" type="text" placeholder="Search…" autocomplete="off" spellcheck="false">
     <button id="search-prev" title="Previous match">↑</button>
     <button id="search-next" title="Next match">↓</button>
     <span id="search-count"></span>
     <button id="search-clear" title="Clear search">✕</button>
-  </div>
-  <div class="tb-sep"></div>
-
-  <!-- Color filter -->
-  <div class="tb-group">
-    <span id="filter-label">Filter:</span>
-    <div id="filter-swatches" class="tb-group"></div>
-  </div>
-  <div class="tb-sep"></div>
-
-  <!-- Format -->
-  <div class="tb-group">
-    <button id="strike-btn" title="Strikethrough selected text">S&#822;</button>
   </div>
   <div class="tb-sep"></div>
 
@@ -1014,98 +309,25 @@ try { var _t = localStorage.getItem('notes_theme'); if (_t) document.documentEle
     <button id="save-btn" title="Save as HTML (Ctrl+S)">⬇ Save</button>
     <button id="clear-btn" title="Clear all sections">⌫ Clear All</button>
   </div>
-  <div class="tb-sep"></div>
-
-  <!-- Account -->
-  <div class="tb-group">
-    <span id="account-email" class="tb-meta-label"></span>
-    <button id="logout-btn" title="Log out" style="display:none">⎋ Logout</button>
-  </div>
 
   <span id="status">Saved ✓</span>
 </div>
 
-<!-- Login overlay (PocketBase) -->
-<div id="login-overlay" class="login-overlay hidden">
-  <div class="login-grid"></div>
-  <form id="login-form" class="login-box">
-    <div class="login-logo">▚ NOTES</div>
-    <div class="login-title">Sign in<span class="caret"></span></div>
-    <div class="login-field">
-      <input id="login-email" type="email" placeholder="Email" autocomplete="username" required>
-    </div>
-    <div class="login-field">
-      <input id="login-password" type="password" placeholder="Password" autocomplete="current-password" required>
-    </div>
-    <button id="login-submit" type="submit">Sign in</button>
-    <div id="login-error" class="login-error"></div>
-  </form>
-</div>
-
-<!-- Spaces sidebar -->
-<div id="space-backdrop"></div>
-<aside id="sidebar" class="sidebar">
-  <div class="sidebar-head">
-    <span class="sidebar-title">Spaces</span>
-    <button id="sidebar-close" class="sidebar-close" title="Close">✕</button>
-  </div>
-  <div id="spaces-grid"></div>
-  <div class="sidebar-foot">
-    <button id="add-space-btn" class="add-space-btn">+ New space</button>
-    <form id="new-space-form" class="new-space-form hidden">
-      <input id="new-space-name" type="text" placeholder="Space name (e.g. Personal)" autocomplete="off" required>
-      <select id="new-space-kind">
-        <option value="personal">Personal</option>
-        <option value="office">Office</option>
-        <option value="other">Other</option>
-      </select>
-      <button type="submit">Create</button>
-      <button type="button" id="new-space-cancel">Cancel</button>
-    </form>
-    <div id="spaces-msg" class="spaces-msg"></div>
-  </div>
-</aside>
-
 <!-- Shared floating color picker -->
 <div id="color-popup" class="color-picker-popup hidden"></div>
-
-<!-- Shared floating split picker -->
-<div id="split-popup" class="split-popup hidden">
-  <button data-split="row" title="Split side by side">⬌</button>
-  <button data-split="col" title="Split stacked (top / bottom)">⬍</button>
-  <button data-split="none" title="Merge into one">✕</button>
-</div>
 
 <div id="grid"></div>
 
 <script>
 (function () {
-  const COLS = 4;              // cells per row (each 25% wide)
-  const INITIAL_ROWS = 6;      // rows created on first load
-  const GROW_ROWS = 4;         // rows appended each time the user nears the end
+  const SECTIONS = 12;
   const STORAGE_KEY = 'notes_v3';
-  // ── PocketBase storage ──
-  const PB_URL = 'https://shyamzzp.pockethost.io';
-  const PB_COLLECTION = 'notes';     // collection: fields key (text) + data (json)
-  const PB_AUTH_KEY = 'pb_auth_notes';
-  const SUPERUSER_KEY = 'board';      // record key used when signed in as admin/superuser
-  // Exported standalone snapshots carry a seed and run fully offline (no login).
-  const OFFLINE = !!window.__NOTES_SEED__;
-  let authToken = null, authUserId = null, authEmail = null, recordId = null, isSuperuser = false;
   let searchMatches = [];
   let searchIndex = -1;
   let theme = 'dark';
-  // Section state grows dynamically (infinite scroll); arrays are appended to.
-  const sectionColors = [];     // null = default
-  const sectionStruck = [];     // per-card strikethrough flag
-  const backTextareas = [];     // per-card "next-day task" (back face)
-  const sectionFontSizes = [];  // per-section font size
-  const splitModes = [];        // null | 'row' (side by side) | 'col' (stacked)
-  const splitPos = [];          // first pane size, percent
+  const sectionColors = new Array(SECTIONS).fill(null); // null = default
+  const sectionFontSizes = new Array(SECTIONS).fill(13); // per-section font size
   let activeSectionIdx = -1; // index of currently focused textarea
-  let dragSrcIdx = -1;       // section index being dragged
-  let globalFontSize = 13;   // default font size applied to all cards
-  let lastFocusedTextarea = null; // most recently focused pane (for toolbar actions)
 
   // ── Color palette ──
   // Each entry: { id, label, dark:{hdr,ta,taFocus,border,title,dot}, light:{...} }
@@ -1149,44 +371,6 @@ try { var _t = localStorage.getItem('notes_theme'); if (_t) document.documentEle
     popup.appendChild(sw);
   });
 
-  // ── Build color filter bar ──
-  // Active filters: set of color ids ('none' = uncolored). Empty = show all.
-  const activeFilters = new Set();
-  const filterBar = document.getElementById('filter-swatches');
-  PALETTE.forEach(c => {
-    const sw = document.createElement('div');
-    sw.className = 'filter-swatch';
-    sw.title = c.id === 'none' ? 'Show uncolored' : 'Show ' + c.id;
-    sw.dataset.filterId = c.id;
-    if (c.id === 'none') {
-      sw.textContent = '○';
-    } else {
-      sw.style.background = c.dot;
-    }
-    filterBar.appendChild(sw);
-  });
-
-  filterBar.addEventListener('click', e => {
-    const sw = e.target.closest('.filter-swatch');
-    if (!sw) return;
-    const id = sw.dataset.filterId;
-    if (activeFilters.has(id)) activeFilters.delete(id);
-    else activeFilters.add(id);
-    sw.classList.toggle('active', activeFilters.has(id));
-    applyFilters();
-  });
-
-  function applyFilters() {
-    sections.forEach((sec, i) => {
-      if (activeFilters.size === 0) {
-        sec.classList.remove('filtered-out');
-        return;
-      }
-      const colorId = sectionColors[i] || 'none';
-      sec.classList.toggle('filtered-out', !activeFilters.has(colorId));
-    });
-  }
-
   let popupTarget = -1; // section index popup is open for
 
   function openPopup(secIdx, dotEl) {
@@ -1212,7 +396,6 @@ try { var _t = localStorage.getItem('notes_theme'); if (_t) document.documentEle
     if (!sw || popupTarget < 0) return;
     const cid = sw.dataset.colorId;
     applyColor(popupTarget, cid === 'none' ? null : cid);
-    applyFilters();
     closePopup();
     autoSave();
   });
@@ -1239,7 +422,7 @@ try { var _t = localStorage.getItem('notes_theme'); if (_t) document.documentEle
     }
     const entry = PALETTE.find(p => p.id === colorId);
     if (!entry) return;
-    const t = themeBase() === 'light' ? entry.light : entry.dark;
+    const t = theme === 'light' ? entry.light : entry.dark;
     sec.setAttribute('data-color', colorId);
     sec.style.setProperty('--sec-hdr-bg', t.hdr);
     sec.style.setProperty('--sec-ta-bg', t.ta);
@@ -1254,498 +437,119 @@ try { var _t = localStorage.getItem('notes_theme'); if (_t) document.documentEle
     sectionColors.forEach((c, i) => applyColor(i, c));
   }
 
-  function applyCardStrike(i, on) {
-    sectionStruck[i] = !!on;
-    if (sections[i]) sections[i].classList.toggle('struck', !!on);
-  }
-  function toggleCardStrike(i) {
-    applyCardStrike(i, !sectionStruck[i]);
-    autoSave();
-  }
-
-  // Flip a card between its front (board) and back (next-day task).
-  function flipCard(i) {
-    const sec = sections[i];
-    if (!sec) return;
-    sec.classList.add('flip-anim');
-    setTimeout(() => sec.classList.remove('flip-anim'), 400);
-    sec.classList.toggle('flipped');
-    const onBack = sec.classList.contains('flipped');
-    const target = onBack ? backTextareas[i] : textareas[i];
-    if (target) target.focus();
-  }
-
-  // ── In-text highlighting ──
-  // A single tokenizer pass colors several token types without nesting.
-  const HL_RE = new RegExp([
-    '\\bU[1-5]\\b',                                   // urgency U1..U5
-    '\\bP[1-5]\\b',                                   // priority P1..P5
-    '\\b(?:DONE|FIXED|RESOLVED|CLOSED)\\b',           // completed
-    '\\b(?:TODO|FIXME|WIP|REVIEW|PENDING|LATER)\\b',  // in-progress / todo
-    '\\b(?:BUG|BLOCKED|FAILED?|URGENT|ASAP|CRITICAL|IMPORTANT|RISK)\\b', // alert
-    '@\\w+',                                          // @mentions
-    '#\\w+',                                          // #tags
-    '\\b\\d{4}-\\d{2}-\\d{2}\\b'                       // ISO dates
-  ].join('|'), 'gi');
-
-  function classOf(m) {
-    if (/^[uU][1-5]$/.test(m)) return 'hl hl-u' + m[1];
-    if (/^[pP][1-5]$/.test(m)) return 'hl hl-p' + m[1];
-    if (m[0] === '@') return 'hl hl-mention';
-    if (m[0] === '#') return 'hl hl-tag';
-    if (/^\d{4}-\d{2}-\d{2}$/.test(m)) return 'hl hl-date';
-    const up = m.toUpperCase();
-    if (/^(DONE|FIXED|RESOLVED|CLOSED)$/.test(up)) return 'hl hl-done';
-    if (/^(TODO|FIXME|WIP|REVIEW|PENDING|LATER)$/.test(up)) return 'hl hl-todo';
-    return 'hl hl-alert';
-  }
-  function escapeHtml(s) {
-    return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-  }
-  function highlightHTML(text) {
-    let h = escapeHtml(text).replace(HL_RE, m => '<span class="' + classOf(m) + '">' + m + '</span>');
-    if (h.charCodeAt(h.length - 1) === 10) h += ' '; // mirror trailing newline
-    return h;
-  }
-  function updateHighlight(ta) {
-    if (ta && ta._bd) ta._bd.innerHTML = highlightHTML(ta.value);
-  }
-  function applyTaFontSize(ta, px) {
-    ta.style.fontSize = px + 'px';
-    if (ta._bd) ta._bd.style.fontSize = px + 'px';
-  }
-
-  // ── Build grid (infinite scroll) ──
+  // ── Build grid ──
   const grid = document.getElementById('grid');
   const textareas = [];
-  const textareas2 = [];   // secondary pane (when split), per section
-  const cellBodies = [];
   const titles = [];
   const wordCounts = [];
   const sections = [];
   const dots = [];
-  const splitBtns = [];
 
-  // Build one section at index i and append it to the grid.
-  function createSection(i) {
-    sectionColors[i] = null;
-    sectionStruck[i] = false;
-    sectionFontSizes[i] = globalFontSize;
-    splitModes[i] = null;
-    splitPos[i] = 50;
-    textareas2[i] = null;
-
+  for (let i = 0; i < SECTIONS; i++) {
     const sec = document.createElement('div');
     sec.className = 'section';
-    sections[i] = sec;
+    sections.push(sec);
 
     const hdr = document.createElement('div');
     hdr.className = 'section-header';
-
-    // Drag handle to move this cell elsewhere
-    const grip = document.createElement('span');
-    grip.className = 'drag-handle';
-    grip.textContent = '⠿';
-    grip.title = 'Drag to move this cell';
-    grip.draggable = true;
-    grip.addEventListener('dragstart', e => {
-      dragSrcIdx = i;
-      sec.classList.add('dragging');
-      e.dataTransfer.effectAllowed = 'move';
-      try { e.dataTransfer.setData('text/plain', String(i)); } catch (err) {}
-    });
-    grip.addEventListener('dragend', () => {
-      sec.classList.remove('dragging');
-      sections.forEach(s => s.classList.remove('drag-over'));
-      dragSrcIdx = -1;
-    });
-    sec.addEventListener('dragover', e => {
-      if (dragSrcIdx < 0) return;
-      e.preventDefault();
-      e.dataTransfer.dropEffect = 'move';
-    });
-    sec.addEventListener('dragenter', () => { if (dragSrcIdx >= 0 && dragSrcIdx !== i) sec.classList.add('drag-over'); });
-    sec.addEventListener('dragleave', () => sec.classList.remove('drag-over'));
-    sec.addEventListener('drop', e => {
-      e.preventDefault();
-      sec.classList.remove('drag-over');
-      if (dragSrcIdx >= 0) moveSection(dragSrcIdx, i);
-      dragSrcIdx = -1;
-    });
 
     const titleInput = document.createElement('input');
     titleInput.className = 'section-title';
     titleInput.placeholder = `Section ${i + 1}`;
     titleInput.type = 'text';
     titleInput.spellcheck = false;
-    titles[i] = titleInput;
+    titles.push(titleInput);
 
     const wc = document.createElement('span');
     wc.className = 'word-count';
     wc.textContent = '0w';
-    wordCounts[i] = wc;
+    wordCounts.push(wc);
 
     // Color dot
     const dot = document.createElement('div');
     dot.className = 'color-dot';
     dot.title = 'Set section color';
     dot.style.background = '#333';
-    dots[i] = dot;
-    dot.addEventListener('click', e => {
-      e.stopPropagation();
-      if (popupTarget === i && !popup.classList.contains('hidden')) { closePopup(); return; }
-      openPopup(i, dot);
-    });
+    dots.push(dot);
+    (idx => {
+      dot.addEventListener('click', e => {
+        e.stopPropagation();
+        if (popupTarget === idx && !popup.classList.contains('hidden')) { closePopup(); return; }
+        openPopup(idx, dot);
+      });
+    })(i);
 
-    // Card-level strikethrough toggle
-    const strikeCardBtn = document.createElement('button');
-    strikeCardBtn.className = 'strike-btn';
-    strikeCardBtn.innerHTML = 'S&#822;';
-    strikeCardBtn.title = 'Strike out this whole card';
-    strikeCardBtn.addEventListener('click', e => { e.stopPropagation(); toggleCardStrike(i); });
-
-    // Split control
-    const splitBtn = document.createElement('button');
-    splitBtn.className = 'split-btn';
-    splitBtn.textContent = '⊞';
-    splitBtn.title = 'Split this cell';
-    splitBtns[i] = splitBtn;
-    splitBtn.addEventListener('click', e => {
-      e.stopPropagation();
-      if (splitTarget === i && !splitPopup.classList.contains('hidden')) { closeSplitPopup(); return; }
-      openSplitPopup(i, splitBtn);
-    });
-
-    hdr.appendChild(grip);
     hdr.appendChild(titleInput);
     hdr.appendChild(wc);
-    hdr.appendChild(strikeCardBtn);
-    hdr.appendChild(splitBtn);
     hdr.appendChild(dot);
 
-    const body = document.createElement('div');
-    body.className = 'cell-body';
-    cellBodies[i] = body;
-
-    const ta = makeTextarea(i);
-    textareas[i] = ta;
-    body.appendChild(ta._wrap);
-
-    // Flip container: front (board) + back (next-day task)
-    const flip = document.createElement('div');
-    flip.className = 'flip-inner';
-    const back = document.createElement('div');
-    back.className = 'card-back';
-    const backLabel = document.createElement('div');
-    backLabel.className = 'card-back-label';
-    backLabel.innerHTML = '<span>Next-day task</span><span class="hint">Ctrl/⌘ + double-click, or double-tap Ctrl/⌘, to flip</span>';
-    const taBack = document.createElement('textarea');
-    taBack.className = 'textarea card-back-ta';
-    taBack.placeholder = 'tomorrow…';
-    taBack.spellcheck = false;
-    taBack.style.fontSize = globalFontSize + 'px';
-    taBack.addEventListener('input', autoSave);
-    backTextareas[i] = taBack;
-    back.appendChild(backLabel);
-    back.appendChild(taBack);
-    flip.appendChild(body);
-    flip.appendChild(back);
-
-    // Ctrl/Cmd + double-click flips the focused card.
-    sec.addEventListener('dblclick', e => {
-      if (e.ctrlKey || e.metaKey) { e.preventDefault(); flipCard(i); }
-    });
-
-    sec.appendChild(hdr);
-    sec.appendChild(flip);
-    grid.appendChild(sec);
-
-    titleInput.addEventListener('input', autoSave);
-  }
-
-  // Ensure at least `n` sections exist (rounded up to whole rows of COLS).
-  function ensureSections(n) {
-    const target = Math.ceil(Math.max(n, 1) / COLS) * COLS;
-    for (let i = sections.length; i < target; i++) createSection(i);
-  }
-
-  // Append more rows as the user scrolls near the bottom.
-  grid.addEventListener('scroll', () => {
-    if (grid.scrollTop + grid.clientHeight >= grid.scrollHeight - 80) {
-      ensureSections(sections.length + GROW_ROWS * COLS);
-      applyFilters();
-    }
-  });
-
-  // Create a configured textarea wrapped in a highlight pane.
-  // Returns the textarea; ta._wrap is the pane element, ta._bd the backdrop.
-  function makeTextarea(i, secondary) {
-    const wrap = document.createElement('div');
-    wrap.className = 'pane';
-    const backdrop = document.createElement('div');
-    backdrop.className = 'hl-backdrop';
-    backdrop.setAttribute('aria-hidden', 'true');
     const ta = document.createElement('textarea');
     ta.className = 'textarea';
-    ta.placeholder = 'notes…';
+    ta.placeholder = `notes…`;
     ta.spellcheck = false;
-    ta._wrap = wrap;
-    ta._bd = backdrop;
-    wrap.appendChild(backdrop);
-    wrap.appendChild(ta);
-    applyTaFontSize(ta, sectionFontSizes[i]);
-    ta.addEventListener('input', () => { updateHighlight(ta); updateWordCount(i); autoSave(); });
-    ta.addEventListener('focus', () => { activeSectionIdx = i; lastFocusedTextarea = ta; updateFontSizeUI(); });
-    ta.addEventListener('scroll', () => { backdrop.scrollTop = ta.scrollTop; backdrop.scrollLeft = ta.scrollLeft; });
+    textareas.push(ta);
+
+    sec.appendChild(hdr);
+    sec.appendChild(ta);
+    grid.appendChild(sec);
+
+    ta.addEventListener('input', () => { updateWordCount(i); autoSave(); });
+    titleInput.addEventListener('input', autoSave);
+
     ta.addEventListener('keydown', (e) => {
       if (e.key === 'Tab') {
         e.preventDefault();
         const start = ta.selectionStart, end = ta.selectionEnd;
         ta.value = ta.value.slice(0, start) + '\t' + ta.value.slice(end);
         ta.selectionStart = ta.selectionEnd = start + 1;
-        updateHighlight(ta);
         updateWordCount(i);
         autoSave();
       }
     });
-    return ta;
   }
 
-  // ── Cell splitting ──
-  const splitPopup = document.getElementById('split-popup');
-  let splitTarget = -1;
-
-  function openSplitPopup(idx, btnEl) {
-    splitTarget = idx;
-    const rect = btnEl.getBoundingClientRect();
-    splitPopup.classList.remove('hidden');
-    splitPopup.style.top = (rect.bottom + 4) + 'px';
-    splitPopup.style.left = Math.min(rect.left, window.innerWidth - 110) + 'px';
-  }
-  function closeSplitPopup() {
-    splitPopup.classList.add('hidden');
-    splitTarget = -1;
-  }
-  splitPopup.addEventListener('click', e => {
-    const btn = e.target.closest('button');
-    if (!btn || splitTarget < 0) return;
-    const mode = btn.dataset.split === 'none' ? null : btn.dataset.split;
-    setSplit(splitTarget, mode);
-    closeSplitPopup();
-    autoSave();
-  });
-  document.addEventListener('click', e => {
-    if (!splitPopup.classList.contains('hidden') && !splitPopup.contains(e.target) && !e.target.closest('.split-btn')) {
-      closeSplitPopup();
-    }
-  });
-
-  // Apply / change a section's split layout, preserving content
-  function setSplit(i, mode) {
-    splitModes[i] = mode;
-    const body = cellBodies[i];
-    const primary = textareas[i];
-    body.innerHTML = '';                 // detaches children; element refs (and their values) survive
-    primary._wrap.style.flex = '';
-    body.classList.toggle('split', !!mode);
-    body.style.flexDirection = mode === 'col' ? 'column' : 'row';
-    body.appendChild(primary._wrap);
-    splitBtns[i].textContent = mode ? '⊟' : '⊞';
-    splitBtns[i].title = mode ? 'Change / merge split' : 'Split this cell';
-    if (!mode) { updateWordCount(i); return; }
-    if (!textareas2[i]) textareas2[i] = makeTextarea(i, true);
-    const splitter = document.createElement('div');
-    splitter.className = 'cell-splitter';
-    attachSplitterDrag(splitter, i);
-    body.appendChild(splitter);
-    body.appendChild(textareas2[i]._wrap);
-    const p = splitPos[i];
-    primary._wrap.style.flex = '0 0 ' + p + '%';
-    textareas2[i]._wrap.style.flex = '0 0 ' + (100 - p) + '%';
-    updateWordCount(i);
-    updateHighlight(textareas2[i]);
-  }
-
-  function attachSplitterDrag(splitter, i) {
-    splitter.addEventListener('mousedown', e => {
-      e.preventDefault();
-      const body = cellBodies[i];
-      const rect = body.getBoundingClientRect();
-      const horizontal = splitModes[i] === 'row'; // panes left/right
-      function onMove(ev) {
-        let pct = horizontal
-          ? (ev.clientX - rect.left) / rect.width * 100
-          : (ev.clientY - rect.top) / rect.height * 100;
-        pct = Math.max(12, Math.min(88, pct));
-        splitPos[i] = pct;
-        textareas[i]._wrap.style.flex = '0 0 ' + pct + '%';
-        textareas2[i]._wrap.style.flex = '0 0 ' + (100 - pct) + '%';
-      }
-      function onUp() {
-        document.removeEventListener('mousemove', onMove);
-        document.removeEventListener('mouseup', onUp);
-        document.body.style.userSelect = '';
-        autoSave();
-      }
-      document.addEventListener('mousemove', onMove);
-      document.addEventListener('mouseup', onUp);
-      document.body.style.userSelect = 'none';
-    });
-  }
-
-  function countWords(s) {
-    const t = s.trim();
-    return t ? t.split(/\s+/).length : 0;
-  }
   function updateWordCount(i) {
-    let n = countWords(textareas[i].value);
-    if (splitModes[i] && textareas2[i]) n += countWords(textareas2[i].value);
-    wordCounts[i].textContent = n + 'w';
+    const val = textareas[i].value.trim();
+    wordCounts[i].textContent = (val ? val.split(/\s+/).length : 0) + 'w';
   }
 
   // ── Persistence ──
-  // Populate the grid from a saved state object.
-  function applyState(data) {
-    if (!data) return;
+  function loadState() {
     try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (!raw) return;
+      const data = JSON.parse(raw);
       if (data.theme) applyTheme(data.theme, false);
-      if (typeof data.globalFontSize === 'number') globalFontSize = data.globalFontSize;
-      const notes = data.notes || [];
-      ensureSections(notes.length);   // create enough cells for the saved data
-      notes.forEach((n, i) => {
+      (data.notes || []).forEach((n, i) => {
+        if (i >= SECTIONS) return;
         textareas[i].value = n.text || '';
         titles[i].value = n.title || '';
-        if (backTextareas[i]) backTextareas[i].value = n.back || '';
         if (n.color !== undefined) sectionColors[i] = n.color;
-        applyCardStrike(i, !!n.struck);
-        if (n.fontSize) { sectionFontSizes[i] = n.fontSize; applyTaFontSize(textareas[i], n.fontSize); }
-        if (n.split) {
-          splitPos[i] = (typeof n.splitPos === 'number') ? n.splitPos : 50;
-          setSplit(i, n.split);
-          if (textareas2[i]) {
-            textareas2[i].value = n.text2 || '';
-            applyTaFontSize(textareas2[i], sectionFontSizes[i]);
-            updateHighlight(textareas2[i]);
-          }
-        }
-        updateHighlight(textareas[i]);
+        if (n.fontSize) { sectionFontSizes[i] = n.fontSize; textareas[i].style.fontSize = n.fontSize + 'px'; }
         updateWordCount(i);
       });
-      if (typeof data.cardHeight === 'number' || data.cardHeight === null) {
-        cardHeight = data.cardHeight;
-      }
-      applyCardHeight();
-      if (data.fontFamily) applyFontFamily(data.fontFamily, false);
       reapplyAllColors();
       updateFontSizeUI();
-      if (typeof updateGlobalFontUI === 'function') updateGlobalFontUI();
     } catch (e) {}
   }
 
-  // Offline / exported-snapshot loader (used only when a seed is present).
-  function loadSeedState() {
-    let raw = null;
-    if (window.__NOTES_SEED__) raw = window.__NOTES_SEED__;
-    if (!raw) { try { raw = localStorage.getItem(STORAGE_KEY); } catch (e) {} }
-    if (!raw) return;
-    try { applyState(JSON.parse(raw)); } catch (e) {}
-  }
-
-  function isEmptySection(i) {
-    return !textareas[i].value &&
-           !titles[i].value &&
-           !sectionColors[i] &&
-           !sectionStruck[i] &&
-           !splitModes[i] &&
-           sectionFontSizes[i] === globalFontSize &&
-           !(textareas2[i] && textareas2[i].value) &&
-           !(backTextareas[i] && backTextareas[i].value);
-  }
-  function currentState() {
-    // Trim trailing empty sections so the infinite grid doesn't bloat storage.
-    let last = sections.length - 1;
-    while (last >= 0 && isEmptySection(last)) last--;
-    const notes = [];
-    for (let i = 0; i <= last; i++) {
-      notes.push({
-        text: textareas[i].value,
-        title: titles[i].value,
-        color: sectionColors[i] || null,
-        struck: !!sectionStruck[i],
-        fontSize: sectionFontSizes[i],
-        split: splitModes[i] || null,
-        splitPos: splitPos[i],
-        text2: textareas2[i] ? textareas2[i].value : '',
-        back: backTextareas[i] ? backTextareas[i].value : ''
-      });
-    }
-    return { notes, theme, cardHeight, fontFamily, globalFontSize };
-  }
-  // Save: PocketBase when online & authed; localStorage only for offline
-  // exported snapshots (seed mode).
-  let saveTimer = null;
   function autoSave() {
-    if (OFFLINE) {
-      try { localStorage.setItem(STORAGE_KEY, JSON.stringify(currentState())); } catch (e) {}
-      flashStatus('Saved ✓');
-      return;
-    }
-    if (!authToken) return; // not signed in yet
-    clearTimeout(saveTimer);
-    flashStatus('Saving…', true);
-    saveTimer = setTimeout(() => { saveToPB(); }, 700);
-  }
-
-  // ── Move / reorder a cell (drag-and-drop) ──
-  function getNote(i) {
-    return {
-      text: textareas[i].value,
+    const notes = textareas.map((ta, i) => ({
+      text: ta.value,
       title: titles[i].value,
       color: sectionColors[i] || null,
-      struck: !!sectionStruck[i],
-      fontSize: sectionFontSizes[i],
-      split: splitModes[i] || null,
-      splitPos: splitPos[i],
-      text2: textareas2[i] ? textareas2[i].value : '',
-      back: backTextareas[i] ? backTextareas[i].value : ''
-    };
-  }
-  function applyNote(i, n) {
-    textareas[i].value = n.text || '';
-    titles[i].value = n.title || '';
-    sectionFontSizes[i] = n.fontSize || 13;
-    applyTaFontSize(textareas[i], sectionFontSizes[i]);
-    splitPos[i] = (typeof n.splitPos === 'number') ? n.splitPos : 50;
-    setSplit(i, n.split || null);
-    if (n.split && textareas2[i]) {
-      textareas2[i].value = n.text2 || '';
-      applyTaFontSize(textareas2[i], sectionFontSizes[i]);
-      updateHighlight(textareas2[i]);
-    }
-    applyColor(i, n.color || null);
-    applyCardStrike(i, !!n.struck);
-    if (backTextareas[i]) backTextareas[i].value = n.back || '';
-    updateHighlight(textareas[i]);
-    updateWordCount(i);
-  }
-  // Move content from index `from` to index `to`, shifting the cells between.
-  function moveSection(from, to) {
-    if (from === to || from < 0 || to < 0) return;
-    const notes = sections.map((_, i) => getNote(i));
-    const [moved] = notes.splice(from, 1);
-    notes.splice(to, 0, moved);
-    notes.forEach((n, i) => applyNote(i, n));
-    applyFilters();
-    autoSave();
+      fontSize: sectionFontSizes[i]
+    }));
+    localStorage.setItem(STORAGE_KEY, JSON.stringify({ notes, theme }));
+    flashStatus();
   }
 
   let statusTimer;
-  function flashStatus(msg, sticky) {
+  function flashStatus() {
     const el = document.getElementById('status');
-    if (msg) el.textContent = msg;
     el.classList.add('show');
     clearTimeout(statusTimer);
-    if (!sticky) statusTimer = setTimeout(() => el.classList.remove('show'), 1400);
+    statusTimer = setTimeout(() => el.classList.remove('show'), 1200);
   }
 
   // ── Per-section font size ──
@@ -1766,13 +570,23 @@ try { var _t = localStorage.getItem('notes_theme'); if (_t) document.documentEle
   }
 
   function setSectionFontSize(idx, size, save = true) {
-    if (idx < 0 || idx >= sections.length) return;
+    if (idx < 0 || idx >= SECTIONS) return;
     sectionFontSizes[idx] = Math.max(9, Math.min(24, size));
-    applyTaFontSize(textareas[idx], sectionFontSizes[idx]);
-    if (textareas2[idx]) applyTaFontSize(textareas2[idx], sectionFontSizes[idx]);
+    textareas[idx].style.fontSize = sectionFontSizes[idx] + 'px';
     if (idx === activeSectionIdx) updateFontSizeUI();
     if (save) autoSave();
   }
+
+  // Track which section is active
+  textareas.forEach((ta, i) => {
+    ta.addEventListener('focus', () => {
+      activeSectionIdx = i;
+      updateFontSizeUI();
+    });
+    ta.addEventListener('blur', () => {
+      // Keep showing last focused section's size briefly; clear on toolbar focus
+    });
+  });
 
   document.getElementById('font-up').addEventListener('click', () => {
     if (activeSectionIdx < 0) return;
@@ -1788,185 +602,32 @@ try { var _t = localStorage.getItem('notes_theme'); if (_t) document.documentEle
   // Init buttons as disabled until a section is focused
   updateFontSizeUI();
 
-  // ── Global font size (all cards at once) ──
-  function updateGlobalFontUI() {
-    document.getElementById('gfont-size-display').textContent = globalFontSize;
-    document.getElementById('gfont-up').disabled = globalFontSize >= 24;
-    document.getElementById('gfont-down').disabled = globalFontSize <= 9;
-  }
-  function setGlobalFontSize(size, save = true) {
-    globalFontSize = Math.max(9, Math.min(24, size));
-    for (let i = 0; i < sections.length; i++) {
-      sectionFontSizes[i] = globalFontSize;
-      applyTaFontSize(textareas[i], globalFontSize);
-      if (textareas2[i]) applyTaFontSize(textareas2[i], globalFontSize);
-      if (backTextareas[i]) backTextareas[i].style.fontSize = globalFontSize + 'px';
-    }
-    updateGlobalFontUI();
-    updateFontSizeUI();
-    if (save) autoSave();
-  }
-  document.getElementById('gfont-up').addEventListener('click', () => setGlobalFontSize(globalFontSize + 1));
-  document.getElementById('gfont-down').addEventListener('click', () => setGlobalFontSize(globalFontSize - 1));
-  updateGlobalFontUI();
-
-  // ── Strikethrough selected text (combining U+0336, works in plain textareas) ──
-  var STRIKE = String.fromCharCode(0x0336);
-  function toggleStrike(str) {
-    if (str.indexOf(STRIKE) !== -1) return str.split(STRIKE).join('');   // un-strike
-    return Array.from(str).map(ch => ch + STRIKE).join('');              // strike
-  }
-  const strikeBtn = document.getElementById('strike-btn');
-  // Keep the textarea focused/selected when the button is pressed.
-  strikeBtn.addEventListener('mousedown', e => e.preventDefault());
-  strikeBtn.addEventListener('click', () => {
-    let ta = document.activeElement;
-    if (!ta || ta.tagName !== 'TEXTAREA' || !ta.classList.contains('textarea')) ta = lastFocusedTextarea;
-    if (!ta) { flashStatus('Click into a card first'); return; }
-    const start = ta.selectionStart, end = ta.selectionEnd;
-    if (start == null || start === end) { flashStatus('Select text to strike'); return; }
-    const before = ta.value.slice(0, start);
-    const sel = ta.value.slice(start, end);
-    const after = ta.value.slice(end);
-    const replaced = toggleStrike(sel);
-    ta.value = before + replaced + after;
-    ta.focus();
-    ta.setSelectionRange(start, start + replaced.length);
-    updateHighlight(ta);
-    const idx = textareas.indexOf(ta);
-    const idx2 = idx === -1 ? textareas2.indexOf(ta) : idx;
-    if (idx2 !== -1) updateWordCount(idx2);
-    autoSave();
-  });
-
-  // ── Uniform card height (all cards at once) ──
-  let cardHeight = null; // null = Fit (auto rows to viewport)
-  const CARD_H_MIN = 120, CARD_H_MAX = 600, CARD_H_STEP = 40;
-
-  function updateCardHeightUI() {
-    document.getElementById('card-h-display').textContent =
-      cardHeight === null ? 'Auto' : cardHeight + 'px';
-    document.getElementById('card-h-up').disabled   = cardHeight !== null && cardHeight >= CARD_H_MAX;
-    document.getElementById('card-h-down').disabled  = cardHeight !== null && cardHeight <= CARD_H_MIN;
-  }
-
-  function applyCardHeight() {
-    // Default ("Fit"): four rows fill the visible grid; otherwise a fixed height.
-    const h = cardHeight === null
-      ? Math.max(CARD_H_MIN, Math.floor((grid.clientHeight || window.innerHeight) / 4))
-      : cardHeight;
-    grid.style.setProperty('--card-h', h + 'px');
-    updateCardHeightUI();
-  }
-  // Keep the auto ("Fit") row height in sync with the viewport.
-  window.addEventListener('resize', () => { if (cardHeight === null) applyCardHeight(); });
-
-  function setCardHeight(h, save = true) {
-    if (h === null) cardHeight = null;
-    else cardHeight = Math.max(CARD_H_MIN, Math.min(CARD_H_MAX, h));
-    applyCardHeight();
-    if (save) autoSave();
-  }
-
-  document.getElementById('card-h-up').addEventListener('click', () => {
-    setCardHeight(cardHeight === null ? 240 : cardHeight + CARD_H_STEP);
-  });
-  document.getElementById('card-h-down').addEventListener('click', () => {
-    setCardHeight(cardHeight === null ? 200 : cardHeight - CARD_H_STEP);
-  });
-  document.getElementById('card-h-auto').addEventListener('click', () => {
-    setCardHeight(null);
-  });
-  updateCardHeightUI();
-
-  // ── Font family (applies to all note text) ──
-  const FONTS = [
-    { id: 'mono',     label: 'Courier (mono)', stack: "'Courier New', Courier, monospace" },
-    { id: 'menlo',    label: 'Menlo / Consolas', stack: "ui-monospace, Menlo, Monaco, Consolas, 'Liberation Mono', monospace" },
-    { id: 'system',   label: 'System Sans', stack: "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" },
-    { id: 'serif',    label: 'Serif', stack: "Georgia, 'Times New Roman', Times, serif" },
-    { id: 'georgia',  label: 'Georgia', stack: "Georgia, serif" },
-    { id: 'verdana',  label: 'Verdana', stack: "Verdana, Geneva, sans-serif" },
-    { id: 'trebuchet',label: 'Trebuchet', stack: "'Trebuchet MS', 'Segoe UI', sans-serif" },
-    { id: 'comic',    label: 'Comic Sans', stack: "'Comic Sans MS', 'Comic Sans', cursive" },
-  ];
-  let fontFamily = 'mono';
-  const fontSelect = document.getElementById('font-family-select');
-  FONTS.forEach(f => {
-    const opt = document.createElement('option');
-    opt.value = f.id;
-    opt.textContent = f.label;
-    fontSelect.appendChild(opt);
-  });
-  function applyFontFamily(id, save = true) {
-    const f = FONTS.find(x => x.id === id) || FONTS[0];
-    fontFamily = f.id;
-    document.documentElement.style.setProperty('--note-font', f.stack);
-    fontSelect.value = f.id;
-    if (save) autoSave();
-  }
-  fontSelect.addEventListener('change', () => applyFontFamily(fontSelect.value));
-  applyFontFamily(fontFamily, false);
-
   // ── Theme ──
-  // Each theme maps to a palette base ('dark' or 'light') for section tinting.
-  const THEMES = [
-    { id: 'dark',     label: 'Dark',     base: 'dark'  },
-    { id: 'light',    label: 'Light',    base: 'light' },
-    { id: 'midnight', label: 'Midnight', base: 'dark'  },
-    { id: 'dracula',  label: 'Dracula',  base: 'dark'  },
-    { id: 'carbon',   label: 'Carbon',   base: 'dark'  },
-    { id: 'nord',     label: 'Nord',     base: 'dark'  },
-    { id: 'matrix',   label: 'Matrix',   base: 'dark'  },
-    { id: 'crimson',  label: 'Crimson',  base: 'dark'  },
-    { id: 'ocean',    label: 'Ocean',    base: 'dark'  },
-    { id: 'amber',    label: 'Amber',    base: 'light' },
-    { id: 'slate',    label: 'Slate',    base: 'light' },
-  ];
-  function themeBase() {
-    const t = THEMES.find(x => x.id === theme);
-    return t ? t.base : 'dark';
-  }
   function applyTheme(t, save = true) {
-    if (!THEMES.some(x => x.id === t)) t = 'dark';
     theme = t;
     document.documentElement.setAttribute('data-theme', t);
-    try { localStorage.setItem('notes_theme', t); } catch (e) {} // cache to avoid flicker next load
-    const meta = THEMES.find(x => x.id === t);
-    document.getElementById('theme-btn').textContent = '◑ ' + meta.label;
+    document.getElementById('theme-btn').textContent = t === 'dark' ? '◑ Theme' : '◐ Theme';
     reapplyAllColors();
     if (save) autoSave();
   }
-  function cycleTheme() {
-    const idx = THEMES.findIndex(x => x.id === theme);
-    applyTheme(THEMES[(idx + 1) % THEMES.length].id);
-  }
-  document.getElementById('theme-btn').addEventListener('click', cycleTheme);
+  document.getElementById('theme-btn').addEventListener('click', () => {
+    applyTheme(theme === 'dark' ? 'light' : 'dark');
+  });
 
   // ── Search ──
   const searchInput = document.getElementById('search-input');
   const searchCountEl = document.getElementById('search-count');
-
-  // All visible panes (primary + any split secondary), in section order
-  function allPanes() {
-    const panes = [];
-    for (let i = 0; i < sections.length; i++) {
-      panes.push(textareas[i]);
-      if (splitModes[i] && textareas2[i]) panes.push(textareas2[i]);
-    }
-    return panes;
-  }
 
   function doSearch() {
     searchMatches = [];
     const q = searchInput.value;
     if (!q) { searchCountEl.textContent = ''; searchIndex = -1; return; }
     const lower = q.toLowerCase();
-    allPanes().forEach(ta => {
+    textareas.forEach((ta, i) => {
       const val = ta.value.toLowerCase();
       let pos = 0;
       while ((pos = val.indexOf(lower, pos)) !== -1) {
-        searchMatches.push({ ta, pos, len: q.length });
+        searchMatches.push({ section: i, pos, len: q.length });
         pos += q.length;
       }
     });
@@ -1983,10 +644,10 @@ try { var _t = localStorage.getItem('notes_theme'); if (_t) document.documentEle
   function scrollToMatch(idx) {
     if (!searchMatches.length || idx < 0) return;
     const m = searchMatches[idx];
-    const ta = m.ta;
+    const ta = textareas[m.section];
     ta.focus();
     ta.setSelectionRange(m.pos, m.pos + m.len);
-    const lineHeight = (parseFloat(getComputedStyle(ta).fontSize) || 13) * 1.55;
+    const lineHeight = fontSize * 1.55;
     const lineNum = (ta.value.slice(0, m.pos).match(/\n/g) || []).length;
     ta.scrollTop = Math.max(0, lineNum * lineHeight - ta.clientHeight / 2);
     searchCountEl.textContent = `${idx + 1}/${searchMatches.length}`;
@@ -2018,29 +679,28 @@ try { var _t = localStorage.getItem('notes_theme'); if (_t) document.documentEle
   });
 
   // ── Save as HTML ──
-  // Produces a standalone copy of this page whose data is seeded so the app
-  // rebuilds cleanly from it (instead of duplicating the generated DOM).
   function saveHTML() {
-    const root = document.documentElement.cloneNode(true);
-    // Empty the JS-generated containers so the app regenerates them once.
-    ['grid', 'color-popup', 'filter-swatches', 'font-family-select'].forEach(id => {
-      const el = root.querySelector('#' + id);
-      if (el) el.innerHTML = '';
-    });
-    // Drop any seed script from a previously-exported source.
-    root.querySelectorAll('script[data-notes-seed]').forEach(s => s.remove());
-
-    const seedJSON = JSON.stringify(JSON.stringify(currentState()));
-    const keyJSON = JSON.stringify(STORAGE_KEY);
-    const seedScript =
-      '<script data-notes-seed>window.__NOTES_SEED__=' + seedJSON +
-      ';try{if(!localStorage.getItem(' + keyJSON + '))localStorage.setItem(' + keyJSON +
-      ',window.__NOTES_SEED__);}catch(e){}<\/script>';
-    let outer = root.outerHTML;
-    // Inject the seed as the first thing in <head> so it runs before the app.
-    outer = outer.replace(/<head[^>]*>/i, m => m + '\n' + seedScript);
-
-    const html = '<!DOCTYPE html>\n' + outer;
+    const notesData = textareas.map((ta, i) => ({
+      text: ta.value,
+      title: titles[i].value,
+      color: sectionColors[i] || null,
+      fontSize: sectionFontSizes[i]
+    }));
+    const savedScript = `
+<script>
+(function(){
+  var data = ${JSON.stringify(notesData)};
+  var tas = document.querySelectorAll('.textarea');
+  var tis = document.querySelectorAll('.section-title');
+  data.forEach(function(n,i){
+    if(tas[i]) tas[i].value = n.text||'';
+    if(tis[i]) tis[i].value = n.title||'';
+    if(n.color) sectionColors[i] = n.color;
+  });
+  reapplyAllColors();
+})();
+<\/script>`;
+    const html = '<!DOCTYPE html>\n' + document.documentElement.outerHTML.replace('</body>', savedScript + '\n</body>');
     const blob = new Blob([html], { type: 'text/html' });
     const a = document.createElement('a');
     a.href = URL.createObjectURL(blob);
@@ -2058,556 +718,23 @@ try { var _t = localStorage.getItem('notes_theme'); if (_t) document.documentEle
       searchInput.focus();
       searchInput.select();
     }
-    // Quick "/" focuses search when not already typing in a field
-    if (e.key === '/' && !e.metaKey && !e.ctrlKey && !e.altKey) {
-      const tag = (document.activeElement && document.activeElement.tagName) || '';
-      if (tag !== 'INPUT' && tag !== 'TEXTAREA') {
-        e.preventDefault();
-        searchInput.focus();
-        searchInput.select();
-      }
-    }
-  });
-
-  // ── Double-tap Ctrl (or ⌘) to flip the focused card ──
-  // Mirrors the Ctrl/⌘ + double-click gesture, but from the keyboard so you can
-  // flip to the "next-day task" face without reaching for the mouse.
-  function focusedSectionIndex() {
-    const el = document.activeElement;
-    if (el && el.closest) {
-      const sec = el.closest('.section');
-      if (sec) { const idx = sections.indexOf(sec); if (idx >= 0) return idx; }
-    }
-    return activeSectionIdx;
-  }
-  let lastCtrlUp = 0;
-  let ctrlUsedAsModifier = false;
-  document.addEventListener('keydown', (e) => {
-    // A non-modifier key pressed while Ctrl/⌘ is held means it's a shortcut
-    // (e.g. Ctrl+S), not a standalone tap — so don't treat the release as a tap.
-    if (e.key !== 'Control' && e.key !== 'Meta' && (e.ctrlKey || e.metaKey)) {
-      ctrlUsedAsModifier = true;
-    }
-  });
-  document.addEventListener('keyup', (e) => {
-    if (e.key !== 'Control' && e.key !== 'Meta') return;
-    if (ctrlUsedAsModifier) { ctrlUsedAsModifier = false; lastCtrlUp = 0; return; }
-    const now = Date.now();
-    if (lastCtrlUp && now - lastCtrlUp < 450) {
-      lastCtrlUp = 0;
-      const i = focusedSectionIndex();
-      if (i >= 0) flipCard(i);
-    } else {
-      lastCtrlUp = now;
-    }
   });
 
   // ── Clear all ──
-  function clearAllSections() {
+  document.getElementById('clear-btn').addEventListener('click', () => {
+    if (!confirm('Clear all sections? This cannot be undone.')) return;
     textareas.forEach((ta, i) => {
       ta.value = '';
       titles[i].value = '';
       sectionColors[i] = null;
       applyColor(i, null);
-      applyCardStrike(i, false);
-      if (backTextareas[i]) backTextareas[i].value = '';
-      if (sections[i]) sections[i].classList.remove('flipped');
-      if (textareas2[i]) { textareas2[i].value = ''; updateHighlight(textareas2[i]); }
-      splitPos[i] = 50;
-      if (splitModes[i]) setSplit(i, null);
-      updateHighlight(ta);
       updateWordCount(i);
     });
-    applyFilters();
-  }
-  document.getElementById('clear-btn').addEventListener('click', () => {
-    if (!confirm('Clear all cards in this space? This cannot be undone.')) return;
-    clearAllSections();
     autoSave();
   });
 
-  // ── PocketBase auth + sync ──
-  function pbHeaders() {
-    const h = { 'Content-Type': 'application/json' };
-    if (authToken) h['Authorization'] = authToken;
-    return h;
-  }
-  function saveAuth() {
-    try { localStorage.setItem(PB_AUTH_KEY, JSON.stringify({ token: authToken, userId: authUserId, email: authEmail, su: isSuperuser })); } catch (e) {}
-  }
-  function loadAuth() {
-    try {
-      const r = localStorage.getItem(PB_AUTH_KEY);
-      if (r) { const a = JSON.parse(r); authToken = a.token; authUserId = a.userId; authEmail = a.email; isSuperuser = !!a.su; }
-    } catch (e) {}
-  }
-  function clearAuth() {
-    authToken = authUserId = authEmail = null;
-    isSuperuser = false;
-    recordId = null;
-    try { localStorage.removeItem(PB_AUTH_KEY); } catch (e) {}
-  }
-  // Record key for the current identity (admins share one 'board' record).
-  function notesKey() { return isSuperuser ? SUPERUSER_KEY : authUserId; }
-  function setAccountUI() {
-    document.getElementById('account-email').textContent = authEmail || '';
-    document.getElementById('logout-btn').style.display = authToken ? '' : 'none';
-  }
-
-  async function tryAuth(path, email, password) {
-    let res;
-    try {
-      res = await fetch(PB_URL + path, {
-        method: 'POST', headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ identity: email, password: password })
-      });
-    } catch (netErr) {
-      throw new Error('Network/CORS error reaching PocketBase: ' + netErr.message);
-    }
-    return res;
-  }
-  async function pbLogin(email, password) {
-    // 1) regular user account in the `users` collection
-    let res = await tryAuth('/api/collections/users/auth-with-password', email, password);
-    if (res.ok) {
-      const data = await res.json();
-      authToken = data.token; authUserId = data.record.id; authEmail = data.record.email; isSuperuser = false;
-      saveAuth(); return;
-    }
-    const userStatus = res.status;
-    // 2) admin / superuser (PocketBase ≥ 0.23)
-    res = await tryAuth('/api/collections/_superusers/auth-with-password', email, password);
-    if (res.ok) {
-      const data = await res.json();
-      authToken = data.token; authUserId = (data.record && data.record.id) || 'admin'; authEmail = email; isSuperuser = true;
-      saveAuth(); return;
-    }
-    // 3) legacy admins endpoint (PocketBase < 0.23)
-    let legacy = null, legacyStatus = '—';
-    try {
-      legacy = await fetch(PB_URL + '/api/admins/auth-with-password', {
-        method: 'POST', headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ identity: email, password: password })
-      });
-      legacyStatus = legacy.status;
-    } catch (e) { legacyStatus = 'net'; }
-    if (legacy && legacy.ok) {
-      const data = await legacy.json();
-      authToken = data.token; authUserId = (data.admin && data.admin.id) || 'admin'; authEmail = email; isSuperuser = true;
-      saveAuth(); return;
-    }
-    throw new Error('Sign in failed — user:' + userStatus + ' superuser:' + res.status + ' admin:' + legacyStatus + ' (check email/password)');
-  }
-
-  async function pbFetchRecord() {
-    // Single-record board: grab the most recent record with no field filter,
-    // so the collection only needs a `data` JSON field.
-    const url = PB_URL + '/api/collections/' + PB_COLLECTION + '/records?perPage=1&sort=-updated';
-    let res;
-    try { res = await fetch(url, { headers: pbHeaders() }); }
-    catch (netErr) { throw new Error('Network/CORS error: ' + netErr.message); }
-    if (res.status === 401 || res.status === 403) throw { auth: true };
-    if (res.status === 404) throw { missing: true };
-    if (!res.ok) {
-      let msg = 'Could not load notes (HTTP ' + res.status + ')';
-      try { const j = await res.json(); if (j && j.message) msg += ' — ' + j.message; } catch (e) {}
-      throw new Error(msg);
-    }
-    const data = await res.json();
-    return (data.items && data.items[0]) || null;
-  }
-
-  // Auto-provision the notes collection (superuser only). Tries the PB ≥0.23
-  // "fields" payload first, then the legacy "schema" payload.
-  async function pbCreateCollection() {
-    const headers = pbHeaders();
-    const attempts = [
-      { name: PB_COLLECTION, type: 'base', fields: [
-        { name: 'slug', type: 'text' }, { name: 'kind', type: 'text' },
-        { name: 'title', type: 'text' }, { name: 'cards', type: 'number' },
-        { name: 'data', type: 'json', maxSize: 5000000 }
-      ] },
-      { name: PB_COLLECTION, type: 'base', schema: [
-        { name: 'slug', type: 'text', options: {} }, { name: 'kind', type: 'text', options: {} },
-        { name: 'title', type: 'text', options: {} }, { name: 'cards', type: 'number', options: {} },
-        { name: 'data', type: 'json', options: { maxSize: 5000000 } }
-      ] }
-    ];
-    for (const body of attempts) {
-      const res = await fetch(PB_URL + '/api/collections', {
-        method: 'POST', headers, body: JSON.stringify(body)
-      });
-      if (res.ok) return true;
-    }
-    return false;
-  }
-
-  // Ensure the collection has the fields we use (superuser only): data (json,
-  // the full board), plus title + cards for readable rows in the admin table.
-  async function pbEnsureSchema() {
-    if (!isSuperuser) return;
-    let res;
-    try { res = await fetch(PB_URL + '/api/collections/' + PB_COLLECTION, { headers: pbHeaders() }); }
-    catch (e) { return; }
-    if (!res.ok) return;
-    const col = await res.json();
-    const existing = col.fields || col.schema || [];
-    const have = new Set(existing.map(f => f.name));
-    const wantNew = [];     // PB ≥0.23 "fields" format
-    const wantOld = [];     // legacy "schema" format
-    const defs = [
-      { name: 'slug',  newDef: { name: 'slug',  type: 'text' },                   oldDef: { name: 'slug',  type: 'text', options: {} } },
-      { name: 'kind',  newDef: { name: 'kind',  type: 'text' },                   oldDef: { name: 'kind',  type: 'text', options: {} } },
-      { name: 'data',  newDef: { name: 'data',  type: 'json', maxSize: 5000000 }, oldDef: { name: 'data',  type: 'json', options: { maxSize: 5000000 } } },
-      { name: 'title', newDef: { name: 'title', type: 'text' },                   oldDef: { name: 'title', type: 'text', options: {} } },
-      { name: 'cards', newDef: { name: 'cards', type: 'number' },                 oldDef: { name: 'cards', type: 'number', options: {} } }
-    ];
-    defs.forEach(d => { if (!have.has(d.name)) { wantNew.push(d.newDef); wantOld.push(d.oldDef); } });
-    if (!wantNew.length) return; // all present
-    const id = col.id || PB_COLLECTION;
-    let p = await fetch(PB_URL + '/api/collections/' + id, {
-      method: 'PATCH', headers: pbHeaders(),
-      body: JSON.stringify({ fields: existing.concat(wantNew) })
-    });
-    if (p.ok) return;
-    await fetch(PB_URL + '/api/collections/' + id, {
-      method: 'PATCH', headers: pbHeaders(),
-      body: JSON.stringify({ schema: (col.schema || []).concat(wantOld) })
-    });
-  }
-
-  // ── Spaces (multi-board) ──
-  let spaces = [];          // [{id, slug, title, kind, cards, data?}]
-  let currentSpace = null;  // open space, or null on the landing page
-  const KIND_LABELS = { personal: 'Personal', office: 'Office', other: 'Other' };
-
-  function slugify(s) {
-    return (s || '').toLowerCase().trim().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '').slice(0, 40) || 'space';
-  }
-  function emptyBoard() {
-    return JSON.stringify({ notes: [], theme: theme, fontFamily: fontFamily, globalFontSize: globalFontSize });
-  }
-  function cardCount() {
-    let n = 0;
-    for (let i = 0; i < sections.length; i++) if (!isEmptySection(i)) n++;
-    return n;
-  }
-
-  // Ensure the collection exists + has our fields. Throws {auth} / Error.
-  async function pbEnsureCollection() {
-    if (isSuperuser) { try { await pbEnsureSchema(); } catch (e) {} }
-    let res;
-    try { res = await fetch(PB_URL + '/api/collections/' + PB_COLLECTION + '/records?perPage=1', { headers: pbHeaders() }); }
-    catch (e) { throw new Error('Network/CORS error: ' + e.message); }
-    if (res.status === 401 || res.status === 403) throw { auth: true };
-    if (res.status === 404) {
-      if (!isSuperuser) throw new Error('Collection "' + PB_COLLECTION + '" not found — ask an admin to create it');
-      flashStatus('Creating "' + PB_COLLECTION + '" collection…', true);
-      const ok = await pbCreateCollection();
-      if (!ok) throw new Error('Could not create collection "' + PB_COLLECTION + '" automatically');
-      try { await pbEnsureSchema(); } catch (e) {}
-      return;
-    }
-    if (!res.ok) throw new Error('Load failed (HTTP ' + res.status + ')');
-  }
-
-  async function pbListSpaces() {
-    const res = await fetch(PB_URL + '/api/collections/' + PB_COLLECTION + '/records?perPage=200&sort=-updated', { headers: pbHeaders() });
-    if (res.status === 401 || res.status === 403) throw { auth: true };
-    if (!res.ok) throw new Error('Could not list spaces (HTTP ' + res.status + ')');
-    const data = await res.json();
-    return (data.items || []).map(it => ({
-      id: it.id,
-      slug: it.slug || slugify(it.title || it.id),
-      title: it.title || 'Untitled',
-      kind: it.kind || 'other',
-      cards: it.cards || 0,
-      data: it.data
-    }));
-  }
-
-  async function pbCreateSpace(title, kind) {
-    const slug = slugify(title);
-    const body = { slug: slug, title: title, kind: kind, data: emptyBoard(), cards: 0 };
-    const res = await fetch(PB_URL + '/api/collections/' + PB_COLLECTION + '/records', {
-      method: 'POST', headers: pbHeaders(), body: JSON.stringify(body)
-    });
-    if (!res.ok) { let m = 'Create failed (HTTP ' + res.status + ')'; try { const j = await res.json(); if (j && j.message) m += ' — ' + j.message; } catch (e) {} throw new Error(m); }
-    const rec = await res.json();
-    return { id: rec.id, slug: rec.slug || slug, title: title, kind: kind, cards: 0 };
-  }
-
-  async function pbDeleteSpace(sp) {
-    const res = await fetch(PB_URL + '/api/collections/' + PB_COLLECTION + '/records/' + sp.id, { method: 'DELETE', headers: pbHeaders() });
-    if (!res.ok && res.status !== 204) { flashStatus('Delete failed (HTTP ' + res.status + ')', true); return; }
-    spaces = spaces.filter(s => s.id !== sp.id);
-    renderSpaces();
-  }
-
-  // Rename a space (keeps the same slug/URL so existing links still work).
-  function applySpaceTitle(sp, title) {
-    sp.title = title;
-    // Keep the open space object in sync so the toolbar + a later autosave use the new title.
-    if (currentSpace && currentSpace.id === sp.id) {
-      currentSpace.title = title;
-      setCurrentSpaceLabel();
-      document.title = title + ' — Notes';
-    }
-    renderSpaces();
-  }
-  async function pbRenameSpace(sp, title) {
-    const prev = sp.title;
-    // Optimistic: show the new name in the toolbar/sidebar immediately, then persist.
-    applySpaceTitle(sp, title);
-    flashStatus('Renaming…', true);
-    let res;
-    try {
-      // Send the full record shape (not just title) so collections with stricter
-      // update rules accept it — same payload style the card autosave uses.
-      res = await fetch(PB_URL + '/api/collections/' + PB_COLLECTION + '/records/' + sp.id, {
-        method: 'PATCH', headers: pbHeaders(),
-        body: JSON.stringify({ title: title, slug: sp.slug, kind: sp.kind })
-      });
-    } catch (e) {
-      applySpaceTitle(sp, prev);
-      flashStatus('Rename failed — ' + ((e && e.message) || 'network error'), true);
-      return;
-    }
-    if (res.status === 401 || res.status === 403) { applySpaceTitle(sp, prev); handleAuthExpired(); return; }
-    if (!res.ok) {
-      // Revert the optimistic change and surface why it failed.
-      applySpaceTitle(sp, prev);
-      let m = 'Rename failed (HTTP ' + res.status + ')';
-      try { const j = await res.json(); if (j && j.message) m += ' — ' + j.message; } catch (e) {}
-      flashStatus(m, true);
-      return;
-    }
-    flashStatus('Renamed ✓');
-  }
-
-  // ── Sidebar & routing ──
-  function openSidebar() {
-    document.getElementById('sidebar').classList.add('open');
-    document.getElementById('space-backdrop').classList.add('open');
-  }
-  function closeSidebar() {
-    document.getElementById('sidebar').classList.remove('open');
-    document.getElementById('space-backdrop').classList.remove('open');
-    document.getElementById('new-space-form').classList.add('hidden');
-  }
-  function currentSlug() { return decodeURIComponent((location.hash || '').replace(/^#\/?/, '')).trim(); }
-  function setCurrentSpaceLabel() {
-    document.getElementById('current-space').textContent = currentSpace ? currentSpace.title : 'No space — open menu ☰';
-  }
-
-  function renderSpaces() {
-    const grid = document.getElementById('spaces-grid');
-    grid.innerHTML = '';
-    if (!spaces.length) {
-      const empty = document.createElement('div');
-      empty.className = 'st-meta';
-      empty.style.padding = '10px';
-      empty.textContent = 'No spaces yet. Create one below.';
-      grid.appendChild(empty);
-    }
-    spaces.forEach(sp => {
-      const tile = document.createElement('div');
-      tile.className = 'space-tile' + (currentSpace && currentSpace.id === sp.id ? ' current' : '');
-      const kind = document.createElement('span'); kind.className = 'st-kind'; kind.textContent = KIND_LABELS[sp.kind] || sp.kind;
-      const name = document.createElement('div'); name.className = 'st-name'; name.textContent = sp.title;
-      const meta = document.createElement('div'); meta.className = 'st-meta'; meta.textContent = (sp.cards || 0) + ' card' + (sp.cards === 1 ? '' : 's');
-      const edit = document.createElement('button'); edit.className = 'st-edit'; edit.title = 'Rename space'; edit.textContent = '✎';
-      const del = document.createElement('button'); del.className = 'st-del'; del.title = 'Delete space'; del.textContent = '🗑';
-      tile.appendChild(kind); tile.appendChild(name); tile.appendChild(meta); tile.appendChild(edit); tile.appendChild(del);
-      tile.addEventListener('click', () => { closeSidebar(); location.hash = '#' + sp.slug; });
-      edit.addEventListener('click', e => {
-        e.stopPropagation();
-        const nn = prompt('Rename space', sp.title);
-        if (nn && nn.trim() && nn.trim() !== sp.title) pbRenameSpace(sp, nn.trim());
-      });
-      del.addEventListener('click', e => {
-        e.stopPropagation();
-        if (confirm('Delete space "' + sp.title + '" and all its cards?')) pbDeleteSpace(sp);
-      });
-      grid.appendChild(tile);
-    });
-  }
-
-  async function openSpaceBySlug(slug) {
-    let sp = spaces.find(s => s.slug === slug);
-    if (!sp) { spaces = await pbListSpaces(); sp = spaces.find(s => s.slug === slug); }
-    if (!sp) { flashStatus('Space "' + slug + '" not found', true); location.hash = ''; return; }
-    flashStatus('Loading…', true);
-    currentSpace = sp; recordId = sp.id;
-    clearAllSections();
-    let d = sp.data;
-    if (d === undefined) {
-      const r = await fetch(PB_URL + '/api/collections/' + PB_COLLECTION + '/records/' + sp.id, { headers: pbHeaders() });
-      if (r.ok) { const rec = await r.json(); d = rec.data; sp.data = d; }
-    }
-    if (typeof d === 'string') { try { d = JSON.parse(d); } catch (e) { d = {}; } }
-    applyState(d || {});
-    ensureSections(sections.length + GROW_ROWS * COLS);
-    applyCardHeight();
-    sp.cards = cardCount();          // reflect the real count immediately
-    document.title = sp.title + ' — Notes';
-    setCurrentSpaceLabel();
-    renderSpaces();
-    closeSidebar();
-    flashStatus('Loaded ✓');
-  }
-
-  async function route() {
-    const slug = currentSlug();
-    spaces = await pbListSpaces();
-    if (!slug) {
-      // No space selected: keep the board full-width but open the menu to pick one.
-      currentSpace = null; recordId = null;
-      document.title = 'Notes';
-      setCurrentSpaceLabel();
-      renderSpaces();
-      openSidebar();
-    } else {
-      renderSpaces();
-      await openSpaceBySlug(slug);
-    }
-  }
-
-  async function saveToPB() {
-    if (!authToken || !currentSpace) return; // only save while a space is open
-    const payload = {
-      data: JSON.stringify(currentState()),
-      title: currentSpace.title,
-      kind: currentSpace.kind,
-      slug: currentSpace.slug,
-      cards: cardCount()
-    };
-    try {
-      const res = await fetch(PB_URL + '/api/collections/' + PB_COLLECTION + '/records/' + currentSpace.id, {
-        method: 'PATCH', headers: pbHeaders(), body: JSON.stringify(payload)
-      });
-      if (res.status === 401 || res.status === 403) { handleAuthExpired(); return; }
-      if (!res.ok) {
-        let msg = 'Save failed (HTTP ' + res.status + ')';
-        try { const j = await res.json(); if (j && j.message) msg += ' — ' + j.message; } catch (e2) {}
-        throw new Error(msg);
-      }
-      currentSpace.cards = payload.cards;
-      if (document.getElementById('sidebar').classList.contains('open')) renderSpaces();
-      flashStatus('Saved ✓');
-    } catch (e) {
-      flashStatus((e && e.message) || 'Sync error — retrying…', true);
-      clearTimeout(saveTimer);
-      saveTimer = setTimeout(saveToPB, 5000);
-    }
-  }
-
-  function showLogin() {
-    document.getElementById('login-overlay').classList.remove('hidden');
-    setTimeout(() => document.getElementById('login-email').focus(), 0);
-  }
-  function hideLogin() { document.getElementById('login-overlay').classList.add('hidden'); }
-  function handleAuthExpired() {
-    clearAuth(); setAccountUI(); showLogin(); flashStatus('Session expired — sign in again');
-  }
-
-  async function startSession() {
-    setAccountUI();
-    if (!authToken) { showLogin(); return; }
-    try {
-      await pbEnsureCollection();
-      hideLogin();
-      await route();   // landing or a specific space based on the URL hash
-    } catch (err) {
-      if (err && err.auth) handleAuthExpired();
-      else flashStatus((err && err.message) || 'Could not reach PocketBase', true);
-    }
-  }
-
-  if (!OFFLINE) {
-    document.getElementById('login-form').addEventListener('submit', async e => {
-      e.preventDefault();
-      const email = document.getElementById('login-email').value.trim();
-      const password = document.getElementById('login-password').value;
-      const errEl = document.getElementById('login-error');
-      const btn = document.getElementById('login-submit');
-      errEl.textContent = ''; errEl.classList.remove('show');
-      btn.disabled = true; btn.textContent = 'Signing in…';
-      try {
-        await pbLogin(email, password);
-        document.getElementById('login-password').value = '';
-        await startSession();
-      } catch (err) {
-        errEl.textContent = (err && err.message) || 'Sign in failed';
-        void errEl.offsetWidth;        // restart the shake animation
-        errEl.classList.add('show');
-      } finally {
-        btn.disabled = false; btn.textContent = 'Sign in';
-      }
-    });
-    document.getElementById('logout-btn').addEventListener('click', () => {
-      clearAuth();
-      location.hash = '';
-      location.reload();
-    });
-
-    // New-space form
-    document.getElementById('new-space-form').addEventListener('submit', async e => {
-      e.preventDefault();
-      const name = document.getElementById('new-space-name').value.trim();
-      const kind = document.getElementById('new-space-kind').value;
-      const msg = document.getElementById('spaces-msg');
-      if (!name) return;
-      msg.textContent = 'Creating space…';
-      try {
-        const sp = await pbCreateSpace(name, kind);
-        spaces.unshift(sp);
-        document.getElementById('new-space-name').value = '';
-        document.getElementById('new-space-form').classList.add('hidden');
-        msg.textContent = '';
-        location.hash = '#' + sp.slug;   // navigate into the new space
-      } catch (err) { msg.textContent = (err && err.message) || 'Could not create space'; }
-    });
-    document.getElementById('new-space-cancel').addEventListener('click', () => {
-      document.getElementById('new-space-form').classList.add('hidden');
-      document.getElementById('spaces-msg').textContent = '';
-    });
-    document.getElementById('add-space-btn').addEventListener('click', () => {
-      document.getElementById('new-space-form').classList.remove('hidden');
-      document.getElementById('new-space-name').focus();
-    });
-
-    // Sidebar toggles
-    document.getElementById('menu-btn').addEventListener('click', () => {
-      const sb = document.getElementById('sidebar');
-      if (sb.classList.contains('open')) closeSidebar(); else { renderSpaces(); openSidebar(); }
-    });
-    document.getElementById('sidebar-close').addEventListener('click', closeSidebar);
-    document.getElementById('space-backdrop').addEventListener('click', closeSidebar);
-
-    // React to URL hash changes (per-space navigation).
-    window.addEventListener('hashchange', () => {
-      if (!authToken) return;
-      route().catch(err => {
-        if (err && err.auth) handleAuthExpired();
-        else flashStatus((err && err.message) || 'Navigation error', true);
-      });
-    });
-  }
-
   // ── Init ──
-  try { var _ct = localStorage.getItem('notes_theme'); if (_ct && THEMES.some(x => x.id === _ct)) applyTheme(_ct, false); } catch (e) {}
-  ensureSections(INITIAL_ROWS * COLS); // baseline grid
-  applyCardHeight();
-  applyFilters();
-  if (OFFLINE) {
-    loadSeedState();                                    // standalone snapshot
-    ensureSections(sections.length + GROW_ROWS * COLS);
-    applyCardHeight();
-  } else {
-    loadAuth();
-    startSession();                                     // login → spaces/board
-  }
+  loadState();
 })();
 </script>
 </body>
