@@ -9,7 +9,9 @@
  *   • everything else (Supabase API, HF media, cross-origin) → passthrough; the
  *     app already caches media via HTTP headers and API responses must stay live.
  */
-const VERSION = "elfindr-v1";
+// Bump on any cache-strategy change or to force-purge stale caches on all
+// clients (the activate handler deletes every cache whose name != current).
+const VERSION = "elfindr-v2";
 const SHELL = VERSION + "-shell";
 const ASSETS = VERSION + "-assets";
 // Directory this SW is scoped to, e.g. "/elfindr/".
