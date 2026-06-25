@@ -11,7 +11,7 @@ const AUTH = {
     username: 'admin',
     salt: 'storymap.sh::v1',
     // SHA-256 of `${salt}:${username}:${password}` — plaintext is never stored.
-    hash: '8d640e1c856d5fcdc7ce95b447880b49cecc6e0961a31ec542e258fd7e6caa73',
+    hash: 'c372d2b3cfcafc7e3373ae157b52c755e4a0f47988a7b1358a2ac811320a2ab7',
 };
 
 const STORE_KEY = 'sm_auth_v1';
