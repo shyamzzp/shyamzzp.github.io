@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>YouTube — elfindr</title>
+<style>
+  body { font-family: system-ui, sans-serif; padding: 2rem; max-width: 32rem; margin: 0 auto; color: #1a1a1a; }
+  @media (prefers-color-scheme: dark) { body { background: #111; color: #eee; } }
+  h2 { margin: 0 0 .5rem; }
+  p { line-height: 1.5; }
+  .muted { opacity: .7; font-size: .9rem; }
+</style>
+</head>
+<body>
+<h2 id="title">Finishing…</h2>
+<p id="msg"></p>
+<p class="muted">You can close this tab.</p>
+<script>
+  // Tiny standalone handshake page. The Supabase Edge callback can't serve HTML
+  // (platform sandboxes it), so it 302-redirects here with the result in the
+  // query string. We relay it to the opener (the elfindr tab that launched the
+  // popup) via postMessage, then close. Mirrors public/gdrive-done.html (#577).
+  (function () {
+    var q = new URLSearchParams(location.search);
+    var connected = q.get("youtube") === "connected";
+    var title = q.get("title") || "";
+    var t = document.getElementById("title");
+    var msg = document.getElementById("msg");
+
+    if (connected) {
+      t.textContent = "YouTube connected ✓";
+      msg.textContent = (title || "Your channel") + " is now ready for uploads from elfindr.";
+    } else {
+      t.textContent = "YouTube connection failed";
+      msg.textContent = q.get("msg") || "Something went wrong. Start again from elfindr.";
+    }
+
+    try {
+      if (window.opener) {
+        window.opener.postMessage(
+          connected ? { youtube: "connected", title: title } : { youtube: "error" },
+          "*"
+        );
+      }
+    } catch (e) { /* opener gone or cross-origin block — page still informs the user */ }
+
+    setTimeout(function () { try { window.close(); } catch (e) { /* */ } }, 600);
+  })();
+</script>
+</body>
+</html>
