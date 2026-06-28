@@ -41,7 +41,7 @@
       if (window.opener) {
         window.opener.postMessage(
           connected ? { youtube: "connected", title: title } : { youtube: "error" },
-          "*"
+          window.location.origin
         );
       }
     } catch (e) { /* opener gone or cross-origin block — page still informs the user */ }
