@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/static/css/main.854055b0.css",
-    "main.js": "/static/js/main.0414e4f7.js",
+    "main.css": "/static/css/main.73bc1c46.css",
+    "main.js": "/static/js/main.8ea1701d.js",
     "static/js/41.d816575f.chunk.js": "/static/js/41.d816575f.chunk.js",
     "static/media/skype.png": "/static/media/skype.ab4e958cf232a0d52b44.png",
     "static/media/live.png": "/static/media/live.73c390f0374e4a7ae99c.png",
@@ -9,7 +9,7 @@
     "static/media/stack-overflow.png": "/static/media/stack-overflow.579cff432dec19bc3d23.png",
     "static/media/github.png": "/static/media/github.f11021803f68852df283.png",
     "static/media/linkedin.png": "/static/media/linkedin.f249b38224ca41a0b909.png",
-    "static/media/installr-mockup.svg": "/static/media/installr-mockup.e4f08b1632c7eb115552fef413e0c1ba.svg",
+    "static/media/installr-mockup.svg": "/static/media/installr-mockup.607a5f884ba43f276a3e8f1d900cdc84.svg",
     "static/media/zero-day-vulnerability.md": "/static/media/zero-day-vulnerability.ba1d606104404f1f45bd.md",
     "index.html": "/index.html",
     "static/media/agile-development.md": "/static/media/agile-development.4ce4456c57805cf3acf0.md",
@@ -20,12 +20,12 @@
     "static/media/x.svg": "/static/media/x.87d2823a0c5f58e5ca6355c04f2f9a00.svg",
     "static/media/email.svg": "/static/media/email.4445ab29b73a6f3edeab7a55ef28e0b9.svg",
     "static/media/not-available.md": "/static/media/not-available.730b22ad26a5448338a4.md",
-    "main.854055b0.css.map": "/static/css/main.854055b0.css.map",
-    "main.0414e4f7.js.map": "/static/js/main.0414e4f7.js.map",
+    "main.73bc1c46.css.map": "/static/css/main.73bc1c46.css.map",
+    "main.8ea1701d.js.map": "/static/js/main.8ea1701d.js.map",
     "41.d816575f.chunk.js.map": "/static/js/41.d816575f.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.854055b0.css",
-    "static/js/main.0414e4f7.js"
+    "static/css/main.73bc1c46.css",
+    "static/js/main.8ea1701d.js"
   ]
 }
