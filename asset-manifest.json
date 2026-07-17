@@ -1,26 +1,31 @@
 {
   "files": {
-    "main.css": "/static/css/main.0d33c2c9.css",
-    "main.js": "/static/js/main.a96df4d5.js",
+    "main.css": "/static/css/main.eb5cf3a0.css",
+    "main.js": "/static/js/main.8cd29a45.js",
     "static/js/41.d816575f.chunk.js": "/static/js/41.d816575f.chunk.js",
     "static/media/skype.png": "/static/media/skype.ab4e958cf232a0d52b44.png",
-    "static/media/cv.png": "/static/media/cv.02b00606e243f8945ade.png",
     "static/media/live.png": "/static/media/live.73c390f0374e4a7ae99c.png",
     "static/media/whatsapp.png": "/static/media/whatsapp.1dd8ca2765f1f177ab22.png",
     "static/media/stack-overflow.png": "/static/media/stack-overflow.579cff432dec19bc3d23.png",
     "static/media/github.png": "/static/media/github.f11021803f68852df283.png",
     "static/media/linkedin.png": "/static/media/linkedin.f249b38224ca41a0b909.png",
+    "static/media/installr-mockup.svg": "/static/media/installr-mockup.e4f08b1632c7eb115552fef413e0c1ba.svg",
     "static/media/zero-day-vulnerability.md": "/static/media/zero-day-vulnerability.ba1d606104404f1f45bd.md",
     "index.html": "/index.html",
     "static/media/agile-development.md": "/static/media/agile-development.4ce4456c57805cf3acf0.md",
     "static/media/github-site.md": "/static/media/github-site.4ce4456c57805cf3acf0.md",
+    "static/media/discord.svg": "/static/media/discord.8f2ad717be429f8619f882482c27550d.svg",
+    "static/media/leetcode.svg": "/static/media/leetcode.999a99c30b508ea9d9d7293ea117b0fc.svg",
+    "static/media/huggingface.svg": "/static/media/huggingface.bc11d880b5bda5da0e3f7fbc13dce8d7.svg",
+    "static/media/x.svg": "/static/media/x.87d2823a0c5f58e5ca6355c04f2f9a00.svg",
+    "static/media/email.svg": "/static/media/email.4445ab29b73a6f3edeab7a55ef28e0b9.svg",
     "static/media/not-available.md": "/static/media/not-available.730b22ad26a5448338a4.md",
-    "main.0d33c2c9.css.map": "/static/css/main.0d33c2c9.css.map",
-    "main.a96df4d5.js.map": "/static/js/main.a96df4d5.js.map",
+    "main.eb5cf3a0.css.map": "/static/css/main.eb5cf3a0.css.map",
+    "main.8cd29a45.js.map": "/static/js/main.8cd29a45.js.map",
     "41.d816575f.chunk.js.map": "/static/js/41.d816575f.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.0d33c2c9.css",
-    "static/js/main.a96df4d5.js"
+    "static/css/main.eb5cf3a0.css",
+    "static/js/main.8cd29a45.js"
   ]
 }
