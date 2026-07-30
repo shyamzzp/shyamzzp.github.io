@@ -21,6 +21,50 @@ export type ProjectRecord = {
 
 export const projectData: ProjectRecord[] = [
   {
+    id: "xprint",
+    title: "xprint",
+    status: "Live",
+    summary:
+      "A terminal tool to print text to a 58mm Xprinter ESC/POS thermal printer directly over USB, no driver required.",
+    description: [
+      "Print from the terminal to a cheap thermal receipt printer.",
+      "Talks to the printer directly over USB via ESC/POS.",
+      "Works on macOS where no vendor driver exists.",
+      "Native and raster modes, with an interactive paste session.",
+    ],
+    sections: [
+      {
+        title: "What It Solves",
+        items: [
+          "macOS dropped raw CUPS queues and ships no driver for no-name 58mm thermal printers, so they are otherwise unusable.",
+          "Bypasses CUPS entirely and drives the printer directly over USB with python-escpos and libusb.",
+        ],
+      },
+      {
+        title: "Implementation",
+        items: [
+          "Python CLI using python-escpos, pyusb, and Pillow for bitmap rendering.",
+          "Two modes: native built-in font (dark, fast) and raster (any TrueType font and size).",
+          "Adds a date and weekday header, auto-wraps long lines, and chunks USB writes to work around the printer's small buffer.",
+        ],
+      },
+      {
+        title: "Why It Matters",
+        items: [
+          "Turns an otherwise-dead thermal printer into a scriptable terminal output device.",
+          "Interactive session lets you paste text and print on the fly, one header per session.",
+        ],
+      },
+    ],
+    tags: ["Python", "ESC/POS", "USB", "CLI"],
+    links: [
+      {
+        label: "GitHub",
+        href: "https://github.com/shyamzzp/xprint",
+      },
+    ],
+  },
+  {
     id: "interview-preparation",
     title: "Interview Preparation",
     status: "Live",
