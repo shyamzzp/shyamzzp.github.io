@@ -1,0 +1,387 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kerala Trek — Aug 21–31 2026</title>
+<style>
+  :root{
+    --ground:#f5f7f3; --panel:#ffffff; --band:#eef3ec; --ink:#16211c; --ink-soft:#4a5a52;
+    --hair:#d3ddd4; --way:#2e9e6b; --mun:#2a6f97; --south:#c05e3c; --bday:#e0a419; --air:#7a8a80;
+    --accent:#b4531f; --good:#2e9e6b; --flag-bg:#fbeee3; --flag-ink:#8a3a12;
+    --shadow:0 1px 2px rgba(20,40,30,.06),0 10px 30px rgba(20,40,30,.07);
+  }
+  @media (prefers-color-scheme:dark){
+    :root{
+      --ground:#0e1613; --panel:#132019; --band:#17251e; --ink:#e8efe9; --ink-soft:#9db0a6;
+      --hair:#243a30; --way:#4cc78d; --mun:#5aa9d6; --south:#e07d57; --bday:#f0be4a; --air:#8fa398;
+      --accent:#e07d4a; --good:#4cc78d; --flag-bg:#26180f; --flag-ink:#f0b48a;
+      --shadow:0 1px 2px rgba(0,0,0,.3),0 12px 34px rgba(0,0,0,.45);
+    }
+  }
+  *{box-sizing:border-box}
+  body{margin:0; background:var(--ground); color:var(--ink);
+    font-family:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif; -webkit-font-smoothing:antialiased}
+  .wrap{max-width:920px; margin:0 auto; padding:0 22px 64px}
+
+  /* sticky storage bar */
+  .bar{position:sticky; top:0; z-index:20; margin:0 -22px 8px; padding:10px 22px;
+    background:color-mix(in srgb,var(--ground) 88%,transparent); backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--hair); display:flex; align-items:center; gap:12px; flex-wrap:wrap;
+    font-family:ui-monospace,"SF Mono",Menlo,monospace; font-size:12.5px}
+  .dot{width:9px; height:9px; border-radius:50%; background:var(--ink-soft); flex:none}
+  .dot.on{background:var(--good)} .dot.off{background:var(--accent)} .dot.sync{background:var(--bday)}
+  #status{color:var(--ink-soft)} #status b{color:var(--ink)}
+  .bar .grow{flex:1}
+  .btn{font-family:inherit; font-size:12.5px; border:1px solid var(--hair); background:var(--panel);
+    color:var(--ink); padding:6px 12px; border-radius:8px; cursor:pointer}
+  .btn:hover{border-color:var(--accent)} .btn:active{transform:translateY(1px)}
+  .btn.pri{background:var(--accent); color:#fff; border-color:var(--accent)}
+
+  header{padding-top:22px}
+  .eyebrow{font-family:ui-monospace,monospace; font-size:11px; letter-spacing:.22em;
+    text-transform:uppercase; color:var(--accent); font-weight:700}
+  h1{font-size:clamp(26px,5vw,40px); line-height:1.03; margin:.12em 0 .18em; font-weight:600;
+    letter-spacing:-.01em}
+  .meta{display:flex; flex-wrap:wrap; gap:8px 18px; color:var(--ink-soft); font-size:14px;
+    font-family:ui-monospace,monospace}
+  .meta b{color:var(--ink); font-weight:600}
+  .rev{font-size:12px; color:var(--ink-soft); font-family:ui-monospace,monospace; margin-top:6px}
+  .rev a{color:var(--accent)}
+
+  .flag{margin:20px 0 6px; background:var(--flag-bg); color:var(--flag-ink);
+    border:1px solid color-mix(in srgb,var(--flag-ink) 25%,transparent); border-radius:12px;
+    padding:13px 16px; font-size:14px; line-height:1.5}
+  .flag b{color:var(--flag-ink)}
+
+  h2.sec{font-size:12px; letter-spacing:.16em; text-transform:uppercase; margin:32px 0 12px;
+    font-family:ui-monospace,monospace; font-weight:700; color:var(--ink-soft);
+    display:flex; align-items:center; gap:10px}
+  h2.sec::after{content:""; flex:1; height:1px; background:var(--hair)}
+
+  .day{background:var(--panel); border:1px solid var(--hair); border-radius:14px; box-shadow:var(--shadow);
+    margin-bottom:14px; overflow:hidden}
+  .dhead{display:flex; align-items:center; gap:12px; padding:13px 16px; background:var(--band);
+    border-bottom:1px solid var(--hair)}
+  .dtag{width:8px; height:34px; border-radius:4px; flex:none}
+  .ddate{font-family:ui-monospace,monospace; font-weight:700; font-size:14px}
+  .ddate small{display:block; color:var(--ink-soft); font-weight:400; font-size:11.5px; letter-spacing:.05em}
+  .dbase{margin-left:auto; font-size:12.5px; color:var(--ink-soft); font-family:ui-monospace,monospace; text-align:right}
+  .dbase b{color:var(--ink); display:block; font-size:13.5px}
+  .bday-badge{background:var(--bday); color:#3a2600; font-family:ui-monospace,monospace; font-size:11px;
+    font-weight:700; padding:2px 8px; border-radius:20px}
+
+  table{width:100%; border-collapse:collapse}
+  td{padding:9px 16px; vertical-align:top; border-top:1px solid var(--hair); font-size:14.5px}
+  tr:first-child td{border-top:none}
+  td.t{width:70px; font-family:ui-monospace,monospace; font-size:13px; color:var(--accent); font-weight:600;
+    font-variant-numeric:tabular-nums; white-space:nowrap}
+  td.a b{font-weight:600}
+  td.a small{color:var(--ink-soft); font-size:12.5px; font-family:ui-monospace,monospace}
+  .bk{display:inline-block; margin-left:8px; font-family:ui-monospace,monospace; font-size:10px;
+    font-weight:700; letter-spacing:.06em; padding:2px 7px; border-radius:20px; vertical-align:middle; white-space:nowrap}
+  .bk.todo{background:var(--bday); color:#3a2600} .bk.done{background:var(--good); color:#fff}
+  .bklead{font-family:ui-monospace,monospace; font-size:11.5px; color:var(--accent); margin-left:6px; font-weight:600}
+  tr.needbook td{background:color-mix(in srgb,var(--bday) 8%,transparent)}
+  tr.booked td{background:color-mix(in srgb,var(--good) 8%,transparent)}
+  .ckbtn{cursor:pointer; user-select:none; margin-left:8px; font-family:ui-monospace,monospace; font-size:11px;
+    border:1px solid var(--hair); background:var(--panel); border-radius:6px; padding:2px 7px; color:var(--ink-soft)}
+  .ckbtn:hover{border-color:var(--good)}
+
+  .xrow td{background:color-mix(in srgb,var(--mun) 6%,transparent)}
+  .xin{font-family:ui-monospace,monospace; font-size:13px; border:1px solid var(--hair); background:var(--ground);
+    color:var(--ink); border-radius:6px; padding:5px 8px}
+  .xin.t{width:64px} .xin.a{width:100%; font-family:inherit; font-size:14.5px}
+  .rm{cursor:pointer; color:var(--accent); border:none; background:none; font-size:15px; padding:0 4px}
+
+  .stay{display:flex; align-items:center; gap:10px; padding:11px 16px; border-top:1px solid var(--hair);
+    background:var(--band); font-size:13.5px; font-family:ui-monospace,monospace; color:var(--ink-soft); flex-wrap:wrap}
+  .stay .bed{font-size:15px}
+  .hotel{font-family:inherit; font-size:13.5px; border:none; border-bottom:1px dashed var(--ink-soft);
+    background:transparent; color:var(--ink); padding:2px 2px; min-width:180px; flex:1}
+  .hotel::placeholder{color:var(--ink-soft); opacity:.7}
+  .hotel:focus{outline:none; border-bottom-color:var(--accent)}
+  .stay .nights{opacity:.8; white-space:nowrap}
+  label.chk{display:inline-flex; align-items:center; gap:5px; cursor:pointer; white-space:nowrap}
+  .dactions{display:flex; gap:8px; padding:9px 16px; border-top:1px solid var(--hair)}
+  .addbtn{font-family:ui-monospace,monospace; font-size:12px; border:1px dashed var(--hair); background:transparent;
+    color:var(--ink-soft); border-radius:8px; padding:5px 11px; cursor:pointer}
+  .addbtn:hover{border-color:var(--accent); color:var(--accent)}
+  .notes{width:100%; font-family:inherit; font-size:14px; border:1px solid var(--hair); background:var(--ground);
+    color:var(--ink); border-radius:8px; padding:8px 10px; margin:0 16px 14px; width:calc(100% - 32px); resize:vertical; min-height:38px}
+  .notes:focus{outline:none; border-color:var(--accent)}
+  .nlabel{font-family:ui-monospace,monospace; font-size:11px; letter-spacing:.08em; text-transform:uppercase;
+    color:var(--ink-soft); padding:8px 16px 4px}
+
+  .info{display:grid; grid-template-columns:1fr 1fr; gap:12px}
+  @media (max-width:640px){ .info{grid-template-columns:1fr} .bar{font-size:11.5px} }
+  .box{background:var(--panel); border:1px solid var(--hair); border-radius:12px; padding:15px 17px; box-shadow:var(--shadow)}
+  .box h3{margin:0 0 8px; font-size:14px; font-family:ui-monospace,monospace}
+  .box ul{margin:0; padding-left:18px; font-size:14px; line-height:1.65}
+  .foot{margin-top:26px; color:var(--ink-soft); font-size:12.5px; line-height:1.6; font-family:ui-monospace,monospace}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="bar">
+    <span class="dot" id="dot"></span>
+    <span id="status">connecting…</span>
+    <span class="grow"></span>
+    <button class="btn" id="reloadBtn" title="Pull latest from cloud">↺ Reload</button>
+    <button class="btn pri" id="saveBtn">Save now</button>
+  </div>
+
+  <header>
+    <div class="eyebrow">Living Itinerary · edits auto-save to cloud</div>
+    <h1>Kerala Trek — Hyderabad &amp; Back</h1>
+    <div class="meta">
+      <span><b>Dates</b> Aug 21 (Fri) → Aug 31 (Mon) 2026</span>
+      <span><b>Travellers</b> Couple, strong hikers</span>
+      <span><b>Vibe</b> Waterfalls · peaks · forest</span>
+    </div>
+    <div class="rev">rev 4 · interactive · CrudCrud cloud + local mirror · 🎂 Aug 22 Meenmutty forest trek ·
+      <a href="https://claude.ai/code/artifact/a232c587-d701-4f34-8771-3d785a83b9f3" target="_blank">↗ map of all stops</a></div>
+  </header>
+
+  <div class="flag">
+    <b>⚠ Monsoon flag —</b> Aug = SW monsoon. Waterfalls at full roar (great), but high treks (Chembra, Meesapulimala)
+    weather-gated / may shut; leeches on forest trails; Wayanad + Munnar ghats landslide-prone. Backups baked into each day.
+    Confirm permits + road status ~1 week before. Keep flex days Aug 29–30. Book refundable stays.
+  </div>
+
+  <h2 class="sec">Day by day · times ±1h · tap fields to edit</h2>
+  <div id="days"></div>
+
+  <h2 class="sec">Transport</h2>
+  <div class="info">
+    <div class="box"><h3>Getting there / back</h3><ul>
+      <li><b>Fly, not train.</b> Hyd↔Kerala train = 24–28h each way.</li>
+      <li><b>Open-jaw:</b> IN → Calicut (CCJ). OUT → Kochi (COK). ~1h20m/leg.</li>
+      <li><b>Aug 31:</b> COK 07:30 → Hyd ~09:15 (back by 10am). Red-eye night of Aug 30 = safer buffer.</li>
+    </ul></div>
+    <div class="box"><h3>Within Kerala</h3><ul>
+      <li><b>Car + driver, whole trip.</b> ~₹2500–3500/day. One operator, every leg.</li>
+      <li><b>No self-drive</b> — hairpin ghats + monsoon.</li>
+      <li><b>Alt mode:</b> one backwater houseboat night (Aug = off-season).</li>
+    </ul></div>
+  </div>
+
+  <div class="foot" id="foot"></div>
+</div>
+
+<script>
+/* ---------- storage: CrudCrud + localStorage mirror ---------- */
+const RES = "https://crudcrud.com/api/312183c8c1a94eb68824c68fa3a365a1/keralaTrip";
+const LS_STATE = "kerala_state_v1";
+const LS_ID = "kerala_docid_v1";
+const H = {"Content-Type":"application/json"};
+let docId = localStorage.getItem(LS_ID) || null;
+let mode = "local"; // local | cloud | offline
+
+function setStatus(){
+  const dot=document.getElementById("dot"), s=document.getElementById("status");
+  if(mode==="cloud"){dot.className="dot on"; s.innerHTML="<b>Cloud synced</b> · edits save to CrudCrud + this device";}
+  else if(mode==="sync"){dot.className="dot sync"; s.innerHTML="<b>Saving…</b>";}
+  else if(mode==="offline"){dot.className="dot off"; s.innerHTML="<b>Cloud unreachable</b> · saved on this device only (localStorage)";}
+  else {dot.className="dot"; s.innerHTML="<b>Local</b> · saved on this device";}
+}
+async function cloudLoad(){
+  const r = await fetch(RES, {cache:"no-store"});
+  if(!r.ok) throw new Error("GET "+r.status);
+  const arr = await r.json();
+  if(Array.isArray(arr) && arr.length){
+    const doc = arr[arr.length-1];        // newest wins
+    docId = doc._id; localStorage.setItem(LS_ID, docId);
+    return JSON.parse(doc.payload);
+  }
+  return null;
+}
+async function cloudSave(state){
+  const body = JSON.stringify({payload: JSON.stringify(state), updated: new Date().toISOString()});
+  if(docId){
+    const r = await fetch(RES+"/"+docId, {method:"PUT", headers:H, body});
+    if(r.status===404){ docId=null; return cloudSave(state); } // doc gone, recreate
+    if(!r.ok) throw new Error("PUT "+r.status);
+  } else {
+    const r = await fetch(RES, {method:"POST", headers:H, body});
+    if(!r.ok) throw new Error("POST "+r.status);
+    const o = await r.json(); docId=o._id; localStorage.setItem(LS_ID, docId);
+  }
+}
+let saveTimer=null, lastSaved=null;
+function persist(){
+  localStorage.setItem(LS_STATE, JSON.stringify(state));   // instant local mirror
+  clearTimeout(saveTimer);
+  mode="sync"; setStatus();
+  saveTimer = setTimeout(async ()=>{
+    try{ await cloudSave(state); mode="cloud"; lastSaved=new Date(); }
+    catch(e){ mode="offline"; console.warn("cloud save failed:", e.message); }
+    setStatus(); renderFoot();
+  }, 700);
+}
+
+/* ---------- defaults ---------- */
+const C={way:"var(--way)",mun:"var(--mun)",south:"var(--south)",air:"var(--air)",bday:"var(--bday)"};
+// rows: [time, activity, note, book?{tag,lead}]
+const DAYS=[
+  {date:"Aug 21",dow:"Fri",base:"Wayanad",note:"arrive north",tag:"air",stay:{p:"Wayanad hill homestay",n:"night 1 of 3",book:true},rows:[
+    ["09:00","Fly Hyderabad → Calicut (CCJ)","~1h20m",{tag:"FLIGHT",lead:"book 6–8 wk ahead"}],
+    ["11:30","Land, meet driver, lunch",""],
+    ["13:00","Drive to Wayanad","~85km / 3h ghat"],
+    ["16:30","Check in, rest, sunset point",""]]},
+  {date:"Aug 22",dow:"Sat",base:"Wayanad",note:"🎂 forest + falls",tag:"bday",bday:true,stay:{p:"Wayanad hill homestay",n:"night 2 of 3",book:false},rows:[
+    ["07:30","Breakfast, drive to Meenmutty trailhead",""],
+    ["08:30","Meenmutty Falls forest trek","~2km jungle trail · 3-tier falls · swim",{tag:"PERMIT",lead:"guide/entry on-site · confirm 1 wk"}],
+    ["13:00","Lunch in forest / picnic",""],
+    ["15:00","Birthday evening · Edakkal Caves optional",""]]},
+  {date:"Aug 23",dow:"Sun",base:"Wayanad",note:"peak + swim",tag:"way",stay:{p:"Wayanad hill homestay",n:"night 3 of 3",book:false},rows:[
+    ["06:30","Chembra Peak trek start","~8km · 4–5h",{tag:"PERMIT",lead:"limited slots · book 3–4 wk"}],
+    ["12:00","Down, lunch",""],
+    ["14:30","Soochipara / Sentinel Rock Falls — swim + rappel",""],
+    ["—","Backup if Chembra shut: Soochipara AM + Edakkal Caves",""]]},
+  {date:"Aug 24",dow:"Mon",base:"→ Munnar",note:"big transfer",tag:"way",stay:{p:"Munnar tea-estate stay",n:"night 1 of 3",book:true},rows:[
+    ["07:00","Thusharagiri Falls / short forest trail",""],
+    ["11:00","Drive to Munnar","~250km / 6–7h"],
+    ["18:00","Arrive, check in, dinner",""]]},
+  {date:"Aug 25",dow:"Tue",base:"Munnar",note:"high trek",tag:"mun",stay:{p:"Munnar tea-estate stay",n:"night 2 of 3",book:false},rows:[
+    ["06:00","Meesapulimala trek","~8km · 5–6h",{tag:"PRE-BOOK",lead:"mandatory · book 3–4 wk"}],
+    ["13:00","Lunch · backup: Lakkam + Attukad + Cheeyappara falls",""],
+    ["17:00","Tea-town evening",""]]},
+  {date:"Aug 26",dow:"Wed",base:"Munnar",note:"tea + forest",tag:"mun",stay:{p:"Munnar tea-estate stay",n:"night 3 of 3",book:false},rows:[
+    ["07:30","Eravikulam NP (Anamudi base)","",{tag:"E-TICKET",lead:"sells out · book 2–4 wk online"}],
+    ["11:00","Tea-hill forest trails",""],
+    ["15:00","Top Station / Echo Point",""]]},
+  {date:"Aug 27",dow:"Thu",base:"→ Athirappilly",note:"descend",tag:"south",stay:{p:"Athirappilly / Chalakudy riverside",n:"night 1 of 1",book:true},rows:[
+    ["09:00","Drive Munnar → Athirappilly","~4–5h"],
+    ["14:00","Arrive, lunch, riverside",""]]},
+  {date:"Aug 28",dow:"Fri",base:"→ Fort Kochi",note:"biggest falls",tag:"south",stay:{p:"Fort Kochi heritage stay",n:"night 1 of 2",book:true},rows:[
+    ["07:30","Athirappilly Falls + Vazhachal forest","full roar"],
+    ["11:00","Drive to Fort Kochi","~2h"],
+    ["14:00","Check in, Fort Kochi walk",""]]},
+  {date:"Aug 29",dow:"Sat",base:"Kochi / Alleppey",note:"FLEX",tag:"south",stay:{p:"Alleppey houseboat (or Fort Kochi)",n:"night 1 of 1",book:true},rows:[
+    ["11:00","Houseboat check-in (backwaters) OR Fort Kochi","flex day",{tag:"BOOK",lead:"houseboat 1–2 wk ahead"}]]},
+  {date:"Aug 30",dow:"Sun",base:"Kochi",note:"buffer",tag:"south",stay:{p:"Fort Kochi heritage stay",n:"night 2 of 2",book:false},rows:[
+    ["all day","Weather buffer / reshuffled trek / explore",""]]},
+  {date:"Aug 31",dow:"Mon",base:"✈ Home",note:"back by 10am",tag:"air",stay:{p:"— overnight flight / home",n:"no stay",book:false},rows:[
+    ["05:30","Leave for COK airport",""],
+    ["07:30","Fly Kochi → Hyderabad","~1h30m",{tag:"FLIGHT",lead:"book 6–8 wk ahead"}],
+    ["09:15","Land Hyderabad ✅",""]]},
+];
+
+/* ---------- state overlay (only the editable bits) ---------- */
+// state.days[i] = { hotel, hotelBooked, rowBooked:{idx:true}, extra:[{t,a}], notes }
+let state = { days:{}, v:4 };
+function dstate(i){ return state.days[i] || (state.days[i]={rowBooked:{},extra:[]}); }
+
+/* ---------- render ---------- */
+function esc(s){return (s==null?"":String(s)).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));}
+const host=document.getElementById("days");
+
+function render(){
+  host.innerHTML="";
+  DAYS.forEach((d,i)=>{
+    const st=dstate(i);
+    let rows=d.rows.map((r,ri)=>{
+      const booked = !!(st.rowBooked && st.rowBooked[ri]);
+      let cls = r[3] ? (booked?"booked":"needbook") : "";
+      let bookHtml="";
+      if(r[3]){
+        bookHtml = booked
+          ? `<span class="bk done">✓ BOOKED</span><span class="ckbtn" data-act="unbook" data-d="${i}" data-r="${ri}">undo</span>`
+          : `<span class="bk todo">${esc(r[3].tag)}</span><span class="bklead">${esc(r[3].lead)}</span><span class="ckbtn" data-act="book" data-d="${i}" data-r="${ri}">mark booked</span>`;
+      }
+      return `<tr class="${cls}"><td class="t">${esc(r[0])}</td><td class="a"><b>${esc(r[1])}</b>${r[2]?` <small>· ${esc(r[2])}</small>`:""}${bookHtml}</td></tr>`;
+    }).join("");
+    // extra custom rows
+    (st.extra||[]).forEach((x,xi)=>{
+      rows += `<tr class="xrow"><td class="t"><input class="xin t" data-act="xt" data-d="${i}" data-x="${xi}" value="${esc(x.t)}" placeholder="time"></td>`+
+        `<td class="a"><input class="xin a" data-act="xa" data-d="${i}" data-x="${xi}" value="${esc(x.a)}" placeholder="add detail…"> <button class="rm" data-act="xrm" data-d="${i}" data-x="${xi}" title="remove">✕</button></td></tr>`;
+    });
+
+    const stayBooked = st.hotelBooked ?? d.stay.book===false ? (st.hotelBooked||false) : false;
+    const hb = !!st.hotelBooked;
+    const stayPill = d.stay.n==="no stay" ? "" :
+      `<label class="chk"><input type="checkbox" data-act="hbook" data-d="${i}" ${hb?"checked":""}> ${hb?'<span class="bk done">✓ booked</span>':'<span class="bk todo">book stay</span>'}</label>`;
+
+    const el=document.createElement("div"); el.className="day";
+    el.innerHTML=`
+      <div class="dhead">
+        <span class="dtag" style="background:${C[d.tag]}"></span>
+        <span class="ddate">${d.date}<small>${d.dow}</small></span>
+        ${d.bday?'<span class="bday-badge">🎂 BIRTHDAY</span>':''}
+        <span class="dbase"><b>${esc(d.base)}</b>${esc(d.note)}</span>
+      </div>
+      <table><tbody>${rows}</tbody></table>
+      <div class="stay"><span class="bed">🛏</span>
+        <input class="hotel" data-act="hotel" data-d="${i}" value="${esc(st.hotel!=null?st.hotel:d.stay.p)}" placeholder="hotel / stay name…">
+        <span class="nights">· ${esc(d.stay.n)}</span>${stayPill}
+      </div>
+      <div class="dactions"><button class="addbtn" data-act="xadd" data-d="${i}">＋ add detail row</button>
+        <button class="addbtn" data-act="ntoggle" data-d="${i}">✎ ${st.notes?"edit note":"add note"}</button></div>
+      ${st.notes!=null?`<div class="nlabel">note</div><textarea class="notes" data-act="notes" data-d="${i}" placeholder="notes for this day…">${esc(st.notes)}</textarea>`:""}
+    `;
+    host.appendChild(el);
+  });
+  renderFoot();
+}
+function renderFoot(){
+  const t = lastSaved ? lastSaved.toLocaleString() : "not yet this session";
+  document.getElementById("foot").innerHTML =
+    `Master exportable doc · hosted at shyamzzp.github.io/kerala · storage = CrudCrud cloud (key expires ~24h on free tier — tell me to swap key) + localStorage fallback.<br>`+
+    `Last cloud save: ${esc(t)}. Open questions: Thekkady wildlife day? · houseboat vs extra trek Aug 29? · day vs night flight Aug 21?`;
+}
+
+/* ---------- events ---------- */
+document.addEventListener("click", e=>{
+  const el=e.target.closest("[data-act]"); if(!el) return;
+  const act=el.dataset.act, i=+el.dataset.d;
+  if(act==="book"){ dstate(i).rowBooked[el.dataset.r]=true; render(); persist(); }
+  else if(act==="unbook"){ delete dstate(i).rowBooked[el.dataset.r]; render(); persist(); }
+  else if(act==="xadd"){ dstate(i).extra.push({t:"",a:""}); render(); persist(); }
+  else if(act==="xrm"){ dstate(i).extra.splice(+el.dataset.x,1); render(); persist(); }
+  else if(act==="ntoggle"){ const s=dstate(i); s.notes = (s.notes==null?"":null); render(); if(s.notes==="") {const ta=host.querySelector(`textarea[data-d="${i}"]`); ta&&ta.focus();} persist(); }
+});
+document.addEventListener("input", e=>{
+  const el=e.target.closest("[data-act]"); if(!el) return;
+  const act=el.dataset.act, i=+el.dataset.d, s=dstate(i);
+  if(act==="hotel") s.hotel=el.value;
+  else if(act==="notes") s.notes=el.value;
+  else if(act==="xt") s.extra[+el.dataset.x].t=el.value;
+  else if(act==="xa") s.extra[+el.dataset.x].a=el.value;
+  else return;
+  persist();
+});
+document.addEventListener("change", e=>{
+  const el=e.target.closest("[data-act]"); if(!el) return;
+  if(el.dataset.act==="hbook"){ dstate(+el.dataset.d).hotelBooked=el.checked; render(); persist(); }
+});
+document.getElementById("saveBtn").onclick=async()=>{
+  mode="sync"; setStatus();
+  try{ await cloudSave(state); mode="cloud"; lastSaved=new Date(); }
+  catch(err){ mode="offline"; }
+  setStatus(); renderFoot();
+};
+document.getElementById("reloadBtn").onclick=async()=>{
+  try{ const s=await cloudLoad(); if(s){ state=s; if(!state.days)state.days={}; mode="cloud"; render(); localStorage.setItem(LS_STATE,JSON.stringify(state)); } }
+  catch(err){ mode="offline"; setStatus(); }
+};
+
+/* ---------- init ---------- */
+(async function init(){
+  const local = localStorage.getItem(LS_STATE);
+  if(local){ try{ state=JSON.parse(local); if(!state.days)state.days={}; }catch(e){} }
+  render();
+  try{
+    const cloud = await cloudLoad();
+    if(cloud){ state=cloud; if(!state.days)state.days={}; }
+    mode="cloud";
+    // if we had local-only edits and cloud was empty, push them up
+    if(!cloud && local) await cloudSave(state);
+    localStorage.setItem(LS_STATE, JSON.stringify(state));
+  }catch(e){ mode = local ? "local" : "offline"; console.warn("cloud init:", e.message); }
+  setStatus(); render();
+})();
+</script>
+</body>
+</html>
