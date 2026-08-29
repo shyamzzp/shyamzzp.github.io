@@ -1,0 +1,1072 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Updates Pad</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=IBM+Plex+Mono:wght@400;500&family=JetBrains+Mono:wght@400;500&family=Share+Tech+Mono&family=VT323&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #0d0f12;
+      --panel: #15181d;
+      --panel-2: #1d2128;
+      --text: #f2efe9;
+      --muted: #9aa3ad;
+      --line: #2c323c;
+      --accent: #6ed7b7;
+      --accent-2: #f4c15d;
+      --danger: #ff7f7f;
+      --term-bg: #0a0c0a;
+      --radius: 10px;
+      --fs-base: 13px;   /* all UI text: buttons, palette, hints, titles */
+      --fs-small: 11px;  /* uppercase section labels, kbd, meta footers */
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body { height: 100%; }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 14px 22px;
+      border-bottom: 1px solid var(--line);
+      background: rgba(13, 15, 18, 0.9);
+      z-index: 200;
+      flex: 0 0 auto;
+    }
+
+    header h1 { margin: 0; font-size: 15px; letter-spacing: 0.4px; }
+    header h1 span { color: var(--accent); }
+
+    .header-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+
+    button, select {
+      font: inherit;
+      font-size: var(--fs-base);
+      color: var(--text);
+      background: var(--panel-2);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 6px 11px;
+      cursor: pointer;
+      transition: border-color 0.15s, transform 0.1s;
+    }
+
+    button:hover, select:hover { border-color: var(--accent); }
+    button:active { transform: scale(0.97); }
+    button.danger:hover { border-color: var(--danger); color: var(--danger); }
+
+    .workspace { display: flex; flex: 1 1 auto; min-height: 0; }
+
+    /* ---------- palette ---------- */
+    aside {
+      flex: 0 0 215px;
+      border-right: 1px solid var(--line);
+      padding: 16px 13px;
+      background: var(--panel);
+      overflow-y: auto;
+      z-index: 150;
+    }
+
+    aside h2 {
+      margin: 0 0 12px;
+      font-size: var(--fs-small);
+      text-transform: uppercase;
+      letter-spacing: 1.4px;
+      color: var(--muted);
+    }
+
+    .palette-item {
+      border: 1px dashed var(--line);
+      border-radius: var(--radius);
+      padding: 12px;
+      margin-bottom: 10px;
+      cursor: grab;
+      background: var(--panel-2);
+      user-select: none;
+      transition: border-color 0.15s, transform 0.12s;
+    }
+
+    .palette-item:hover { border-color: var(--accent); transform: translateY(-1px); }
+    .palette-item:active { cursor: grabbing; }
+    .palette-item .pi-title { font-size: var(--fs-base); font-weight: 600; margin-bottom: 3px; }
+    .palette-item .pi-desc { font-size: var(--fs-base); color: var(--muted); line-height: 1.45; }
+    .palette-item.term .pi-title { color: #3ee07f; font-family: "JetBrains Mono", ui-monospace, Menlo, monospace; }
+
+    aside .hint {
+      margin-top: 16px;
+      font-size: var(--fs-base);
+      color: var(--muted);
+      line-height: 1.65;
+      border-top: 1px solid var(--line);
+      padding-top: 12px;
+    }
+
+    kbd {
+      background: var(--panel-2);
+      border: 1px solid var(--line);
+      border-radius: 4px;
+      padding: 1px 5px;
+      font-size: var(--fs-small);
+      font-family: ui-monospace, Menlo, monospace;
+    }
+
+    /* ---------- pad (freeform canvas) ---------- */
+    #viewport {
+      flex: 1 1 auto;
+      overflow: auto;
+      position: relative;
+    }
+
+    #pad {
+      position: relative;
+      width: 3200px;
+      height: 2400px;
+      background-image: radial-gradient(circle, rgba(154, 163, 173, 0.18) 1px, transparent 1px);
+      background-size: 24px 24px;
+    }
+
+    #pad.drag-over { outline: 2px dashed var(--accent); outline-offset: -8px; }
+
+    #empty-state {
+      position: absolute;
+      top: 120px;
+      left: 50%;
+      transform: translateX(-50%);
+      border: 1px dashed var(--line);
+      border-radius: var(--radius);
+      padding: 44px 56px;
+      text-align: center;
+      color: var(--muted);
+      font-size: var(--fs-base);
+      line-height: 1.7;
+      pointer-events: none;
+      white-space: nowrap;
+    }
+
+    /* ---------- boxes ---------- */
+    .card {
+      position: absolute;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--panel);
+      display: flex;
+      flex-direction: column;
+      min-width: 180px;
+      min-height: 120px;
+      box-shadow: 0 8px 28px rgba(0, 0, 0, 0.45);
+      transition: border-color 0.15s, box-shadow 0.15s;
+    }
+
+    .card.moving { opacity: 0.92; cursor: grabbing; box-shadow: 0 16px 44px rgba(0, 0, 0, 0.6); }
+    .card:focus-within { border-color: rgba(110, 215, 183, 0.5); }
+
+    .card-head {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      padding: 4px 8px;
+      background: var(--panel-2);
+      border-bottom: 1px solid var(--line);
+      border-radius: var(--radius) var(--radius) 0 0;
+      cursor: grab;
+      user-select: none;
+      flex: 0 0 auto;
+    }
+    .card-head:active { cursor: grabbing; }
+
+    .term-dots { display: inline-flex; gap: 5px; align-items: center; }
+    .term-dots i { width: 10px; height: 10px; border-radius: 50%; }
+    .term-dots i:nth-child(1) { background: #ff5f56; }
+    .term-dots i:nth-child(2) { background: #ffbd2e; }
+    .term-dots i:nth-child(3) { background: #27c93f; }
+
+    .card-title {
+      flex: 1;
+      background: transparent;
+      border: 1px solid transparent;
+      border-radius: 6px;
+      color: var(--text);
+      font: inherit;
+      font-size: var(--fs-base);
+      font-weight: 600;
+      padding: 2px 6px;
+      min-width: 0;
+      cursor: text;
+    }
+    .card-title:hover { border-color: var(--line); }
+    .card-title:focus { outline: none; border-color: var(--accent); background: var(--bg); }
+
+    .tool-btn {
+      padding: 2px 8px;
+      font-size: var(--fs-base);
+      border-radius: 6px;
+      background: transparent;
+      border: 1px solid transparent;
+      color: var(--muted);
+    }
+    .tool-btn:hover { border-color: var(--line); color: var(--text); }
+
+    .card-body { position: relative; flex: 1 1 auto; display: flex; flex-direction: column; min-height: 0; }
+
+    .term-prompt {
+      display: none;
+      gap: 8px;
+      padding: 8px 14px 0;
+      font-size: 0.9em;
+      opacity: 0.75;
+      user-select: none;
+      flex: 0 0 auto;
+    }
+    .card.terminal .term-prompt { display: flex; }
+
+    .editor {
+      flex: 1 1 auto;
+      min-height: 0;
+      padding: 12px 14px;
+      line-height: 1.6;
+      outline: none;
+      white-space: pre-wrap;
+      word-break: break-word;
+      overflow-y: auto;
+      transition: filter 0.25s;
+      border-radius: 0 0 var(--radius) var(--radius);
+    }
+
+    .editor:empty::before {
+      content: attr(data-placeholder);
+      color: var(--muted);
+      pointer-events: none;
+    }
+
+    /* blur option */
+    .card.blurred .editor { filter: blur(6px); }
+    .card.blurred .editor:focus { filter: none; }
+    .card.blurred .card-body::after {
+      content: "hidden — click to reveal";
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      color: var(--muted);
+      pointer-events: none;
+      opacity: 0.9;
+      font-family: Inter, system-ui, sans-serif;
+    }
+    .card.blurred .card-body:focus-within::after { display: none; }
+
+    /* terminal option — color comes from --tc set inline per card */
+    .card.terminal { border-color: color-mix(in srgb, var(--tc, #3ee07f) 30%, var(--line)); }
+    .card.terminal .card-head {
+      background: #101510;
+      border-bottom-color: color-mix(in srgb, var(--tc, #3ee07f) 25%, var(--line));
+    }
+    .card.terminal .card-body { background: var(--term-bg); border-radius: 0 0 var(--radius) var(--radius); }
+    .card.terminal .term-prompt,
+    .card.terminal .editor {
+      color: var(--tc, #3ee07f);
+      text-shadow: 0 0 6px color-mix(in srgb, var(--tc, #3ee07f) 40%, transparent);
+    }
+    .card.terminal .editor { background: transparent; caret-color: var(--tc, #3ee07f); }
+    .card.terminal .editor::selection { background: color-mix(in srgb, var(--tc, #3ee07f) 28%, transparent); }
+    .card.terminal .editor:empty::before { color: color-mix(in srgb, var(--tc, #3ee07f) 45%, transparent); }
+
+    /* scanlines for extra CRT feel */
+    .card.terminal .card-body::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background: repeating-linear-gradient(0deg, rgba(255,255,255,0.022) 0 1px, transparent 1px 3px);
+      border-radius: 0 0 var(--radius) var(--radius);
+    }
+
+    /* ---------- style (Aa) popover ---------- */
+    .style-pop {
+      position: absolute;
+      top: 38px;
+      right: 6px;
+      z-index: 30;
+      background: var(--panel-2);
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 12px;
+      width: 218px;
+      box-shadow: 0 12px 36px rgba(0, 0, 0, 0.55);
+      display: none;
+      font-family: Inter, system-ui, sans-serif;
+      cursor: default;
+    }
+    .style-pop.open { display: block; }
+
+    .menu-row {
+      display: flex;
+      width: 100%;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      background: transparent;
+      border: 1px solid transparent;
+      border-radius: 6px;
+      padding: 5px 8px;
+      margin: 0 0 2px;
+      font-size: var(--fs-base);
+      color: var(--text);
+      text-align: left;
+      cursor: pointer;
+    }
+    .menu-row:hover { background: var(--bg); border-color: var(--line); }
+    .menu-row .state { color: var(--muted); font-size: var(--fs-small); }
+    .menu-row.on .state { color: var(--accent); }
+    .menu-row.danger:hover { color: var(--danger); border-color: var(--danger); }
+
+    .menu-meta {
+      margin-top: 10px;
+      padding-top: 8px;
+      border-top: 1px solid var(--line);
+      font-size: var(--fs-small);
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    .style-pop label {
+      display: block;
+      font-size: var(--fs-small);
+      text-transform: uppercase;
+      letter-spacing: 1.1px;
+      color: var(--muted);
+      margin: 10px 0 5px;
+      border-top: 1px solid var(--line);
+      padding-top: 10px;
+    }
+    .style-pop label ~ label { border-top: none; padding-top: 0; }
+
+    .style-pop select {
+      width: 100%;
+      padding: 6px 8px;
+      background: var(--bg);
+    }
+
+    .size-row { display: flex; align-items: center; gap: 8px; }
+    .size-row button { padding: 3px 10px; line-height: 1; background: var(--bg); }
+    .size-row .size-val { font-size: var(--fs-base); min-width: 44px; text-align: center; color: var(--text); }
+
+    .swatches { display: flex; gap: 7px; }
+    .swatch {
+      width: 24px; height: 24px;
+      border-radius: 50%;
+      border: 2px solid transparent;
+      cursor: pointer;
+      padding: 0;
+      background-clip: padding-box;
+    }
+    .swatch.sel { border-color: var(--text); }
+
+    /* ---------- resize handle ---------- */
+    /* folded page corner — document look (text boxes only) */
+    .card-body .fold {
+      position: absolute;
+      top: 0; right: 0;
+      width: 16px; height: 16px;
+      background: linear-gradient(225deg, var(--bg) 50%, var(--panel-2) 50%);
+      border-left: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      border-radius: 0 0 0 5px;
+      pointer-events: none;
+      z-index: 5;
+    }
+    .card.terminal .fold { display: none; }
+
+    .resize-handle {
+      position: absolute;
+      right: 0; bottom: 0;
+      width: 18px; height: 18px;
+      cursor: nwse-resize;
+      z-index: 10;
+    }
+    .resize-handle::after {
+      content: "";
+      position: absolute;
+      right: 4px; bottom: 4px;
+      width: 8px; height: 8px;
+      border-right: 2px solid var(--muted);
+      border-bottom: 2px solid var(--muted);
+      border-radius: 1px;
+      opacity: 0.7;
+    }
+
+    .toast {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%) translateY(10px);
+      background: var(--panel-2);
+      border: 1px solid var(--accent);
+      border-radius: 8px;
+      padding: 9px 16px;
+      font-size: var(--fs-base);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s, transform 0.2s;
+      z-index: 300;
+    }
+    .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+    @media (max-width: 720px) {
+      .workspace { flex-direction: column; }
+      aside { flex: 0 0 auto; border-right: none; border-bottom: 1px solid var(--line); display: flex; gap: 10px; overflow-x: auto; }
+      aside h2, aside .hint { display: none; }
+      .palette-item { margin-bottom: 0; min-width: 150px; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>updates<span>.pad</span></h1>
+    <div class="header-actions">
+      <button id="btn-add-text">+ Text</button>
+      <button id="btn-add-term">+ Terminal</button>
+      <button id="btn-export">Export JSON</button>
+      <button id="btn-import">Import JSON</button>
+      <button id="btn-clear" class="danger">Clear all</button>
+    </div>
+  </header>
+
+  <div class="workspace">
+    <aside>
+      <h2>Components</h2>
+      <div class="palette-item" draggable="true" data-type="text">
+        <div class="pi-title">📝 Text Editor</div>
+        <div class="pi-desc">Free-floating note. Pick any font &amp; size, toggle blur to hide it.</div>
+      </div>
+      <div class="palette-item term" draggable="true" data-type="terminal">
+        <div class="pi-title">$ Terminal</div>
+        <div class="pi-desc">CRT terminal with scanlines, retro mono fonts &amp; phosphor color themes.</div>
+      </div>
+      <div class="hint">
+        Drag a component anywhere on the pad — it drops where you point.<br><br>
+        Drag a box by its title bar to move it. Drag the corner <kbd>◢</kbd> to resize.<br><br>
+        <kbd>☰</kbd> on a document opens blur, terminal &amp; font options. Everything autosaves to your browser.
+      </div>
+    </aside>
+
+    <div id="viewport">
+      <div id="pad">
+        <div id="empty-state">
+          Blank pad.<br>
+          Drag a component from the left — or click <strong>+ Text</strong> / <strong>+ Terminal</strong> above.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+  <input type="file" id="file-input" accept="application/json" hidden>
+
+  <script>
+    (function () {
+      'use strict';
+
+      var STORE_KEY = 'updates-pad-v2';
+      var LEGACY_KEY = 'updates-board-v1';
+
+      var pad = document.getElementById('pad');
+      var viewport = document.getElementById('viewport');
+      var emptyState = document.getElementById('empty-state');
+      var toastEl = document.getElementById('toast');
+      var fileInput = document.getElementById('file-input');
+      var toastTimer = null;
+
+      var FONTS = [
+        { id: 'inter',     label: 'Inter (sans)',     stack: 'Inter, ui-sans-serif, system-ui, sans-serif',        mono: false },
+        { id: 'serif',     label: 'Georgia (serif)',  stack: 'Georgia, "Times New Roman", serif',                  mono: false },
+        { id: 'menlo',     label: 'Menlo / SF Mono',  stack: '"SF Mono", Menlo, ui-monospace, Consolas, monospace', mono: true },
+        { id: 'jetbrains', label: 'JetBrains Mono',   stack: '"JetBrains Mono", ui-monospace, Menlo, monospace',   mono: true },
+        { id: 'fira',      label: 'Fira Code',        stack: '"Fira Code", ui-monospace, Menlo, monospace',        mono: true },
+        { id: 'plex',      label: 'IBM Plex Mono',    stack: '"IBM Plex Mono", ui-monospace, Menlo, monospace',    mono: true },
+        { id: 'sharetech', label: 'Share Tech Mono',  stack: '"Share Tech Mono", ui-monospace, Menlo, monospace',  mono: true },
+        { id: 'vt323',     label: 'VT323 (retro CRT)', stack: '"VT323", ui-monospace, Menlo, monospace',           mono: true }
+      ];
+
+      var TERM_COLORS = [
+        { id: 'green', label: 'Phosphor green', hex: '#3ee07f' },
+        { id: 'amber', label: 'Amber',          hex: '#ffb000' },
+        { id: 'cyan',  label: 'Cyan',           hex: '#4dd8e6' },
+        { id: 'white', label: 'Paper white',    hex: '#e8e8e8' }
+      ];
+
+      var FONT_MIN = 10, FONT_MAX = 34;
+
+      function fontById(id) {
+        return FONTS.find(function (f) { return f.id === id; }) || FONTS[0];
+      }
+      function termColorById(id) {
+        return TERM_COLORS.find(function (c) { return c.id === id; }) || TERM_COLORS[0];
+      }
+
+      /* ---------------- state (CRUD core) ---------------- */
+
+      var cards = load();
+      var maxZ = cards.reduce(function (m, c) { return Math.max(m, c.z || 1); }, 1);
+
+      function defaultFontFor(type) { return type === 'terminal' ? 'vt323' : 'inter'; }
+      function defaultSizeFor(type, fontId) { return fontId === 'vt323' ? 17 : (type === 'terminal' ? 12 : 13); }
+
+      function normalize(c, i) {
+        var type = c.type === 'terminal' ? 'terminal' : 'text';
+        var font = c.font && fontById(c.font).id === c.font ? c.font : defaultFontFor(type);
+        return {
+          id: c.id || uid(),
+          type: type,
+          title: String(c.title || (type === 'terminal' ? 'terminal' : 'untitled note')),
+          content: String(c.content || ''),
+          blur: !!c.blur,
+          font: font,
+          fontSize: clamp(parseInt(c.fontSize, 10) || defaultSizeFor(type, font), FONT_MIN, FONT_MAX),
+          termColor: c.termColor && termColorById(c.termColor).id === c.termColor ? c.termColor : 'green',
+          x: isFinite(c.x) ? c.x : 60 + (i % 5) * 60,
+          y: isFinite(c.y) ? c.y : 40 + i * 70,
+          w: clamp(isFinite(c.w) ? c.w : 280, 180, 1600),
+          h: clamp(isFinite(c.h) ? c.h : 330, 120, 1200),
+          z: isFinite(c.z) ? c.z : i + 1,
+          createdAt: c.createdAt || nowIso(),
+          updatedAt: c.updatedAt || nowIso()
+        };
+      }
+
+      function load() {
+        try {
+          var raw = localStorage.getItem(STORE_KEY);
+          if (!raw) {
+            // migrate v1 list-layout boards into freeform positions
+            var legacy = localStorage.getItem(LEGACY_KEY);
+            if (legacy) {
+              var old = JSON.parse(legacy);
+              if (Array.isArray(old) && old.length) {
+                var migrated = old.map(normalize);
+                localStorage.setItem(STORE_KEY, JSON.stringify(migrated));
+                return migrated;
+              }
+            }
+            return [];
+          }
+          var parsed = JSON.parse(raw);
+          var list = Array.isArray(parsed) ? parsed.map(normalize) : [];
+          // one-time shrink of boxes still on the old default sizes (vt323 20px, others 14px)
+          if (list.length && !localStorage.getItem('updates-pad-fontfix-1')) {
+            list.forEach(function (c) {
+              if (c.font === 'vt323' && c.fontSize === 20) c.fontSize = 17;
+              else if (c.fontSize === 14) c.fontSize = defaultSizeFor(c.type, c.font);
+            });
+            localStorage.setItem(STORE_KEY, JSON.stringify(list));
+          }
+          localStorage.setItem('updates-pad-fontfix-1', '1');
+          return list;
+        } catch (e) { return []; }
+      }
+
+      function save() { localStorage.setItem(STORE_KEY, JSON.stringify(cards)); }
+
+      function uid() {
+        return 'c_' + Date.now().toString(36) + '_' + Math.random().toString(36).slice(2, 8);
+      }
+
+      function nowIso() { return new Date().toISOString(); }
+      function clamp(v, lo, hi) { return Math.min(hi, Math.max(lo, v)); }
+
+      // CREATE
+      function createCard(type, x, y) {
+        var n = cards.length;
+        var font = defaultFontFor(type);
+        var card = normalize({
+          type: type,
+          font: font,
+          fontSize: defaultSizeFor(type, font),
+          x: isFinite(x) ? Math.max(0, x) : 80 + (n % 6) * 48,
+          y: isFinite(y) ? Math.max(0, y) : 60 + (n % 6) * 48,
+          z: ++maxZ
+        }, n);
+        cards.push(card);
+        save();
+        render();
+        focusEditor(card.id);
+        toast(type === 'terminal' ? 'Terminal added' : 'Text box added');
+        return card;
+      }
+
+      // UPDATE
+      function updateCard(id, patch, opts) {
+        var card = findCard(id);
+        if (!card) return;
+        Object.keys(patch).forEach(function (k) { card[k] = patch[k]; });
+        if (!opts || !opts.silentTimestamp) card.updatedAt = nowIso();
+        save();
+      }
+
+      // DELETE
+      function deleteCard(id) {
+        var idx = cards.findIndex(function (c) { return c.id === id; });
+        if (idx === -1) return;
+        cards.splice(idx, 1);
+        save();
+        render();
+        toast('Deleted');
+      }
+
+      function duplicateCard(id) {
+        var src = findCard(id);
+        if (!src) return;
+        var copy = JSON.parse(JSON.stringify(src));
+        copy.id = uid();
+        copy.title = src.title + ' (copy)';
+        copy.x = src.x + 28;
+        copy.y = src.y + 28;
+        copy.z = ++maxZ;
+        copy.createdAt = nowIso();
+        copy.updatedAt = nowIso();
+        cards.push(copy);
+        save();
+        render();
+        toast('Duplicated');
+      }
+
+      function findCard(id) {
+        return cards.find(function (c) { return c.id === id; });
+      }
+
+      function bringToFront(id) {
+        var c = findCard(id);
+        if (!c || c.z === maxZ) return;
+        c.z = ++maxZ;
+        var el = pad.querySelector('.card[data-id="' + id + '"]');
+        if (el) el.style.zIndex = c.z;
+        save();
+      }
+
+      /* ---------------- rendering ---------------- */
+
+      function render() {
+        pad.querySelectorAll('.card').forEach(function (el) { el.remove(); });
+        emptyState.style.display = cards.length ? 'none' : 'block';
+        cards.forEach(function (card) { pad.appendChild(buildCardEl(card)); });
+      }
+
+      function applyStyles(card, el, editor, prompt) {
+        var f = fontById(card.font);
+        el.style.left = card.x + 'px';
+        el.style.top = card.y + 'px';
+        el.style.width = card.w + 'px';
+        el.style.height = card.h + 'px';
+        el.style.zIndex = card.z;
+        el.style.setProperty('--tc', termColorById(card.termColor).hex);
+        editor.style.fontFamily = f.stack;
+        editor.style.fontSize = card.fontSize + 'px';
+        prompt.style.fontFamily = f.stack;
+        el.classList.toggle('terminal', card.type === 'terminal');
+        el.classList.toggle('blurred', card.blur);
+        editor.dataset.placeholder = card.type === 'terminal' ? 'type a command or log output…' : 'start typing…';
+      }
+
+      function buildCardEl(card) {
+        var el = document.createElement('div');
+        el.className = 'card';
+        el.dataset.id = card.id;
+
+        /* ---- head ---- */
+        var head = document.createElement('div');
+        head.className = 'card-head';
+
+        var dots = document.createElement('span');
+        dots.className = 'term-dots';
+        dots.innerHTML = '<i></i><i></i><i></i>';
+
+        var title = document.createElement('input');
+        title.className = 'card-title';
+        title.value = card.title;
+        title.spellcheck = false;
+        title.addEventListener('change', function () {
+          updateCard(card.id, { title: title.value.trim() || 'untitled' });
+          title.value = findCard(card.id).title;
+          refreshFoot();
+        });
+
+        var burger = toolBtn('☰', false, function (e) {
+          e.stopPropagation();
+          closeAllPops(pop);
+          pop.classList.toggle('open');
+        });
+        burger.title = 'Options (blur, terminal, font…)';
+
+        head.append(dots, title, burger);
+
+        /* ---- style popover ---- */
+        var pop = document.createElement('div');
+        pop.className = 'style-pop';
+        pop.addEventListener('pointerdown', function (e) { e.stopPropagation(); });
+
+        function menuRow(label, onClick) {
+          var b = document.createElement('button');
+          b.className = 'menu-row';
+          var l = document.createElement('span');
+          l.textContent = label;
+          var st = document.createElement('span');
+          st.className = 'state';
+          b.append(l, st);
+          b.addEventListener('click', onClick);
+          return b;
+        }
+
+        var blurRow = menuRow('Blur content', function () {
+          updateCard(card.id, { blur: !findCard(card.id).blur });
+          rerenderCard();
+        });
+        var termRow = menuRow('Terminal style', function () {
+          var c = findCard(card.id);
+          var toTerm = c.type !== 'terminal';
+          var patch = { type: toTerm ? 'terminal' : 'text' };
+          // switching into terminal mode? pick a terminal font automatically
+          if (toTerm && !fontById(c.font).mono) {
+            patch.font = 'vt323';
+            patch.fontSize = defaultSizeFor('terminal', 'vt323');
+          }
+          updateCard(card.id, patch);
+          rerenderCard();
+        });
+        var dupRow = menuRow('Duplicate', function () { duplicateCard(card.id); });
+        var delRow = menuRow('Delete…', function () {
+          if (confirm('Delete "' + findCard(card.id).title + '"?')) deleteCard(card.id);
+        });
+        delRow.classList.add('danger');
+
+        var fontLabel = document.createElement('label');
+        fontLabel.textContent = 'Font';
+        var fontSel = document.createElement('select');
+        FONTS.forEach(function (f) {
+          var o = document.createElement('option');
+          o.value = f.id;
+          o.textContent = f.label + (f.mono ? '  ·  mono' : '');
+          o.style.fontFamily = f.stack;
+          fontSel.appendChild(o);
+        });
+        fontSel.value = card.font;
+        fontSel.addEventListener('change', function () {
+          updateCard(card.id, { font: fontSel.value });
+          syncStyles();
+        });
+
+        var sizeLabel = document.createElement('label');
+        sizeLabel.textContent = 'Font size';
+        var sizeRow = document.createElement('div');
+        sizeRow.className = 'size-row';
+        var minus = document.createElement('button'); minus.textContent = '−';
+        var sizeVal = document.createElement('span'); sizeVal.className = 'size-val';
+        var plus = document.createElement('button'); plus.textContent = '+';
+        function setSize(delta) {
+          var c = findCard(card.id);
+          updateCard(card.id, { fontSize: clamp(c.fontSize + delta, FONT_MIN, FONT_MAX) });
+          syncStyles();
+        }
+        minus.addEventListener('click', function () { setSize(-1); });
+        plus.addEventListener('click', function () { setSize(1); });
+        sizeRow.append(minus, sizeVal, plus);
+
+        var colorLabel = document.createElement('label');
+        colorLabel.textContent = 'Terminal color';
+        var swatches = document.createElement('div');
+        swatches.className = 'swatches';
+        TERM_COLORS.forEach(function (tc) {
+          var s = document.createElement('button');
+          s.className = 'swatch';
+          s.style.background = tc.hex;
+          s.title = tc.label;
+          s.dataset.color = tc.id;
+          s.addEventListener('click', function () {
+            updateCard(card.id, { termColor: tc.id });
+            syncStyles();
+          });
+          swatches.appendChild(s);
+        });
+
+        var meta = document.createElement('div');
+        meta.className = 'menu-meta';
+
+        pop.append(blurRow, termRow, dupRow, delRow, fontLabel, fontSel, sizeLabel, sizeRow, colorLabel, swatches, meta);
+
+        /* ---- body ---- */
+        var body = document.createElement('div');
+        body.className = 'card-body';
+
+        var prompt = document.createElement('div');
+        prompt.className = 'term-prompt';
+        prompt.textContent = 'shyam@updates ~ %';
+
+        var editor = document.createElement('div');
+        editor.className = 'editor';
+        editor.contentEditable = 'true';
+        editor.spellcheck = false;
+        editor.innerText = card.content;
+
+        var saveDebounce = null;
+        editor.addEventListener('input', function () {
+          clearTimeout(saveDebounce);
+          saveDebounce = setTimeout(function () {
+            updateCard(card.id, { content: editor.innerText });
+            refreshFoot();
+          }, 250);
+        });
+        editor.addEventListener('blur', function () {
+          clearTimeout(saveDebounce);
+          updateCard(card.id, { content: editor.innerText });
+          refreshFoot();
+        });
+
+        var fold = document.createElement('div');
+        fold.className = 'fold';
+        body.append(prompt, editor, fold);
+
+        /* ---- resize ---- */
+        function refreshFoot() {
+          var c = findCard(card.id);
+          if (!c) return;
+          meta.textContent = c.type + ' · ' + fontById(c.font).label.split(' (')[0] + ' ' +
+            c.fontSize + 'px · ' + (c.content ? c.content.length + ' chars' : 'empty');
+        }
+
+        var resize = document.createElement('div');
+        resize.className = 'resize-handle';
+        resize.title = 'Drag to resize';
+
+        el.append(head, pop, body, resize);
+
+        function syncStyles() {
+          var c = findCard(card.id);
+          if (!c) return;
+          applyStyles(c, el, editor, prompt);
+          blurRow.classList.toggle('on', c.blur);
+          blurRow.querySelector('.state').textContent = c.blur ? 'on' : 'off';
+          termRow.classList.toggle('on', c.type === 'terminal');
+          termRow.querySelector('.state').textContent = c.type === 'terminal' ? 'on' : 'off';
+          fontSel.value = c.font;
+          sizeVal.textContent = c.fontSize + 'px';
+          pop.querySelectorAll('.swatch').forEach(function (s) {
+            s.classList.toggle('sel', s.dataset.color === c.termColor);
+          });
+          refreshFoot();
+        }
+        function rerenderCard() { syncStyles(); }
+        syncStyles();
+
+        /* ---- move (pointer drag on head) ---- */
+        head.addEventListener('pointerdown', function (e) {
+          if (e.target.closest('button, input, select, .style-pop')) return;
+          e.preventDefault();
+          bringToFront(card.id);
+          var c = findCard(card.id);
+          var startX = e.clientX, startY = e.clientY;
+          var origX = c.x, origY = c.y;
+          el.classList.add('moving');
+          try { head.setPointerCapture(e.pointerId); } catch (err) {}
+
+          function onMove(ev) {
+            var nx = Math.max(0, origX + (ev.clientX - startX));
+            var ny = Math.max(0, origY + (ev.clientY - startY));
+            el.style.left = nx + 'px';
+            el.style.top = ny + 'px';
+          }
+          function onUp(ev) {
+            head.removeEventListener('pointermove', onMove);
+            head.removeEventListener('pointerup', onUp);
+            head.removeEventListener('pointercancel', onUp);
+            el.classList.remove('moving');
+            var nx = Math.max(0, origX + (ev.clientX - startX));
+            var ny = Math.max(0, origY + (ev.clientY - startY));
+            updateCard(card.id, { x: nx, y: ny }, { silentTimestamp: true });
+          }
+          head.addEventListener('pointermove', onMove);
+          head.addEventListener('pointerup', onUp);
+          head.addEventListener('pointercancel', onUp);
+        });
+
+        /* ---- resize (pointer drag on corner) ---- */
+        resize.addEventListener('pointerdown', function (e) {
+          e.preventDefault();
+          e.stopPropagation();
+          bringToFront(card.id);
+          var c = findCard(card.id);
+          var startX = e.clientX, startY = e.clientY;
+          var origW = c.w, origH = c.h;
+          try { resize.setPointerCapture(e.pointerId); } catch (err) {}
+
+          function onMove(ev) {
+            var nw = clamp(origW + (ev.clientX - startX), 180, 1600);
+            var nh = clamp(origH + (ev.clientY - startY), 120, 1200);
+            el.style.width = nw + 'px';
+            el.style.height = nh + 'px';
+          }
+          function onUp(ev) {
+            resize.removeEventListener('pointermove', onMove);
+            resize.removeEventListener('pointerup', onUp);
+            resize.removeEventListener('pointercancel', onUp);
+            var nw = clamp(origW + (ev.clientX - startX), 180, 1600);
+            var nh = clamp(origH + (ev.clientY - startY), 120, 1200);
+            updateCard(card.id, { w: nw, h: nh }, { silentTimestamp: true });
+          }
+          resize.addEventListener('pointermove', onMove);
+          resize.addEventListener('pointerup', onUp);
+          resize.addEventListener('pointercancel', onUp);
+        });
+
+        el.addEventListener('pointerdown', function () { bringToFront(card.id); });
+
+        return el;
+      }
+
+      function toolBtn(label, on, onClick) {
+        var b = document.createElement('button');
+        b.className = 'tool-btn' + (on ? ' on' : '');
+        b.textContent = label;
+        b.addEventListener('click', onClick);
+        return b;
+      }
+
+      function closeAllPops(except) {
+        pad.querySelectorAll('.style-pop.open').forEach(function (p) {
+          if (p !== except) p.classList.remove('open');
+        });
+      }
+
+      document.addEventListener('pointerdown', function (e) {
+        if (!e.target.closest('.style-pop') && !e.target.closest('.tool-btn')) closeAllPops();
+      });
+
+      function focusEditor(id) {
+        var el = pad.querySelector('.card[data-id="' + id + '"] .editor');
+        if (el) el.focus();
+      }
+
+      function toast(msg) {
+        toastEl.textContent = msg;
+        toastEl.classList.add('show');
+        clearTimeout(toastTimer);
+        toastTimer = setTimeout(function () { toastEl.classList.remove('show'); }, 1600);
+      }
+
+      /* ---------------- palette drag → drop on pad ---------------- */
+
+      document.querySelectorAll('.palette-item').forEach(function (item) {
+        item.addEventListener('dragstart', function (e) {
+          e.dataTransfer.setData('text/palette-type', item.dataset.type);
+          e.dataTransfer.effectAllowed = 'copy';
+        });
+        item.addEventListener('click', function () {
+          // place near current scroll position so it's visible
+          var x = viewport.scrollLeft + 120 + (cards.length % 5) * 44;
+          var y = viewport.scrollTop + 80 + (cards.length % 5) * 44;
+          createCard(item.dataset.type, x, y);
+        });
+      });
+
+      pad.addEventListener('dragover', function (e) {
+        if (Array.prototype.indexOf.call(e.dataTransfer.types, 'text/palette-type') === -1) return;
+        e.preventDefault();
+        pad.classList.add('drag-over');
+      });
+      pad.addEventListener('dragleave', function (e) {
+        if (e.target === pad) pad.classList.remove('drag-over');
+      });
+      pad.addEventListener('drop', function (e) {
+        e.preventDefault();
+        pad.classList.remove('drag-over');
+        var palType = e.dataTransfer.getData('text/palette-type');
+        if (!palType) return;
+        var rect = pad.getBoundingClientRect();
+        var x = Math.max(0, e.clientX - rect.left - 140);
+        var y = Math.max(0, e.clientY - rect.top - 16);
+        createCard(palType, x, y);
+      });
+
+      /* ---------------- header actions ---------------- */
+
+      document.getElementById('btn-add-text').addEventListener('click', function () {
+        var x = viewport.scrollLeft + 120 + (cards.length % 5) * 44;
+        var y = viewport.scrollTop + 80 + (cards.length % 5) * 44;
+        createCard('text', x, y);
+      });
+      document.getElementById('btn-add-term').addEventListener('click', function () {
+        var x = viewport.scrollLeft + 120 + (cards.length % 5) * 44;
+        var y = viewport.scrollTop + 80 + (cards.length % 5) * 44;
+        createCard('terminal', x, y);
+      });
+
+      document.getElementById('btn-export').addEventListener('click', function () {
+        var blob = new Blob([JSON.stringify(cards, null, 2)], { type: 'application/json' });
+        var a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = 'updates-pad.json';
+        a.click();
+        URL.revokeObjectURL(a.href);
+        toast('Exported ' + cards.length + ' box(es)');
+      });
+
+      document.getElementById('btn-import').addEventListener('click', function () {
+        fileInput.click();
+      });
+      fileInput.addEventListener('change', function () {
+        var file = fileInput.files[0];
+        if (!file) return;
+        var reader = new FileReader();
+        reader.onload = function () {
+          try {
+            var data = JSON.parse(reader.result);
+            if (!Array.isArray(data)) throw new Error('not an array');
+            data.forEach(function (c, i) {
+              var n = normalize(c, cards.length + i);
+              n.id = uid();
+              n.z = ++maxZ;
+              cards.push(n);
+            });
+            save();
+            render();
+            toast('Imported ' + data.length + ' box(es)');
+          } catch (err) {
+            toast('Import failed: invalid JSON');
+          }
+          fileInput.value = '';
+        };
+        reader.readAsText(file);
+      });
+
+      document.getElementById('btn-clear').addEventListener('click', function () {
+        if (!cards.length) return;
+        if (!confirm('Delete all ' + cards.length + ' box(es)? This cannot be undone.')) return;
+        cards = [];
+        save();
+        render();
+        toast('Pad cleared');
+      });
+
+      render();
+    })();
+  </script>
+</body>
+</html>
