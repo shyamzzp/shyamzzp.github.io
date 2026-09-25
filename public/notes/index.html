@@ -1281,9 +1281,6 @@ try { var _t = localStorage.getItem('notes_theme'); if (_t) document.documentEle
     <div class="login-logo">▚ NOTES</div>
     <div class="login-title">Sign in<span class="caret"></span></div>
     <div class="login-field">
-      <input id="login-email" type="email" placeholder="Email" autocomplete="username" required>
-    </div>
-    <div class="login-field">
       <input id="login-password" type="password" placeholder="Password" autocomplete="current-password" required>
     </div>
     <button id="login-submit" type="submit">Sign in</button>
@@ -1351,6 +1348,7 @@ try { var _t = localStorage.getItem('notes_theme'); if (_t) document.documentEle
   const PB_COLLECTION = 'notes';     // collection: fields key (text) + data (json)
   const PB_AUTH_KEY = 'pb_auth_notes';
   const SUPERUSER_KEY = 'board';      // record key used when signed in as admin/superuser
+  const DEFAULT_LOGIN_EMAIL = 'shyam22.co@gmail.com';
   // Exported standalone snapshots carry a seed and run fully offline (no login).
   const OFFLINE = !!window.__NOTES_SEED__;
   let authToken = null, authUserId = null, authEmail = null, recordId = null, isSuperuser = false;
@@ -2918,7 +2916,7 @@ try { var _t = localStorage.getItem('notes_theme'); if (_t) document.documentEle
 
   function showLogin() {
     document.getElementById('login-overlay').classList.remove('hidden');
-    setTimeout(() => document.getElementById('login-email').focus(), 0);
+    setTimeout(() => document.getElementById('login-password').focus(), 0);
   }
   function hideLogin() { document.getElementById('login-overlay').classList.add('hidden'); }
   function handleAuthExpired() {
@@ -2941,14 +2939,13 @@ try { var _t = localStorage.getItem('notes_theme'); if (_t) document.documentEle
   if (!OFFLINE) {
     document.getElementById('login-form').addEventListener('submit', async e => {
       e.preventDefault();
-      const email = document.getElementById('login-email').value.trim();
       const password = document.getElementById('login-password').value;
       const errEl = document.getElementById('login-error');
       const btn = document.getElementById('login-submit');
       errEl.textContent = ''; errEl.classList.remove('show');
       btn.disabled = true; btn.textContent = 'Signing in…';
       try {
-        await pbLogin(email, password);
+        await pbLogin(DEFAULT_LOGIN_EMAIL, password);
         document.getElementById('login-password').value = '';
         await startSession();
       } catch (err) {
