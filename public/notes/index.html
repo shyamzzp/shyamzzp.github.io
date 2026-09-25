@@ -372,6 +372,46 @@ try { var _t = localStorage.getItem('notes_theme'); if (_t) document.documentEle
     #grid { grid-template-columns: repeat(2, 1fr); }
   }
 
+  /* ── Focus layouts ── */
+  #grid.focus-fullscreen {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: minmax(0, 1fr);
+    overflow: hidden;
+  }
+  #grid.focus-fullscreen .section:not(.focus-selected) { display: none; }
+  #grid.focus-fullscreen .section.focus-selected {
+    grid-column: 1 !important;
+    grid-row: 1 !important;
+    animation: focus-expand 0.24s cubic-bezier(.2,.8,.2,1) both;
+  }
+
+  #grid.focus-column {
+    grid-template-columns: repeat(var(--focus-column-count), var(--focus-column-width));
+    grid-template-rows: repeat(var(--focus-row-count), var(--card-h));
+    grid-auto-rows: var(--card-h);
+    grid-auto-flow: unset;
+    align-content: start;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x proximity;
+  }
+  #grid.focus-column .section { scroll-snap-align: start; }
+  #grid.focus-column .section.focus-selected {
+    animation: focus-expand 0.24s cubic-bezier(.2,.8,.2,1) both;
+  }
+  #grid.focus-column .section:not(.focus-selected) {
+    animation: focus-slide-in 0.24s cubic-bezier(.2,.8,.2,1) both;
+  }
+
+  @keyframes focus-expand {
+    from { opacity: 0.3; transform: scale(0.96); }
+    to { opacity: 1; transform: scale(1); }
+  }
+  @keyframes focus-slide-in {
+    from { opacity: 0; transform: translateX(-18px); }
+    to { opacity: 1; transform: translateX(0); }
+  }
+
   .section {
     display: flex;
     flex-direction: column;
@@ -840,6 +880,8 @@ try { var _t = localStorage.getItem('notes_theme'); if (_t) document.documentEle
   @media (prefers-reduced-motion: reduce) {
     .login-overlay, .login-box, .login-field, .login-box button[type="submit"] { animation: none !important; opacity: 1 !important; }
     .login-overlay::before, .login-overlay::after, .login-box::before, .login-title .caret { animation: none !important; }
+    #grid.focus-fullscreen .section.focus-selected,
+    #grid.focus-column .section { animation: none !important; }
   }
 
   /* ── Spaces sidebar (off-canvas) ── */
@@ -1078,6 +1120,7 @@ try { var _t = localStorage.getItem('notes_theme'); if (_t) document.documentEle
 
 <div id="grid"></div>
 
+<script src="layout-utils.js"></script>
 <script>
 (function () {
   const COLS = 4;              // cells per row (each 25% wide)
@@ -1325,6 +1368,85 @@ try { var _t = localStorage.getItem('notes_theme'); if (_t) document.documentEle
   const sections = [];
   const dots = [];
   const splitBtns = [];
+  let focusLayout = null;
+
+  function normalColumnCount() {
+    return window.matchMedia('(max-width: 640px)').matches ? 2 : COLS;
+  }
+
+  function applyColumnFocusLayout() {
+    if (!focusLayout || focusLayout.mode !== 'column') return;
+    const rows = COLS;
+    const width = Math.max(180, Math.floor(grid.clientWidth / normalColumnCount()));
+    const placements = window.NotesLayoutUtils.columnPlacements(sections.length, focusLayout.index, rows);
+    const columns = Math.max.apply(null, placements.map(placement => placement.column));
+
+    grid.style.setProperty('--focus-column-width', width + 'px');
+    grid.style.setProperty('--focus-column-count', String(columns));
+    grid.style.setProperty('--focus-row-count', String(rows));
+
+    placements.forEach((placement, index) => {
+      const section = sections[index];
+      section.style.gridColumn = String(placement.column);
+      section.style.gridRow = placement.rowSpan > 1
+        ? String(placement.row) + ' / span ' + String(placement.rowSpan)
+        : String(placement.row);
+    });
+  }
+
+  function clearFocusLayout(restoreFocus = true) {
+    if (!focusLayout) return;
+    const focusElement = focusLayout.focusElement;
+    focusLayout = null;
+    grid.classList.remove('focus-fullscreen', 'focus-column');
+    grid.style.removeProperty('--focus-column-width');
+    grid.style.removeProperty('--focus-column-count');
+    grid.style.removeProperty('--focus-row-count');
+    sections.forEach(section => {
+      section.classList.remove('focus-selected');
+      section.style.removeProperty('grid-column');
+      section.style.removeProperty('grid-row');
+    });
+    if (restoreFocus && focusElement && document.contains(focusElement)) {
+      requestAnimationFrame(() => focusElement.focus({ preventScroll: true }));
+    }
+  }
+
+  function setFocusLayout(index, mode, focusElement) {
+    if (focusLayout && focusLayout.index === index && focusLayout.mode === mode) {
+      clearFocusLayout();
+      return;
+    }
+
+    clearFocusLayout(false);
+    focusLayout = { index, mode, focusElement };
+    sections[index].classList.add('focus-selected');
+
+    if (mode === 'fullscreen') {
+      grid.classList.add('focus-fullscreen');
+    } else {
+      grid.classList.add('focus-column');
+      applyColumnFocusLayout();
+      grid.scrollTo({ left: 0, top: 0, behavior: 'smooth' });
+    }
+
+    requestAnimationFrame(() => focusElement.focus({ preventScroll: true }));
+  }
+
+  function handleFocusLayoutShortcut(event, index, focusElement) {
+    const mode = window.NotesLayoutUtils.shortcutMode(event);
+    if (mode) {
+      event.preventDefault();
+      setFocusLayout(index, mode, focusElement);
+      return true;
+    }
+    if (event.key === 'Escape' && focusLayout) {
+      event.preventDefault();
+      clearFocusLayout();
+      return true;
+    }
+    return false;
+  }
 
   // Build one section at index i and append it to the grid.
   function createSection(i) {
@@ -1379,6 +1501,8 @@ try { var _t = localStorage.getItem('notes_theme'); if (_t) document.documentEle
     titleInput.type = 'text';
     titleInput.spellcheck = false;
     titles[i] = titleInput;
+    titleInput.addEventListener('focus', () => { activeSectionIdx = i; updateFontSizeUI(); });
+    titleInput.addEventListener('keydown', e => handleFocusLayoutShortcut(e, i, titleInput));
 
     const wc = document.createElement('span');
     wc.className = 'word-count';
@@ -1445,6 +1569,8 @@ try { var _t = localStorage.getItem('notes_theme'); if (_t) document.documentEle
     taBack.spellcheck = false;
     taBack.style.fontSize = globalFontSize + 'px';
     taBack.addEventListener('input', autoSave);
+    taBack.addEventListener('focus', () => { activeSectionIdx = i; lastFocusedTextarea = taBack; updateFontSizeUI(); });
+    taBack.addEventListener('keydown', e => handleFocusLayoutShortcut(e, i, taBack));
     backTextareas[i] = taBack;
     back.appendChild(backLabel);
     back.appendChild(taBack);
@@ -1498,6 +1624,7 @@ try { var _t = localStorage.getItem('notes_theme'); if (_t) document.documentEle
     ta.addEventListener('focus', () => { activeSectionIdx = i; lastFocusedTextarea = ta; updateFontSizeUI(); });
     ta.addEventListener('scroll', () => { backdrop.scrollTop = ta.scrollTop; backdrop.scrollLeft = ta.scrollLeft; });
     ta.addEventListener('keydown', (e) => {
+      if (handleFocusLayoutShortcut(e, i, ta)) return;
       if (e.key === 'Tab') {
         e.preventDefault();
         const start = ta.selectionStart, end = ta.selectionEnd;
@@ -1859,7 +1986,10 @@ try { var _t = localStorage.getItem('notes_theme'); if (_t) document.documentEle
     updateCardHeightUI();
   }
   // Keep the auto ("Fit") row height in sync with the viewport.
-  window.addEventListener('resize', () => { if (cardHeight === null) applyCardHeight(); });
+  window.addEventListener('resize', () => {
+    if (cardHeight === null) applyCardHeight();
+    applyColumnFocusLayout();
+  });
 
   function setCardHeight(h, save = true) {
     if (h === null) cardHeight = null;
