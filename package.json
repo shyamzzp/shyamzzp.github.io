@@ -29,6 +29,7 @@
     "build": "react-scripts build",
     "test:notes-layout": "node --test public/notes/layout-utils.test.js",
     "test:notes-history": "node --test public/notes/history-utils.test.js",
+    "test:notes-spaces": "node --test public/notes/space-utils.test.js",
     "installr:daemon": "node scripts/installr-catalog-daemon.mjs",
     "installr:review": "node scripts/installr-review.mjs",
     "test": "react-scripts test",

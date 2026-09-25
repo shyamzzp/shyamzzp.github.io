@@ -1166,6 +1166,7 @@ try { var _t = localStorage.getItem('notes_theme'); if (_t) document.documentEle
 
 <script src="layout-utils.js"></script>
 <script src="history-utils.js"></script>
+<script src="space-utils.js"></script>
 <script>
 (function () {
   const COLS = 4;              // cells per row (each 25% wide)
@@ -2518,7 +2519,7 @@ try { var _t = localStorage.getItem('notes_theme'); if (_t) document.documentEle
       slug: it.slug || slugify(it.title || it.id),
       title: it.title || 'Untitled',
       kind: it.kind || 'other',
-      cards: it.cards || 0,
+      cards: window.NotesSpaceUtils.savedCardCount(it.data),
       data: it.data
     }));
   }
@@ -2670,13 +2671,7 @@ try { var _t = localStorage.getItem('notes_theme'); if (_t) document.documentEle
 
   async function saveToPB() {
     if (!authToken || !currentSpace) return; // only save while a space is open
-    const payload = {
-      data: JSON.stringify(currentState()),
-      title: currentSpace.title,
-      kind: currentSpace.kind,
-      slug: currentSpace.slug,
-      cards: cardCount()
-    };
+    const payload = window.NotesSpaceUtils.boardSavePayload(currentState(), cardCount());
     try {
       const res = await fetch(PB_URL + '/api/collections/' + PB_COLLECTION + '/records/' + currentSpace.id, {
         method: 'PATCH', headers: pbHeaders(), body: JSON.stringify(payload)
