@@ -547,6 +547,9 @@ try { var _t = localStorage.getItem('notes_theme'); if (_t) document.documentEle
   }
   #grid.focus-column .section { scroll-snap-align: start; }
   #grid.focus-column .section.focus-selected {
+    position: sticky;
+    left: 0;
+    z-index: 2;
     animation: focus-expand 0.24s cubic-bezier(.2,.8,.2,1) both;
   }
   #grid.focus-column .section:not(.focus-selected) {
