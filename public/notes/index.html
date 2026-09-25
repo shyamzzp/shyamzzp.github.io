@@ -355,6 +355,156 @@ try { var _t = localStorage.getItem('notes_theme'); if (_t) document.documentEle
   }
   #status.show { opacity: 1; }
 
+  /* ── Left control panel ── */
+  #app-shell {
+    display: flex;
+    flex: 1;
+    min-height: 0;
+    overflow: hidden;
+  }
+  #toolbar {
+    --tb-h: 30px;
+    width: 260px;
+    height: 100%;
+    flex: 0 0 260px;
+    flex-direction: column;
+    align-items: stretch;
+    align-content: stretch;
+    gap: 0;
+    padding: 10px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    border-right: 1px solid var(--toolbar-border);
+    border-bottom: 0;
+    background: color-mix(in srgb, var(--toolbar-bg) 94%, var(--bg));
+  }
+  #notes-workspace { flex: 1; min-width: 0; min-height: 0; display: flex; }
+  #notes-workspace #grid { flex: 1; }
+  .panel-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 3px 0 10px;
+    border-bottom: 1px solid var(--toolbar-border);
+  }
+  .panel-title { color: var(--title-text); font-size: 12px; font-weight: bold; letter-spacing: 0.13em; }
+  .panel-toggle { min-width: 30px; padding: 3px; font-size: 14px; }
+  #toolbar .tb-group {
+    width: 100%;
+    height: auto;
+    min-height: var(--tb-h);
+    flex-wrap: wrap;
+    gap: 6px;
+    padding: 11px 0;
+    border-bottom: 1px solid color-mix(in srgb, var(--toolbar-border) 70%, transparent);
+  }
+  #toolbar .tb-group:last-of-type { border-bottom: 0; }
+  .tb-group-label {
+    width: 100%;
+    color: var(--title-text);
+    font-size: 9px;
+    font-weight: bold;
+    letter-spacing: 0.11em;
+    opacity: 0.92;
+    text-transform: uppercase;
+  }
+  #toolbar .tb-sep { display: none; }
+  #toolbar button,
+  #toolbar input,
+  #toolbar select {
+    color: var(--title-text);
+    border-color: color-mix(in srgb, var(--toolbar-border) 55%, var(--text));
+    background: color-mix(in srgb, var(--btn-bg) 82%, var(--bg));
+  }
+  #toolbar button:hover,
+  #toolbar button:focus-visible { background: var(--btn-hover); border-color: var(--text); }
+  #toolbar input:focus,
+  #toolbar select:focus { border-color: var(--text); }
+  #toolbar .tb-meta-label,
+  #toolbar #font-size-label,
+  #toolbar #font-size-display,
+  #toolbar #search-count,
+  #toolbar #status { color: var(--text); opacity: 0.88; }
+  #toolbar #current-space { width: calc(100% - 40px); color: var(--title-text); font-size: 11px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  #toolbar #search-input { width: 100%; }
+  #toolbar #font-family-select { width: 100%; max-width: none; }
+  #toolbar #filter-swatches { width: auto; min-height: 0; padding: 0; border: 0; gap: 4px; }
+  #toolbar #status { margin-left: 0; min-height: 14px; }
+  #mobile-panel-toggle { display: none; }
+
+  body.panel-collapsed #toolbar { width: 58px; flex-basis: 58px; padding: 10px 8px; }
+  body.panel-collapsed #toolbar .panel-title,
+  body.panel-collapsed #toolbar .tb-group-label,
+  body.panel-collapsed #toolbar .tb-meta-label,
+  body.panel-collapsed #toolbar #font-size-label,
+  body.panel-collapsed #toolbar #current-space,
+  body.panel-collapsed #toolbar #search-count,
+  body.panel-collapsed #toolbar #status { display: none; }
+  body.panel-collapsed #toolbar .tb-group { justify-content: center; }
+  body.panel-collapsed #toolbar .panel-head { justify-content: center; }
+  body.panel-collapsed #toolbar .panel-toggle { transform: rotate(180deg); }
+
+  @media (min-width: 761px) {
+    body.panel-collapsed #toolbar #search-input,
+    body.panel-collapsed #toolbar #font-family-select,
+    body.panel-collapsed #toolbar #filter-label { display: none; }
+    body.panel-collapsed #toolbar #theme-btn,
+    body.panel-collapsed #toolbar #save-btn,
+    body.panel-collapsed #toolbar #clear-btn {
+      flex: 0 0 34px;
+      width: 34px;
+      min-width: 34px;
+      padding: 3px;
+      font-size: 0;
+    }
+    body.panel-collapsed #toolbar #theme-btn::before { content: '◑'; font-size: 14px; }
+    body.panel-collapsed #toolbar #save-btn::before { content: '⬇'; font-size: 14px; }
+    body.panel-collapsed #toolbar #clear-btn::before { content: '⌫'; font-size: 14px; }
+  }
+
+  @media (max-width: 760px) {
+    #app-shell { display: block; }
+    #notes-workspace { height: 100%; }
+    #toolbar {
+      position: fixed;
+      z-index: 900;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      width: min(300px, 86vw);
+      height: auto;
+      transform: translateX(-104%);
+      transition: transform 0.2s ease;
+      box-shadow: 8px 0 28px rgba(0,0,0,0.45);
+    }
+    body.panel-mobile-open #toolbar { transform: translateX(0); }
+    body.panel-collapsed #toolbar { width: min(300px, 86vw); padding: 10px; }
+    body.panel-collapsed #toolbar .panel-title,
+    body.panel-collapsed #toolbar .tb-group-label,
+    body.panel-collapsed #toolbar .tb-meta-label,
+    body.panel-collapsed #toolbar #font-size-label,
+    body.panel-collapsed #toolbar #current-space,
+    body.panel-collapsed #toolbar #search-input,
+    body.panel-collapsed #toolbar #search-count,
+    body.panel-collapsed #toolbar #font-family-select,
+    body.panel-collapsed #toolbar #status { display: initial; }
+    body.panel-collapsed #toolbar .tb-group { justify-content: flex-start; }
+    #mobile-panel-toggle {
+      position: fixed;
+      z-index: 901;
+      top: 8px;
+      left: 8px;
+      display: inline-flex;
+      width: 34px;
+      height: 34px;
+      align-items: center;
+      justify-content: center;
+      color: var(--title-text);
+      border: 1px solid var(--toolbar-border);
+      background: var(--toolbar-bg);
+    }
+  }
+
   /* ── Grid ── */
   /* Infinite vertical scroller: 4 columns (25% each), rows of --card-h.
      New rows are appended as you scroll. */
@@ -1017,9 +1167,16 @@ try { var _t = localStorage.getItem('notes_theme'); if (_t) document.documentEle
 </head>
 <body>
 
-<div id="toolbar">
+<button id="mobile-panel-toggle" type="button" aria-label="Open controls" aria-expanded="false">☰</button>
+<div id="app-shell">
+<aside id="toolbar" aria-label="Notes controls">
+  <div class="panel-head">
+    <span class="panel-title">NOTES</span>
+    <button id="panel-toggle" class="panel-toggle" type="button" title="Collapse controls" aria-label="Collapse controls" aria-expanded="true">‹</button>
+  </div>
   <!-- Spaces -->
   <div class="tb-group">
+    <span class="tb-group-label">Space</span>
     <button id="menu-btn" title="Spaces menu">☰</button>
     <span id="current-space"></span>
   </div>
@@ -1027,12 +1184,14 @@ try { var _t = localStorage.getItem('notes_theme'); if (_t) document.documentEle
 
   <!-- Theme -->
   <div class="tb-group">
+    <span class="tb-group-label">Theme</span>
     <button id="theme-btn" title="Toggle theme">◑ Theme</button>
   </div>
   <div class="tb-sep"></div>
 
   <!-- Font size -->
   <div class="tb-group">
+    <span class="tb-group-label">Active card</span>
     <button id="font-down" title="Decrease font size (active section)">A−</button>
     <span id="font-size-display">—</span>
     <button id="font-up" title="Increase font size (active section)">A+</button>
@@ -1042,6 +1201,7 @@ try { var _t = localStorage.getItem('notes_theme'); if (_t) document.documentEle
 
   <!-- Global font size (all cards) -->
   <div class="tb-group">
+    <span class="tb-group-label">All cards</span>
     <button id="gfont-down" title="Decrease font size for all cards">A−</button>
     <span id="gfont-size-display">13</span>
     <button id="gfont-up" title="Increase font size for all cards">A+</button>
@@ -1051,12 +1211,14 @@ try { var _t = localStorage.getItem('notes_theme'); if (_t) document.documentEle
 
   <!-- Font family (all notes) -->
   <div class="tb-group">
+    <span class="tb-group-label">Font</span>
     <select id="font-family-select" title="Font family for all notes"></select>
   </div>
   <div class="tb-sep"></div>
 
   <!-- Card height (all cards at once) -->
   <div class="tb-group">
+    <span class="tb-group-label">Card height</span>
     <button id="card-h-down" title="Shorter cards">H−</button>
     <span id="card-h-display">Auto</span>
     <button id="card-h-up" title="Taller cards">H+</button>
@@ -1067,6 +1229,7 @@ try { var _t = localStorage.getItem('notes_theme'); if (_t) document.documentEle
 
   <!-- Search -->
   <div class="tb-group">
+    <span class="tb-group-label">Search</span>
     <input id="search-input" type="text" placeholder="Search… ( / or Ctrl+F )" title="Focus search: / or Ctrl+F" autocomplete="off" spellcheck="false">
     <button id="search-prev" title="Previous match">↑</button>
     <button id="search-next" title="Next match">↓</button>
@@ -1077,19 +1240,22 @@ try { var _t = localStorage.getItem('notes_theme'); if (_t) document.documentEle
 
   <!-- Color filter -->
   <div class="tb-group">
-    <span id="filter-label">Filter:</span>
+    <span class="tb-group-label">Filter</span>
+    <span id="filter-label">Colors:</span>
     <div id="filter-swatches" class="tb-group"></div>
   </div>
   <div class="tb-sep"></div>
 
   <!-- Format -->
   <div class="tb-group">
+    <span class="tb-group-label">Format</span>
     <button id="strike-btn" title="Strikethrough selected text">S&#822;</button>
   </div>
   <div class="tb-sep"></div>
 
   <!-- Save -->
   <div class="tb-group">
+    <span class="tb-group-label">File</span>
     <button id="save-btn" title="Save as HTML (Ctrl+S)">⬇ Save</button>
     <button id="clear-btn" title="Clear all sections">⌫ Clear All</button>
   </div>
@@ -1097,12 +1263,13 @@ try { var _t = localStorage.getItem('notes_theme'); if (_t) document.documentEle
 
   <!-- Account -->
   <div class="tb-group">
+    <span class="tb-group-label">Account</span>
     <span id="account-email" class="tb-meta-label"></span>
     <button id="logout-btn" title="Log out" style="display:none">⎋ Logout</button>
   </div>
 
   <span id="status">Saved ✓</span>
-</div>
+</aside>
 
 <!-- Login overlay (PocketBase) -->
 <div id="login-overlay" class="login-overlay hidden">
@@ -1155,7 +1322,8 @@ try { var _t = localStorage.getItem('notes_theme'); if (_t) document.documentEle
   <button data-split="none" title="Merge into one">✕</button>
 </div>
 
-<div id="grid"></div>
+<main id="notes-workspace"><div id="grid"></div></main>
+</div>
 
 <div id="space-loading" role="status" aria-live="polite" aria-hidden="true">
   <div class="space-loading-card">
@@ -1167,12 +1335,14 @@ try { var _t = localStorage.getItem('notes_theme'); if (_t) document.documentEle
 <script src="layout-utils.js"></script>
 <script src="history-utils.js"></script>
 <script src="space-utils.js"></script>
+<script src="control-panel-utils.js"></script>
 <script>
 (function () {
   const COLS = 4;              // cells per row (each 25% wide)
   const INITIAL_ROWS = 6;      // rows created on first load
   const GROW_ROWS = 4;         // rows appended each time the user nears the end
   const STORAGE_KEY = 'notes_v3';
+  const CONTROL_PANEL_KEY = 'notes_control_panel';
   // ── PocketBase storage ──
   const PB_URL = 'https://shyamzzp.pockethost.io';
   const PB_COLLECTION = 'notes';     // collection: fields key (text) + data (json)
@@ -1195,6 +1365,56 @@ try { var _t = localStorage.getItem('notes_theme'); if (_t) document.documentEle
   let dragSrcIdx = -1;       // section index being dragged
   let globalFontSize = 13;   // default font size applied to all cards
   let lastFocusedTextarea = null; // most recently focused pane (for toolbar actions)
+
+  const panelToggle = document.getElementById('panel-toggle');
+  const mobilePanelToggle = document.getElementById('mobile-panel-toggle');
+  const toolbar = document.getElementById('toolbar');
+
+  function setPanelState(state) {
+    const normalized = window.NotesControlPanelUtils.normalizePanelState(state);
+    document.body.classList.toggle('panel-collapsed', normalized === 'collapsed');
+    panelToggle.setAttribute('aria-expanded', String(normalized === 'expanded'));
+    panelToggle.title = normalized === 'expanded' ? 'Collapse controls' : 'Expand controls';
+    panelToggle.setAttribute('aria-label', panelToggle.title);
+    try { localStorage.setItem(CONTROL_PANEL_KEY, normalized); } catch (e) {}
+  }
+
+  function syncMobilePanelAccessibility() {
+    const isMobileLayout = window.matchMedia('(max-width: 760px)').matches;
+    const open = document.body.classList.contains('panel-mobile-open');
+    const inert = window.NotesControlPanelUtils.shouldPanelBeInert(isMobileLayout, open);
+    toolbar.inert = inert;
+    if (inert) toolbar.setAttribute('aria-hidden', 'true');
+    else toolbar.removeAttribute('aria-hidden');
+  }
+
+  function setMobilePanel(open) {
+    document.body.classList.toggle('panel-mobile-open', open);
+    mobilePanelToggle.setAttribute('aria-expanded', String(open));
+    mobilePanelToggle.textContent = open ? '✕' : '☰';
+    syncMobilePanelAccessibility();
+  }
+
+  function toggleMobilePanel() {
+    setMobilePanel(!document.body.classList.contains('panel-mobile-open'));
+  }
+
+  try { setPanelState(localStorage.getItem(CONTROL_PANEL_KEY)); } catch (e) { setPanelState('expanded'); }
+  panelToggle.addEventListener('click', () => {
+    if (window.matchMedia('(max-width: 760px)').matches) { toggleMobilePanel(); return; }
+    setPanelState(window.NotesControlPanelUtils.nextPanelState(
+      document.body.classList.contains('panel-collapsed') ? 'collapsed' : 'expanded'
+    ));
+  });
+  mobilePanelToggle.addEventListener('click', toggleMobilePanel);
+  window.addEventListener('resize', () => {
+    if (!window.matchMedia('(max-width: 760px)').matches) {
+      setMobilePanel(false);
+    } else {
+      syncMobilePanelAccessibility();
+    }
+  });
+  syncMobilePanelAccessibility();
 
   // ── Color palette ──
   // Each entry: { id, label, dark:{hdr,ta,taFocus,border,title,dot}, light:{...} }
@@ -2561,6 +2781,7 @@ try { var _t = localStorage.getItem('notes_theme'); if (_t) document.documentEle
 
   // ── Sidebar & routing ──
   function openSidebar() {
+    setMobilePanel(false);
     document.getElementById('sidebar').classList.add('open');
     document.getElementById('space-backdrop').classList.add('open');
   }
