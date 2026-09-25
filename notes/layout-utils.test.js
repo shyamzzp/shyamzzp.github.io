@@ -1,4 +1,6 @@
 const assert = require('node:assert/strict');
+const fs = require('node:fs');
+const path = require('node:path');
 const test = require('node:test');
 
 const { shortcutMode, columnPlacements } = require('./layout-utils');
@@ -28,4 +30,9 @@ test('keeps a non-first focused section in the first visible column', () => {
   assert.deepEqual(placements[4], { column: 1, row: 1, rowSpan: 4 });
   assert.deepEqual(placements[0], { column: 2, row: 1, rowSpan: 1 });
   assert.deepEqual(placements[5], { column: 3, row: 1, rowSpan: 1 });
+});
+
+test('pins the full-height focused column while the remaining columns scroll', () => {
+  const page = fs.readFileSync(path.join(__dirname, 'index.html'), 'utf8');
+  assert.match(page, /#grid\.focus-column \.section\.focus-selected\s*\{[\s\S]*?position:\s*sticky;[\s\S]*?left:\s*0;/);
 });
