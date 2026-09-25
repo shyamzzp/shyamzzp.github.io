@@ -976,6 +976,43 @@ try { var _t = localStorage.getItem('notes_theme'); if (_t) document.documentEle
   }
   .strike-btn:hover { color: var(--text); }
   .section.struck .strike-btn { color: var(--text); }
+
+  /* ── Space switching ── */
+  #space-loading {
+    position: fixed;
+    inset: 0;
+    z-index: 1100;
+    display: grid;
+    place-items: center;
+    padding: 24px;
+    background: rgba(0, 0, 0, 0.46);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.18s ease;
+  }
+  #space-loading.open { opacity: 1; pointer-events: auto; }
+  .space-loading-card {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-width: min(340px, 100%);
+    padding: 18px 20px;
+    color: var(--title-text);
+    background: var(--toolbar-bg);
+    border: 1px solid var(--toolbar-border);
+    box-shadow: 0 16px 48px rgba(0,0,0,0.45);
+    font-family: 'Courier New', monospace;
+  }
+  .space-loading-spinner {
+    width: 18px;
+    height: 18px;
+    border: 2px solid var(--border);
+    border-top-color: var(--text);
+    border-radius: 50%;
+    animation: space-loading-spin 0.7s linear infinite;
+  }
+  @keyframes space-loading-spin { to { transform: rotate(360deg); } }
+  @media (prefers-reduced-motion: reduce) { .space-loading-spinner { animation: none; } }
 </style>
 </head>
 <body>
@@ -1120,7 +1157,15 @@ try { var _t = localStorage.getItem('notes_theme'); if (_t) document.documentEle
 
 <div id="grid"></div>
 
+<div id="space-loading" role="status" aria-live="polite" aria-hidden="true">
+  <div class="space-loading-card">
+    <span class="space-loading-spinner" aria-hidden="true"></span>
+    <span id="space-loading-message">Switching space…</span>
+  </div>
+</div>
+
 <script src="layout-utils.js"></script>
+<script src="history-utils.js"></script>
 <script>
 (function () {
   const COLS = 4;              // cells per row (each 25% wide)
@@ -1369,6 +1414,51 @@ try { var _t = localStorage.getItem('notes_theme'); if (_t) document.documentEle
   const dots = [];
   const splitBtns = [];
   let focusLayout = null;
+  let boardHistory = null;
+  let isRestoringHistory = false;
+  let typingHistoryTimer = null;
+
+  function resetBoardHistory() {
+    clearTimeout(typingHistoryTimer);
+    typingHistoryTimer = null;
+    boardHistory = window.NotesHistoryUtils.createHistory(currentState());
+  }
+
+  function recordHistory() {
+    if (!isRestoringHistory && boardHistory) boardHistory.record(currentState());
+  }
+
+  function queueTypingHistory() {
+    clearTimeout(typingHistoryTimer);
+    typingHistoryTimer = setTimeout(() => {
+      typingHistoryTimer = null;
+      recordHistory();
+    }, 600);
+  }
+
+  function flushTypingHistory() {
+    if (!typingHistoryTimer) return;
+    clearTimeout(typingHistoryTimer);
+    typingHistoryTimer = null;
+    recordHistory();
+  }
+
+  function restoreHistorySnapshot(snapshot) {
+    if (!snapshot) return;
+    clearTimeout(typingHistoryTimer);
+    typingHistoryTimer = null;
+    isRestoringHistory = true;
+    try {
+      clearAllSections();
+      applyState(snapshot);
+      ensureSections(sections.length + GROW_ROWS * COLS);
+      applyCardHeight();
+      applyFilters();
+    } finally {
+      isRestoringHistory = false;
+    }
+    autoSave(false);
+  }
 
   function normalColumnCount() {
     return window.matchMedia('(max-width: 640px)').matches ? 2 : COLS;
@@ -1568,7 +1658,7 @@ try { var _t = localStorage.getItem('notes_theme'); if (_t) document.documentEle
     taBack.placeholder = 'tomorrow…';
     taBack.spellcheck = false;
     taBack.style.fontSize = globalFontSize + 'px';
-    taBack.addEventListener('input', autoSave);
+    taBack.addEventListener('input', () => { queueTypingHistory(); autoSave(false); });
     taBack.addEventListener('focus', () => { activeSectionIdx = i; lastFocusedTextarea = taBack; updateFontSizeUI(); });
     taBack.addEventListener('keydown', e => handleFocusLayoutShortcut(e, i, taBack));
     backTextareas[i] = taBack;
@@ -1586,7 +1676,7 @@ try { var _t = localStorage.getItem('notes_theme'); if (_t) document.documentEle
     sec.appendChild(flip);
     grid.appendChild(sec);
 
-    titleInput.addEventListener('input', autoSave);
+    titleInput.addEventListener('input', () => { queueTypingHistory(); autoSave(false); });
   }
 
   // Ensure at least `n` sections exist (rounded up to whole rows of COLS).
@@ -1620,7 +1710,7 @@ try { var _t = localStorage.getItem('notes_theme'); if (_t) document.documentEle
     wrap.appendChild(backdrop);
     wrap.appendChild(ta);
     applyTaFontSize(ta, sectionFontSizes[i]);
-    ta.addEventListener('input', () => { updateHighlight(ta); updateWordCount(i); autoSave(); });
+    ta.addEventListener('input', () => { updateHighlight(ta); updateWordCount(i); queueTypingHistory(); autoSave(false); });
     ta.addEventListener('focus', () => { activeSectionIdx = i; lastFocusedTextarea = ta; updateFontSizeUI(); });
     ta.addEventListener('scroll', () => { backdrop.scrollTop = ta.scrollTop; backdrop.scrollLeft = ta.scrollLeft; });
     ta.addEventListener('keydown', (e) => {
@@ -1632,7 +1722,8 @@ try { var _t = localStorage.getItem('notes_theme'); if (_t) document.documentEle
         ta.selectionStart = ta.selectionEnd = start + 1;
         updateHighlight(ta);
         updateWordCount(i);
-        autoSave();
+        queueTypingHistory();
+        autoSave(false);
       }
     });
     return ta;
@@ -1811,7 +1902,8 @@ try { var _t = localStorage.getItem('notes_theme'); if (_t) document.documentEle
   // Save: PocketBase when online & authed; localStorage only for offline
   // exported snapshots (seed mode).
   let saveTimer = null;
-  function autoSave() {
+  function autoSave(record = true) {
+    if (record) recordHistory();
     if (OFFLINE) {
       try { localStorage.setItem(STORAGE_KEY, JSON.stringify(currentState())); } catch (e) {}
       flashStatus('Saved ✓');
@@ -2181,7 +2273,15 @@ try { var _t = localStorage.getItem('notes_theme'); if (_t) document.documentEle
 
   document.getElementById('save-btn').addEventListener('click', saveHTML);
 
+  document.addEventListener('pointerdown', flushTypingHistory, true);
   document.addEventListener('keydown', (e) => {
+    const historyAction = window.NotesHistoryUtils.historyShortcut(e);
+    if (historyAction && boardHistory) {
+      e.preventDefault();
+      flushTypingHistory();
+      restoreHistorySnapshot(historyAction === 'undo' ? boardHistory.undo() : boardHistory.redo());
+      return;
+    }
     if ((e.metaKey || e.ctrlKey) && e.key === 's') { e.preventDefault(); saveHTML(); }
     if ((e.metaKey || e.ctrlKey) && e.key === 'f') {
       e.preventDefault();
@@ -2218,7 +2318,7 @@ try { var _t = localStorage.getItem('notes_theme'); if (_t) document.documentEle
     applyFilters();
   }
   document.getElementById('clear-btn').addEventListener('click', () => {
-    if (!confirm('Clear all cards in this space? This cannot be undone.')) return;
+    if (!confirm('Clear all cards in this space? You can undo this action.')) return;
     clearAllSections();
     autoSave();
   });
@@ -2472,6 +2572,17 @@ try { var _t = localStorage.getItem('notes_theme'); if (_t) document.documentEle
   function setCurrentSpaceLabel() {
     document.getElementById('current-space').textContent = currentSpace ? currentSpace.title : 'No space — open menu ☰';
   }
+  function showSpaceLoading(title) {
+    document.getElementById('space-loading-message').textContent = 'Switching to ' + title + '…';
+    const overlay = document.getElementById('space-loading');
+    overlay.classList.add('open');
+    overlay.setAttribute('aria-hidden', 'false');
+  }
+  function hideSpaceLoading() {
+    const overlay = document.getElementById('space-loading');
+    overlay.classList.remove('open');
+    overlay.setAttribute('aria-hidden', 'true');
+  }
 
   function renderSpaces() {
     const grid = document.getElementById('spaces-grid');
@@ -2492,7 +2603,11 @@ try { var _t = localStorage.getItem('notes_theme'); if (_t) document.documentEle
       const edit = document.createElement('button'); edit.className = 'st-edit'; edit.title = 'Rename space'; edit.textContent = '✎';
       const del = document.createElement('button'); del.className = 'st-del'; del.title = 'Delete space'; del.textContent = '🗑';
       tile.appendChild(kind); tile.appendChild(name); tile.appendChild(meta); tile.appendChild(edit); tile.appendChild(del);
-      tile.addEventListener('click', () => { closeSidebar(); location.hash = '#' + sp.slug; });
+      tile.addEventListener('click', () => {
+        if (currentSpace && currentSpace.id !== sp.id) showSpaceLoading(sp.title);
+        closeSidebar();
+        location.hash = '#' + sp.slug;
+      });
       edit.addEventListener('click', e => {
         e.stopPropagation();
         const nn = prompt('Rename space', sp.title);
@@ -2510,24 +2625,31 @@ try { var _t = localStorage.getItem('notes_theme'); if (_t) document.documentEle
     let sp = spaces.find(s => s.slug === slug);
     if (!sp) { spaces = await pbListSpaces(); sp = spaces.find(s => s.slug === slug); }
     if (!sp) { flashStatus('Space "' + slug + '" not found', true); location.hash = ''; return; }
+    const isSwitchingSpace = !!(currentSpace && currentSpace.id !== sp.id);
+    if (isSwitchingSpace) showSpaceLoading(sp.title);
     flashStatus('Loading…', true);
-    currentSpace = sp; recordId = sp.id;
-    clearAllSections();
-    let d = sp.data;
-    if (d === undefined) {
-      const r = await fetch(PB_URL + '/api/collections/' + PB_COLLECTION + '/records/' + sp.id, { headers: pbHeaders() });
-      if (r.ok) { const rec = await r.json(); d = rec.data; sp.data = d; }
+    try {
+      currentSpace = sp; recordId = sp.id;
+      clearAllSections();
+      let d = sp.data;
+      if (d === undefined) {
+        const r = await fetch(PB_URL + '/api/collections/' + PB_COLLECTION + '/records/' + sp.id, { headers: pbHeaders() });
+        if (r.ok) { const rec = await r.json(); d = rec.data; sp.data = d; }
+      }
+      if (typeof d === 'string') { try { d = JSON.parse(d); } catch (e) { d = {}; } }
+      applyState(d || {});
+      ensureSections(sections.length + GROW_ROWS * COLS);
+      applyCardHeight();
+      sp.cards = cardCount();          // reflect the real count immediately
+      document.title = sp.title + ' — Notes';
+      setCurrentSpaceLabel();
+      renderSpaces();
+      closeSidebar();
+      resetBoardHistory();
+      flashStatus('Loaded ✓');
+    } finally {
+      if (isSwitchingSpace) hideSpaceLoading();
     }
-    if (typeof d === 'string') { try { d = JSON.parse(d); } catch (e) { d = {}; } }
-    applyState(d || {});
-    ensureSections(sections.length + GROW_ROWS * COLS);
-    applyCardHeight();
-    sp.cards = cardCount();          // reflect the real count immediately
-    document.title = sp.title + ' — Notes';
-    setCurrentSpaceLabel();
-    renderSpaces();
-    closeSidebar();
-    flashStatus('Loaded ✓');
   }
 
   async function route() {
@@ -2662,6 +2784,7 @@ try { var _t = localStorage.getItem('notes_theme'); if (_t) document.documentEle
     window.addEventListener('hashchange', () => {
       if (!authToken) return;
       route().catch(err => {
+        hideSpaceLoading();
         if (err && err.auth) handleAuthExpired();
         else flashStatus((err && err.message) || 'Navigation error', true);
       });
@@ -2677,6 +2800,7 @@ try { var _t = localStorage.getItem('notes_theme'); if (_t) document.documentEle
     loadSeedState();                                    // standalone snapshot
     ensureSections(sections.length + GROW_ROWS * COLS);
     applyCardHeight();
+    resetBoardHistory();
   } else {
     loadAuth();
     startSession();                                     // login → spaces/board
