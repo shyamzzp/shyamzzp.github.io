@@ -16,11 +16,5 @@
     "noEmit": true,
     "jsx": "react-jsx"
   },
-  "include": ["src"],
-  "exclude": [
-    "node_modules",
-    "src/**/*.test.ts",
-    "src/**/*.test.tsx",
-    "src/setupTests.ts"
-  ]
+  "include": ["src"]
 }
