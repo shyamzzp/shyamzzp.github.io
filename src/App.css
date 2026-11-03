@@ -129,7 +129,7 @@ hr {
 
   .portfolio-panel {
     border-radius: 0;
-    flex: 0 0 100vw;
+    flex: 0 0 100%;
     height: 100%;
     min-height: 0;
     padding: 0;
@@ -195,7 +195,7 @@ hr {
 
 @media screen and (min-width: 769px) and (max-width: 1120px) {
   .portfolio-panel-track {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: minmax(0, 1fr);
   }
 
   .portfolio-panel {
@@ -301,7 +301,8 @@ hr {
   display: grid;
   flex: 1;
   gap: 0.65rem;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: minmax(0, 1fr);
+  justify-items: center;
   min-height: 0;
   overflow: hidden;
 }
@@ -311,10 +312,10 @@ hr {
 }
 
 .portfolio-panel {
-  background: rgba(255, 255, 255, 0.76);
-  border: 1px solid rgba(31, 41, 55, 0.1);
+  background: transparent;
+  border: 0;
   border-radius: 0;
-  box-shadow: 0 16px 42px rgba(31, 41, 55, 0.08);
+  box-shadow: none;
   color: #202124;
   height: 100%;
   min-height: 0;
@@ -324,12 +325,9 @@ hr {
 }
 
 .portfolio-panel-about {
+  max-width: 1180px;
   order: 1;
-}
-
-.portfolio-panel-projects {
-  grid-column: span 2;
-  order: 2;
+  width: 100%;
 }
 
 .portfolio-panel-scroll.project-carousel-scroll {
@@ -755,7 +753,6 @@ hr {
 }
 
 .portfolio-panel-header {
-  border-bottom: 1px solid rgba(31, 41, 55, 0.1);
   margin-bottom: 1rem;
   padding-bottom: 1rem;
 }
@@ -889,7 +886,7 @@ hr {
 }
 
 .social-media {
-  margin-bottom: 1.4rem;
+  margin-bottom: 0.96rem;
   width: 100%;
 }
 
@@ -908,7 +905,9 @@ hr {
 .social-media-icons {
   align-items: center;
   display: flex;
-  justify-content: space-between;
+  flex-wrap: nowrap;
+  gap: clamp(0.35rem, 1.6vw, 1.6rem);
+  padding-top: 1.9rem;
   width: 100%;
 }
 
@@ -930,7 +929,7 @@ hr {
   pointer-events: none;
   position: absolute;
   text-transform: uppercase;
-  top: calc(100% + 5px);
+  bottom: calc(100% + 5px);
   transform: translateX(-50%);
   transition: opacity 0.14s ease;
   white-space: nowrap;
@@ -1115,26 +1114,36 @@ hr {
   padding: 0.25rem 0.48rem;
 }
 
+.skills-grid {
+  column-gap: 1.6rem;
+  columns: 230px 4;
+  margin-top: 0.9rem;
+}
+
 .portfolio-panel .skills-group {
-  margin-top: 1.05rem;
+  break-inside: avoid;
+  margin-bottom: 2.4rem;
+  margin-top: 0;
+  -webkit-column-break-inside: avoid;
 }
 
 .portfolio-panel .skills-group + .skills-group {
-  margin-top: 2.35rem;
+  margin-top: 0;
 }
 
 .portfolio-panel .skills-group-heading {
-  color: rgba(17, 24, 39, 0.72);
-  font-size: 0.78rem;
+  color: #111827;
+  padding-bottom: 0;
+  font-size: 0.74rem;
   font-weight: 800;
   letter-spacing: 0.06em;
-  margin-bottom: 0.45rem;
+  margin-bottom: 0.5rem;
   text-transform: uppercase;
 }
 
 .portfolio-panel .tags {
-  column-gap: 0.38rem;
-  row-gap: 0.62rem;
+  column-gap: 0.3rem;
+  row-gap: 0.4rem;
 }
 
 .portfolio-panel .tag {
@@ -1142,8 +1151,8 @@ hr {
   border-radius: 0;
   font-size: 0.72rem;
   line-height: 1.05;
-  min-height: 1.48rem;
-  padding: 0.24rem 0.44rem;
+  min-height: 1.3rem;
+  padding: 0.18rem 0.38rem;
   white-space: normal;
 }
 
@@ -1726,7 +1735,7 @@ hr {
 
   .portfolio-panel {
     border-radius: 0;
-    flex: 0 0 100vw;
+    flex: 0 0 100%;
     height: 100%;
     min-height: 0;
     padding: 0;
@@ -1744,11 +1753,9 @@ hr {
 
 @media screen and (min-width: 769px) and (max-width: 1240px) {
   .portfolio-panel-track {
-    grid-auto-flow: column;
-    grid-template-columns: repeat(3, minmax(340px, 1fr));
-    overflow-x: auto;
-    overflow-y: hidden;
-    scrollbar-width: none;
+    grid-auto-flow: row;
+    grid-template-columns: minmax(0, 1fr);
+    overflow: hidden;
   }
 }
 
@@ -2208,21 +2215,22 @@ hr {
 .skills-group .tags {
   display: flex;
   flex-wrap: wrap;
-  column-gap: 0.38rem;
-  row-gap: 0.62rem;
+  column-gap: 0.3rem;
+  row-gap: 0.4rem;
   max-width: 100%;
 }
 
 .skills-group .tag {
   align-items: center;
+  margin-right: 0 !important;
   border-radius: 0;
   flex: 0 1 auto;
   height: auto;
   justify-content: center;
   line-height: 1.05;
   margin-bottom: 0 !important;
-  min-height: 1.48rem;
-  padding: 0.24rem 0.44rem;
+  min-height: 1.3rem;
+  padding: 0.18rem 0.38rem;
   text-align: left;
   white-space: normal;
   word-break: break-word;

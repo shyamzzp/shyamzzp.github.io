@@ -66,7 +66,6 @@ const links = [
 export default function SocialMedia() {
   return (
     <div className="social-media">
-      <p className="social-media-header">Connect</p>
       <div className="social-media-icons">
         {links.map((link) => (
           <a
